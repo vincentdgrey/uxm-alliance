@@ -103,6 +103,31 @@
     });
   }
 
+  /* ---------- Video de fondo del hero ---------- */
+  function initHeroVideo() {
+    var video = byId("heroVideo");
+    if (!video) return;
+
+    /* Safari/iOS requieren el silenciado aplicado antes de iniciar la reproducción. */
+    video.muted = true;
+    video.defaultMuted = true;
+
+    var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) {
+      video.removeAttribute("autoplay");
+      video.pause();
+      return;
+    }
+
+    var playRequest = video.play();
+    if (playRequest && typeof playRequest.catch === "function") {
+      playRequest.catch(function () {
+        /* El poster permanece visible cuando el navegador bloquea el autoplay. */
+        video.setAttribute("data-playback", "fallback");
+      });
+    }
+  }
+
   /* ---------- Menú lateral propio ---------- */
   var navPanel = byId("navPanel");
   var navList = byId("navList");
@@ -245,4 +270,5 @@
   buildLangs();
   applyPageContent();
   syncNavState();
+  initHeroVideo();
 })();
