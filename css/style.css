@@ -1,7 +1,11 @@
 /* ---------- Base: layout fluido con footer al fondo ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { height: 100%; }
+html {
+  height: 100%;
+  color-scheme: light;
+  background: var(--bg);
+}
 body {
   margin: 0;
   min-height: 100vh;
@@ -10,6 +14,21 @@ body {
   flex-direction: column;
   background: var(--bg);
   color: var(--text);
+}
+
+@font-face {
+  font-family: "Cinzel";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../media/fonts/cinzel-600.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Cinzel";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../media/fonts/cinzel-700.ttf") format("truetype");
 }
 
 :root {
@@ -22,6 +41,9 @@ body {
   --cyan: #0d6efd;
   --u: min(1vw, 1.8vh);            /* unidad relativa al recuadro */
   --ease: cubic-bezier(.22, .61, .36, 1);
+  --nav-panel-width: min(100vw, 400px);
+  --nav-toggle-line-origin: 25px;
+  --nav-toggle-line-end: calc(var(--nav-panel-width) - var(--nav-toggle-line-origin) - 10px);
 }
 
 /* ---------- Navbar superior transparente ---------- */
@@ -74,6 +96,8 @@ body {
 .topbar-brand:focus-visible { box-shadow: 0 0 0 2px #ffbf47; }
 
 .nav-toggle {
+  position: relative;
+  z-index: 70;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -90,17 +114,25 @@ body {
 .nav-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 
 /* Animación solo de forma: el color del icono nunca cambia */
-.nav-toggle-bars { display: block; width: 20px; }
+.nav-toggle-bars {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  width: 20px;
+}
 .nav-toggle-bars i {
   display: block;
-  height: 2px;
-  margin: 4px 0;
+  flex: 0 0 3px;
+  width: 20px;
+  height: 3px;
   background: var(--text);
-  transition: transform .25s var(--ease), opacity .2s var(--ease), margin .25s var(--ease);
+  transform-origin: left center;
+  transition: width .28s var(--ease), transform .28s var(--ease);
 }
-.nav-open .nav-toggle-bars i:nth-child(1) { transform: translateY(4px) scaleX(.62); }
-.nav-open .nav-toggle-bars i:nth-child(2) { transform: scaleX(.82); }
-.nav-open .nav-toggle-bars i:nth-child(3) { transform: translateY(-4px) scaleX(.45); }
+.nav-open .nav-toggle-bars i:nth-child(3) {
+  width: var(--nav-toggle-line-end);
+}
 
 /* ---------- Menú lateral propio (anclado a la izquierda) ---------- */
 .nav-panel {
@@ -109,7 +141,7 @@ body {
   left: 0;
   z-index: 60;
   width: 100%;
-  min-width: 400px;
+  max-width: 400px;
   height: 100%;
   height: 100dvh;
   overflow-y: auto;
@@ -199,7 +231,10 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
-  background: #082f3a;
+  background-color: #082f3a;
+  background-image: url("../media/video-particles-cyan-poster.jpg");
+  background-position: center;
+  background-size: cover;
 }
 .hero-video-media {
   position: absolute;
@@ -238,26 +273,32 @@ body {
 
 .hero-title {
   margin: 0;
+  font-family: "Cinzel", Georgia, "Times New Roman", serif;
   font-size: clamp(28px, 7vw, 64px);
   font-weight: 700;
+  line-height: 1.08;
   letter-spacing: .06em;
   text-transform: uppercase;
   color: #1a1a1a;
   text-shadow: 0 2px 0 rgba(255, 255, 255, .75), 0 8px 22px rgba(33, 33, 33, .28);
 }
-/* En el hero principal el título cruza la pantalla de izquierda a derecha */
+/* En el hero principal el título flota suavemente en su posición central */
 .hero-video .hero-title {
-  width: max-content;
-  max-width: none;
-  border-bottom: 7px solid #26b;
+  width: min(100%, 960px);
+  max-width: calc(100% - 32px);
   color: #fff;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, .35), 0 8px 22px rgba(0, 0, 0, .45);
-  animation: uxm-title-sweep 14s linear infinite;
+  text-shadow:
+    0 1px 0 #d7d1c5,
+    0 2px 0 #8c857b,
+    0 3px 0 #4a4640,
+    0 5px 2px rgba(8, 47, 58, .85),
+    0 10px 26px rgba(8, 47, 58, .75);
+  animation: uxm-title-float 6s ease-in-out infinite;
   will-change: transform;
 }
-@keyframes uxm-title-sweep {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(100vw); }
+@keyframes uxm-title-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -309,6 +350,7 @@ body {
   justify-self: end;
   gap: 8px;
   margin: 0;
+  color-scheme: light;
 }
 .lang-label {
   font-size: 12px;
@@ -351,6 +393,10 @@ body {
   --bs-menu-min-width: 11rem;
   --bs-menu-max-height: 70dvh;
   --bs-menu-overflow-y: auto;
+  color: var(--text);
+  background-color: #fff;
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 24px rgba(33, 37, 41, .18);
 }
 .lang-menu .menu-item {
   font-size: 13px;
