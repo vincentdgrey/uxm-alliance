@@ -6,8 +6,8 @@ Configuración para agentes de IA. Este archivo garantiza continuidad del proyec
 
 ## Descripción del Proyecto
 
-1. Pagina web pura, alojamiento final cloud en Github Pages, carpeta root del website `src/`.
-2. Cada archivo en `src/pages/section` es un **bloque-script** independiente que funciona sin librerías externas, útiles para prototipos.
+1. Pagina web pura, alojamiento final cloud en Github Pages, carpeta root del website `./`.
+2. Cada archivo en `src/` es un **bloque-script** independiente que funciona sin librerías externas, útiles para prototipos.
 3. sin dependencias de red (sin fetch/CORS), en lo posible.
 4. Determinando el lenguaje del navegador (navigator.language + ?lang=es) cambiar el texto según el idioma disponible: español, ingles, portugués, italiano, turco, francés, chino, japones. default:ingles.
 5. Include Bootstrap’s CSS and JavaScript files via CDN. CDNs (Content Delivery Networks) are services that provides copies of libraries for your website.
@@ -19,26 +19,25 @@ Configuración para agentes de IA. Este archivo garantiza continuidad del proyec
 
 ```
 uxm-alliance/
+├── css            # archivos de estilos del sitio web
+|   └── style.css
+├── js             # archivos javascript del sitio web
+|   ├── i18n.js    # Textos por idioma
+|   └── app.js     # Lógica sitio web
+├── media          # archivos multimedia
+|   └── video-particles-cyan.mp4  # video cover pagina de inicio
+├── pages/         # Subpáginas del sitio web
+|   ├── actividades-diarias.html  # Actividades Diarias
+|   ├── normas-uxm.html           # Normas UXM
+|   ├── video-tutoriales.html     # Video Tutoriales
+|   ├── estrategia.html           # Estrategia
+|   └── contacto.html             # Contacto
+├── index.html     # Archivo principal sitio web (única página en la raíz)
+|
+├── src/               # carpeta Bloques-script (un archivo = un bloque)
 ├── AGENTS.md          # Este archivo - configuración para agentes
 ├── README.md          # Descripción breve del proyecto
-├── src/               # root web site
-|   ├── css            # archivos de estilos del sitio web
-|   |   └── style.css
-|   ├── js             # archivos javascript del sitio web
-|   |   ├── i18n.js    # Textos por idioma
-|   |   └── app.js     # Lógica sitio web
-|   ├── media          # archivos multimedia
-|   |   └── video-particles-cyan.mp4  # video cover pagina de inicio
-|   ├── pages/         # Subpáginas del sitio web
-|   |   ├── section    # carpeta Bloques-script (un archivo = un bloque)
-|   |   ├── actividades-diarias.html  # Actividades Diarias
-|   |   ├── normas-uxm.html           # Normas UXM
-|   |   ├── video-tutoriales.html     # Video Tutoriales
-|   |   ├── estrategia.html           # Estrategia
-|   |   └── contacto.html             # Contacto
-|   └── index.html     # Archivo principal sitio web (única página en la raíz)
 ├── db/                # Datos fuente en JSON (referencia base absoluta)
-├── bin/               # Scripts utilitarios windows/wsl
 ├── prompt/            # Instrucciones de sesión
 └── docs/              # Documentación del proyecto
     ├── architecture/  # Decisiones de diseño y patrones
@@ -48,7 +47,7 @@ uxm-alliance/
 
 ---
 
-## Sitio Web (./src/)
+## Sitio Web (root)
 
 1. **Bootstrap 6 por CDN obligatorio**: versión fijada `6.0.0-alpha.1` (jsDelivr) con `integrity` SRI y `crossorigin`. Sin npm ni paso de build: el sitio sigue siendo estático y funciona en GitHub Pages.
 2. `css/style.css` se carga **después** del CSS de Bootstrap para que la personalización prevalezca.
@@ -61,7 +60,7 @@ uxm-alliance/
 9. **Rutas**: las subpáginas están en `./pages/`; usa rutas **relativas** (`../css`, `../js`, `../index.html`). `js/app.js` las resuelve con `inPagesDir()`, `basePath()` y `pageUrl()`. Nunca rutas absolutas (`/pages/...`): rompen en sitios de proyecto de GitHub Pages.
 10. **Estados seleccionables**: `hover`, `focus-visible` y `active` usan fondo `#26b` con texto `#fff` (nunca texto oscuro sobre azul). Anillo de foco `#ffbf47`.
 11. **Enlace principal**: el navbar muestra **"Inicio UXM"** y apunta a `index.html` (o `../index.html` desde `./pages/`).
-12. **Hero principal**: a pantalla completa (`100dvh`) y ancho completo, con video de fondo `multimedia/video-particles-cyan.mp4` (`autoplay muted loop playsinline`). El `heroTitle` debe animarse simulando suavemente flotando en su posición en bucle; con `prefers-reduced-motion` se muestra estático y sin video, con imagen de fondo estatica.
+12. **Hero principal**: a pantalla completa (`100dvh`) y ancho completo, con video de fondo `media/video-particles-cyan.mp4` (`autoplay muted loop playsinline`). El `heroTitle` debe animarse simulando suavemente flotando en su posición en bucle; con `prefers-reduced-motion` se muestra estático y sin video, con imagen de fondo estatica.
 
 > Detalle completo en `docs/core/project-rules.md`.
 
@@ -69,7 +68,7 @@ uxm-alliance/
 
 ## Convenciones de Bloques-Script
 
-Cada archivo en `src/pages/section` DEBE cumplir:
+Cada archivo en `src/` DEBE cumplir:
 
 1. **Solo `<div>` + `<script>`**: No incluir `<html>`, `<head>`, `<body>`, ni `<style>`.
 2. **CSS inyectado vía JS**: Los estilos se crean dinámicamente desde el script usando un elemento `<style>` inyectado al DOM.
@@ -147,8 +146,8 @@ Formato conventional commits:
 
 | Archivo | Prefijo | Descripción |
 |---|---|---|
-| `src/pages/section/battle-survival-schedule.html` | `bs-` | Calendario semanal Battle Survival con counter en tiempo real |
-| `src/pages/section/alliance-duel-schedule.html` | `ad-` | Listados contraíbles de actividades diarias Duelo de Alianzas (7 días, hoy destacado) |
+| `src/battle-survival-schedule.html` | `bs-` | Calendario semanal Battle Survival con counter en tiempo real |
+| `src/alliance-duel-schedule.html` | `ad-` | Listados contraíbles de actividades diarias Duelo de Alianzas (7 días, hoy destacado) |
 
 ---
 
