@@ -38,7 +38,7 @@ Los datos en `db/*.json` son la fuente de verdad. Al actualizar un bloque-script
 | `pages/contacto.html` | Contacto |
 | `css/style.css` | Estilos del sitio (se carga después de Bootstrap) |
 | `js/i18n.js` | Textos por idioma (9 idiomas) |
-| `js/app.js` | Lógica del sitio (menú, idiomas, título animado) |
+| `js/app.js` | Lógica del sitio (menú, idiomas, video y título animado) |
 
 **Todas las subpáginas viven en `./pages/`.** Solo `index.html` permanece en la raíz.
 
@@ -101,9 +101,10 @@ El fondo del sitio es **gris suave** (`#e9ecef`, equivalente a `bs-gray-200`). P
 
 ### Menú lateral
 
-- Panel propio **anclado a la izquierda**: `position: fixed`, `left: 0`, `top: 0`, `height: 100dvh`, `width: 100%` y `min-width: 400px`.
+- Panel propio **anclado a la izquierda**: `position: fixed`, `left: 0`, `top: 0`, `height: 100dvh`, `width: 100%` y `max-width: 400px`. El ancho nunca supera 400 px en escritorio ni en móvil.
 - Fondo gris claro translúcido `rgba(248, 249, 250, .6)` (40 % de transparencia) sobre el fondo base `#e9ecef`, con texto gris oscuro `#212529`.
 - Entrada animada desde la izquierda: `transform: translateX(-100%)` → `translateX(0)` al añadir la clase `.is-open`.
+- La hamburguesa usa tres líneas sólidas de `3px` separadas `7px`. Al abrir, la tercera línea se alarga desde su origen hasta quedar a `10px` del borde derecho del panel; al cerrar recupera su ancho inicial. La animación nunca cambia el color ni forma un icono «X».
 - Backdrop propio (`#navBackdrop`) con `rgba(33, 37, 41, .35)`; cierre con `Escape`, con el backdrop o al pulsar un enlace.
 - Un único panel por página con `id="navPanel"`; el contenido lo genera `js/app.js` en `#navList`.
 - Enlaces **minimalistas**: sin fondo, borde ni aspecto de botón; en `hover`/`focus-visible` cambian a `#26b` y la página activa se marca con un punto azul (`.active::after`).
@@ -113,9 +114,16 @@ El fondo del sitio es **gris suave** (`#e9ecef`, equivalente a `bs-gray-200`). P
 ### Hero principal (página de inicio)
 
 - El hero de `index.html` ocupa el ancho completo y `min-height: 100dvh`; el contenido posterior se mantiene limitado a `960px` en `.home-body`.
-- Video de fondo `multimedia/video-particles-cyan.mp4` con `autoplay`, `muted`, `loop` y `playsinline`, cubriendo el hero con `object-fit: cover` y una capa de gradiente para legibilidad.
-- El `heroTitle` cruza la pantalla de izquierda a derecha en bucle (`uxm-title-sweep`, 14 s lineales) y lleva `border-bottom: 7px solid #26b`.
-- Con `prefers-reduced-motion: reduce` el título se muestra estático y el video se oculta.
+- Video de fondo `media/video-particles-cyan.mp4` con `autoplay`, `muted`, `loop` y `playsinline`, cubriendo el hero con `object-fit: cover` y una capa de gradiente para legibilidad. El MP4 usa H.264 y `yuv420p`; `media/video-particles-cyan-poster.jpg` queda como poster y fondo estático de respaldo.
+- `js/app.js` fuerza el silenciado antes de llamar a `video.play()` y captura el rechazo del navegador sin ocultar el poster.
+- El `heroTitle` usa la fuente local **Cinzel**, no tiene subrayado y aplica una sombra multicapa con relieve de piedra. Flota verticalmente `8px` en un bucle suave de 6 s sin abandonar su posición central.
+- Con `prefers-reduced-motion: reduce` el título se muestra estático, el video se pausa y se oculta, y permanece visible el poster estático.
+
+### Esquema de color y copyright
+
+- El sitio usa `color-scheme: light` y fondos claros explícitos. No aplica fondos negros implícitos; los fondos oscuros permitidos están definidos de forma expresa (hero, overlay y backdrop).
+- El selector de idioma usa siempre esquema claro, con superficie `#fff`, texto oscuro y borde `--line`.
+- El copyright corporativo es fijo en todos los idiomas: `© 2026 UXM – Under Xtreme Madness`.
 
 ### Estilos de selección (hover / focus / active)
 

@@ -3,14 +3,16 @@
 ## [261102] - 2026-11-02
 
 ### Added
-- Hero principal a pantalla completa (`100dvh`) con video de fondo `multimedia/video-particles-cyan.mp4` (`autoplay`, `muted`, `loop`, `playsinline`).
-- Animación CSS continua del `heroTitle` de izquierda a derecha, con `border-bottom: 7px solid #26b`.
-- Panel de navegación propio con backdrop y animación de entrada desde la derecha.
+- Hero principal a pantalla completa (`100dvh`) con video de fondo `media/video-particles-cyan.mp4` (`autoplay`, `muted`, `loop`, `playsinline`) y poster de respaldo.
+- Tipografía local Cinzel y sombra de piedra para el `heroTitle`, sin subrayado y con flotación vertical suave.
+- Panel de navegación propio con backdrop y animación de entrada desde la izquierda.
 
 ### Changed
-- El menú lateral deja de usar el `Drawer` de Bootstrap: ahora es un panel fijo a la izquierda, a pantalla completa (`100dvh`), con `min-width: 400px` y fondo gris claro translúcido `rgba(248, 249, 250, .6)`.
+- El menú lateral deja de usar el `Drawer` de Bootstrap: ahora es un panel fijo a la izquierda, a pantalla completa (`100dvh`), con ancho máximo de `400px` y fondo gris claro translúcido `rgba(248, 249, 250, .6)`.
+- La hamburguesa usa tres líneas de `3px` separadas `7px`; la tercera se alarga hasta quedar a `10px` del borde derecho durante la apertura.
 - Los enlaces del menú adoptan un estilo minimalista, sin aspecto de botón; la página activa se marca con un punto azul.
 - El cierre del menú se realiza con `Escape`, backdrop o al pulsar un enlace, devolviendo el foco al botón hamburguesa.
+- El selector de idioma queda fijado en esquema claro y el copyright corporativo es `© 2026 UXM – Under Xtreme Madness` en todos los idiomas.
 
 ### Removed
 - Elemento `<p id="welcome" class="welcome"></p>` de la página principal, su asignación en `js/app.js` y las claves `welcome` de `js/i18n.js`.
