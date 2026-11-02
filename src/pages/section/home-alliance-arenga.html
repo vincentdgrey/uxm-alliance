@@ -1,0 +1,82 @@
+<div class="ha-message" id="ha-message">
+  <h4>
+    Under the most crushing flames,
+    our terrible night grows dark,
+    monsters roam around me,
+    I will embrace my fear, I will do what is right...
+
+    I choose this kingdom, I choose this fight
+    in the service of the light of my Alliance!
+
+    For the silenced, for those who spent a week of blows, for the hopeless, for those who do not want to repeat this day,
+    they will hear my war drum approaching.
+
+    Brothers, do not falter, you are the strength!
+    You are the blood of fury that moves my soldiers,
+    my friend, my ally, for the Gatitos and Puppy!!!
+  </h4>
+</div>
+<div class="ha-author" id="ha-author">VincentÐGяey</div>
+<script>
+(function () {
+  "use strict";
+
+  var CSS = ""
+    + ".ha-message { font-family: Roboto, Arial; font-weight: 300; text-align: center; color: rgba(33,33,33,1); font-size: 13pt; line-height: 1.6; }"
+    + ".ha-message h4 { margin: 0; font-family: inherit; font-weight: inherit; text-align: inherit; color: inherit; font-size: inherit; line-height: inherit; white-space: pre-line; }"
+    + ".ha-author { margin: 15px 0 0 70%; padding: 15px 10px 0 0; border-bottom: 2px solid #ccc; font-family: Roboto, Arial; font-weight: 300; font-style: italic; text-align: right; color: #aaa; font-size: 11pt; line-height: 1.6; }";
+
+  var styleEl = document.createElement("style");
+  styleEl.type = "text/css";
+  if (styleEl.styleSheet) {
+    styleEl.styleSheet.cssText = CSS;
+  } else {
+    styleEl.appendChild(document.createTextNode(CSS));
+  }
+  (document.head || document.getElementsByTagName("head")[0]).appendChild(styleEl);
+
+  var I18N = {
+    es: {
+      message: "Bajo las llamas más aplastantes,\nque oscurecen nuestra noche temible,\nmonstruos a mi alrededor merodean.\nAbrazaré mi miedo, haré lo correcto...\n\nElijo este reino, elijo esta lucha!\nAbrazaré mi destino porque quiero creer...\nAl servicio de la luz de mi Alianza\ntendré en mí la esperanza.\n\nPor los silenciados,\npor quienes pasaron una semana de golpes,\npor los heridos del fuego,\npor los que no quieren repetir este día,\nescultarán mi golpe de tambor acercándose.\n\nHermanos, no decaigan, ustedes son la fuerza!\nSon la sangre de furia que mueve mis soldados,\ntú, mi amigo, mi aliado,\npor los Gatitos y Puppy,\nsentiran el hierro de mi espada!!!"
+    },
+    en: {
+      message: "Under the most crushing flames,\nthat darken our terrible night,\nmonsters roam around me.\nI will embrace my fear, I will do what is right...\n\nI choose this kingdom, I choose this fight!\nI will embrace my destiny because I want to believe...\nIn the service of the light of my Alliance\nI will carry hope within me.\n\nFor the silenced,\nfor those who spent a week of blows,\nfor those wounded by fire,\nfor those who do not want to repeat this day,\nthey will hear my war drum approaching.\n\nBrothers, do not falter, you are the strength!\nYou are the blood of fury that moves my soldiers,\nyou, my friend, my ally,\nfor the Gatitos and Puppy,\nwill feel the iron of my sword!!!"
+    },
+    pt: {
+      message: "Sob as chamas mais esmagadoras,\nque escurecem a nossa noite terrível,\nmonstros vagam ao meu redor.\nVou abraçar meu medo, vou fazer o que é certo...\n\nEu escolho este reino, eu escolho esta luta!\nVou abraçar meu destino porque quero acreditar...\nA serviço da luz da minha Aliança,\ncarregarei a esperança dentro de mim.\n\nPelos silenciados,\npor aqueles que passaram uma semana de golpes,\npelos feridos pelo fogo,\npor quem não quer repetir este dia,\nouvirão meu toque de tambor se aproximando.\n\nIrmãos, não desanimem, vocês são a força!\nVocês são o sangue de fúria que move meus soldados,\nvocê, meu amigo, meu aliado,\npelos Gatitos e Puppy,\nsentirão o ferro da minha espada!!!"
+    },
+    it: {
+      message: "Sotto le fiamme più schiaccianti,\nche rendono scura la nostra notte terribile,\nmostri vagano intorno a me.\nAbbraccerò la mia paura, farò ciò che è giusto...\n\nScelgo questo regno, scelgo questa lotta!\nAbbraccerò il mio destino perché voglio credere...\nAl servizio della luce della mia Alleanza,\nporterò con me la speranza.\n\nPer i silenziati,\nper coloro che hanno trascorso una settimana di colpi,\nper i feriti dal fuoco,\nper chi non vuole ripetere questo giorno,\nudiranno il mio tamburo avvicinarsi.\n\nFratelli, non cedete, siete la forza!\nSiete il sangue di furia che muove i miei soldati,\ntu, mio amico, mio alleato,\nper i Gatitos e Puppy,\nsentiranno il ferro della mia spada!!!"
+    },
+    tr: {
+      message: "En ezici baskılar,\nterrible gecemizi karartan alevler,\nçevremde canavarlar dolaşıyor.\nKorkumu kucaklayacağım, doğru olanı yapacağım...\n\nBu krallığı seçiyorum, bu mücadeleyi seçiyorum!\nİnandığım için kaderimi kucaklayacağım...\nİttifakımın ışığı için hizmet ederken\niçimde umudu taşıyacağım.\n\nSusturulanlar için,\nbir hafta boyunca darbe alanlar için,\nateşten yaralananlar için,\nbu günü tekrar etmek istemeyenler için,\nnabızımın yaklaştığını duyacaklar.\n\nKardeşler, çaresiz olmayın, siz güçsünüz!\nSiz benim askerlerimi hareket ettiren öfke kanısınız,\nsen, dostum, müttefikim,\nGatitos ve Puppy için,\nkılıcımın demirini hissedecekler!!!"
+    },
+    fr: {
+      message: "Sous les flammes les plus écrasantes,\nqui assombrissent notre nuit terrible,\ndes monstres rôdent autour de moi.\nJ embrace ma peur, je ferai ce qui est juste...\n\nJe choisis ce royaume, je choisis ce combat !\nJ embrace mon destin parce que je veux croire...\nAu service de la lumière de mon Alliance,\nje porterai l'espérance en moi.\n\nPour les silenced,\npour ceux qui ont passé une semaine de coups,\npour les blessés par le feu,\npour ceux qui ne veulent pas répéter ce jour,\nils entendront ma caisse de guerre approcher.\n\nFrères, ne faiblissez pas, vous êtes la force !\nVous êtes le sang de la fureur qui anime mes soldats,\ntoi, mon ami, mon allié,\npour les Gatitos et Puppy,\nsentiront le fer de mon épée !!!"
+    },
+    zh: {
+      message: "在最猛烈的火焰中，\n令我们可怕的夜晚变得黑暗，\n怪物在我周围徘徊。\n我会拥抱恐惧，会做正确的事……\n\n我选择这个王国，我选择这场战斗！\n因为心怀信念，我会拥抱自己的命运……\n为我的联盟之光效力时，\n我心中将怀抱希望。\n\n为了那些被沉默的人，\n为了那些挨打一周的人，\n为了那些被火焰灼伤的人，\n为了那些不愿再重复这一天的人，\n他们将听到我的战鼓声渐渐逼近。\n\n兄弟们，不要气馁，你们就是力量！\n你们是驱动我士兵的怒火之血，\n你，我的朋友，我的盟友，\n为了 Gatitos 和 Puppy，\n他们将感受我剑锋的钢铁！！！"
+    },
+    ja: {
+      message: "最も押し潰すような炎の下、\n恐怖の夜を覆い隠す炎に、\n怪物が私の周囲をさまよう。\n私は恐怖を受け入れ、正しく行く……\n\n私はこの王国を選び、この戦いを選ぶ！\n信じるから、私は運命を受け入れる……\n我が同盟の光に奉仕しながら、\n私は、希望を胸に抱く。\n\n沈黙された人のために、\n一週間も打たれ続けた人のために、\n火傷した人のために、\nこの日を繰り返したくない人のために、\n彼らは私の戦鼓が近づくのを見るだろう。\n\n兄弟たち、落胆するな、お前たちが力だ！\nお前たちは私の兵を動かす怒りの血であり、\nお前、私の友よ、盟友よ、\nGatitos と Puppy のために、\n私の剣の鉄の重さを感じるだろう！！！"
+    }
+  };
+  var FALLBACK_LANG = "en";
+
+  function resolveLang() {
+    var m = /[?&]lang=([a-zA-Z]{2})/.exec(window.location.search);
+    if (m && I18N[m[1].toLowerCase()]) return m[1].toLowerCase();
+    var base = ((navigator.language || navigator.userLanguage || "").toLowerCase().split("-"))[0];
+    return I18N[base] ? base : FALLBACK_LANG;
+  }
+
+  var LANG = resolveLang();
+  var T = I18N[LANG];
+  var root = document.getElementById("ha-message");
+  var author = document.getElementById("ha-author");
+
+  root.setAttribute("lang", LANG);
+  root.getElementsByTagName("h4")[0].textContent = T.message;
+  author.setAttribute("lang", LANG);
+})();
+</script>

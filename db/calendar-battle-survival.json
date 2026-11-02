@@ -1,0 +1,50 @@
+[
+  { "codet": "0.00", "noday": 0, "time_init": "00:00:00", "day": "Sun", "codebs": "BUILD" },
+  { "codet": "0.04", "noday": 0, "time_init": "04:00:00", "day": "Sun", "codebs": "SOLDIER" },
+  { "codet": "0.08", "noday": 0, "time_init": "08:00:00", "day": "Sun", "codebs": "TECH" },
+  { "codet": "0.12", "noday": 0, "time_init": "12:00:00", "day": "Sun", "codebs": "RAVEN" },
+  { "codet": "0.16", "noday": 0, "time_init": "16:00:00", "day": "Sun", "codebs": "HEROE" },
+  { "codet": "0.20", "noday": 0, "time_init": "20:00:00", "day": "Sun", "codebs": "BUILD" },
+
+  { "codet": "1.00", "noday": 1, "time_init": "00:00:00", "day": "Mon", "codebs": "HEROE" },
+  { "codet": "1.04", "noday": 1, "time_init": "04:00:00", "day": "Mon", "codebs": "BUILD" },
+  { "codet": "1.08", "noday": 1, "time_init": "08:00:00", "day": "Mon", "codebs": "SOLDIER" },
+  { "codet": "1.12", "noday": 1, "time_init": "12:00:00", "day": "Mon", "codebs": "TECH" },
+  { "codet": "1.16", "noday": 1, "time_init": "16:00:00", "day": "Mon", "codebs": "RAVEN" },
+  { "codet": "1.20", "noday": 1, "time_init": "20:00:00", "day": "Mon", "codebs": "HEROE" },
+
+  { "codet": "2.00", "noday": 2, "time_init": "00:00:00", "day": "Tue", "codebs": "BUILD" },
+  { "codet": "2.04", "noday": 2, "time_init": "04:00:00", "day": "Tue", "codebs": "SOLDIER" },
+  { "codet": "2.08", "noday": 2, "time_init": "08:00:00", "day": "Tue", "codebs": "TECH" },
+  { "codet": "2.12", "noday": 2, "time_init": "12:00:00", "day": "Tue", "codebs": "RAVEN" },
+  { "codet": "2.16", "noday": 2, "time_init": "16:00:00", "day": "Tue", "codebs": "HEROE" },
+  { "codet": "2.20", "noday": 2, "time_init": "20:00:00", "day": "Tue", "codebs": "BUILD" },
+
+  { "codet": "3.00", "noday": 3, "time_init": "00:00:00", "day": "Wed", "codebs": "SOLDIER" },
+  { "codet": "3.04", "noday": 3, "time_init": "04:00:00", "day": "Wed", "codebs": "TECH" },
+  { "codet": "3.08", "noday": 3, "time_init": "08:00:00", "day": "Wed", "codebs": "RAVEN" },
+  { "codet": "3.12", "noday": 3, "time_init": "12:00:00", "day": "Wed", "codebs": "HEROE" },
+  { "codet": "3.16", "noday": 3, "time_init": "16:00:00", "day": "Wed", "codebs": "BUILD" },
+  { "codet": "3.20", "noday": 3, "time_init": "20:00:00", "day": "Wed", "codebs": "SOLDIER" },
+
+  { "codet": "4.00", "noday": 4, "time_init": "00:00:00", "day": "Thu", "codebs": "TECH" },
+  { "codet": "4.04", "noday": 4, "time_init": "04:00:00", "day": "Thu", "codebs": "RAVEN" },
+  { "codet": "4.08", "noday": 4, "time_init": "08:00:00", "day": "Thu", "codebs": "HEROE" },
+  { "codet": "4.12", "noday": 4, "time_init": "12:00:00", "day": "Thu", "codebs": "BUILD" },
+  { "codet": "4.16", "noday": 4, "time_init": "16:00:00", "day": "Thu", "codebs": "SOLDIER" },
+  { "codet": "4.20", "noday": 4, "time_init": "20:00:00", "day": "Thu", "codebs": "TECH" },
+
+  { "codet": "5.00", "noday": 5, "time_init": "00:00:00", "day": "Fri", "codebs": "RAVEN" },
+  { "codet": "5.04", "noday": 5, "time_init": "04:00:00", "day": "Fri", "codebs": "HEROE" },
+  { "codet": "5.08", "noday": 5, "time_init": "08:00:00", "day": "Fri", "codebs": "BUILD" },
+  { "codet": "5.12", "noday": 5, "time_init": "12:00:00", "day": "Fri", "codebs": "SOLDIER" },
+  { "codet": "5.16", "noday": 5, "time_init": "16:00:00", "day": "Fri", "codebs": "TECH" },
+  { "codet": "5.20", "noday": 5, "time_init": "20:00:00", "day": "Fri", "codebs": "RAVEN" },
+
+  { "codet": "6.00", "noday": 6, "time_init": "00:00:00", "day": "Sat", "codebs": "HEROE" },
+  { "codet": "6.04", "noday": 6, "time_init": "04:00:00", "day": "Sat", "codebs": "BUILD" },
+  { "codet": "6.08", "noday": 6, "time_init": "08:00:00", "day": "Sat", "codebs": "SOLDIER" },
+  { "codet": "6.12", "noday": 6, "time_init": "12:00:00", "day": "Sat", "codebs": "TECH" },
+  { "codet": "6.16", "noday": 6, "time_init": "16:00:00", "day": "Sat", "codebs": "RAVEN" },
+  { "codet": "6.20", "noday": 6, "time_init": "20:00:00", "day": "Sat", "codebs": "HEROE" }
+]

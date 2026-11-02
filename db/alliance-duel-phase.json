@@ -1,0 +1,8 @@
+[
+  { "phase": "P01", "desc":"Phase 1 : Enhance Raven" },
+  { "phase": "P02", "desc":"Phase 2 : Territory Development" },
+  { "phase": "P03", "desc":"Phase 3 : Tech Research" },
+  { "phase": "P04", "desc":"Phase 4 : Hero Growth" },
+  { "phase": "P05", "desc":"Phase 5 : War Preparation" },
+  { "phase": "P06", "desc":"Phase 6 : Raid the Enemy" }
+]

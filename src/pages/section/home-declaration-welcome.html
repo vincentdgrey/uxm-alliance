@@ -1,0 +1,67 @@
+<div class="hw-message" id="hw-message">
+  <h4>
+    We are an alliance in the Last Asylum Plague game, present on server 277 with a friendly environment, and we grow with every hard battle.
+    Our group of friends works daily to improve, we laugh at everything we can and we make mistakes, we strive with events at our level so that everyone earns rewards, and in the difficult ones (to the death!) after a hard fight we laugh off whether we win or not.
+    We enjoy epic battles and remember the last 30 minutes of extreme madness, giving everything until the end.
+  </h4>
+</div>
+<script>
+(function () {
+  "use strict";
+
+  var CSS = ""
+    + ".hw-message { font-family: Roboto, Arial; font-weight: 300; text-align: center; color: rgba(33,33,33,1); font-size: 13pt; line-height: 1.6; }"
+    + ".hw-message h4 { margin: 0; font-family: inherit; font-weight: inherit; text-align: inherit; color: inherit; font-size: inherit; line-height: inherit; }";
+
+  var styleEl = document.createElement("style");
+  styleEl.type = "text/css";
+  if (styleEl.styleSheet) {
+    styleEl.styleSheet.cssText = CSS;
+  } else {
+    styleEl.appendChild(document.createTextNode(CSS));
+  }
+  (document.head || document.getElementsByTagName("head")[0]).appendChild(styleEl);
+
+  var I18N = {
+    es: {
+      message: "Somos una alianza del juego Last Asylum Plague, presentes en el servidor 277 con un entorno amigable y crecemos con cada dura batalla. Nuestro grupo de amigos trabaja diariamente en mejorar, nos reímos de todo lo que podemos y cometemos errores, nos esforzamos con eventos a nuestro nivel para que todos adquieran recompensas, y en los difíciles (a morir!) después de una ardua pelea nos reímos de si vencemos o no. Disfrutamos de batallas épicas y recordamos los últimos 30 minutos de extrema locura, dio todo hasta el final."
+    },
+    en: {
+      message: "We are an alliance in the Last Asylum Plague game, present on server 277 with a friendly environment, and we grow with every hard battle. Our group of friends works daily to improve, we laugh at everything we can and we make mistakes, we strive with events at our level so that everyone earns rewards, and in the difficult ones (to the death!) after a hard fight we laugh off whether we win or not. We enjoy epic battles and remember the last 30 minutes of extreme madness, giving everything until the end."
+    },
+    pt: {
+      message: "Somos uma aliança no jogo Last Asylum Plague, presente no servidor 277 com um ambiente amigável e crescemos a cada batalha difícil. Nosso grupo de amigos trabalha diariamente para melhorar, rimos de tudo o que podemos e cometemos erros, nos esforçamos com eventos no nosso nível para que todos ganuem recompensas e nos desafios (até a morte!) depois de uma batalha difícil rimos de vencermos ou não. Desfrutamos de batalhas épicas e lembramos dos últimos 30 minutos de loucura extrema, dando tudo até o final."
+    },
+    it: {
+      message: "Siamo un'alleanza nel gioco Last Asylum Plague, presenti sul server 277 con un ambiente amichevole e cresciamo con ogni battaglia difficile. Il nostro gruppo di amici lavora ogni giorno per migliorare, ridiamo di tutto quello che possiamo e commettiamo errori, ci impegniamo con eventi al nostro livello perché tutti ottengano ricompense e nelle sfide (fino alla morte!) dopo una battaglia dura ridiamo di vincere o no. Godiamo di battaglie epiche e ricordiamo gli ultimi 30 minuti di follia estrema, dando tutto fino alla fine."
+    },
+    tr: {
+      message: "Last Asylum Plague oyununda, 277 numaralı sunucuda dostça bir ortamla bulunan ve her zorlu savaşta büyüyen bir ittifakız. Dostlarımızdan oluşan grubumuz her gün gelişmek için çalışıyor, yapabileceğimiz her şeye gülüyor ve hata yapıyoruz, herkesin ödül kazanabilmesi için kendi seviyemize uygun etkinlikler düzenlemeye çalışıyoruz ve zorlu olanlarda (ölümüne!) zorlu bir mücareden sonra kazanıp kazanmadığımıza gülüyoruz. Destansı savaşların tadını çıkarıyor ve çılgınlığın son 30 dakikasını hatırlıyoruz, sonuna kadar her şeyimizi veriyoruz."
+    },
+    fr: {
+      message: "Nous sommes une alliance dans le jeu Last Asylum Plague, présents sur le serveur 277 dans un environnement convivial, et nous grandissons à chaque bataille difficile. Notre groupe d'amis travaille quotidiennement pour s'améliorer, nous rions de tout ce que nous pouvons et nous faisons des erreurs, nous nous efforçons avec des événements à notre niveau pour que chacun obtienne des récompenses et dans les plus difficiles (jusqu'à la mort !) après un rude combat, nous rions de savoir si nous gagnons ou non. Nous profitons de batailles épiques et nous nous souvenons des 30 dernières minutes de folie extrême, donnant tout jusqu'au bout."
+    },
+    zh: {
+      message: "我们是《Last Asylum Plague》游戏中的联盟，位于277服，拥有友好的环境，并在每一场艰难的战斗中不断成长。我们的朋友团队每天都在努力提升自己，我们为一切可笑之事发笑，也难免犯错；我们按照自身水平组织活动，让每个人都能获得奖励。在最艰难的活动（生死之战！）中，经过苦战后，我们会笑着看待胜利或失败。我们享受史诗般的战斗，也珍惜最后30分钟的疯狂，并战斗到最后一刻。"
+    },
+    ja: {
+      message: "Last Asylum Plague ゲームで、277サーバーにいる Friendly な環境の alliancesです。每一是一场厳しい戦いごとに成長しています。友人组成的グループは毎日改善に努め、できる限りのことには笑い、失敗もすることを认めた上で、自分たちのレベルに合ったイベント positives组织实施して全員が報酬を得られるようにし、最も厳しいもの（命懸け！）では、厳しい戦いの後に勝ったかどうかdismissして笑っています。史诗的な戦い Whole を楽しみ、最後の30分の狂気を記憶し、最後まで全力を尽くします。"
+    }
+  };
+  var FALLBACK_LANG = "en";
+
+  function resolveLang() {
+    var m = /[?&]lang=([a-zA-Z]{2})/.exec(window.location.search);
+    if (m && I18N[m[1].toLowerCase()]) return m[1].toLowerCase();
+    var base = ((navigator.language || navigator.userLanguage || "").toLowerCase().split("-"))[0];
+    return I18N[base] ? base : FALLBACK_LANG;
+  }
+
+  var LANG = resolveLang();
+  var T = I18N[LANG];
+  var root = document.getElementById("hw-message");
+
+  root.setAttribute("lang", LANG);
+  root.getElementsByTagName("h4")[0].textContent = T.message;
+})();
+</script>

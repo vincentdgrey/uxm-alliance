@@ -1,0 +1,7 @@
+[
+  { "event":"AD", "es":"Duelo de Alianza", "en":"Alliance Duel" },
+  { "event":"DY", "es":"Diario", "en":"Daily" },
+  { "event":"KVK", "es":"Guerra Reinos", "en":"Kingdoms War" },
+  { "event":"BS", "es":"Batalla Supervivencia", "en":"Battle Survival" },
+  { "event":"EQ", "es":"Mejora de Equipo", "en":"Equipment Upgrade" }
+]

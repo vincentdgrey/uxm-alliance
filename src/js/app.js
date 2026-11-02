@@ -1,0 +1,248 @@
+(function () {
+  "use strict";
+
+  /* ---------- Configuración (edita aquí) ---------- */
+  var SITE    = "";
+  var YOUTUBE = "https://www.youtube.com/@VincentDantesGrey/videos";
+  var DEFAULT_LANG = "en";
+
+  var BONUSES = [
+    { name: "Alliance Experience Gift", value: "Lv.12" },
+    { name: "Fast Build 8",             value: "+20%" },
+    { name: "Research Speedup 5",       value: "+12.5%", noteKey: "In Progress" },
+    { name: "Crafting Speedup 4",       value: "+8%" },
+    { name: "Fast Training 2",          value: "+1%" },
+    { name: "Rally HP/ATK/DEF 2",       value: "+2%" },
+    { name: "Shard Exchange Bank",      value: "Active", noteKey: "" }
+  ];
+
+  /* ---------- Páginas del menú ---------- */
+  var PAGES = [
+    { file: "actividades-diarias.html", key: "navDaily",  titleKey: "pageDailyTitle" },
+    { file: "normas-uxm.html",          key: "navRules",  titleKey: "pageRulesTitle" },
+    { file: "video-tutoriales.html",    key: "navTutorials", titleKey: "pageTutorialsTitle" },
+    { file: "estrategia.html",          key: "navStrategy", titleKey: "pageStrategyTitle" },
+    { file: "contacto.html",            key: "navContact", titleKey: "pageContactTitle" }
+  ];
+
+  /* ---------- Utilidades ---------- */
+  function byId(id) { return document.getElementById(id); }
+
+  function currentFile() {
+    var path = window.location.pathname || "";
+    var file = path.substring(path.lastIndexOf("/") + 1);
+    return file || "index.html";
+  }
+
+  /* Las subpáginas viven en ./pages: desde allí se sube un nivel */
+  function inPagesDir() {
+    var path = window.location.pathname || "";
+    return path.indexOf("/pages/") >= 0 || /(^|\/)pages\//.test(path);
+  }
+
+  function basePath() {
+    return inPagesDir() ? "../" : "";
+  }
+
+  function pageUrl(file) {
+    return inPagesDir() ? file : "pages/" + file;
+  }
+
+  function withLang(href, lang) {
+    return href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=" + lang;
+  }
+
+  function resolveLang() {
+    var m = /[?&]lang=([a-zA-Z]{2})/.exec(window.location.search);
+    if (m && window.I18N[m[1].toLowerCase()]) return m[1].toLowerCase();
+    var base = ((navigator.language || navigator.userLanguage || "").toLowerCase().split("-"))[0];
+    return window.I18N[base] ? base : DEFAULT_LANG;
+  }
+
+  var LANG = resolveLang();
+  var T = window.I18N[LANG];
+
+  document.documentElement.lang = LANG;
+  document.documentElement.setAttribute("data-lang", LANG);
+
+  /* ---------- Textos generales ---------- */
+  function setText(id, text) {
+    var el = byId(id);
+    if (el) el.textContent = text;
+  }
+
+  setText("join", T.join);
+  setText("bonusTitle", T.bonuses);
+  setText("copyright", T.copyright);
+  setText("ytLabel", T.youtube);
+
+  /* ---------- Texto propio de cada página ---------- */
+  function applyPageContent() {
+    var here = currentFile();
+    var lead = byId("pageLead");
+    for (var i = 0; i < PAGES.length; i++) {
+      if (PAGES[i].file !== here) continue;
+      var title = T[PAGES[i].titleKey];
+      var leadKey = PAGES[i].titleKey.replace("Title", "Lead");
+      if (lead) lead.textContent = T[leadKey] || "";
+      if (title) {
+        var h1 = byId("heroTitle");
+        if (h1) h1.textContent = title;
+        document.title = title + " – UXM";
+      }
+      return;
+    }
+  }
+
+  var bonusList = byId("bonuses");
+  if (bonusList) {
+    BONUSES.forEach(function (b) {
+      var li = document.createElement("li");
+      li.textContent = b.name + " — " + b.value + (b.noteKey ? " (" + b.noteKey + ")" : "");
+      bonusList.appendChild(li);
+    });
+  }
+
+  /* ---------- Menú lateral propio ---------- */
+  var navPanel = byId("navPanel");
+  var navList = byId("navList");
+  var navToggle = byId("navToggle");
+  var navBackdrop = byId("navBackdrop");
+  var homeLink = byId("homeLink");
+
+  function buildNav() {
+    if (!navList) return;
+    navList.innerHTML = "";
+    var here = currentFile();
+    PAGES.forEach(function (page) {
+      var li = document.createElement("li");
+      li.className = "nav-item";
+      var a = document.createElement("a");
+      a.className = "nav-link";
+      a.href = withLang(pageUrl(page.file), LANG);
+      a.textContent = T[page.key];
+      if (page.file === here) {
+        a.classList.add("active");
+        a.setAttribute("aria-current", "page");
+      }
+      li.appendChild(a);
+      navList.appendChild(li);
+    });
+    if (navToggle) navToggle.setAttribute("aria-label", T.menu);
+    if (navPanel) {
+      var panelTitle = byId("navPanelTitle");
+      if (panelTitle) panelTitle.textContent = T.menu;
+    }
+    if (homeLink) homeLink.href = withLang(basePath() + "index.html", LANG);
+  }
+
+  /* Estado visual del icono hamburguesa mientras el menú está abierto */
+  function syncNavState() {
+    var open = navPanel && navPanel.classList.contains("is-open");
+    document.body.classList.toggle("nav-open", open);
+  }
+
+  function openNav() {
+    if (!navPanel) return;
+    navPanel.hidden = false;
+    if (navBackdrop) navBackdrop.hidden = false;
+    /* Forzar el reflow para que la transición se aplique desde el estado inicial */
+    void navPanel.offsetWidth;
+    navPanel.classList.add("is-open");
+    if (navBackdrop) navBackdrop.classList.add("is-open");
+    if (navToggle) navToggle.setAttribute("aria-expanded", "true");
+    document.body.classList.add("nav-open");
+  }
+
+  function closeNav() {
+    if (!navPanel) return;
+    navPanel.classList.remove("is-open");
+    if (navBackdrop) navBackdrop.classList.remove("is-open");
+    if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("nav-open");
+    window.setTimeout(function () {
+      if (navPanel.classList.contains("is-open")) return;
+      navPanel.hidden = true;
+      if (navBackdrop) navBackdrop.hidden = true;
+    }, 280);
+  }
+
+  if (navToggle) {
+    navToggle.addEventListener("click", function () {
+      var open = navPanel && navPanel.classList.contains("is-open");
+      if (open) closeNav();
+      else openNav();
+    });
+  }
+
+  if (navBackdrop) {
+    navBackdrop.addEventListener("click", closeNav);
+  }
+
+  if (navPanel) {
+    /* Cierre al navegar dentro del menú */
+    navPanel.addEventListener("click", function (e) {
+      var link = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+      if (link) closeNav();
+    });
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && navPanel && navPanel.classList.contains("is-open")) {
+      closeNav();
+      if (navToggle) navToggle.focus();
+    }
+  });
+
+  /* ---------- Selector de idiomas (Menu desplegable de Bootstrap) ---------- */
+  var langsBox = byId("langs");
+  function buildLangs() {
+    if (!langsBox) return;
+    langsBox.innerHTML = "";
+
+    var label = document.createElement("span");
+    label.className = "lang-label";
+    label.id = "langLabel";
+    label.textContent = T.language;
+    langsBox.appendChild(label);
+
+    var toggle = document.createElement("button");
+    toggle.id = "langToggle";
+    toggle.type = "button";
+    toggle.className = "btn-outline lang-toggle";
+    toggle.setAttribute("data-bs-toggle", "menu");
+    toggle.setAttribute("data-bs-placement", "top-end");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-haspopup", "true");
+    toggle.setAttribute("aria-labelledby", "langLabel langToggle");
+    toggle.setAttribute("lang", LANG);
+    toggle.textContent = window.I18N[LANG].name;
+    langsBox.appendChild(toggle);
+
+    var menu = document.createElement("div");
+    menu.className = "menu lang-menu";
+    menu.setAttribute("aria-labelledby", "langToggle");
+
+    Object.keys(window.I18N).forEach(function (code) {
+      var item = document.createElement("button");
+      item.type = "button";
+      item.className = "menu-item" + (code === LANG ? " selected" : "");
+      item.setAttribute("lang", code);
+      item.setAttribute("data-lang", code);
+      item.textContent = window.I18N[code].name;
+      if (code === LANG) item.setAttribute("aria-current", "true");
+      item.addEventListener("click", function () {
+        window.location.href = withLang(currentFile(), code);
+      });
+      menu.appendChild(item);
+    });
+
+    langsBox.appendChild(menu);
+  }
+
+  /* ---------- Init ---------- */
+  buildNav();
+  buildLangs();
+  applyPageContent();
+  syncNavState();
+})();
