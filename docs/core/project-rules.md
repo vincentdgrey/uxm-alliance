@@ -64,6 +64,7 @@ Reglas:
 
 1. La versión está **fijada** (`6.0.0-alpha.1`, versión estable oficial de Bootstrap 6). No usar rangos como `@6` para evitar cambios no controlados.
 2. Los atributos `integrity` (SRI) son obligatorios: si se actualiza la versión, deben recalcularse.
+
 3. `css/style.css` se carga **después** del CSS de Bootstrap para que la personalización del sitio prevalezca.
 4. El sitio es HTML/CSS/JS estático: funciona en **GitHub Pages** sin configuración adicional. Requiere conexión a internet para cargar el CDN.
 
@@ -87,6 +88,9 @@ Reglas:
 | `--muted` | `#495057` | Texto secundario |
 | `--hot` | `#df1b1b` | Acento (marca UXM, YouTube) |
 | `--cyan` | `#0d6efd` | Estados de foco e interacción |
+| `--scarlet` | `#ff2400` | Acento escarlata del menú y del título principal |
+| `--gray-light` | `#e9ecef` | Icono y marca sobre el video de la portada |
+| `--concrete` | `#b8b8b2` | Texto principal del título sobre el video |
 
 El fondo del sitio es **gris suave** (`#e9ecef`, equivalente a `bs-gray-200`). Por ese fondo claro, el texto del sitio usa la paleta oscura de Bootstrap (`bs-gray-900` / `bs-gray-700`) y el título del hero aplica sombra clara y oscura para conservar el contraste.
 
@@ -96,27 +100,30 @@ El fondo del sitio es **gris suave** (`#e9ecef`, equivalente a `bs-gray-200`). P
 - El texto usa el **color estándar** del esquema claro de Bootstrap (`--navbar-color: var(--fg-2)`, `--navbar-brand-color: var(--fg-body)`).
 - Transparente, superpuesto (`position: absolute`), sin fondo ni borde.
 - `pointer-events: none` en el navbar y en su `.container-fluid` para no bloquear el Home; solo el botón hamburguesa, la marca y el panel de navegación son interactivos.
-- El botón hamburguesa **no tiene borde** y su animación solo cambia la forma de las barras (nunca el color).
+- El botón hamburguesa **no tiene borde**; sus tres líneas de `3px` separadas `7px` usan gris claro `#e9ecef` en la portada y `--text` en las subpáginas. Durante la apertura cambian a rojo escarlata `#ff2400`.
 - No se muestra ningún icono "X": el menú se cierra con backdrop, `Escape` o al pulsar un enlace.
+- En `index.html`, la marca **"Inicio UXM"** usa gris claro `#e9ecef` y una sombra oscura para mantener el contraste sobre el video.
 
 ### Menú lateral
 
 - Panel propio **anclado a la izquierda**: `position: fixed`, `left: 0`, `top: 0`, `height: 100dvh`, `width: 100%` y `max-width: 400px`. El ancho nunca supera 400 px en escritorio ni en móvil.
 - Fondo gris claro translúcido `rgba(248, 249, 250, .6)` (40 % de transparencia) sobre el fondo base `#e9ecef`, con texto gris oscuro `#212529`.
 - Entrada animada desde la izquierda: `transform: translateX(-100%)` → `translateX(0)` al añadir la clase `.is-open`.
-- La hamburguesa usa tres líneas sólidas de `3px` separadas `7px`. Al abrir, la tercera línea se alarga desde su origen hasta quedar a `10px` del borde derecho del panel; al cerrar recupera su ancho inicial. La animación nunca cambia el color ni forma un icono «X».
+- La hamburguesa usa tres líneas sólidas de `3px` separadas `7px`: gris claro `#e9ecef` en la portada y `--text` en las subpáginas. Al abrir, las tres cambian a rojo escarlata `#ff2400` y la tercera se alarga desde su origen hasta quedar a `10px` del borde derecho del panel; al cerrar recuperan su color y ancho inicial. La animación nunca forma un icono «X».
 - Backdrop propio (`#navBackdrop`) con `rgba(33, 37, 41, .35)`; cierre con `Escape`, con el backdrop o al pulsar un enlace.
 - Un único panel por página con `id="navPanel"`; el contenido lo genera `js/app.js` en `#navList`.
-- Enlaces **minimalistas**: sin fondo, borde ni aspecto de botón; en `hover`/`focus-visible` cambian a `#26b` y la página activa se marca con un punto azul (`.active::after`).
+- Enlaces **minimalistas**: ocupan todo el ancho disponible, sin borde ni aspecto de botón; en `hover`/`focus-visible` se rellenan progresivamente de rojo escarlata `#ff2400` de izquierda a derecha, con texto blanco, y la página activa se marca con un punto azul (`.active::after`).
 - Enlaces generados con `?lang=` para conservar el idioma: `actividades-diarias.html`, `normas-uxm.html`, `video-tutoriales.html`, `estrategia.html`, `contacto.html` (con prefijo `pages/` cuando se viewing desde la raíz).
 - La página activa se marca con `aria-current="page"` y la clase `.active`.
 
 ### Hero principal (página de inicio)
 
-- El hero de `index.html` ocupa el ancho completo y `min-height: 100dvh`; el contenido posterior se mantiene limitado a `960px` en `.home-body`.
+- El hero de `index.html` ocupa el ancho completo y `min-height: calc(100dvh - 20px)`; al final quedan visibles 20 px del contenido posterior para señalar que la página continúa. El contenido siguiente se mantiene limitado a `960px` en `.home-body`.
 - Video de fondo `media/video-particles-cyan.mp4` con `autoplay`, `muted`, `loop` y `playsinline`, cubriendo el hero con `object-fit: cover` y una capa de gradiente para legibilidad. El MP4 usa H.264 y `yuv420p`; `media/video-particles-cyan-poster.jpg` queda como poster y fondo estático de respaldo.
 - `js/app.js` fuerza el silenciado antes de llamar a `video.play()` y captura el rechazo del navegador sin ocultar el poster.
-- El `heroTitle` usa la fuente local **Cinzel**, no tiene subrayado y aplica una sombra multicapa con relieve de piedra. Flota verticalmente `8px` en un bucle suave de 6 s sin abandonar su posición central.
+- El `heroTitle` usa la fuente local **Cinzel**, no tiene subrayado y aplica una sombra multicapa con relieve de piedra. Flota verticalmente `10px` en un bucle suave de 6 s sin abandonar su posición central.
+- Las palabras del título se agrupan con `inline-flex` y `align-items: flex-start`; cada inicial (`U`, `X`, `M`, `A`) mide `1.12em` y queda alineada por su borde superior respecto al resto de las letras de su palabra.
+- La inicial `U` de “Under” usa rojo escarlata `#ff2400`; el resto del título usa gris concreto `#b8b8b2`.
 - Con `prefers-reduced-motion: reduce` el título se muestra estático, el video se pausa y se oculta, y permanece visible el poster estático.
 
 ### Esquema de color y copyright
@@ -127,11 +134,11 @@ El fondo del sitio es **gris suave** (`#e9ecef`, equivalente a `bs-gray-200`). P
 
 ### Estilos de selección (hover / focus / active)
 
-Regla general del sitio: **todo elemento seleccionable usa fondo `#26b` (primary) con texto `#fff`** en `hover`, `focus-visible` y estado activo. Nunca texto oscuro sobre fondo azul.
+Regla general del sitio: **todo elemento seleccionable usa fondo `#26b` (primary) con texto `#fff`** en `hover`, `focus-visible` y estado activo, salvo los elementos con acento escarlata explícito. Nunca texto oscuro sobre fondo azul.
 
 | Elemento | Regla |
 |---|---|
-| Enlaces del menú (`.nav-list a`) | Estilo minimalista: sin fondo ni borde; `hover`/`focus-visible` con color `#26b` y foco con `box-shadow: 0 2px 0 #ffbf47`; la página activa muestra un punto azul |
+| Enlaces del menú (`.nav-list a`) | Estilo minimalista sin borde; `hover`/`focus-visible` rellenan el enlace con `#ff2400` y texto blanco; foco con `box-shadow: inset 0 0 0 2px #fff`; la página activa muestra un punto azul |
 | Opciones del desplegable de idioma (`.lang-menu .menu-item`) | Fondo `#26b` + texto blanco; el estado `.selected` mantiene el fondo y en hover pasa a `#1a53a0` |
 | Disparador del desplegable (`.lang-toggle`) | Fondo `#26b` + texto blanco en hover y foco |
 | Marca del navbar (`.topbar-brand`) | Fondo `#26b` + texto blanco en hover y foco |

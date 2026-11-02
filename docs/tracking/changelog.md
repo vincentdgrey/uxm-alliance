@@ -9,10 +9,13 @@
 
 ### Changed
 - El menú lateral deja de usar el `Drawer` de Bootstrap: ahora es un panel fijo a la izquierda, a pantalla completa (`100dvh`), con ancho máximo de `400px` y fondo gris claro translúcido `rgba(248, 249, 250, .6)`.
-- La hamburguesa usa tres líneas de `3px` separadas `7px`; la tercera se alarga hasta quedar a `10px` del borde derecho durante la apertura.
-- Los enlaces del menú adoptan un estilo minimalista, sin aspecto de botón; la página activa se marca con un punto azul.
+- La hamburguesa usa tres líneas de `3px` separadas `7px`: gris claro en la portada y texto oscuro en las subpáginas; al abrir, las tres cambian a rojo escarlata y la tercera se alarga hasta quedar a `10px` del borde derecho.
+- Los enlaces del menú ocupan todo el ancho y se rellenan progresivamente de rojo escarlata con texto blanco al recibir `hover` o `focus-visible`; la página activa se marca con un punto azul.
 - El cierre del menú se realiza con `Escape`, backdrop o al pulsar un enlace, devolviendo el foco al botón hamburguesa.
 - El selector de idioma queda fijado en esquema claro y el copyright corporativo es `© 2026 UXM – Under Xtreme Madness` en todos los idiomas.
+- El hero de la portada deja 20 px visibles del contenido siguiente para indicar que la página continúa.
+- El título principal agrupa cada palabra con alineación superior, eleva sus iniciales a `1.12em`, pinta la `U` de “Under” en rojo escarlata y usa gris concreto `#b8b8b2` para el resto.
+- El enlace **"Inicio UXM"** de la portada usa texto gris claro y sombra oscura para contrastar con el video.
 
 ### Removed
 - Elemento `<p id="welcome" class="welcome"></p>` de la página principal, su asignación en `js/app.js` y las claves `welcome` de `js/i18n.js`.

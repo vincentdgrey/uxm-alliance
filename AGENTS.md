@@ -49,19 +49,39 @@ uxm-alliance/
 
 ## Sitio Web (root)
 
+> Design System
+
 1. **Bootstrap 6 por CDN obligatorio**: versión fijada `6.0.0-alpha.1` (jsDelivr) con `integrity` SRI y `crossorigin`. Sin npm ni paso de build: el sitio sigue siendo estático y funciona en GitHub Pages.
+
 2. `css/style.css` se carga **después** del CSS de Bootstrap para que la personalización prevalezca.
+
+> Nav Bar & Menu
+
 3. **Barra superior**: `<nav class="navbar topbar">` con fondo **transparente** y texto en el color estándar del esquema claro (`--fg-2` / `--fg-body`). Superpuesta y con `pointer-events: none` para no bloquear el Home.
-4. **Menú lateral**: panel propio (`<div id="navPanel" class="nav-panel">`), fijo en el borde **izquierdo**, a pantalla completa (`100dvh`) y con `max-width: 400px` en escritorio y móvil, fondo gris claro translúcido (`rgba(248, 249, 250, .6)`) y entrada animada desde la izquierda. Enlaces minimalistas (sin aspecto de botón); la página activa se marca con un punto azul. Backdrop propio (`#navBackdrop`) y cierre con `Escape` o al pulsar un enlace. Un solo panel por página, con los enlaces generados por `js/app.js`.
-5. **Hamburguesa**: sin borde, tres líneas sólidas de `3px` separadas `7px`; la animación solo cambia la forma (nunca el color) y **no se muestra icono "X"** al abrir. La tercera línea se alarga desde su origen hasta quedar a `10px` del borde derecho del menú durante la apertura.
+
+4. **Menú lateral**: panel propio (`<div id="navPanel" class="nav-panel">`), fijo en el borde **izquierdo**, a pantalla completa (`100dvh`) y con `max-width: 400px` en escritorio y móvil, fondo gris claro translúcido (`rgba(248, 249, 250, .6)`) y entrada animada desde la izquierda. Los enlaces ocupan todo el ancho del panel y se rellenan de rojo escarlata `#ff2400` con texto blanco al recibir `hover` o `focus-visible`; la página activa se marca con un punto azul. Backdrop propio (`#navBackdrop`) y cierre con `Escape` o al pulsar un enlace. Un solo panel por página, con los enlaces generados por `js/app.js`.
+
+5. **Hamburguesa**: sin borde, tres líneas sólidas de `3px` separadas `7px`; en la portada están en gris claro `#e9ecef` y en las subpáginas usan `--text` para mantener el contraste. Al abrir el menú cambian a rojo escarlata `#ff2400`, sin formar un icono "X". La tercera línea se alarga desde su origen hasta quedar a `10px` del borde derecho del menú durante la apertura.
+
 6. **Fondo gris suave** `--bg: #e9ecef`, con texto oscuro (`--text: #212529`) y sombras recalculadas.
-7. **Footer**: siempre al fondo (body flex + `min-height: 100dvh`), en grid `1fr auto 1fr`: YouTube a la izquierda, copyright en el centro y **selector de idioma a la derecha**.
-8. **Selector de idioma**: `Menu` desplegable de Bootstrap (`data-bs-toggle="menu"`, `data-bs-placement="top-end"`), se abre hacia arriba y usa siempre esquema claro. Cada idioma se muestra en su propio idioma con atributo `lang`; conserva `?lang=` al cambiar. Se acompaña de la etiqueta visible **«Lenguaje»** (clave `language`).
-9. **Rutas**: las subpáginas están en `./pages/`; usa rutas **relativas** (`../css`, `../js`, `../index.html`). `js/app.js` las resuelve con `inPagesDir()`, `basePath()` y `pageUrl()`. Nunca rutas absolutas (`/pages/...`): rompen en sitios de proyecto de GitHub Pages.
-10. **Estados seleccionables**: `hover`, `focus-visible` y `active` usan fondo `#26b` con texto `#fff` (nunca texto oscuro sobre azul). Anillo de foco `#ffbf47`.
-11. **Enlace principal**: el navbar muestra **"Inicio UXM"** y apunta a `index.html` (o `../index.html` desde `./pages/`).
-12. **Hero principal**: a pantalla completa (`100dvh`) y ancho completo, con video de fondo `media/video-particles-cyan.mp4` (`autoplay muted loop playsinline`) y poster `media/video-particles-cyan-poster.jpg` como fallback. El `heroTitle` usa la fuente local **Cinzel**, sin subrayado, con sombra de piedra y flotación vertical suave en su posición; con `prefers-reduced-motion` se muestra estático y sin video, con imagen de fondo estática.
-13. **Copyright**: texto corporativo fijo `© 2026 UXM – Under Xtreme Madness` en todos los idiomas.
+
+7. **Rutas**: las subpáginas están en `./pages/`; usa rutas **relativas** (`../css`, `../js`, `../index.html`). `js/app.js` las resuelve con `inPagesDir()`, `basePath()` y `pageUrl()`. Nunca rutas absolutas (`/pages/...`): rompen en sitios de proyecto de GitHub Pages.
+
+8. **Estados seleccionables**: `hover`, `focus-visible` y `active` usan fondo `#26b` con texto `#fff` (nunca texto oscuro sobre azul), salvo los elementos con acento escarlata explícito. Anillo de foco `#ffbf47`.
+
+9. **Enlace principal**: el navbar muestra **"Inicio UXM"** y apunta a `index.html` (o `../index.html` desde `./pages/`). En la portada usa texto gris claro `#e9ecef` con sombra oscura para contrastar con el video.
+
+> Footer
+
+10. **Footer**: siempre al fondo (body flex + `min-height: 100dvh`), en grid `1fr auto 1fr`: YouTube a la izquierda, copyright en el centro y **selector de idioma a la derecha**.
+
+11. **Selector de idioma**: `Menu` desplegable de Bootstrap (`data-bs-toggle="menu"`, `data-bs-placement="top-end"`), se abre hacia arriba y usa siempre esquema claro. Cada idioma se muestra en su propio idioma con atributo `lang`; conserva `?lang=` al cambiar. Se acompaña de la etiqueta visible **«Lenguaje»** (clave `language`).
+
+12. **Copyright**: texto corporativo fijo `© 2026 UXM – Under Xtreme Madness` en todos los idiomas.
+
+> Hero
+
+13. **Hero principal**: ocupa el ancho completo y `min-height: calc(100dvh - 20px)`, dejando 20 px del contenido siguiente visibles; usa video de fondo `media/video-particles-cyan.mp4` (`autoplay muted loop playsinline`) y poster `media/video-particles-cyan-poster.jpg` como fallback. El `heroTitle` usa la fuente local **Cinzel**, sin subrayado, con sombra de piedra y flotación vertical suave; cada inicial mide `1.12em` y todas las letras se alinean por su borde superior. La inicial `U` de “Under” usa rojo escarlata `#ff2400` y el resto del texto gris concreto `#b8b8b2`. Con `prefers-reduced-motion` se muestra estático y sin video, con imagen de fondo estática.
 
 > Detalle completo en `docs/core/project-rules.md`.
 
