@@ -39,6 +39,9 @@ body {
   --muted: #495057;
   --hot: #df1b1b;
   --cyan: #0d6efd;
+  --scarlet: #ff2400;
+  --gray-light: #e9ecef;
+  --concrete: #b8b8b2;
   --u: min(1vw, 1.8vh);            /* unidad relativa al recuadro */
   --ease: cubic-bezier(.22, .61, .36, 1);
   --nav-panel-width: min(100vw, 400px);
@@ -95,6 +98,17 @@ body {
 }
 .topbar-brand:focus-visible { box-shadow: 0 0 0 2px #ffbf47; }
 
+/* En la portada la marca debe contrastar con el video de fondo */
+.home-topbar .topbar-brand {
+  color: var(--gray-light);
+  text-shadow: 0 1px 3px rgba(8, 47, 58, .9);
+}
+.home-topbar .topbar-brand:hover,
+.home-topbar .topbar-brand:focus-visible {
+  color: #fff;
+  text-shadow: none;
+}
+
 .nav-toggle {
   position: relative;
   z-index: 70;
@@ -113,7 +127,7 @@ body {
 .nav-toggle:hover { background-color: rgba(38, 51, 187, .12); }
 .nav-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 
-/* Animación solo de forma: el color del icono nunca cambia */
+/* Las líneas cambian de gris claro a escarlata junto con la apertura */
 .nav-toggle-bars {
   display: flex;
   flex-direction: column;
@@ -128,7 +142,13 @@ body {
   height: 3px;
   background: var(--text);
   transform-origin: left center;
-  transition: width .28s var(--ease), transform .28s var(--ease);
+  transition: width .28s var(--ease), transform .28s var(--ease), background-color .28s var(--ease);
+}
+.home-topbar .nav-toggle-bars i {
+  background: var(--gray-light);
+}
+.nav-open .nav-toggle-bars i {
+  background: var(--scarlet);
 }
 .nav-open .nav-toggle-bars i:nth-child(3) {
   width: var(--nav-toggle-line-end);
@@ -174,24 +194,33 @@ body {
 .nav-list li + li { margin-top: 2px; }
 /* Enlaces minimalistas: sin aspecto de botón */
 .nav-list a {
-  display: inline-block;
-  padding: 8px 0;
+  display: block;
+  padding: 10px 12px;
   color: var(--text);
   font-size: 15px;
   font-weight: 400;
   letter-spacing: .02em;
   text-decoration: none;
   border: 0;
-  transition: color .2s var(--ease), opacity .2s var(--ease);
+  background-image: linear-gradient(var(--scarlet), var(--scarlet));
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 0 100%;
+  transition: color .25s var(--ease), background-size .25s var(--ease);
 }
 .nav-list a:hover,
 .nav-list a:focus-visible {
-  color: #26b;
+  color: #fff;
+  background-size: 100% 100%;
   outline: none;
 }
 .nav-list a.active {
   color: var(--text);
   font-weight: 600;
+}
+.nav-list a.active:hover,
+.nav-list a.active:focus-visible {
+  color: #fff;
 }
 .nav-list a.active::after {
   content: "";
@@ -203,7 +232,7 @@ body {
   background: #26b;
   vertical-align: middle;
 }
-.nav-list a:focus-visible { box-shadow: 0 2px 0 #ffbf47; }
+.nav-list a:focus-visible { box-shadow: inset 0 0 0 2px #fff; }
 
 /* ---------- Contenido ---------- */
 #stage { flex: 1 1 auto; }
@@ -220,7 +249,7 @@ body {
 
 .hero { text-align: center; }
 
-/* Hero principal a pantalla completa con video de fondo */
+/* Hero principal con video de fondo; deja 20px visibles del contenido siguiente */
 .hero-video {
   position: relative;
   display: flex;
@@ -228,8 +257,8 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: calc(100vh - 20px);
+  min-height: calc(100dvh - 20px);
   overflow: hidden;
   background-color: #082f3a;
   background-image: url("../media/video-particles-cyan-poster.jpg");
@@ -286,7 +315,7 @@ body {
 .hero-video .hero-title {
   width: min(100%, 960px);
   max-width: calc(100% - 32px);
-  color: #fff;
+  color: var(--concrete);
   text-shadow:
     0 1px 0 #d7d1c5,
     0 2px 0 #8c857b,
@@ -296,15 +325,28 @@ body {
   animation: uxm-title-float 6s ease-in-out infinite;
   will-change: transform;
 }
+.hero-title-word {
+  display: inline-flex;
+  align-items: flex-start;
+  white-space: nowrap;
+}
+.hero-title-initial {
+  font-size: 1.12em;
+  line-height: inherit;
+}
+.hero-title-accent {
+  color: var(--scarlet);
+}
 @keyframes uxm-title-float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-10px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-video .hero-title { animation: none; transform: none; }
   .hero-video-media { display: none; }
   .nav-toggle-bars i { transition: none; }
+  .nav-list a { transition: none; }
   .nav-panel, .nav-backdrop { transition: none; }
 }
 
