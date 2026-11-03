@@ -7,7 +7,7 @@ Configuración para agentes de IA. Este archivo garantiza continuidad del proyec
 ## Descripción del Proyecto
 
 1. Pagina web pura, alojamiento final cloud en Github Pages, carpeta root del website `./`.
-2. Cada archivo en `src/` es un **bloque-script** independiente que funciona sin librerías externas, útiles para prototipos.
+2. archivos en `src/` obsoletos.
 3. sin dependencias de red (sin fetch/CORS), en lo posible.
 4. Determinando el lenguaje del navegador (navigator.language + ?lang=es) cambiar el texto según el idioma disponible: español, ingles, portugués, italiano, turco, francés, chino, japones. default:ingles.
 5. Include Bootstrap’s CSS and JavaScript files via CDN. CDNs (Content Delivery Networks) are services that provides copies of libraries for your website.
@@ -49,57 +49,7 @@ uxm-alliance/
 
 ## Sitio Web (root)
 
-> Design System
-
-1. **Bootstrap 6 por CDN obligatorio**: versión fijada `6.0.0-alpha.1` (jsDelivr) con `integrity` SRI y `crossorigin`. Sin npm ni paso de build: el sitio sigue siendo estático y funciona en GitHub Pages.
-
-2. `css/style.css` se carga **después** del CSS de Bootstrap para que la personalización prevalezca.
-
-> Nav Bar & Menu
-
-3. **Barra superior**: `<nav class="navbar topbar">` fija (`position: fixed; top: 0`), con fondo **transparente**, `pointer-events: none` para no bloquear el contenido y texto «Inicio UXM» en gris `#ccc`. El botón, la marca, el panel y el backdrop mantienen `pointer-events: auto`.
-
-4. **Menú lateral**: panel propio (`<div id="navPanel" class="nav-panel">`), fijo en el borde **izquierdo**, a pantalla completa (`100dvh`) y con `max-width: 400px` en escritorio y móvil, fondo negro translúcido (`rgba(0, 0, 0, .72)`), borde blanco sutil y entrada animada desde la izquierda. Los enlaces y sus `.nav-item` ocupan todo el ancho del panel, usan texto blanco y se rellenan de rojo escarlata `#ff2400` al recibir `hover` o `focus-visible`; la página activa se marca con un punto azul. Incluye como primer enlace la portada localizada («Inicio», «Home», «Início», etc.) mediante `basePath()` y conserva `?lang=`. Backdrop propio (`#navBackdrop`) y cierre con `Escape` o al pulsar un enlace. Un solo panel por página, con los enlaces generados por `js/app.js`.
-
-5. **Hamburguesa**: sin borde, tres líneas sólidas de `3px` separadas `7px`, inicialmente en gris `#ccc`. Cada 60 s la primera línea se desplaza `20px` a la derecha y la segunda `10px`, regresando a su posición original. Al abrir el menú las tres cambian a rojo escarlata `#ff2400`, sin formar un icono "X", y la tercera se alarga desde su origen hasta quedar a `10px` del borde derecho del menú.
-
-6. **Fondo gris suave** `--bg: #e9ecef`, con texto oscuro (`--text: #212529`) y sombras recalculadas.
-7. **Botones**: todos los botones y enlaces con apariencia de botón usan `border-radius: 3px` mediante el token `--button-radius`.
-8. **Sección informativa (portada)**: `.block-content-info` muestra un subtítulo `.sibtitle-info text-center` en gris concreto con la primera letra escarlata, el mensaje de bienvenida localizado y dos botones `btn-outline`: YouTube (escarlata) y Normas UXM (`#2266bb`). El saludo `.dinamic-welcome` enumera la palabra «Bienvenido» de todos los idiomas salvo el activo, separados por ` · `, sin rotación.
-
-9. **Rutas**: las subpáginas están en `./pages/`; usa rutas **relativas** (`../css`, `../js`, `../index.html`). `js/app.js` las resuelve con `inPagesDir()`, `basePath()` y `pageUrl()`. Nunca rutas absolutas (`/pages/...`): rompen en sitios de proyecto de GitHub Pages.
-
-10. **Estados seleccionables**: `hover`, `focus-visible` y `active` usan fondo `#26b` con texto `#fff` (nunca texto oscuro sobre azul), salvo los elementos con acento escarlata explícito. Anillo de foco `#ffbf47`.
-
-11. **Enlace principal**: el navbar muestra **"Inicio UXM"** y apunta a `index.html` (o `../index.html` desde `./pages/`). En la portada usa texto gris claro `#e9ecef` con sombra oscura para contrastar con el video.
-
-> Footer
-
-12. **Footer**: siempre al fondo (body flex + `min-height: 100dvh`), en grid `1fr auto 1fr`: YouTube a la izquierda, copyright en el centro y **selector de idioma a la derecha**.
-
-13. **Selector de idioma**: `Menu` desplegable de Bootstrap (`data-bs-toggle="menu"`, `data-bs-placement="top-end"`), se abre hacia arriba y usa siempre esquema claro. Cada idioma se muestra en su propio idioma con atributo `lang`; conserva `?lang=` al cambiar. Se acompaña de la etiqueta visible **«Lenguaje»** (clave `language`).
-
-14. **Copyright**: texto corporativo fijo `© 2026 UXM – Under Xtreme Madness` en todos los idiomas.
-
-> Hero
-
-15. **Hero principal**: ocupa el ancho completo y `min-height: 90dvh`, dejando visible el 10 % siguiente del viewport; usa video de fondo `media/video-particles-cyan.mp4` (`autoplay muted loop playsinline`) y poster `media/video-particles-cyan-poster.jpg` como fallback. El `heroTitle` usa la fuente local **Cinzel**, sin subrayado, con sombra multicapa de piedra que produce relieve sobre el video y flotación vertical suave; cada inicial mide `1.12em` y todas las letras se alinean por su borde superior. La inicial `U` de “Under” usa rojo escarlata `#ff2400` con sombra propia roja y el resto del texto gris concreto `#b8b8b2`. El `<p class="tag">` comparte el trabajo de sombra, con distancias adaptadas a su tamaño. En la parte inferior del cover se muestra un mouse dibujado con CSS, con rueda animada, que enlaza a `#join` para indicar que el contenido continúa hacia abajo. Con `prefers-reduced-motion` el título se muestra estático y sin video, con imagen de fondo estática.
-
 > Detalle completo en `docs/core/project-rules.md`.
-
----
-
-## Convenciones de Bloques-Script
-
-Cada archivo en `src/` DEBE cumplir:
-
-1. **Solo `<div>` + `<script>`**: No incluir `<html>`, `<head>`, `<body>`, ni `<style>`.
-2. **CSS inyectado vía JS**: Los estilos se crean dinámicamente desde el script usando un elemento `<style>` inyectado al DOM.
-3. **Sin librerías externas**: Vanilla JS, compatible con ES5 (var, function, sin arrow functions ni let/const).
-4. **Datos embebidos**: Toda la data necesaria va dentro del script (sin fetch, sin CORS, sin dependencias de red).
-5. **100% autónomo**: Cada bloque funciona por sí solo al pegarlo en Google Sites.
-6. **IIFE**: Todo el código se envuelve en `(function () { "use strict"; ... })();`.
-7. **Prefijo de clases**: Cada bloque usa un prefijo único (ej: `bs-` para battle-survival) para evitar colisiones en Google Sites.
 
 ---
 
@@ -152,25 +102,13 @@ Colores neutros complementarios (no requieren token):
 
 ## Reglas de Commits Atómicos
 
-Tras cada modificación exitosa, generar commits individuales por concepto (no agrupar cambios no relacionados):
-
-Formato conventional commits:
-
-- `feat [scope]: descripcion` - nueva funcionalidad
-- `fix [scope]: descripcion` - corrección de bug
-- `refactor [scope]: descripcion` - refactorización
-- `upd [scope]: descripcion` - modificación de capa o ajuste
-- `rem [scope]: descripcion` - eliminación
-- `release [version]: descripcion` - release gitflow
+usuario creara manualmente
 
 ---
 
 ## Bloques-Script Google Site Existentes
 
-| Archivo | Prefijo | Descripción |
-|---|---|---|
-| `src/battle-survival-schedule.html` | `bs-` | Calendario semanal Battle Survival con counter en tiempo real |
-| `src/alliance-duel-schedule.html` | `ad-` | Listados contraíbles de actividades diarias Duelo de Alianzas (7 días, hoy destacado) |
+desabilitados
 
 ---
 

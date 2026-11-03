@@ -468,13 +468,12 @@ button,
 /* ---------- Bloques de contenido informativo ---------- */
 .block-content-info,
 .block-content-destacated {
-  max-width: 960px;
   margin: 0 auto;
-  padding: 48px 16px;
+  padding: 48px 2%;
   text-align: center;
 }
 .block-content-destacated {
-  background-color: #424d61;
+  background-color: #d3d3d3;
   color: #ccc;
 }
 .sibtitle-info {
@@ -497,7 +496,7 @@ button,
   font-size: 14px;
   letter-spacing: .04em;
 }
-.message-welcome {
+.message-welcome,.message-arenga {
   max-width: 760px;
   margin: 0 auto 24px;
   color: var(--text);
