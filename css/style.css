@@ -50,7 +50,7 @@ body {
 
 /* ---------- Navbar superior transparente ---------- */
 .topbar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 40;
@@ -81,9 +81,9 @@ body {
 .topbar-brand {
   font-weight: 700;
   letter-spacing: .02em;
-  color: var(--navbar-brand-color);
+  color: #ccc;
   text-decoration: none;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, .6);
+  text-shadow: 0 1px 3px rgba(8, 47, 58, .65);
   padding: 4px 8px;
   border-radius: 4px;
   transition: background-color .2s var(--ease), color .2s var(--ease);
@@ -99,7 +99,7 @@ body {
 
 /* En la portada la marca debe contrastar con el video de fondo */
 .home-topbar .topbar-brand {
-  color: var(--gray-light);
+  color: #ccc;
   text-shadow: 0 1px 3px rgba(8, 47, 58, .9);
 }
 .home-topbar .topbar-brand:hover,
@@ -126,7 +126,7 @@ body {
 .nav-toggle:hover { background-color: rgba(34, 102, 187, .12); }
 .nav-toggle:focus-visible { outline: 2px solid #ffbf47; outline-offset: 2px; }
 
-/* Las líneas cambian de gris claro a escarlata junto con la apertura */
+/* Las líneas cambian de gris a escarlata junto con la apertura */
 .nav-toggle-bars {
   display: flex;
   flex-direction: column;
@@ -139,18 +139,39 @@ body {
   flex: 0 0 3px;
   width: 20px;
   height: 3px;
-  background: var(--text);
+  background: #ccc;
   transform-origin: left center;
   transition: width .28s var(--ease), background-color .28s var(--ease);
 }
 .home-topbar .nav-toggle-bars i {
-  background: var(--gray-light);
+  background: #ccc;
 }
 .nav-open .nav-toggle-bars i {
   background: var(--scarlet);
 }
 .nav-open .nav-toggle-bars i:nth-child(3) {
   width: var(--nav-toggle-line-end);
+}
+
+/* Aviso periódico: la primera línea avanza 20px y la segunda 10px */
+.nav-toggle-bars i:nth-child(1) {
+  animation: uxm-nav-line-one 60s ease-in-out infinite;
+}
+.nav-toggle-bars i:nth-child(2) {
+  animation: uxm-nav-line-two 60s ease-in-out infinite;
+}
+.nav-open .nav-toggle-bars i:nth-child(1),
+.nav-open .nav-toggle-bars i:nth-child(2) {
+  animation: none;
+  transform: none;
+}
+@keyframes uxm-nav-line-one {
+  0%, 95%, 100% { transform: translateX(0); }
+  97% { transform: translateX(20px); }
+}
+@keyframes uxm-nav-line-two {
+  0%, 95%, 100% { transform: translateX(0); }
+  97% { transform: translateX(10px); }
 }
 
 /* ---------- Menú lateral propio (anclado a la izquierda) ---------- */
@@ -249,6 +270,9 @@ body {
   margin: 0;
   padding: 0;
 }
+#join {
+  scroll-margin-top: 72px;
+}
 
 .hero { text-align: center; }
 
@@ -288,12 +312,61 @@ body {
   z-index: 2;
 }
 .hero-video .tag {
-  color: #f1f3f5;
+  color: none;
   text-shadow:
     0 1px 0 #d7d1c5,
     0 2px 0 #8c857b,
     0 3px 3px rgba(8, 47, 58, .9),
     0 6px 16px rgba(8, 47, 58, .8);
+}
+
+/* Indicador de scroll: mouse dibujado con CSS y rueda animada */
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 42px;
+  color: #ccc;
+  text-decoration: none;
+  transform: translateX(-50%);
+}
+.hero-scroll-cue:hover,
+.hero-scroll-cue:focus-visible {
+  color: var(--scarlet);
+}
+.hero-scroll-cue:focus-visible {
+  outline: 2px solid #ffbf47;
+  outline-offset: 4px;
+}
+.hero-scroll-mouse {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 38px;
+  border: 2px solid currentColor;
+  border-radius: 14px;
+}
+.hero-scroll-wheel {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  background: currentColor;
+  border-radius: 3px;
+  transform: translateX(-50%);
+  animation: uxm-scroll-wheel 1.8s ease-in-out infinite;
+}
+@keyframes uxm-scroll-wheel {
+  0% { opacity: 0; transform: translate(-50%, -4px); }
+  35% { opacity: 1; }
+  70% { opacity: 0; transform: translate(-50%, 9px); }
+  100% { opacity: 0; transform: translate(-50%, 9px); }
 }
 
 .home-body {
@@ -363,9 +436,16 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hero-video .hero-title { animation: none; transform: none; }
   .hero-video-media { display: none; }
-  .nav-toggle-bars i { transition: none; }
+  .nav-toggle-bars i,
+  .nav-toggle-bars i:nth-child(1),
+  .nav-toggle-bars i:nth-child(2) {
+    transition: none;
+    animation: none;
+    transform: none;
+  }
   .nav-list a { transition: none; }
   .nav-panel, .nav-backdrop { transition: none; }
+  .hero-scroll-wheel { animation: none; }
 }
 
 .welcome { color: var(--muted); }
