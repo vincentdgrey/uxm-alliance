@@ -7,11 +7,14 @@
 - Botones `btn-outline` para YouTube (escarlata) y Normas UXM (`#2266bb`), con relleno animado y rutas relativas compatibles con GitHub Pages.
 - Selector de idioma al final del menú lateral (`#sideLangs`), con IDs independientes y apertura hacia arriba (`top-start`).
 - Divisor `.line-divisor-scarlet` de `3px`, ancho `96%` y margen libre del 2 % en cada extremo.
+- Bloque `.video-tutorial` en la portada con video de YouTube `kU9m5eJxbCQ` y tres botones hacia las secciones de tutoriales.
+- Secciones de la subpágina de tutoriales con banners `.banner-divisor` y anclas `#learningPriority`, `#tips` y `#events`.
 
 ### Changed
 - Todos los botones del sitio usan `border-radius: 4px` mediante el token `--button-radius`; los enlaces activos del menú lateral también respetan ese radio.
 - Los subtítulos `.sibtitle-info` usan la fuente local Cinzel, texto gris concreto, sombra gris y la primera letra en rojo escarlata en todos los títulos; el de bienvenida permanece centrado.
-- `.block-content-destacated` comparte el layout de `.block-content-info` y usa fondo `#424d61` con texto `#ccc`.
+- `.block-content-info` y `.block-content-destacated` usan `padding: 0 10%` y alineación izquierda por defecto; `.center-content` habilita el centrado visual.
+- `.block-content-destacated` comparte el layout de `.block-content-info` y usa fondo `#d3d3d3` con texto `#ccc`.
 - `.dinamic-welcome` muestra las traducciones de «Bienvenido» de todos los idiomas salvo el activo, separadas por ` · `, sin rotación ni temporizadores.
 - `.ha-author` se muestra en cursiva, `#aaa`, alineado a la derecha y con subrayado de `1px solid #aaa`.
 - El texto español de `.message-arenga` se conserva según la redacción manual de `index.html`.

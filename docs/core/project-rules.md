@@ -151,7 +151,7 @@ El anillo de foco usa `#ffbf47` (amarillo) porque mantiene la visibilidad sobre 
 
 ### Sección informativa de la portada
 
-- La portada organiza su contenido en bloques `<section class="block-content-info">` y `<section class="block-content-destacated">`; ambos comparten ancho máximo `960px`, padding y alineación.
+- La portada organiza su contenido en bloques `<section class="block-content-info">` y `<section class="block-content-destacated">`; ambos comparten `padding: 0 10%` y alineación izquierda por defecto. Solo los bloques con `.center-content` centran visualmente su contenido.
 - Los subtítulos son `<h2 class="sibtitle-info">` y usan la fuente local **Cinzel** (`"Cinzel", Georgia, "Times New Roman", serif`), texto gris concreto, sombra gris y primera letra en rojo escarlata `#ff2400` mediante `.info-initial` en todos los títulos.
 - `.dinamic-welcome` enumera la palabra «Bienvenido» de **todos los idiomas definidos salvo el activo**, separados por ` · `. No utiliza temporizadores ni rotación: solo cambia al recargar con otro `?lang=` o al detectar el idioma del navegador.
 - `.message-welcome` muestra el mensaje de bienvenida en el idioma activo mediante la clave `welcomeMessage`.
@@ -161,7 +161,11 @@ El anillo de foco usa `#ffbf47` (amarillo) porque mantiene la visibilidad sobre 
 - `.block-buttons` contiene dos enlaces `btn-outline`:
   - YouTube: borde y texto escarlata `#ff2400`, icono SVG y relleno animado en `hover`/`focus-visible`; abre en pestaña nueva con `rel="noopener noreferrer"`.
   - Normas UXM: borde y texto `#2266bb`, relleno animado del mismo color y ruta relativa `pages/normas-uxm.html` con `?lang=` (nunca `127.0.0.1`).
-- `.block-content-destacated` usa fondo `#424d61` y texto `#ccc` como contraste frente al bloque informativo.
+- `.block-content-destacated` usa fondo `#d3d3d3` y texto `#ccc` como contraste frente al bloque informativo.
+- `.video-tutorial` limita el contenido a `760px` y divide el bloque en `.component-video` y `.component-buttons`.
+- `.component-video` incrusta el video de YouTube `kU9m5eJxbCQ` a todo el ancho, con reproducción automática silenciada (`autoplay=1&mute=1&playsinline=1`), sin márgenes y con altura máxima de `400px`.
+- `.component-buttons` apila tres enlaces `btn-outline btn-info-rules` con ancho `90%`; apuntan a las secciones `#learningPriority`, `#tips` y `#events` de `pages/video-tutoriales.html` conservando `?lang=`.
+- `.banner-divisor` convierte los subtítulos de la subpágina de tutoriales en banners con fondo `#ccc` y texto `#3d3d3d`, manteniendo la inicial escarlata.
 - Todos los botones y enlaces con apariencia de botón usan `--button-radius: 4px`.
 
 ### Footer
