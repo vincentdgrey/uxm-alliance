@@ -107,28 +107,29 @@ El fondo del sitio es **gris suave** (`#e9ecef`, equivalente a `bs-gray-200`). P
 ### Menú lateral
 
 - Panel propio **anclado a la izquierda**: `position: fixed`, `left: 0`, `top: 0`, `height: 100dvh`, `width: 100%` y `max-width: 400px`. El ancho nunca supera 400 px en escritorio ni en móvil.
-- Fondo gris claro translúcido `rgba(248, 249, 250, .6)` (40 % de transparencia) sobre el fondo base `#e9ecef`, con texto gris oscuro `#212529`.
+- Fondo negro translúcido `rgba(0, 0, 0, .72)` con borde derecho blanco sutil `rgba(255, 255, 255, .16)` y texto blanco.
 - Entrada animada desde la izquierda: `transform: translateX(-100%)` → `translateX(0)` al añadir la clase `.is-open`.
 - La hamburguesa usa tres líneas sólidas de `3px` separadas `7px`: gris claro `#e9ecef` en la portada y `--text` en las subpáginas. Al abrir, las tres cambian a rojo escarlata `#ff2400` y la tercera se alarga desde su origen hasta quedar a `10px` del borde derecho del panel; al cerrar recuperan su color y ancho inicial. La animación nunca forma un icono «X».
 - Backdrop propio (`#navBackdrop`) con `rgba(33, 37, 41, .35)`; cierre con `Escape`, con el backdrop o al pulsar un enlace.
 - Un único panel por página con `id="navPanel"`; el contenido lo genera `js/app.js` en `#navList`.
-- Enlaces **minimalistas**: ocupan todo el ancho disponible, sin borde ni aspecto de botón; en `hover`/`focus-visible` se rellenan progresivamente de rojo escarlata `#ff2400` de izquierda a derecha, con texto blanco, y la página activa se marca con un punto azul (`.active::after`).
+- Enlaces **minimalistas**: los `.nav-item` y sus enlaces ocupan todo el ancho disponible (`width: 100%`), sin borde ni aspecto de botón; en `hover`/`focus-visible` se rellenan progresivamente de rojo escarlata `#ff2400` de izquierda a derecha, con texto blanco, y la página activa se marca con un punto azul (`.active::after`).
 - Enlaces generados con `?lang=` para conservar el idioma: `actividades-diarias.html`, `normas-uxm.html`, `video-tutoriales.html`, `estrategia.html`, `contacto.html` (con prefijo `pages/` cuando se viewing desde la raíz).
 - La página activa se marca con `aria-current="page"` y la clase `.active`.
 
 ### Hero principal (página de inicio)
 
-- El hero de `index.html` ocupa el ancho completo y `min-height: calc(100dvh - 20px)`; al final quedan visibles 20 px del contenido posterior para señalar que la página continúa. El contenido siguiente se mantiene limitado a `960px` en `.home-body`.
+- El hero de `index.html` ocupa el ancho completo y `min-height: 90dvh` (con fallback `90vh`); al final queda visible el 10 % siguiente del viewport para señalar que la página continúa. El contenido siguiente se mantiene limitado a `960px` en `.home-body`.
 - Video de fondo `media/video-particles-cyan.mp4` con `autoplay`, `muted`, `loop` y `playsinline`, cubriendo el hero con `object-fit: cover` y una capa de gradiente para legibilidad. El MP4 usa H.264 y `yuv420p`; `media/video-particles-cyan-poster.jpg` queda como poster y fondo estático de respaldo.
 - `js/app.js` fuerza el silenciado antes de llamar a `video.play()` y captura el rechazo del navegador sin ocultar el poster.
-- El `heroTitle` usa la fuente local **Cinzel**, no tiene subrayado y aplica una sombra multicapa con relieve de piedra. Flota verticalmente `10px` en un bucle suave de 6 s sin abandonar su posición central.
+- El `heroTitle` usa la fuente local **Cinzel**, no tiene subrayado y aplica una sombra multicapa con relieve de piedra: iluminación superior, extrusión en cuatro niveles y sombra difusa `0 12px 30px` para destacar el texto sobre el video. Flota verticalmente `10px` en un bucle suave de 6 s sin abandonar su posición central.
 - Las palabras del título se agrupan con `inline-flex` y `align-items: flex-start`; cada inicial (`U`, `X`, `M`, `A`) mide `1.12em` y queda alineada por su borde superior respecto al resto de las letras de su palabra.
-- La inicial `U` de “Under” usa rojo escarlata `#ff2400`; el resto del título usa gris concreto `#b8b8b2`.
+- La inicial `U` de “Under” usa rojo escarlata `#ff2400` con su propia sombra de iluminación y extrusión en tonos rojos; el resto del título usa gris concreto `#b8b8b2`.
+- El `<p class="tag">` aplica el mismo lenguaje de relieve, con una luz superior, extrusión y sombra proyectada adaptadas a su tamaño tipográfico menor.
 - Con `prefers-reduced-motion: reduce` el título se muestra estático, el video se pausa y se oculta, y permanece visible el poster estático.
 
 ### Esquema de color y copyright
 
-- El sitio usa `color-scheme: light` y fondos claros explícitos. No aplica fondos negros implícitos; los fondos oscuros permitidos están definidos de forma expresa (hero, overlay y backdrop).
+- El sitio usa `color-scheme: light` y fondos claros explícitos. No aplica fondos negros implícitos; los fondos oscuros permitidos están definidos de forma expresa (menú lateral `rgba(0, 0, 0, .72)`, hero, overlay y backdrop).
 - El selector de idioma usa siempre esquema claro, con superficie `#fff`, texto oscuro y borde `--line`.
 - El copyright corporativo es fijo en todos los idiomas: `© 2026 UXM – Under Xtreme Madness`.
 
