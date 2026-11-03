@@ -122,6 +122,9 @@
 
     if (welcomeMessage) welcomeMessage.textContent = T.welcomeMessage || "";
     if (buttonsBox) buildInfoButtons(buttonsBox);
+
+    var videoButtonsBox = byId("videoTutorialButtons");
+    if (videoButtonsBox) buildVideoTutorialButtons(videoButtonsBox);
   }
 
   function buildInfoButtons(container) {
@@ -145,6 +148,26 @@
     rulesButton.href = withLang(pageUrl("normas-uxm.html"), LANG);
     rulesButton.textContent = T.rulesLabel;
     container.appendChild(rulesButton);
+  }
+
+  /* ---------- Botones del bloque de video tutorial ---------- */
+  var VIDEO_TUTORIAL_SECTIONS = [
+    { id: "learningPriority", labelKey: "learningPriority" },
+    { id: "tips", labelKey: "tips" },
+    { id: "events", labelKey: "events" }
+  ];
+
+  function buildVideoTutorialButtons(container) {
+    if (!container) return;
+    container.innerHTML = "";
+
+    VIDEO_TUTORIAL_SECTIONS.forEach(function (section) {
+      var button = document.createElement("a");
+      button.className = "btn-outline btn-info-rules";
+      button.href = withLang(pageUrl("video-tutoriales.html"), LANG) + "#" + section.id;
+      button.textContent = T[section.labelKey] || section.id;
+      container.appendChild(button);
+    });
   }
 
   /* ---------- Texto propio de cada página ---------- */
