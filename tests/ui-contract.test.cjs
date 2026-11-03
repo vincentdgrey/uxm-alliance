@@ -15,7 +15,7 @@ test("todos los botones usan radio de 4px", () => {
 
 test("la portada incluye la sección informativa con el subtítulo centrado", () => {
   const html = read("index.html");
-  assert.match(html, /<section class="block-content-info">/);
+  assert.match(html, /<section class="block-content-info center-content">/);
   assert.match(html, /<h2 class="sibtitle-info"[^>]*>/);
   assert.match(html, /<p class="dinamic-welcome"[^>]*><\/p>/);
   assert.match(html, /<div class="message-welcome">\s*<p id="welcomeMessage">/s);
@@ -45,12 +45,47 @@ test("la sección informativa incluye botones de YouTube y Normas UXM", () => {
 
 test("los botones informativos declaran borde y el tag del hero usa un color válido", () => {
   const css = read("css/style.css");
-  assert.match(css, /\.block-buttons \.btn-outline\s*\{[^}]*border-width:\s*1px/s);
-  assert.match(css, /\.block-buttons \.btn-outline\s*\{[^}]*border-style:\s*solid/s);
-  assert.match(css, /\.block-buttons \.btn-info-youtube\s*\{[^}]*border:\s*1px solid var\(--scarlet\)/s);
-  assert.match(css, /\.block-buttons \.btn-info-rules\s*\{[^}]*border:\s*1px solid var\(--primary-btn\)/s);
+  assert.match(css, /\.block-buttons \.btn-outline,\s*\.component-buttons \.btn-outline\s*\{[^}]*border-width:\s*1px/s);
+  assert.match(css, /\.block-buttons \.btn-outline,\s*\.component-buttons \.btn-outline\s*\{[^}]*border-style:\s*solid/s);
+  assert.match(css, /\.block-buttons \.btn-info-youtube,\s*\.component-buttons \.btn-info-youtube\s*\{[^}]*border:\s*1px solid var\(--scarlet\)/s);
+  assert.match(css, /\.block-buttons \.btn-info-rules,\s*\.component-buttons \.btn-info-rules\s*\{[^}]*border:\s*1px solid var\(--primary-btn\)/s);
   assert.doesNotMatch(css, /color:\s*none/);
   assert.match(css, /\.hero-video \.tag\s*\{[^}]*color:\s*#f1f3f5/s);
+});
+
+test("el bloque de video tutorial usa YouTube responsive y tres botones apilados", () => {
+  const html = read("index.html");
+  const css = read("css/style.css");
+  const js = read("js/app.js");
+  assert.match(html, /<div class="video-tutorial">[\s\S]*?<div class="component-video">[\s\S]*?youtube\.com\/embed\/kU9m5eJxbCQ\?autoplay=1&amp;mute=1&amp;playsinline=1[\s\S]*?<\/div>/);
+  assert.match(html, /<div class="component-buttons" id="videoTutorialButtons"><\/div>/);
+  assert.match(css, /\.video-tutorial\s*\{[^}]*max-width:\s*760px/s);
+  assert.match(css, /\.component-video\s*\{[^}]*max-height:\s*400px/s);
+  assert.match(css, /\.component-video\s*\{[^}]*aspect-ratio:\s*16 \/ 9/s);
+  assert.match(css, /\.component-buttons\s*\{[^}]*flex-direction:\s*column/s);
+  assert.match(css, /\.component-buttons\s*\{[^}]*width:\s*90%/s);
+  assert.match(js, /VIDEO_TUTORIAL_SECTIONS/);
+  assert.match(js, /pageUrl\("video-tutoriales\.html"\)/);
+  assert.match(js, /#"\s*\+\s*section\.id/);
+});
+
+test("los botones enlazan las tres secciones de tutoriales con idioma y ancla", () => {
+  const js = read("js/app.js");
+  assert.match(js, /id:\s*"learningPriority"/);
+  assert.match(js, /id:\s*"tips"/);
+  assert.match(js, /id:\s*"events"/);
+  assert.match(js, /withLang\(pageUrl\("video-tutoriales\.html"\), LANG\)/);
+});
+
+test("la subpágina de tutoriales usa banners y anclas únicas", () => {
+  const html = read("pages/video-tutoriales.html");
+  const css = read("css/style.css");
+  assert.match(html, /id="learningPriority"/);
+  assert.match(html, /id="tips"/);
+  assert.match(html, /id="events"/);
+  assert.equal((html.match(/id="tips"/g) || []).length, 1);
+  assert.match(css, /\.banner-divisor\s*\{[^}]*background-color:\s*#ccc/s);
+  assert.match(css, /\.banner-divisor\s*\{[^}]*color:\s*#3d3d3d/s);
 });
 
 test("los subtítulos informativos usan H2, Cinzel, inicial escarlata y sombra gris", () => {
@@ -68,10 +103,16 @@ test("los subtítulos informativos usan H2, Cinzel, inicial escarlata y sombra g
 test("el bloque destacado comparte layout y usa fondo azul grisáceo", () => {
   const html = read("index.html");
   const css = read("css/style.css");
-  assert.match(html, /<section class="block-content-destacated">/);
-  assert.match(css, /\.block-content-info,\s*\.block-content-destacated\s*\{[^}]*max-width:\s*960px/s);
-  assert.match(css, /\.block-content-destacated\s*\{[^}]*background-color:\s*#424d61/s);
+  assert.match(html, /<section class="block-content-destacated center-content">/);
+  assert.match(css, /\.block-content-destacated\s*\{[^}]*background-color:\s*#d3d3d3/s);
   assert.match(css, /\.block-content-destacated\s*\{[^}]*color:\s*#ccc/s);
+});
+
+test("los bloques informativos se centran solo con center-content y usan padding responsive", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.block-content-info,\s*\.block-content-destacated\s*\{[^}]*padding:\s*0 10%/s);
+  assert.match(css, /\.block-content-info,\s*\.block-content-destacated\s*\{[^}]*text-align:\s*left/s);
+  assert.match(css, /\.block-content-info\.center-content,\s*\.block-content-destacated\.center-content\s*\{[^}]*text-align:\s*center/s);
 });
 
 test("el autor de la arenga se muestra en cursiva, a la derecha y subrayado", () => {
