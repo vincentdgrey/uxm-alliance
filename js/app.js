@@ -76,6 +76,9 @@
   setText("copyright", T.copyright);
   setText("ytLabel", T.youtube);
 
+  var heroScrollCue = byId("heroScrollCue");
+  if (heroScrollCue) heroScrollCue.setAttribute("aria-label", T.scrollCue);
+
   /* ---------- Texto propio de cada página ---------- */
   function applyPageContent() {
     var here = currentFile();
@@ -139,6 +142,20 @@
     if (!navList) return;
     navList.innerHTML = "";
     var here = currentFile();
+
+    var homeItem = document.createElement("li");
+    homeItem.className = "nav-item";
+    var homeNavLink = document.createElement("a");
+    homeNavLink.className = "nav-link";
+    homeNavLink.href = withLang(basePath() + "index.html", LANG);
+    homeNavLink.textContent = T.navHome;
+    if (here === "index.html") {
+      homeNavLink.classList.add("active");
+      homeNavLink.setAttribute("aria-current", "page");
+    }
+    homeItem.appendChild(homeNavLink);
+    navList.appendChild(homeItem);
+
     PAGES.forEach(function (page) {
       var li = document.createElement("li");
       li.className = "nav-item";
