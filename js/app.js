@@ -79,6 +79,60 @@
   var heroScrollCue = byId("heroScrollCue");
   if (heroScrollCue) heroScrollCue.setAttribute("aria-label", T.scrollCue);
 
+  /* ---------- Sección informativa de bienvenida ---------- */
+  function applyInfoContent() {
+    var infoTitle = byId("infoTitle");
+    var dynamicWelcome = byId("dynamicWelcome");
+    var welcomeMessage = byId("welcomeMessage");
+    var buttonsBox = byId("infoButtons");
+
+    if (infoTitle) {
+      var title = T.welcomeTitle || T.welcome;
+      infoTitle.textContent = "";
+      var initial = document.createElement("span");
+      initial.className = "info-initial";
+      initial.textContent = title.charAt(0);
+      infoTitle.appendChild(initial);
+      infoTitle.appendChild(document.createTextNode(title.slice(1)));
+    }
+
+    if (dynamicWelcome) {
+      var welcomeTexts = [];
+      Object.keys(window.I18N).forEach(function (code) {
+        if (code !== LANG && window.I18N[code].welcome) {
+          welcomeTexts.push(window.I18N[code].welcome);
+        }
+      });
+      dynamicWelcome.textContent = welcomeTexts.join(" · ");
+    }
+
+    if (welcomeMessage) welcomeMessage.textContent = T.welcomeMessage || "";
+    if (buttonsBox) buildInfoButtons(buttonsBox);
+  }
+
+  function buildInfoButtons(container) {
+    if (!container) return;
+    container.innerHTML = "";
+
+    var youtubeButton = document.createElement("a");
+    youtubeButton.className = "btn-outline btn-info-youtube";
+    youtubeButton.href = YOUTUBE;
+    youtubeButton.target = "_blank";
+    youtubeButton.rel = "noopener noreferrer";
+    youtubeButton.setAttribute("aria-label", T.youtubeLabel);
+    youtubeButton.innerHTML = '<svg class="yt-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">' +
+      '<path fill="#ff1919" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8z"/>' +
+      '<path fill="#fff" d="M9.6 15.6 15.8 12 9.6 8.4z"/></svg>';
+    youtubeButton.appendChild(document.createTextNode(T.youtubeLabel));
+    container.appendChild(youtubeButton);
+
+    var rulesButton = document.createElement("a");
+    rulesButton.className = "btn-outline btn-info-rules";
+    rulesButton.href = withLang(pageUrl("normas-uxm.html"), LANG);
+    rulesButton.textContent = T.rulesLabel;
+    container.appendChild(rulesButton);
+  }
+
   /* ---------- Texto propio de cada página ---------- */
   function applyPageContent() {
     var here = currentFile();
@@ -286,6 +340,7 @@
   buildNav();
   buildLangs();
   applyPageContent();
+  applyInfoContent();
   syncNavState();
   initHeroVideo();
 })();
