@@ -57,11 +57,11 @@ uxm-alliance/
 
 > Nav Bar & Menu
 
-3. **Barra superior**: `<nav class="navbar topbar">` con fondo **transparente** y texto en el color estándar del esquema claro (`--fg-2` / `--fg-body`). Superpuesta y con `pointer-events: none` para no bloquear el Home.
+3. **Barra superior**: `<nav class="navbar topbar">` fija (`position: fixed; top: 0`), con fondo **transparente**, `pointer-events: none` para no bloquear el contenido y texto «Inicio UXM» en gris `#ccc`. El botón, la marca, el panel y el backdrop mantienen `pointer-events: auto`.
 
-4. **Menú lateral**: panel propio (`<div id="navPanel" class="nav-panel">`), fijo en el borde **izquierdo**, a pantalla completa (`100dvh`) y con `max-width: 400px` en escritorio y móvil, fondo negro translúcido (`rgba(0, 0, 0, .72)`), borde blanco sutil y entrada animada desde la izquierda. Los enlaces y sus `.nav-item` ocupan todo el ancho del panel, usan texto blanco y se rellenan de rojo escarlata `#ff2400` al recibir `hover` o `focus-visible`; la página activa se marca con un punto azul. Backdrop propio (`#navBackdrop`) y cierre con `Escape` o al pulsar un enlace. Un solo panel por página, con los enlaces generados por `js/app.js`.
+4. **Menú lateral**: panel propio (`<div id="navPanel" class="nav-panel">`), fijo en el borde **izquierdo**, a pantalla completa (`100dvh`) y con `max-width: 400px` en escritorio y móvil, fondo negro translúcido (`rgba(0, 0, 0, .72)`), borde blanco sutil y entrada animada desde la izquierda. Los enlaces y sus `.nav-item` ocupan todo el ancho del panel, usan texto blanco y se rellenan de rojo escarlata `#ff2400` al recibir `hover` o `focus-visible`; la página activa se marca con un punto azul. Incluye como primer enlace la portada localizada («Inicio», «Home», «Início», etc.) mediante `basePath()` y conserva `?lang=`. Backdrop propio (`#navBackdrop`) y cierre con `Escape` o al pulsar un enlace. Un solo panel por página, con los enlaces generados por `js/app.js`.
 
-5. **Hamburguesa**: sin borde, tres líneas sólidas de `3px` separadas `7px`; en la portada están en gris claro `#e9ecef` y en las subpáginas usan `--text` para mantener el contraste. Al abrir el menú cambian a rojo escarlata `#ff2400`, sin formar un icono "X". La tercera línea se alarga desde su origen hasta quedar a `10px` del borde derecho del menú durante la apertura.
+5. **Hamburguesa**: sin borde, tres líneas sólidas de `3px` separadas `7px`, inicialmente en gris `#ccc`. Cada 60 s la primera línea se desplaza `20px` a la derecha y la segunda `10px`, regresando a su posición original. Al abrir el menú las tres cambian a rojo escarlata `#ff2400`, sin formar un icono "X", y la tercera se alarga desde su origen hasta quedar a `10px` del borde derecho del menú.
 
 6. **Fondo gris suave** `--bg: #e9ecef`, con texto oscuro (`--text: #212529`) y sombras recalculadas.
 
@@ -81,7 +81,7 @@ uxm-alliance/
 
 > Hero
 
-13. **Hero principal**: ocupa el ancho completo y `min-height: 90dvh`, dejando visible el 10 % siguiente del viewport; usa video de fondo `media/video-particles-cyan.mp4` (`autoplay muted loop playsinline`) y poster `media/video-particles-cyan-poster.jpg` como fallback. El `heroTitle` usa la fuente local **Cinzel**, sin subrayado, con sombra multicapa de piedra que produce relieve sobre el video y flotación vertical suave; cada inicial mide `1.12em` y todas las letras se alinean por su borde superior. La inicial `U` de “Under” usa rojo escarlata `#ff2400` con sombra propia roja y el resto del texto gris concreto `#b8b8b2`. El `<p class="tag">` comparte el trabajo de sombra, con distancias adaptadas a su tamaño. Con `prefers-reduced-motion` se muestra estático y sin video, con imagen de fondo estática.
+13. **Hero principal**: ocupa el ancho completo y `min-height: 90dvh`, dejando visible el 10 % siguiente del viewport; usa video de fondo `media/video-particles-cyan.mp4` (`autoplay muted loop playsinline`) y poster `media/video-particles-cyan-poster.jpg` como fallback. El `heroTitle` usa la fuente local **Cinzel**, sin subrayado, con sombra multicapa de piedra que produce relieve sobre el video y flotación vertical suave; cada inicial mide `1.12em` y todas las letras se alinean por su borde superior. La inicial `U` de “Under” usa rojo escarlata `#ff2400` con sombra propia roja y el resto del texto gris concreto `#b8b8b2`. El `<p class="tag">` comparte el trabajo de sombra, con distancias adaptadas a su tamaño. En la parte inferior del cover se muestra un mouse dibujado con CSS, con rueda animada, que enlaza a `#join` para indicar que el contenido continúa hacia abajo. Con `prefers-reduced-motion` el título se muestra estático y sin video, con imagen de fondo estática.
 
 > Detalle completo en `docs/core/project-rules.md`.
 

@@ -9,14 +9,16 @@
 
 ### Changed
 - El menú lateral deja de usar el `Drawer` de Bootstrap: ahora es un panel fijo a la izquierda, a pantalla completa (`100dvh`), con ancho máximo de `400px` y fondo negro translúcido `rgba(0, 0, 0, .72)` con texto blanco.
-- La hamburguesa usa tres líneas de `3px` separadas `7px`: gris claro en la portada y texto oscuro en las subpáginas; al abrir, las tres cambian a rojo escarlata y la tercera se alarga hasta quedar a `10px` del borde derecho.
+- La navbar pasa a `position: fixed` y la marca **"Inicio UXM"** adopta gris `#ccc`.
+- La hamburguesa usa tres líneas de `3px` separadas `7px` inicialmente en gris `#ccc`; cada 60 s la primera avanza `20px` y la segunda `10px` antes de regresar. Al abrir, las tres cambian a rojo escarlata y la tercera se alarga hasta quedar a `10px` del borde derecho.
+- El menú lateral incorpora un primer enlace localizado a la portada mediante la clave `navHome`.
 - Los `.nav-item` y enlaces del menú ocupan todo el ancho y se rellenan progresivamente de rojo escarlata con texto blanco al recibir `hover` o `focus-visible`; la página activa se marca con un punto azul.
 - El cierre del menú se realiza con `Escape`, backdrop o al pulsar un enlace, devolviendo el foco al botón hamburguesa.
 - El selector de idioma queda fijado en esquema claro y el copyright corporativo es `© 2026 UXM – Under Xtreme Madness` en todos los idiomas.
 - El hero de la portada ocupa el 90 % del viewport, dejando visible el 10 % siguiente para indicar que la página continúa.
 - El título principal agrupa cada palabra con alineación superior, eleva sus iniciales a `1.12em`, pinta la `U` de “Under” en rojo escarlata y usa gris concreto `#b8b8b2` para el resto.
 - El título y el tag del hero aplican sombras de relieve multicapa; la inicial `U` usa una sombra propia en tonos rojos.
-- El enlace **"Inicio UXM"** de la portada usa texto gris claro y sombra oscura para contrastar con el video.
+- La portada incorpora un mouse animado en la parte inferior del cover que enlaza al contenido mediante `#join`.
 
 ### Removed
 - Elemento `<p id="welcome" class="welcome"></p>` de la página principal, su asignación en `js/app.js` y las claves `welcome` de `js/i18n.js`.

@@ -97,23 +97,24 @@ El fondo del sitio es **gris suave** (`#e9ecef`, equivalente a `bs-gray-200`). P
 ### Navbar (barra superior)
 
 - Elemento `<nav class="navbar topbar">` con **fondo transparente** (`background-color: transparent`, sin `navbar-translucent` ni `data-bs-theme="dark"`).
-- El texto usa el **color estándar** del esquema claro de Bootstrap (`--navbar-color: var(--fg-2)`, `--navbar-brand-color: var(--fg-body)`).
-- Transparente, superpuesto (`position: absolute`), sin fondo ni borde.
-- `pointer-events: none` en el navbar y en su `.container-fluid` para no bloquear el Home; solo el botón hamburguesa, la marca y el panel de navegación son interactivos.
-- El botón hamburguesa **no tiene borde**; sus tres líneas de `3px` separadas `7px` usan gris claro `#e9ecef` en la portada y `--text` en las subpáginas. Durante la apertura cambian a rojo escarlata `#ff2400`.
+- La barra es **fija** (`position: fixed; top: 0`) para permanecer visible durante el desplazamiento, sin ocupar el flujo del documento.
+- `pointer-events: none` en el navbar y en su `.container-fluid` para no bloquear el contenido; solo el botón hamburguesa, la marca, el panel de navegación y el backdrop son interactivos.
+- El botón hamburguesa **no tiene borde**; sus tres líneas de `3px` separadas `7px` usan gris `#ccc` en reposo y cambian a rojo escarlata `#ff2400` durante la apertura.
+- Cada 60 segundos se ejecuta un aviso de navegación: la primera línea avanza `20px` y la segunda `10px` hacia la derecha, y ambas regresan a su posición original. El movimiento se suspende con el menú abierto y con `prefers-reduced-motion`.
 - No se muestra ningún icono "X": el menú se cierra con backdrop, `Escape` o al pulsar un enlace.
-- En `index.html`, la marca **"Inicio UXM"** usa gris claro `#e9ecef` y una sombra oscura para mantener el contraste sobre el video.
+- La marca **"Inicio UXM"** usa gris `#ccc` y una sombra oscura para mantener el contraste sobre el video.
 
 ### Menú lateral
 
 - Panel propio **anclado a la izquierda**: `position: fixed`, `left: 0`, `top: 0`, `height: 100dvh`, `width: 100%` y `max-width: 400px`. El ancho nunca supera 400 px en escritorio ni en móvil.
 - Fondo negro translúcido `rgba(0, 0, 0, .72)` con borde derecho blanco sutil `rgba(255, 255, 255, .16)` y texto blanco.
 - Entrada animada desde la izquierda: `transform: translateX(-100%)` → `translateX(0)` al añadir la clase `.is-open`.
-- La hamburguesa usa tres líneas sólidas de `3px` separadas `7px`: gris claro `#e9ecef` en la portada y `--text` en las subpáginas. Al abrir, las tres cambian a rojo escarlata `#ff2400` y la tercera se alarga desde su origen hasta quedar a `10px` del borde derecho del panel; al cerrar recuperan su color y ancho inicial. La animación nunca forma un icono «X».
+- La hamburguesa usa tres líneas sólidas de `3px` separadas `7px`, inicialmente en gris `#ccc`. Al abrir, las tres cambian a rojo escarlata `#ff2400` y la tercera se alarga desde su origen hasta quedar a `10px` del borde derecho del panel; al cerrar recuperan su color y ancho inicial. La animación nunca forma un icono «X».
 - Backdrop propio (`#navBackdrop`) con `rgba(33, 37, 41, .35)`; cierre con `Escape`, con el backdrop o al pulsar un enlace.
 - Un único panel por página con `id="navPanel"`; el contenido lo genera `js/app.js` en `#navList`.
+- El primer enlace del menú es la portada, con texto localizado mediante la clave `navHome` («Inicio», «Home», «Início», etc.), ruta relativa calculada con `basePath()` y conservación de `?lang=`. En `index.html` se marca como página activa.
 - Enlaces **minimalistas**: los `.nav-item` y sus enlaces ocupan todo el ancho disponible (`width: 100%`), sin borde ni aspecto de botón; en `hover`/`focus-visible` se rellenan progresivamente de rojo escarlata `#ff2400` de izquierda a derecha, con texto blanco, y la página activa se marca con un punto azul (`.active::after`).
-- Enlaces generados con `?lang=` para conservar el idioma: `actividades-diarias.html`, `normas-uxm.html`, `video-tutoriales.html`, `estrategia.html`, `contacto.html` (con prefijo `pages/` cuando se viewing desde la raíz).
+- Enlaces generados con `?lang=` para conservar el idioma: `index.html`, `actividades-diarias.html`, `normas-uxm.html`, `video-tutoriales.html`, `estrategia.html`, `contacto.html` (con prefijo `pages/` cuando se viewing desde la raíz).
 - La página activa se marca con `aria-current="page"` y la clase `.active`.
 
 ### Hero principal (página de inicio)
@@ -124,8 +125,9 @@ El fondo del sitio es **gris suave** (`#e9ecef`, equivalente a `bs-gray-200`). P
 - El `heroTitle` usa la fuente local **Cinzel**, no tiene subrayado y aplica una sombra multicapa con relieve de piedra: iluminación superior, extrusión en cuatro niveles y sombra difusa `0 12px 30px` para destacar el texto sobre el video. Flota verticalmente `10px` en un bucle suave de 6 s sin abandonar su posición central.
 - Las palabras del título se agrupan con `inline-flex` y `align-items: flex-start`; cada inicial (`U`, `X`, `M`, `A`) mide `1.12em` y queda alineada por su borde superior respecto al resto de las letras de su palabra.
 - La inicial `U` de “Under” usa rojo escarlata `#ff2400` con su propia sombra de iluminación y extrusión en tonos rojos; el resto del título usa gris concreto `#b8b8b2`.
-- El `<p class="tag">` aplica el mismo lenguaje de relieve, con una luz superior, extrusión y sombra proyectada adaptadas a su tamaño tipográfico menor.
-- Con `prefers-reduced-motion: reduce` el título se muestra estático, el video se pausa y se oculta, y permanece visible el poster estático.
+- El `<p class="tag">` aplica el mismo lenguaje de relieve, con una luz superior sin color de texto, extrusión y sombra proyectada adaptadas a su tamaño tipográfico menor.
+- En la parte inferior del cover se incluye `.hero-scroll-cue`: un mouse dibujado con CSS, con rueda animada mediante `uxm-scroll-wheel`, que enlaza a `#join` para indicar que la página continúa hacia abajo. Cambia a rojo escarlata en `hover`/`focus-visible` y mantiene un anillo de foco visible.
+- Con `prefers-reduced-motion: reduce` el título se muestra estático, el video se pausa y se oculta, permanece visible el poster estático y el indicador de scroll deja de animarse.
 
 ### Esquema de color y copyright
 
