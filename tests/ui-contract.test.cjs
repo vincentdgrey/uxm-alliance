@@ -6,6 +6,50 @@ const path = require("node:path");
 const root = path.resolve(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 
+test("la navbar es fija y usa el gris inicial de la hamburguesa", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.topbar\s*\{[^}]*position:\s*fixed/s);
+  assert.match(css, /\.topbar\s*\{[^}]*top:\s*0/s);
+  assert.match(css, /\.nav-toggle-bars i\s*\{[^}]*background:\s*#ccc/s);
+  assert.match(css, /\.topbar-brand\s*\{[^}]*color:\s*#ccc/s);
+});
+
+test("la hamburguesa se anima cada 60 segundos con desplazamientos definidos", () => {
+  const css = read("css/style.css");
+  assert.match(css, /@keyframes\s+uxm-nav-line-one/);
+  assert.match(css, /@keyframes\s+uxm-nav-line-two/);
+  assert.match(css, /60s/);
+  assert.match(css, /translateX\(20px\)/);
+  assert.match(css, /translateX\(10px\)/);
+  const reducedMotion = css.match(/@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{([\s\S]*?)\n\}/);
+  assert.ok(reducedMotion, "debe existir el bloque de movimiento reducido");
+  assert.match(reducedMotion[1], /\.nav-toggle-bars i:nth-child\(1\)/);
+  assert.match(reducedMotion[1], /\.nav-toggle-bars i:nth-child\(2\)/);
+  assert.match(reducedMotion[1], /animation:\s*none/);
+});
+
+test("el menú lateral incluye el enlace localizado de inicio", () => {
+  const js = read("js/app.js");
+  const i18n = read("js/i18n.js");
+  assert.match(js, /navHome/);
+  assert.match(js, /basePath\(\)\s*\+\s*"index\.html"/);
+  assert.match(i18n, /navHome:"Inicio"/);
+  assert.ok((i18n.match(/navHome:/g) || []).length >= 8);
+});
+
+test("la portada incluye un mouse animado que enlaza al contenido", () => {
+  const html = read("index.html");
+  const css = read("css/style.css");
+  const js = read("js/app.js");
+  const i18n = read("js/i18n.js");
+  assert.match(html, /hero-scroll-cue/);
+  assert.match(html, /href="#join"/);
+  assert.match(css, /\.hero-scroll-cue/);
+  assert.match(css, /@keyframes\s+uxm-scroll-wheel/);
+  assert.match(js, /heroScrollCue.*setAttribute\("aria-label",\s*T\.scrollCue\)/);
+  assert.ok((i18n.match(/scrollCue:/g) || []).length >= 8);
+});
+
 test("el menú lateral nunca supera 400px y la tercera línea alcanza el borde menos 10px", () => {
   const css = read("css/style.css");
   assert.match(css, /\.nav-panel\s*\{[\s\S]*?max-width:\s*400px/);
@@ -16,8 +60,8 @@ test("el menú lateral nunca supera 400px y la tercera línea alcanza el borde m
 
 test("la hamburguesa usa gris claro en la portada y cambia a escarlata al abrir el menú", () => {
   const css = read("css/style.css");
-  assert.match(css, /\.nav-toggle-bars i\s*\{[^}]*background:\s*var\(--text\)/s);
-  assert.match(css, /\.home-topbar\s+\.nav-toggle-bars i\s*\{[^}]*background:\s*var\(--gray-light\)/s);
+  assert.match(css, /\.nav-toggle-bars i\s*\{[^}]*background:\s*#ccc/s);
+  assert.match(css, /\.home-topbar\s+\.nav-toggle-bars i\s*\{[^}]*background:\s*#ccc/s);
   assert.match(css, /\.nav-open\s+\.nav-toggle-bars i\s*\{[^}]*background:\s*var\(--scarlet\)/s);
 });
 
@@ -34,7 +78,7 @@ test("la portada distingue el hero y la marca con clases específicas", () => {
   const css = read("css/style.css");
   assert.match(html, /<body class="home-page">/);
   assert.match(html, /<nav class="navbar topbar home-topbar"[^>]*>/);
-  assert.match(css, /\.home-topbar\s+\.topbar-brand\s*\{[^}]*color:\s*var\(--gray-light\)/s);
+  assert.match(css, /\.home-topbar\s+\.topbar-brand\s*\{[^}]*color:\s*#ccc/s);
   assert.match(css, /\.hero-video\s*\{[^}]*min-height:\s*90vh/s);
   assert.match(css, /\.hero-video\s*\{[^}]*min-height:\s*90dvh/s);
 });
