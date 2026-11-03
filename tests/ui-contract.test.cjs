@@ -35,7 +35,22 @@ test("la portada distingue el hero y la marca con clases específicas", () => {
   assert.match(html, /<body class="home-page">/);
   assert.match(html, /<nav class="navbar topbar home-topbar"[^>]*>/);
   assert.match(css, /\.home-topbar\s+\.topbar-brand\s*\{[^}]*color:\s*var\(--gray-light\)/s);
-  assert.match(css, /\.hero-video\s*\{[^}]*min-height:\s*calc\(100dvh - 20px\)/s);
+  assert.match(css, /\.hero-video\s*\{[^}]*min-height:\s*90vh/s);
+  assert.match(css, /\.hero-video\s*\{[^}]*min-height:\s*90dvh/s);
+});
+
+test("el menú lateral usa fondo negro translúcido y texto blanco", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.nav-panel\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*\.72\)/s);
+  assert.match(css, /\.nav-list a\s*\{[^}]*color:\s*#fff/s);
+  assert.match(css, /\.nav-list\s+\.nav-item\s*\{[^}]*width:\s*100%/s);
+});
+
+test("el título y el tag del hero usan sombras de relieve", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.hero-video\s+\.hero-title\s*\{[^}]*text-shadow:[^}]*0 12px 30px/s);
+  assert.match(css, /\.hero-title-accent\s*\{[^}]*text-shadow:[^}]*rgba\(122,\s*17,\s*0/s);
+  assert.match(css, /\.hero-video\s+\.tag\s*\{[^}]*text-shadow:[^}]*;/s);
 });
 
 test("las iniciales del hero se alinean arriba, crecen y usan los colores solicitados", () => {
