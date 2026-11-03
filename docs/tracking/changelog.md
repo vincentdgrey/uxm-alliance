@@ -3,13 +3,21 @@
 ## [261103] - 2026-11-03
 
 ### Added
-- Sección informativa `.block-content-info` en la portada con subtítulo centrado, mensaje de bienvenida localizado, saludos dinámicos y dos botones de acción.
+- Sección informativa `.block-content-info` en la portada con subtítulos `<h2 class="sibtitle-info">`, mensaje de bienvenida localizado, saludos dinámicos y dos botones de acción.
 - Botones `btn-outline` para YouTube (escarlata) y Normas UXM (`#2266bb`), con relleno animado y rutas relativas compatibles con GitHub Pages.
+- Selector de idioma al final del menú lateral (`#sideLangs`), con IDs independientes y apertura hacia arriba (`top-start`).
+- Divisor `.line-divisor-scarlet` de `3px`, ancho `96%` y margen libre del 2 % en cada extremo.
 
 ### Changed
-- Todos los botones del sitio usan `border-radius: 3px` mediante el token `--button-radius`.
-- El subtítulo `.sibtitle-info` usa texto gris concreto con la primera letra en rojo escarlata.
+- Todos los botones del sitio usan `border-radius: 4px` mediante el token `--button-radius`; los enlaces activos del menú lateral también respetan ese radio.
+- Los subtítulos `.sibtitle-info` usan la fuente local Cinzel, texto gris concreto, sombra gris y la primera letra en rojo escarlata en todos los títulos; el de bienvenida permanece centrado.
+- `.block-content-destacated` comparte el layout de `.block-content-info` y usa fondo `#424d61` con texto `#ccc`.
 - `.dinamic-welcome` muestra las traducciones de «Bienvenido» de todos los idiomas salvo el activo, separadas por ` · `, sin rotación ni temporizadores.
+- `.ha-author` se muestra en cursiva, `#aaa`, alineado a la derecha y con subrayado de `1px solid #aaa`.
+- El texto español de `.message-arenga` se conserva según la redacción manual de `index.html`.
+
+### Removed
+- Elemento `<h2 id="join"></h2>`, su asignación en `js/app.js`, la clave i18n `join` y su regla CSS; el indicador de scroll apunta a `#infoTitle`.
 
 ## [261102] - 2026-11-02
 

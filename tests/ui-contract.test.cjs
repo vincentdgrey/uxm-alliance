@@ -6,16 +6,17 @@ const path = require("node:path");
 const root = path.resolve(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 
-test("todos los botones usan radio de 3px", () => {
+test("todos los botones usan radio de 4px", () => {
   const css = read("css/style.css");
-  assert.match(css, /--button-radius:\s*3px/);
+  assert.match(css, /--button-radius:\s*4px/);
   assert.match(css, /button,\s*\.btn,\s*\.btn-outline[^{]*\{[^}]*border-radius:\s*var\(--button-radius\)/s);
+  assert.match(css, /\.nav-list a\.active\s*\{[^}]*border-radius:\s*var\(--button-radius\)/s);
 });
 
 test("la portada incluye la sección informativa con el subtítulo centrado", () => {
   const html = read("index.html");
   assert.match(html, /<section class="block-content-info">/);
-  assert.match(html, /<h3 class="sibtitle-info text-center"[^>]*>/);
+  assert.match(html, /<h2 class="sibtitle-info"[^>]*>/);
   assert.match(html, /<p class="dinamic-welcome"[^>]*><\/p>/);
   assert.match(html, /<div class="message-welcome">\s*<p id="welcomeMessage">/s);
   assert.match(html, /<div class="block-buttons"[^>]*>/);
@@ -50,6 +51,65 @@ test("los botones informativos declaran borde y el tag del hero usa un color vá
   assert.match(css, /\.block-buttons \.btn-info-rules\s*\{[^}]*border:\s*1px solid var\(--primary-btn\)/s);
   assert.doesNotMatch(css, /color:\s*none/);
   assert.match(css, /\.hero-video \.tag\s*\{[^}]*color:\s*#f1f3f5/s);
+});
+
+test("los subtítulos informativos usan H2, Cinzel, inicial escarlata y sombra gris", () => {
+  const html = read("index.html");
+  const css = read("css/style.css");
+  const js = read("js/app.js");
+  assert.doesNotMatch(html, /<h3 class="sibtitle-info/);
+  assert.ok((html.match(/<h2 class="sibtitle-info/g) || []).length >= 4);
+  assert.match(css, /\.sibtitle-info\s*\{[^}]*font-family:\s*"Cinzel", Georgia, "Times New Roman", serif/s);
+  assert.match(css, /\.sibtitle-info\s*\{[^}]*text-shadow:[^}]*rgba\(33,\s*33,\s*33/s);
+  assert.match(css, /\.sibtitle-info \.info-initial\s*\{[^}]*color:\s*var\(--scarlet\)/s);
+  assert.match(js, /querySelectorAll\("\.sibtitle-info"\)/);
+});
+
+test("el bloque destacado comparte layout y usa fondo azul grisáceo", () => {
+  const html = read("index.html");
+  const css = read("css/style.css");
+  assert.match(html, /<section class="block-content-destacated">/);
+  assert.match(css, /\.block-content-info,\s*\.block-content-destacated\s*\{[^}]*max-width:\s*960px/s);
+  assert.match(css, /\.block-content-destacated\s*\{[^}]*background-color:\s*#424d61/s);
+  assert.match(css, /\.block-content-destacated\s*\{[^}]*color:\s*#ccc/s);
+});
+
+test("el autor de la arenga se muestra en cursiva, a la derecha y subrayado", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.ha-author\s*\{[^}]*font-style:\s*italic/s);
+  assert.match(css, /\.ha-author\s*\{[^}]*color:\s*#aaa/s);
+  assert.match(css, /\.ha-author\s*\{[^}]*text-align:\s*right/s);
+  assert.match(css, /\.ha-author\s*\{[^}]*border-bottom:\s*1px solid #aaa/s);
+});
+
+test("se eliminó join y el mouse apunta a la sección informativa", () => {
+  const html = read("index.html");
+  const js = read("js/app.js");
+  const i18n = read("js/i18n.js");
+  assert.doesNotMatch(html, /id="join"/);
+  assert.doesNotMatch(js, /setText\("join"/);
+  assert.doesNotMatch(i18n, /\bjoin:/);
+  assert.match(html, /id="heroScrollCue"[^>]*href="#infoTitle"/);
+  assert.match(read("css/style.css"), /#infoTitle\s*\{[^}]*scroll-margin-top/s);
+});
+
+test("el divisor escarlata ocupa el 96% con 2% libre a cada lado", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.line-divisor-scarlet\s*\{[^}]*width:\s*96%/s);
+  assert.match(css, /\.line-divisor-scarlet\s*\{[^}]*border-top:\s*3px solid var\(--scarlet\)/s);
+  assert.match(css, /\.line-divisor-scarlet\s*\{[^}]*margin:[^;]*auto/s);
+});
+
+test("el menú lateral incluye un selector de idioma independiente al final", () => {
+  const html = read("index.html");
+  const js = read("js/app.js");
+  const css = read("css/style.css");
+  assert.match(html, /id="sideLangs"/);
+  assert.match(js, /prefix \+ "LangToggle"/);
+  assert.match(js, /prefix \+ "LangLabel"/);
+  assert.match(js, /buildLangSelector\(sideLangsBox, "side", "top-start"\)/);
+  assert.match(css, /\.nav-panel\s*\{[^}]*display:\s*flex/s);
+  assert.match(css, /\.side-langs\s*\{[^}]*margin-top:\s*auto/s);
 });
 
 test("la navbar es fija y usa el gris inicial de la hamburguesa", () => {
@@ -89,7 +149,7 @@ test("la portada incluye un mouse animado que enlaza al contenido", () => {
   const js = read("js/app.js");
   const i18n = read("js/i18n.js");
   assert.match(html, /hero-scroll-cue/);
-  assert.match(html, /href="#join"/);
+  assert.match(html, /href="#infoTitle"/);
   assert.match(css, /\.hero-scroll-cue/);
   assert.match(css, /@keyframes\s+uxm-scroll-wheel/);
   assert.match(js, /heroScrollCue.*setAttribute\("aria-label",\s*T\.scrollCue\)/);

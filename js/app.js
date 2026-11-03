@@ -71,7 +71,6 @@
     if (el) el.textContent = text;
   }
 
-  setText("join", T.join);
   setText("bonusTitle", T.bonuses);
   setText("copyright", T.copyright);
   setText("ytLabel", T.youtube);
@@ -94,6 +93,21 @@
       initial.textContent = title.charAt(0);
       infoTitle.appendChild(initial);
       infoTitle.appendChild(document.createTextNode(title.slice(1)));
+    }
+
+    /* Todos los subtítulos informativos reciben inicial escarlata. */
+    var infoTitles = document.querySelectorAll(".sibtitle-info");
+    for (var i = 0; i < infoTitles.length; i++) {
+      var heading = infoTitles[i];
+      if (heading.querySelector(".info-initial")) continue;
+      var text = heading.textContent.trim();
+      if (!text) continue;
+      heading.textContent = "";
+      var headingInitial = document.createElement("span");
+      headingInitial.className = "info-initial";
+      headingInitial.textContent = text.charAt(0);
+      heading.appendChild(headingInitial);
+      heading.appendChild(document.createTextNode(text.slice(1)));
     }
 
     if (dynamicWelcome) {
@@ -292,32 +306,34 @@
 
   /* ---------- Selector de idiomas (Menu desplegable de Bootstrap) ---------- */
   var langsBox = byId("langs");
-  function buildLangs() {
-    if (!langsBox) return;
-    langsBox.innerHTML = "";
+  var sideLangsBox = byId("sideLangs");
+
+  function buildLangSelector(container, prefix, placement) {
+    if (!container) return;
+    container.innerHTML = "";
 
     var label = document.createElement("span");
     label.className = "lang-label";
-    label.id = "langLabel";
+    label.id = prefix + "LangLabel";
     label.textContent = T.language;
-    langsBox.appendChild(label);
+    container.appendChild(label);
 
     var toggle = document.createElement("button");
-    toggle.id = "langToggle";
+    toggle.id = prefix + "LangToggle";
     toggle.type = "button";
     toggle.className = "btn-outline lang-toggle";
     toggle.setAttribute("data-bs-toggle", "menu");
-    toggle.setAttribute("data-bs-placement", "top-end");
+    toggle.setAttribute("data-bs-placement", placement);
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-haspopup", "true");
-    toggle.setAttribute("aria-labelledby", "langLabel langToggle");
+    toggle.setAttribute("aria-labelledby", label.id + " " + toggle.id);
     toggle.setAttribute("lang", LANG);
     toggle.textContent = window.I18N[LANG].name;
-    langsBox.appendChild(toggle);
+    container.appendChild(toggle);
 
     var menu = document.createElement("div");
     menu.className = "menu lang-menu";
-    menu.setAttribute("aria-labelledby", "langToggle");
+    menu.setAttribute("aria-labelledby", toggle.id);
 
     Object.keys(window.I18N).forEach(function (code) {
       var item = document.createElement("button");
@@ -333,7 +349,12 @@
       menu.appendChild(item);
     });
 
-    langsBox.appendChild(menu);
+    container.appendChild(menu);
+  }
+
+  function buildLangs() {
+    buildLangSelector(langsBox, "", "top-end");
+    buildLangSelector(sideLangsBox, "side", "top-start");
   }
 
   /* ---------- Init ---------- */

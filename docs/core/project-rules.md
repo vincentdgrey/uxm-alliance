@@ -112,8 +112,9 @@ El fondo del sitio es **gris suave** (`#e9ecef`, equivalente a `bs-gray-200`). P
 - La hamburguesa usa tres líneas sólidas de `3px` separadas `7px`, inicialmente en gris `#ccc`. Al abrir, las tres cambian a rojo escarlata `#ff2400` y la tercera se alarga desde su origen hasta quedar a `10px` del borde derecho del panel; al cerrar recuperan su color y ancho inicial. La animación nunca forma un icono «X».
 - Backdrop propio (`#navBackdrop`) con `rgba(33, 37, 41, .35)`; cierre con `Escape`, con el backdrop o al pulsar un enlace.
 - Un único panel por página con `id="navPanel"`; el contenido lo genera `js/app.js` en `#navList`.
+- El panel es un contenedor flex vertical con `overflow-y: auto`. Los enlaces mantienen prioridad visual en la parte superior y el selector `#sideLangs` se sitúa al final mediante `margin-top: auto`; en pantallas bajas queda después de los enlaces dentro del área desplazable, sin superponerse.
 - El primer enlace del menú es la portada, con texto localizado mediante la clave `navHome` («Inicio», «Home», «Início», etc.), ruta relativa calculada con `basePath()` y conservación de `?lang=`. En `index.html` se marca como página activa.
-- Enlaces **minimalistas**: los `.nav-item` y sus enlaces ocupan todo el ancho disponible (`width: 100%`), sin borde ni aspecto de botón; en `hover`/`focus-visible` se rellenan progresivamente de rojo escarlata `#ff2400` de izquierda a derecha, con texto blanco, y la página activa se marca con un punto azul (`.active::after`).
+- Enlaces **minimalistas**: los `.nav-item` y sus enlaces ocupan todo el ancho disponible (`width: 100%`), sin borde ni aspecto de botón; en `hover`/`focus-visible` se rellenan progresivamente de rojo escarlata `#ff2400` de izquierda a derecha, con texto blanco, y la página activa se marca con un punto azul (`.active::after`). El enlace activo respeta `border-radius: var(--button-radius)` (`4px`).
 - Enlaces generados con `?lang=` para conservar el idioma: `index.html`, `actividades-diarias.html`, `normas-uxm.html`, `video-tutoriales.html`, `estrategia.html`, `contacto.html` (con prefijo `pages/` cuando se viewing desde la raíz).
 - La página activa se marca con `aria-current="page"` y la clase `.active`.
 
@@ -132,7 +133,7 @@ El fondo del sitio es **gris suave** (`#e9ecef`, equivalente a `bs-gray-200`). P
 ### Esquema de color y copyright
 
 - El sitio usa `color-scheme: light` y fondos claros explícitos. No aplica fondos negros implícitos; los fondos oscuros permitidos están definidos de forma expresa (menú lateral `rgba(0, 0, 0, .72)`, hero, overlay y backdrop).
-- El selector de idioma usa siempre esquema claro, con superficie `#fff`, texto oscuro y borde `--line`.
+- El selector de idioma del footer usa `data-bs-placement="top-end"`; el del menú lateral (`#sideLangs`) usa `top-start` y se genera con IDs independientes (`sideLangToggle`, `sideLangLabel`). Ambos mantienen esquema claro, superficie `#fff`, texto oscuro y borde `--line`.
 - El copyright corporativo es fijo en todos los idiomas: `© 2026 UXM – Under Xtreme Madness`.
 
 ### Estilos de selección (hover / focus / active)
@@ -150,14 +151,18 @@ El anillo de foco usa `#ffbf47` (amarillo) porque mantiene la visibilidad sobre 
 
 ### Sección informativa de la portada
 
-- La portada organiza su contenido en bloques `<section class="block-content-info">`.
-- El subtítulo `<h3 class="sibtitle-info text-center">` está centrado con la utilidad Bootstrap `text-center`; el texto usa gris concreto `#b8b8b2` y la primera letra se renderiza en rojo escarlata `#ff2400` mediante `.info-initial`.
+- La portada organiza su contenido en bloques `<section class="block-content-info">` y `<section class="block-content-destacated">`; ambos comparten ancho máximo `960px`, padding y alineación.
+- Los subtítulos son `<h2 class="sibtitle-info">` y usan la fuente local **Cinzel** (`"Cinzel", Georgia, "Times New Roman", serif`), texto gris concreto, sombra gris y primera letra en rojo escarlata `#ff2400` mediante `.info-initial` en todos los títulos.
 - `.dinamic-welcome` enumera la palabra «Bienvenido» de **todos los idiomas definidos salvo el activo**, separados por ` · `. No utiliza temporizadores ni rotación: solo cambia al recargar con otro `?lang=` o al detectar el idioma del navegador.
 - `.message-welcome` muestra el mensaje de bienvenida en el idioma activo mediante la clave `welcomeMessage`.
+- El texto español de `.message-arenga` se mantiene tal como está definido manualmente en `index.html`; no se genera ni se sobrescribe desde los bloques de `src/`.
+- `.ha-author` se muestra en cursiva, color `#aaa`, alineado a la derecha y con `border-bottom: 1px solid #aaa`.
+- `.line-divisor-scarlet` dibuja una línea `3px` de rojo escarlata con `width: 96%`, centrada y dejando un 2 % libre en cada extremo.
 - `.block-buttons` contiene dos enlaces `btn-outline`:
   - YouTube: borde y texto escarlata `#ff2400`, icono SVG y relleno animado en `hover`/`focus-visible`; abre en pestaña nueva con `rel="noopener noreferrer"`.
   - Normas UXM: borde y texto `#2266bb`, relleno animado del mismo color y ruta relativa `pages/normas-uxm.html` con `?lang=` (nunca `127.0.0.1`).
-- Todos los botones y enlaces con apariencia de botón usan `--button-radius: 3px`.
+- `.block-content-destacated` usa fondo `#424d61` y texto `#ccc` como contraste frente al bloque informativo.
+- Todos los botones y enlaces con apariencia de botón usan `--button-radius: 4px`.
 
 ### Footer
 
