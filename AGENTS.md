@@ -64,24 +64,26 @@ uxm-alliance/
 5. **Hamburguesa**: sin borde, tres líneas sólidas de `3px` separadas `7px`, inicialmente en gris `#ccc`. Cada 60 s la primera línea se desplaza `20px` a la derecha y la segunda `10px`, regresando a su posición original. Al abrir el menú las tres cambian a rojo escarlata `#ff2400`, sin formar un icono "X", y la tercera se alarga desde su origen hasta quedar a `10px` del borde derecho del menú.
 
 6. **Fondo gris suave** `--bg: #e9ecef`, con texto oscuro (`--text: #212529`) y sombras recalculadas.
+7. **Botones**: todos los botones y enlaces con apariencia de botón usan `border-radius: 3px` mediante el token `--button-radius`.
+8. **Sección informativa (portada)**: `.block-content-info` muestra un subtítulo `.sibtitle-info text-center` en gris concreto con la primera letra escarlata, el mensaje de bienvenida localizado y dos botones `btn-outline`: YouTube (escarlata) y Normas UXM (`#2266bb`). El saludo `.dinamic-welcome` enumera la palabra «Bienvenido» de todos los idiomas salvo el activo, separados por ` · `, sin rotación.
 
-7. **Rutas**: las subpáginas están en `./pages/`; usa rutas **relativas** (`../css`, `../js`, `../index.html`). `js/app.js` las resuelve con `inPagesDir()`, `basePath()` y `pageUrl()`. Nunca rutas absolutas (`/pages/...`): rompen en sitios de proyecto de GitHub Pages.
+9. **Rutas**: las subpáginas están en `./pages/`; usa rutas **relativas** (`../css`, `../js`, `../index.html`). `js/app.js` las resuelve con `inPagesDir()`, `basePath()` y `pageUrl()`. Nunca rutas absolutas (`/pages/...`): rompen en sitios de proyecto de GitHub Pages.
 
-8. **Estados seleccionables**: `hover`, `focus-visible` y `active` usan fondo `#26b` con texto `#fff` (nunca texto oscuro sobre azul), salvo los elementos con acento escarlata explícito. Anillo de foco `#ffbf47`.
+10. **Estados seleccionables**: `hover`, `focus-visible` y `active` usan fondo `#26b` con texto `#fff` (nunca texto oscuro sobre azul), salvo los elementos con acento escarlata explícito. Anillo de foco `#ffbf47`.
 
-9. **Enlace principal**: el navbar muestra **"Inicio UXM"** y apunta a `index.html` (o `../index.html` desde `./pages/`). En la portada usa texto gris claro `#e9ecef` con sombra oscura para contrastar con el video.
+11. **Enlace principal**: el navbar muestra **"Inicio UXM"** y apunta a `index.html` (o `../index.html` desde `./pages/`). En la portada usa texto gris claro `#e9ecef` con sombra oscura para contrastar con el video.
 
 > Footer
 
-10. **Footer**: siempre al fondo (body flex + `min-height: 100dvh`), en grid `1fr auto 1fr`: YouTube a la izquierda, copyright en el centro y **selector de idioma a la derecha**.
+12. **Footer**: siempre al fondo (body flex + `min-height: 100dvh`), en grid `1fr auto 1fr`: YouTube a la izquierda, copyright en el centro y **selector de idioma a la derecha**.
 
-11. **Selector de idioma**: `Menu` desplegable de Bootstrap (`data-bs-toggle="menu"`, `data-bs-placement="top-end"`), se abre hacia arriba y usa siempre esquema claro. Cada idioma se muestra en su propio idioma con atributo `lang`; conserva `?lang=` al cambiar. Se acompaña de la etiqueta visible **«Lenguaje»** (clave `language`).
+13. **Selector de idioma**: `Menu` desplegable de Bootstrap (`data-bs-toggle="menu"`, `data-bs-placement="top-end"`), se abre hacia arriba y usa siempre esquema claro. Cada idioma se muestra en su propio idioma con atributo `lang`; conserva `?lang=` al cambiar. Se acompaña de la etiqueta visible **«Lenguaje»** (clave `language`).
 
-12. **Copyright**: texto corporativo fijo `© 2026 UXM – Under Xtreme Madness` en todos los idiomas.
+14. **Copyright**: texto corporativo fijo `© 2026 UXM – Under Xtreme Madness` en todos los idiomas.
 
 > Hero
 
-13. **Hero principal**: ocupa el ancho completo y `min-height: 90dvh`, dejando visible el 10 % siguiente del viewport; usa video de fondo `media/video-particles-cyan.mp4` (`autoplay muted loop playsinline`) y poster `media/video-particles-cyan-poster.jpg` como fallback. El `heroTitle` usa la fuente local **Cinzel**, sin subrayado, con sombra multicapa de piedra que produce relieve sobre el video y flotación vertical suave; cada inicial mide `1.12em` y todas las letras se alinean por su borde superior. La inicial `U` de “Under” usa rojo escarlata `#ff2400` con sombra propia roja y el resto del texto gris concreto `#b8b8b2`. El `<p class="tag">` comparte el trabajo de sombra, con distancias adaptadas a su tamaño. En la parte inferior del cover se muestra un mouse dibujado con CSS, con rueda animada, que enlaza a `#join` para indicar que el contenido continúa hacia abajo. Con `prefers-reduced-motion` el título se muestra estático y sin video, con imagen de fondo estática.
+15. **Hero principal**: ocupa el ancho completo y `min-height: 90dvh`, dejando visible el 10 % siguiente del viewport; usa video de fondo `media/video-particles-cyan.mp4` (`autoplay muted loop playsinline`) y poster `media/video-particles-cyan-poster.jpg` como fallback. El `heroTitle` usa la fuente local **Cinzel**, sin subrayado, con sombra multicapa de piedra que produce relieve sobre el video y flotación vertical suave; cada inicial mide `1.12em` y todas las letras se alinean por su borde superior. La inicial `U` de “Under” usa rojo escarlata `#ff2400` con sombra propia roja y el resto del texto gris concreto `#b8b8b2`. El `<p class="tag">` comparte el trabajo de sombra, con distancias adaptadas a su tamaño. En la parte inferior del cover se muestra un mouse dibujado con CSS, con rueda animada, que enlaza a `#join` para indicar que el contenido continúa hacia abajo. Con `prefers-reduced-motion` el título se muestra estático y sin video, con imagen de fondo estática.
 
 > Detalle completo en `docs/core/project-rules.md`.
 
@@ -118,7 +120,7 @@ Todos los bloques-script deben usar esta paleta para acciones o elementos de imp
 | Token     | Hex       | Uso                                    |
 |-----------|-----------|----------------------------------------|
 | `success` | #009922 | Acciones completadas, estado en curso  |
-| `primary` | #26b    | Elementos principales, headers, títulos|
+| `primary` | #2266bb | Elementos principales, headers, títulos|
 | `warning` | #e95612 | Alertas preventivas, próximos eventos  |
 | `alert`   | #df1b1b | Errores, eventos críticos              |
 

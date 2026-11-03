@@ -148,6 +148,17 @@ Regla general del sitio: **todo elemento seleccionable usa fondo `#26b` (primary
 
 El anillo de foco usa `#ffbf47` (amarillo) porque mantiene la visibilidad sobre el fondo azul.
 
+### Sección informativa de la portada
+
+- La portada organiza su contenido en bloques `<section class="block-content-info">`.
+- El subtítulo `<h3 class="sibtitle-info text-center">` está centrado con la utilidad Bootstrap `text-center`; el texto usa gris concreto `#b8b8b2` y la primera letra se renderiza en rojo escarlata `#ff2400` mediante `.info-initial`.
+- `.dinamic-welcome` enumera la palabra «Bienvenido» de **todos los idiomas definidos salvo el activo**, separados por ` · `. No utiliza temporizadores ni rotación: solo cambia al recargar con otro `?lang=` o al detectar el idioma del navegador.
+- `.message-welcome` muestra el mensaje de bienvenida en el idioma activo mediante la clave `welcomeMessage`.
+- `.block-buttons` contiene dos enlaces `btn-outline`:
+  - YouTube: borde y texto escarlata `#ff2400`, icono SVG y relleno animado en `hover`/`focus-visible`; abre en pestaña nueva con `rel="noopener noreferrer"`.
+  - Normas UXM: borde y texto `#2266bb`, relleno animado del mismo color y ruta relativa `pages/normas-uxm.html` con `?lang=` (nunca `127.0.0.1`).
+- Todos los botones y enlaces con apariencia de botón usan `--button-radius: 3px`.
+
 ### Footer
 
 - Siempre al fondo de la página: `body` es flex column con `min-height: 100dvh`, `#stage` crece (`flex: 1 1 auto`) y el footer queda al final (`flex: 0 0 auto`). Con contenido que excede el alto de pantalla, la página se vuelve continua con scroll normal.
