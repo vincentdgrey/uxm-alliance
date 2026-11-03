@@ -6,6 +6,52 @@ const path = require("node:path");
 const root = path.resolve(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 
+test("todos los botones usan radio de 3px", () => {
+  const css = read("css/style.css");
+  assert.match(css, /--button-radius:\s*3px/);
+  assert.match(css, /button,\s*\.btn,\s*\.btn-outline[^{]*\{[^}]*border-radius:\s*var\(--button-radius\)/s);
+});
+
+test("la portada incluye la sección informativa con el subtítulo centrado", () => {
+  const html = read("index.html");
+  assert.match(html, /<section class="block-content-info">/);
+  assert.match(html, /<h3 class="sibtitle-info text-center"[^>]*>/);
+  assert.match(html, /<p class="dinamic-welcome"[^>]*><\/p>/);
+  assert.match(html, /<div class="message-welcome">\s*<p id="welcomeMessage">/s);
+  assert.match(html, /<div class="block-buttons"[^>]*>/);
+});
+
+test("el saludo dinámico excluye el idioma activo y separa los demás con puntos", () => {
+  const js = read("js/app.js");
+  const i18n = read("js/i18n.js");
+  assert.match(js, /welcomeTexts/);
+  assert.match(js, /code\s*!==\s*LANG/);
+  assert.match(js, /\.join\(" · "\)/);
+  assert.doesNotMatch(js, /setInterval/);
+  assert.ok((i18n.match(/welcome:"[^"]+"/g) || []).length >= 8);
+});
+
+test("la sección informativa incluye botones de YouTube y Normas UXM", () => {
+  const js = read("js/app.js");
+  const i18n = read("js/i18n.js");
+  assert.match(js, /buildInfoButtons/);
+  assert.match(js, /youtube\.com\/@VincentDantesGrey\/videos/);
+  assert.match(js, /normas-uxm\.html/);
+  assert.doesNotMatch(js, /127\.0\.0\.1/);
+  assert.match(i18n, /youtubeLabel:"YouTube"/);
+  assert.match(i18n, /rulesLabel:"Normas UXM"/);
+});
+
+test("los botones informativos declaran borde y el tag del hero usa un color válido", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.block-buttons \.btn-outline\s*\{[^}]*border-width:\s*1px/s);
+  assert.match(css, /\.block-buttons \.btn-outline\s*\{[^}]*border-style:\s*solid/s);
+  assert.match(css, /\.block-buttons \.btn-info-youtube\s*\{[^}]*border:\s*1px solid var\(--scarlet\)/s);
+  assert.match(css, /\.block-buttons \.btn-info-rules\s*\{[^}]*border:\s*1px solid var\(--primary-btn\)/s);
+  assert.doesNotMatch(css, /color:\s*none/);
+  assert.match(css, /\.hero-video \.tag\s*\{[^}]*color:\s*#f1f3f5/s);
+});
+
 test("la navbar es fija y usa el gris inicial de la hamburguesa", () => {
   const css = read("css/style.css");
   assert.match(css, /\.topbar\s*\{[^}]*position:\s*fixed/s);
