@@ -9,7 +9,7 @@ Configuración para agentes de IA. Este archivo garantiza continuidad del proyec
 1. Pagina web pura, alojamiento final cloud en Github Pages, carpeta root del website `./`.
 2. archivos en `src/` obsoletos.
 3. sin dependencias de red (sin fetch/CORS), en lo posible.
-4. Determinando el lenguaje del navegador (navigator.language + ?lang=es) cambiar el texto según el idioma disponible: español, ingles, portugués, italiano, turco, francés, chino, japones. default:ingles.
+4. Determinando el lenguaje del navegador (navigator.language + ?lang=es) cambiar el texto según el idioma disponible: español, ingles, portugués, italiano, francés, ruso, chino, japones,turco. default:ingles.
 5. Include Bootstrap’s CSS and JavaScript files via CDN. CDNs (Content Delivery Networks) are services that provides copies of libraries for your website.
 6. usar como base de conocimiento para implementar elementos html https://getbootstrap.com/docs/6.0/components/accordion/
 
@@ -51,6 +51,13 @@ uxm-alliance/
 
 > Detalle completo en `docs/core/project-rules.md`.
 
+### Fuente de verdad y cambios manuales
+
+- Para el sitio web, el código manual vigente en `index.html`, `pages/*.html`, `css/style.css`, `js/app.js` y `js/i18n.js` es la fuente de verdad.
+- Cuando el usuario informe que realizó cambios manuales en HTML, CSS, JavaScript o traducciones, revisar el diff, respetarlos sin revertirlos ni sobrescribirlos y actualizar `docs/core/project-rules.md` con el comportamiento resultante.
+- Si una regla anterior contradice al código manual, prevalece el código manual y la regla obsoleta debe corregirse.
+- `db/*.json` permanece como fuente de verdad exclusiva para los datos del juego.
+
 ---
 
 ## Zona Horaria Base
@@ -58,7 +65,7 @@ uxm-alliance/
 **UTC-2** es la zona horaria origen donde se registran todos los datos de actividades.
 
 - Los horarios en `db/*.json` están en UTC-2.
-- Cada bloque-script o script del sitio web convierte los horarios a la zona local del visitante automáticamente.
+- Cada script del sitio web convierte los horarios a la zona local del visitante automáticamente.
 - Fórmula: `UTC = hora_origen + 2h` → luego se convierte a la zona del navegador.
 
 ---

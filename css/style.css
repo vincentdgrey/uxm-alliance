@@ -41,13 +41,22 @@ body {
   --cyan: #0d6efd;
   --scarlet: #ff2400;
   --gray-light: #e9ecef;
-  --concrete: #6e6e6e;
+  --concrete: #5a5a5a;
   --primary-btn: #2266bb;
   --button-radius: 4px;
   --ease: cubic-bezier(.22, .61, .36, 1);
   --nav-panel-width: min(100vw, 400px);
   --nav-toggle-line-origin: 25px;
   --nav-toggle-line-end: calc(var(--nav-panel-width) - var(--nav-toggle-line-origin) - 10px);
+}
+.left-content{text-align: left;}
+.in-progress::after{
+  content: " (" attr(data-progress) ")";
+  color: #029202;
+}
+.info-data tbody th,
+.info-data tbody td:nth-child(2) {
+  color: #1a53a0;
 }
 
 /* ---------- Botones ---------- */
@@ -90,7 +99,6 @@ button,
 .topbar-brand {
   font-weight: 700;
   letter-spacing: .02em;
-  color: #ccc;
   text-decoration: none;
   text-shadow: 0 1px 3px rgba(8, 47, 58, .65);
   padding: 4px 8px;
@@ -100,7 +108,7 @@ button,
 .topbar-brand:hover,
 .topbar-brand:focus-visible {
   color: #fff;
-  background-color: #26b;
+  background-color: var(--hot);
   text-shadow: none;
   outline: none;
 }
@@ -108,7 +116,7 @@ button,
 
 /* En la portada la marca debe contrastar con el video de fondo */
 .home-topbar .topbar-brand {
-  color: #ccc;
+  color: var(--hot);
   text-shadow: 0 1px 3px rgba(8, 47, 58, .9);
 }
 .home-topbar .topbar-brand:hover,
@@ -151,9 +159,10 @@ button,
   background: #ccc;
   transform-origin: left center;
   transition: width .28s var(--ease), background-color .28s var(--ease);
+  box-shadow: 0 1px 3px rgba(8, 47, 58, .65);
 }
 .home-topbar .nav-toggle-bars i {
-  background: #ccc;
+  background: var(--hot);
 }
 .nav-open .nav-toggle-bars i {
   background: var(--scarlet);
@@ -164,10 +173,10 @@ button,
 
 /* Aviso periódico: la primera línea avanza 20px y la segunda 10px */
 .nav-toggle-bars i:nth-child(1) {
-  animation: uxm-nav-line-one 60s ease-in-out infinite;
+  animation: uxm-nav-line-one 30s ease-in-out infinite;
 }
 .nav-toggle-bars i:nth-child(2) {
-  animation: uxm-nav-line-two 60s ease-in-out infinite;
+  animation: uxm-nav-line-two 30s ease-in-out infinite;
 }
 .nav-open .nav-toggle-bars i:nth-child(1),
 .nav-open .nav-toggle-bars i:nth-child(2) {
@@ -286,7 +295,10 @@ button,
   scroll-margin-top: 72px;
 }
 
-.hero { text-align: center; }
+.hero,
+.subpage {
+  text-align: center;
+}
 
 /* Hero principal con video de fondo; deja visible el 10% siguiente del viewport */
 .hero-video {
@@ -319,11 +331,25 @@ button,
   background: linear-gradient(180deg, rgba(8, 47, 58, .18), rgba(8, 47, 58, .52));
 }
 .hero-video .hero-title,
-.hero-video .tag {
+.hero-video .tag,
+.subpage .subpage-title,
+.subpage .tag {
   position: relative;
   z-index: 2;
 }
-.hero-video .tag {
+#content.subpage-content .subpage-title {
+  color: #f1f3f5;
+  text-shadow:
+    0 1px 0 #d7d1c5,
+    0 2px 0 #8c857b,
+    0 3px 3px rgba(8, 47, 58, .9),
+    0 6px 16px rgba(8, 47, 58, .8);
+}
+#content.subpage-content .welcome {
+  color: #e9ecef;
+}
+.hero-video .tag,
+.subpage .tag {
   color: #f1f3f5;
   text-shadow:
     0 1px 0 #d7d1c5,
@@ -381,12 +407,6 @@ button,
   100% { opacity: 0; transform: translate(-50%, 9px); }
 }
 
-.home-body {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 96px 16px 40px;
-}
-
 .tag {
   margin: 0 0 10px;
   font-size: 13px;
@@ -403,17 +423,17 @@ button,
   line-height: 1.08;
   letter-spacing: .06em;
   text-transform: uppercase;
-  color: #1a1a1a;
-  text-shadow: 0 2px 0 rgba(255, 255, 255, .75), 0 8px 22px rgba(33, 33, 33, .28);
+  color: #808080;
+  text-shadow: 0 2px 0 rgba(199, 194, 194, 0.75), 0 8px 22px rgba(33, 33, 33, .28);
 }
 /* En el hero principal el título flota suavemente en su posición central */
 .hero-video .hero-title {
   width: min(100%, 960px);
   max-width: calc(100% - 32px);
-  color: var(--concrete);
+  color: #313131;
   text-shadow:
-    0 1px 0 #eee9df,
-    0 2px 0 #b3aca1,
+    0 1px 0 #918f8c,
+    0 2px 0 #948f86,
     0 3px 0 #7a7369,
     0 4px 0 #4a4640,
     0 6px 3px rgba(8, 47, 58, .9),
@@ -421,16 +441,19 @@ button,
   animation: uxm-title-float 6s ease-in-out infinite;
   will-change: transform;
 }
-.hero-title-word {
+.hero-title-word,
+.subpage-title-word {
   display: inline-flex;
   align-items: flex-start;
   white-space: nowrap;
 }
-.hero-title-initial {
+.hero-title-initial,
+.subpage-title-initial {
   font-size: 1.12em;
   line-height: inherit;
 }
-.hero-title-accent {
+.hero-title-accent,
+.subpage-title-accent {
   color: var(--scarlet);
   text-shadow:
     0 1px 0 #ff9a85,
@@ -462,13 +485,55 @@ button,
 
 .welcome { color: var(--muted); }
 
-.bonus-block { margin-top: 26px; }
-.bonuses { margin: 0; padding-left: 20px; color: var(--muted); }
+/* ---------- Portada de subpagina ---------- */
+#content.subpage-content {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 120px 16px 96px;
+  overflow: hidden;
+  background-color: #082f3a;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+/* Capa de contraste para conservar la legibilidad del titulo */
+#content.subpage-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(180deg, rgba(4, 12, 18, .35), rgba(4, 12, 18, .68));
+}
+#content.subpage-content .subpage {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fondo tematico por subpagina */
+.subpage-rules { background-image: url("../media/subpages/normas-uxm.svg"); }
+.subpage-daily { background-image: url("../media/subpages/actividades-diarias.svg"); }
+.subpage-tutorials { background-image: url("../media/subpages/video-tutoriales.svg"); }
+.subpage-strategy { background-image: url("../media/subpages/estrategia.svg"); }
+.subpage-contact { background-image: url("../media/subpages/contacto.svg"); }
+
+.subpage-title {
+  margin: 0;
+  font-family: "Cinzel", Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 7vw, 64px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #808080;
+  text-shadow: 0 2px 0 rgba(199, 194, 194, 0.75), 0 8px 22px rgba(33, 33, 33, .28);
+}
 
 /* ---------- Bloques de contenido informativo ---------- */
 .block-content-info,
 .block-content-destacated {
-  margin: 0 auto;
+  margin: 40px auto;
   padding: 0 10%;
   text-align: left;
 }
@@ -496,6 +561,7 @@ button,
   font-family: "Cinzel", Georgia, "Times New Roman", serif;
   font-weight: 700;
   letter-spacing: .04em;
+  text-align: left;
   text-shadow: 0 2px 3px rgba(33, 33, 33, .45);
 }
 .sibtitle-info .info-initial {
@@ -504,27 +570,35 @@ button,
 .sibtitle-info::first-letter {
   color: var(--scarlet);
 }
+.center-content .sibtitle-info{
+  text-align: center;
+}
 .dinamic-welcome {
   margin: 0 0 18px;
   color: var(--muted);
   font-size: 14px;
   letter-spacing: .04em;
 }
-.message-welcome,.message-arenga {
+.message-welcome,
+.message-arenga {
   max-width: 760px;
   margin: 0 auto 24px;
   color: var(--text);
 }
-.message-welcome p {
+.message-welcome p,
+.message-arenga p {
   margin: 0;
   line-height: 1.7;
+}
+.message-arenga p {
+  white-space: pre-line;
 }
 .block-buttons {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10%;
 }
 .block-buttons .btn-outline,
 .component-buttons .btn-outline {
@@ -572,49 +646,81 @@ button,
 }
 
 /* ---------- Componentes de video tutorial ---------- */
+.extra-top-space{padding-top: 30px;}
 .video-tutorial {
+  position: relative;
   width: 100%;
   max-width: 760px;
-  margin: 0 auto;
+  margin: 0 auto 40px auto;
+  display: inline-flex;
+  align-items: center;      /* centra verticalmente video y botones */
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;          /* en móvil, los botones bajan */
 }
 .component-video {
   position: relative;
-  width: 100%;
-  max-height: 400px;
+  flex: 0 0 auto;
+  width: 298px;
+  max-width: 100%;
+  aspect-ratio: 298 / 530;  /* relación real del video vertical */
   overflow: hidden;
-  margin: 0;
-  background-color: #082f3a;
-  aspect-ratio: 16 / 9;
+  background-color: #000;
+  border-radius: 8px;       /* opcional, mejora visual */
 }
 .component-video iframe {
-  display: block;
+  position: absolute;
+  inset: 0;                 /* top/right/bottom/left: 0 -> centrado total */
   width: 100%;
   height: 100%;
-  margin: 0;
   border: 0;
+  display: block;
 }
 .component-buttons {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  width: 90%;
-  margin: 24px auto 0;
+  flex: 0 1 300px;
+  min-width: 200px;
+  max-width: 40%;
 }
 .component-buttons .btn-outline {
   width: 100%;
 }
+/* Responsivo: si no caben lado a lado, se apilan */
+@media (max-width: 640px) {
+  .video-tutorial {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .component-buttons {
+    max-width: 100%;
+    width: 100%;
+    margin-top: 24px;
+  }
+}
 .ha-author {
+  position: relative;
   width: fit-content;
   margin: 15px 0 0 auto;
   padding: 0 0 2px;
-  border-bottom: 1px solid #aaa;
-  color: #aaa;
+  color: #7c7c7c;
   font-style: italic;
   text-align: right;
 }
+.ha-author::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid #7c7c7c;
+}
 .line-divisor-scarlet {
-  width: 96%;
+  width: 100%;
   height: 0;
   margin: 24px auto 0;
   border-top: 3px solid var(--scarlet);

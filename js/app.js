@@ -6,16 +6,6 @@
   var YOUTUBE = "https://www.youtube.com/@VincentDantesGrey/videos";
   var DEFAULT_LANG = "en";
 
-  var BONUSES = [
-    { name: "Alliance Experience Gift", value: "Lv.12" },
-    { name: "Fast Build 8",             value: "+20%" },
-    { name: "Research Speedup 5",       value: "+12.5%", noteKey: "In Progress" },
-    { name: "Crafting Speedup 4",       value: "+8%" },
-    { name: "Fast Training 2",          value: "+1%" },
-    { name: "Rally HP/ATK/DEF 2",       value: "+2%" },
-    { name: "Shard Exchange Bank",      value: "Active", noteKey: "" }
-  ];
-
   /* ---------- Páginas del menú ---------- */
   var PAGES = [
     { file: "actividades-diarias.html", key: "navDaily",  titleKey: "pageDailyTitle" },
@@ -71,12 +61,27 @@
     if (el) el.textContent = text;
   }
 
-  setText("bonusTitle", T.bonuses);
+  setText("arengaTitle", T.arengaTitle);
+  setText("arengaMessage", T.arengaMessage);
+  setText("tutoTitle", T.tutoTitle);
+  setText("allianceTitle", T.allianceTitle);
+  setText("allianceMessage", T.allianceMessage);
+  setText("bonusAlliance", T.bonusAlliance);
+  setText("bonusFastBuild", T.bonusFastBuild);
+  setText("bonusResearchSpeedup", T.bonusResearchSpeedup);
+  setText("bonusCraftingSpeedup", T.bonusCraftingSpeedup);
+  setText("bonusFastTraining", T.bonusFastTraining);
+  setText("bonusRallyStats", T.bonusRallyStats);
+  setText("bonusShardExchange", T.bonusShardExchange);
   setText("copyright", T.copyright);
   setText("ytLabel", T.youtube);
 
   var heroScrollCue = byId("heroScrollCue");
   if (heroScrollCue) heroScrollCue.setAttribute("aria-label", T.scrollCue);
+
+  /* El estado "en curso" de la tabla de bonos se localize por atributo. */
+  var bonusInProgress = byId("bonusCraftingSpeedup");
+  if (bonusInProgress) bonusInProgress.setAttribute("data-progress", T.bonusInProgress);
 
   /* ---------- Sección informativa de bienvenida ---------- */
   function applyInfoContent() {
@@ -171,6 +176,24 @@
   }
 
   /* ---------- Texto propio de cada página ---------- */
+
+  /* El título de subpagina se reconstruye para aplicar la inicial escarlata. */
+  function setSubpageTitle(el, title) {
+    if (!el) return;
+    el.textContent = "";
+
+    var word = document.createElement("span");
+    word.className = "subpage-title-word";
+
+    var initial = document.createElement("span");
+    initial.className = "subpage-title-initial subpage-title-accent";
+    initial.textContent = title.charAt(0);
+
+    word.appendChild(initial);
+    word.appendChild(document.createTextNode(title.slice(1)));
+    el.appendChild(word);
+  }
+
   function applyPageContent() {
     var here = currentFile();
     var lead = byId("pageLead");
@@ -181,20 +204,14 @@
       if (lead) lead.textContent = T[leadKey] || "";
       if (title) {
         var h1 = byId("heroTitle");
-        if (h1) h1.textContent = title;
+        if (h1) {
+          if (h1.className.indexOf("subpage-title") >= 0) setSubpageTitle(h1, title);
+          else h1.textContent = title;
+        }
         document.title = title + " – UXM";
       }
       return;
     }
-  }
-
-  var bonusList = byId("bonuses");
-  if (bonusList) {
-    BONUSES.forEach(function (b) {
-      var li = document.createElement("li");
-      li.textContent = b.name + " — " + b.value + (b.noteKey ? " (" + b.noteKey + ")" : "");
-      bonusList.appendChild(li);
-    });
   }
 
   /* ---------- Video de fondo del hero ---------- */

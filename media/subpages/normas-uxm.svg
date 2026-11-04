@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 900" width="1920" height="900" role="img" aria-label="Fondo de las Normas UXM">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1c26"/>
+      <stop offset="0.55" stop-color="#12303d"/>
+      <stop offset="1" stop-color="#06121a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#1d5b73" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#0b1c26" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7d8890"/>
+      <stop offset="0.5" stop-color="#3b464e"/>
+      <stop offset="1" stop-color="#232c33"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#59656e"/>
+      <stop offset="1" stop-color="#20282e"/>
+    </linearGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0 L0 0 0 60" fill="none" stroke="#ffffff" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="900" fill="url(#bg)"/>
+  <rect width="1920" height="900" fill="url(#grid)"/>
+  <rect width="1920" height="900" fill="url(#glow)"/>
+
+  <!-- Siluetas de ruinas al fondo -->
+  <g fill="#050d13" opacity="0.85">
+    <rect x="40" y="470" width="120" height="430"/>
+    <rect x="150" y="560" width="70" height="340"/>
+    <path d="M40 470 L100 380 L160 470 Z"/>
+    <rect x="1710" y="500" width="150" height="400"/>
+    <rect x="1790" y="590" width="90" height="310"/>
+    <path d="M1710 500 L1785 400 L1860 500 Z"/>
+  </g>
+
+  <!-- Columnas de ceniza a los lados -->
+  <g opacity="0.5" fill="#0d2029">
+    <rect x="250" y="0" width="26" height="900"/>
+    <rect x="1644" y="0" width="26" height="900"/>
+  </g>
+
+  <!-- Escudo central: ley de la alianza -->
+  <g transform="translate(960 430)">
+    <path d="M-150 -210 L150 -210 L150 40 Q150 170 0 230 Q-150 170 -150 40 Z"
+          fill="url(#steel)" stroke="#8a949c" stroke-width="6"/>
+    <path d="M-124 -186 L124 -186 L124 32 Q124 140 0 192 Q-124 140 -124 32 Z"
+          fill="#101c24" stroke="#c9d2d8" stroke-opacity="0.35" stroke-width="2"/>
+    <!-- Documento / norma -->
+    <rect x="-58" y="-140" width="116" height="150" rx="6" fill="url(#metal)" opacity="0.92"/>
+    <g stroke="#e8eef1" stroke-opacity="0.75" stroke-width="6" stroke-linecap="round">
+      <line x1="-38" y1="-106" x2="38" y2="-106"/>
+      <line x1="-38" y1="-74" x2="38" y2="-74"/>
+      <line x1="-38" y1="-42" x2="16" y2="-42"/>
+    </g>
+    <circle cx="34" cy="-38" r="14" fill="#df1b1b" opacity="0.9"/>
+    <!-- Cruz escarlata -->
+    <path d="M-14 30 L14 30 L14 74 L46 74 L46 102 L14 102 L14 146 L-14 146 L-14 102 L-46 102 L-46 74 L-14 74 Z"
+          fill="#ff2400" opacity="0.92"/>
+  </g>
+
+  <!-- Marcas de juramento / columnas laterales con estandartes -->
+  <g opacity="0.85">
+    <g transform="translate(420 430)">
+      <rect x="-10" y="-210" width="20" height="420" fill="url(#metal)"/>
+      <path d="M10 -206 L120 -176 L10 -146 Z" fill="#c02a12"/>
+      <path d="M10 -206 L10 -146 L-40 -176 Z" fill="#7d1710"/>
+    </g>
+    <g transform="translate(1500 430)">
+      <rect x="-10" y="-210" width="20" height="420" fill="url(#metal)"/>
+      <path d="M-10 -206 L-120 -176 L-10 -146 Z" fill="#c02a12"/>
+      <path d="M-10 -206 L-10 -146 L40 -176 Z" fill="#7d1710"/>
+    </g>
+  </g>
+
+  <!-- Vinetas laterales -->
+  <g opacity="0.28" stroke="#df1b1b" stroke-width="3" fill="none">
+    <path d="M120 210 H420 M120 210 V250 M120 210 L150 240"/>
+    <path d="M1800 210 H1500 M1800 210 V250 M1800 210 L1770 240"/>
+  </g>
+
+  <!-- Capa inferior para legibilidad del titulo -->
+  <rect x="0" y="560" width="1920" height="340" fill="#04090d" opacity="0.45"/>
+  <ellipse cx="960" cy="700" rx="620" ry="130" fill="#04090d" opacity="0.55" filter="url(#soft)"/>
+</svg>

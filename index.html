@@ -9,13 +9,14 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="home-page">
+
   <nav class="navbar topbar home-topbar" aria-label="Main navigation">
     <div class="container-fluid">
       <button id="navToggle" class="btn-icon navbar-toggler nav-toggle" type="button"
               aria-controls="navPanel" aria-expanded="false" aria-label="Menu">
         <span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i><i></i></span>
       </button>
-      <a id="homeLink" class="navbar-brand topbar-brand" href="index.html">Inicio UXM</a>
+      <a id="homeLink" class="navbar-brand topbar-brand" href="index.html">UXM</a>
     </div>
     <div id="navPanel" class="nav-panel" role="dialog" aria-modal="true"
          aria-labelledby="navPanelTitle" hidden>
@@ -65,10 +66,10 @@
     </section>
 
     <section class="block-content-info center-content">
-      <h2 class="sibtitle-info">Arenga de Guerra</h2>
+      <h2 class="sibtitle-info" id="arengaTitle">Arenga de Guerra</h2>
 
       <div class="message-arenga">
-        <p class="">
+        <p id="arengaMessage">
           Bajo las llamas más aplastantes,
           que oscurecen nuestra noche y santuario,
           monstruos a mi alrededor merodean.
@@ -97,8 +98,8 @@
 
     </section>
 
-    <section class="block-content-destacated center-content">
-      <h2 class="sibtitle-info">Video Tutoriales</h2>
+    <section class="block-content-destacated center-content extra-top-space">
+      <h2 class="sibtitle-info" id="tutoTitle">Video Tutoriales</h2>
 
       <div class="video-tutorial">
         <div class="component-video">
@@ -108,33 +109,57 @@
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen></iframe>
         </div>
+
         <div class="component-buttons" id="videoTutorialButtons"></div>
       </div>
+
       <div class="block-button-videos"></div>
 
-      <div class="line-divisor-scarlet"></div>
-
     </section>
 
     <section class="block-content-info center-content">
-      <h2 class="sibtitle-info">Cronograma Batalla de Supervivencia</h2>
+      <h2 class="sibtitle-info" id="allianceTitle">Visita nuestra Alianza</h2>
 
-      <div class="cronograma-content">
-
+      <div class="message-welcome">
+        <p id="allianceMessage">Conoce nuestra Alianza, buscamos ayudar a todos los del reino 277, incluso puedes visitarnos los domingos y usar nuestros bonos de construcción e investigación, mejoremos juntos!!</p>
       </div>
 
-      <div class="line-divisor-scarlet"></div>
-
-    </section>
-
-    <section class="block-content-info center-content">
-      <h2 class="sibtitle-info">Visita nuestra Alianza</h2>
-
-      <div class="home-body">
-        <div class="bonus-block">
-          <h3 id="bonusTitle"></h3>
-          <ul id="bonuses" class="bonuses"></ul>
-        </div>
+      <div class="bonus-alliance left-content">
+        <p id="bonusAlliance">Bonos Tecnología de la Alianza</p>
+        <table class="info-data">
+          <tbody>
+            <tr>
+              <th>★</th>
+              <td>+20%</td>
+              <td id="bonusFastBuild">Fast Build 8</td>
+            </tr>
+            <tr>
+              <th>★</th>
+              <td>+15%</td>
+              <td id="bonusResearchSpeedup">Research Speedup 5</td>
+            </tr>
+            <tr>
+              <th>★</th>
+              <td>+8%</td>
+              <td id="bonusCraftingSpeedup" class="in-progress" data-progress="En curso">Crafting Speedup 4</td>
+            </tr>
+            <tr>
+              <th>★</th>
+              <td>+1%</td>
+              <td id="bonusFastTraining">Fast Training 2</td>
+            </tr>
+            <tr>
+              <th>★</th>
+              <td>+2%</td>
+              <td id="bonusRallyStats">Rally HP/ATK/DEF 2</td>
+            </tr>
+            <tr>
+              <th>★</th>
+              <td></td>
+              <td id="bonusShardExchange">Shard Exchange Bank: para los tesoros que requieres en operaciones encubiertas.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
     </section>
@@ -153,7 +178,7 @@
     <div id="langs" class="langs"></div>
   </footer>
 
-  <noscript>UXM – Under Xtreme Madness · Kingdom 277</noscript>
+  <noscript>UXM – Under Xtreme Madness Alliance · Kingdom 277</noscript>
   <script src="js/i18n.js"></script>
   <script src="js/app.js"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js"

@@ -1,5 +1,7 @@
 # Patrón de Bloques-Script
 
+OBSOLETO - DESCONTINUADO!!
+
 ## Descripción
 
 Cada bloque-script es un fragmento HTML autónomo diseñado para insertarse en Google Sites mediante el bloque "Insertar > Embed code".
