@@ -87,8 +87,29 @@ test("la subpágina de tutoriales usa banners y anclas únicas", () => {
   assert.match(html, /id="tips"/);
   assert.match(html, /id="events"/);
   assert.equal((html.match(/id="tips"/g) || []).length, 1);
-  assert.match(css, /\.banner-divisor\s*\{[^}]*background-color:\s*#ccc/s);
-  assert.match(css, /\.banner-divisor\s*\{[^}]*color:\s*#3d3d3d/s);
+  assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*background-color:\s*#ccc/s);
+  assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*color:\s*#3d3d3d/s);
+});
+
+test("el banner de subpágina comparte estilo con el divisor y ocupa todo el ancho", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*padding:\s*12px 16px/s);
+  assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*text-align:\s*center/s);
+  assert.match(css, /\.banner-divisor \.info-initial,\s*\.banner-subpage \.info-initial\s*\{[^}]*color:\s*var\(--scarlet\)/s);
+  assert.match(css, /\.banner-subpage\s*\{[^}]*margin-left:\s*-12\.5%/s);
+  assert.match(css, /\.banner-subpage\s*\{[^}]*margin-right:\s*-12\.5%/s);
+});
+
+test("la inicial escarlata del título de subpágina se centra verticalmente", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.subpage-title-word\s*\{[^}]*align-items:\s*center/s);
+  assert.match(css, /\.hero-title-word\s*\{[^}]*align-items:\s*flex-start/s);
+});
+
+test("el título de subpágina usa el color gris claro solicitado", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.subpage-title\s*\{[^}]*color:\s*#adadad/s);
+  assert.match(css, /#content\.subpage-content \.subpage-title\s*\{[^}]*color:\s*#adadad/s);
 });
 
 test("todas las subpáginas usan el estándar de portada subpage-content", () => {
@@ -171,6 +192,41 @@ test("los bloques informativos se centran solo con center-content y usan padding
   assert.match(css, /\.block-content-info,\s*\.block-content-destacated\s*\{[^}]*padding:\s*0 10%/s);
   assert.match(css, /\.block-content-info,\s*\.block-content-destacated\s*\{[^}]*text-align:\s*left/s);
   assert.match(css, /\.block-content-info\.center-content,\s*\.block-content-destacated\.center-content\s*\{[^}]*text-align:\s*center/s);
+});
+
+test("actividades diarias incluye el calendario de batalla de supervivencia a ancho completo", () => {
+  const html = read("pages/actividades-diarias.html");
+  const css = read("css/style.css");
+  assert.match(html, /<h2 class="sibtitle-info banner-subpage" id="textBS"[^>]*>/);
+  assert.match(html, /<div class="battle-content">[\s\S]*?<table class="bs-schedule">[\s\S]*?<tbody id="bs-body"><\/tbody>[\s\S]*?<\/div>/);
+  assert.match(html, /id="bs-subtitle"/);
+  assert.match(html, /id="bs-tzinfo"/);
+  assert.match(css, /\.battle-content\s*\{[^}]*margin-left:\s*-12\.5%/s);
+  assert.match(css, /\.battle-content\s*\{[^}]*margin-right:\s*-12\.5%/s);
+  assert.match(css, /\.battle-content \.bs-schedule\s*\{[^}]*max-width:\s*none/s);
+});
+
+test("el encabezado del cronograma de batalla se traduce en todos los idiomas", () => {
+  const html = read("pages/actividades-diarias.html");
+  const js = read("js/app.js");
+  const i18n = read("js/i18n.js");
+  assert.match(html, /data-i18n="scheduleBattleSurvival"/);
+  assert.match(html, />Cronograma Batalla Supervivencia<\/h2>/);
+  assert.match(js, /function applySectionTitles\(\)/);
+  assert.match(js, /querySelectorAll\("\[data-i18n\]"\)/);
+  assert.match(js, /setSectionTitle\(heading, T\[key\]\)/);
+  assert.match(js, /applySectionTitles\(\);/);
+  assert.match(js, /initial\.className = "info-initial"/);
+  const matches = i18n.match(/scheduleBattleSurvival:"[^"]+"/g) || [];
+  assert.equal(matches.length, 8);
+  assert.match(i18n, /scheduleBattleSurvival:"Cronograma Batalla Supervivencia"/);
+});
+
+test("el calendario incrustado no altera el titulo ni el idioma de la pagina", () => {
+  const html = read("pages/actividades-diarias.html");
+  assert.doesNotMatch(html, /document\.title\s*=/);
+  assert.doesNotMatch(html, /document\.documentElement\.lang\s*=/);
+  assert.match(html, /<title>Actividades Diarias – UXM<\/title>/);
 });
 
 test("el autor de la arenga se muestra en cursiva, a la derecha y en gris", () => {
@@ -314,7 +370,7 @@ test("las iniciales del hero se alinean arriba, crecen y usan los colores solici
   assert.match(html, /hero-title-word/);
   assert.match(html, /hero-title-initial/);
   assert.match(html, /hero-title-accent/);
-  assert.match(css, /\.hero-title-word,\s*\.subpage-title-word\s*\{[^}]*align-items:\s*flex-start/s);
+  assert.match(css, /\.hero-title-word\s*\{[^}]*align-items:\s*flex-start/s);
   assert.match(css, /\.hero-title-initial,\s*\.subpage-title-initial\s*\{[^}]*font-size:\s*1\.12em/s);
   assert.match(css, /\.hero-title-accent,\s*\.subpage-title-accent\s*\{[^}]*color:\s*var\(--scarlet\)/s);
   assert.match(css, /\.hero-video\s+\.hero-title\s*\{[^}]*color:\s*#313131/s);
