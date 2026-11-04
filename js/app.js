@@ -177,6 +177,29 @@
 
   /* ---------- Texto propio de cada página ---------- */
 
+  /* Los subtitulos de seccion traducidos se reconstruyen con inicial escarlata. */
+  function setSectionTitle(el, title) {
+    if (!el || !title) return;
+    el.textContent = "";
+
+    var initial = document.createElement("span");
+    initial.className = "info-initial";
+    initial.textContent = title.charAt(0);
+
+    el.appendChild(initial);
+    el.appendChild(document.createTextNode(title.slice(1)));
+  }
+
+  /* Aplica la traduccion a los subtitulos de seccion que declaran su clave. */
+  function applySectionTitles() {
+    var headings = document.querySelectorAll("[data-i18n]");
+    for (var i = 0; i < headings.length; i++) {
+      var heading = headings[i];
+      var key = heading.getAttribute("data-i18n");
+      setSectionTitle(heading, T[key]);
+    }
+  }
+
   /* El título de subpagina se reconstruye para aplicar la inicial escarlata. */
   function setSubpageTitle(el, title) {
     if (!el) return;
@@ -401,6 +424,7 @@
   buildNav();
   buildLangs();
   applyPageContent();
+  applySectionTitles();
   applyInfoContent();
   syncNavState();
   initHeroVideo();
