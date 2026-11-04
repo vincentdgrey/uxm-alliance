@@ -1,5 +1,22 @@
 # Changelog
 
+## [261104c] - 2026-11-04
+
+### Added
+- Hoja de estilos propia `css/activities-daily.css` para la subpágina de Actividades Diarias, cargada después de `css/style.css`.
+- Script único `js/activities-daily.js` que unifica los dos cronogramas: datos, utilidades compartidas, `initBattleSurvival()` e `initAllianceDuel()`.
+- Un único `setInterval` de `1 s` coordina la actualización de los dos cronogramas.
+- Variables de datos como fuente de verdad: `ACTIVITIES` (6), `CALENDAR` (42), `ACTIVITY_CODE` (44), `EVENT_CODE` (5), `PHASES` (6) y `DAILY` (60), con los horarios en UTC-2.
+
+### Changed
+- `pages/actividades-diarias.html` carga un solo script propio (`js/activities-daily.js`) en lugar de los dos anteriores.
+- Los datos de actividades se administran en las variables de `js/activities-daily.js`. Los archivos `db/*.json` quedan obsoletos: se conservan como histórico y el sitio ya no los carga.
+- `AGENTS.md` y `docs/core/project-rules.md` actualizados con la nueva fuente de verdad, la estructura de archivos y la tabla de datos obsoletos.
+
+### Removed
+- `js/battle-survival-schedule.js` y `js/alliance-duel-schedule.js`, sustituidos por `js/activities-daily.js`.
+- La inyección de estilos en tiempo de ejecución: las variables `CSS` de ambos scripts se trasladaron a `css/activities-daily.css`.
+
 ## [261104b] - 2026-11-04
 
 ### Added

@@ -1,0 +1,194 @@
+/* Estilos propios de la subpagina de Actividades Diarias.
+   Movidos desde las variables CSS de los scripts de calendario,
+   que quedaron obsoletos al unificarse en js/activities-daily.js. */
+
+/* ---------- Calendario de Batalla de Supervivencia ---------- */
+.bs-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  justify-content: flex-start;
+}
+.bs-schedule {
+  width: 100%;
+  min-width: 640px;
+  max-width: 900px;
+  border-collapse: collapse;
+  background: #fff;
+  color: #888;
+  font: 13px/1.45 Roboto, Arial, Helvetica, sans-serif;
+}
+.bs-schedule th {
+  padding: 3px 10px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: #26b;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+}
+.bs-schedule td {
+  padding: 1px 10px;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+.bs-schedule tbody tr:last-child td {
+  border-bottom: none;
+}
+.bs-schedule tbody tr.bs-dayend td {
+  border-bottom: 2px solid #ccc;
+}
+.bs-event,
+.bs-counter,
+.bs-status,
+.bs-server {
+  white-space: nowrap;
+}
+.bs-counter {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+#bs-th-counter {
+  text-align: right;
+}
+.bs-event {
+  font-weight: 700;
+}
+tr.bs-past td {
+  color: #b3b3b3;
+}
+tr.bs-current td {
+  background: #069726;
+  color: #fff;
+  font-weight: 700;
+}
+tr.bs-current td:nth-child(n+3) {
+  background: #00ff39;
+  color: #00821d;
+  font-weight: normal;
+}
+tr.bs-current td.bs-counter {
+  font-weight: normal;
+}
+.bs-activities,
+.bs-server {
+  font-size: 11px;
+}
+.bs-activities .bs-act-line {
+  display: block;
+}
+.bs-schedule tbody .bs-hl-track {
+  background-color: #727374;
+  color: #ebebeb;
+}
+.bs-schedule tbody td.bs-hl-special {
+  background-color: #ffee00;
+  color: #b65200;
+}
+.bs-schedule tbody tr.bs-row-third td:nth-child(1),
+.bs-schedule tbody tr.bs-row-third td:nth-child(2) {
+  background-color: #3484e6;
+  color: #FFF;
+}
+tr.bs-current td.bs-event::after {
+  content: " \2605";
+  margin-right: 4px;
+}
+#bs-tzinfo {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: #aaa;
+  padding: 10px 10px 0 10px;
+  text-align: left;
+}
+
+/* ---------- Calendario de Duelo de Alianzas ---------- */
+.ad-item {
+  margin: 0 0 20px 0;
+}
+.ad-item-title {
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #6d6d6d;
+  padding: 0 10px 20px 0px;
+  border-bottom: 2px solid #008cff;
+  cursor: pointer;
+  position: relative;
+}
+.ad-item.ad-today .ad-item-title {
+  background: #009922;
+  color: #fff;
+}
+.ad-arrow {
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+.ad-arrow::after {
+  content: "\25BC";
+}
+.ad-item.ad-open .ad-arrow::after {
+  content: "\25B2";
+}
+.ad-item-body {
+  display: none;
+  padding-top: 10px;
+}
+.ad-item.ad-open .ad-item-body {
+  display: block;
+}
+.ad-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.ad-schedule {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  color: #888;
+  font: 13px/1.45 Roboto, Arial, Helvetica, sans-serif;
+}
+.ad-schedule th {
+  padding: 3px 10px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ebebeb;
+  background: #727374;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+}
+.ad-schedule td {
+  padding: 3px 10px;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+.ad-schedule tbody tr:last-child td {
+  border-bottom: none;
+}
+.ad-time,
+.ad-event,
+.ad-phase {
+  white-space: nowrap;
+}
+.ad-time {
+  font-variant-numeric: tabular-nums;
+}
+.ad-event {
+  font-weight: 700;
+}
+tr.ad-past td {
+  color: #b3b3b3;
+}
+#ad-tzinfo {
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: #aaa;
+  padding: 10px 10px 0 10px;
+}

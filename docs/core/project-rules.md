@@ -10,8 +10,8 @@ UXM Alliance es un sitio web estático publicado en GitHub Pages. La portada viv
 
 | Ámbito | Fuente de verdad | Regla de sincronización |
 |---|---|---|
-| Datos del juego | `db/*.json` | Los datos embebidos en cualquier bloque-script deben coincidir con estos archivos. |
-| Sitio web | Código manual actual en `index.html`, `pages/*.html`, `css/style.css`, `js/app.js` y `js/i18n.js` | Cada cambio manual del usuario se conserva y se incorpora a estas reglas. |
+| Datos del juego | Variables de `js/activities-daily.js` (`ACTIVITIES`, `CALENDAR`, `ACTIVITY_CODE`, `EVENT_CODE`, `PHASES`, `DAILY`) | Editar las variables del script. Los archivos `db/*.json` son obsoletos y no los carga el sitio. |
+| Sitio web | Código manual actual en `index.html`, `pages/*.html`, `css/style.css`, `css/activities-daily.css`, `js/app.js`, `js/i18n.js` y `js/activities-daily.js` | Cada cambio manual del usuario se conserva y se incorpora a estas reglas. |
 
 **Regla de cambios manuales:** cuando el usuario informa que realizó cambios manuales en HTML, CSS, JavaScript o traducciones, el agente debe revisar el diff, respetarlos sin revertirlos ni sobrescribirlos y actualizar este documento para que describa el código vigente. Si una regla anterior contradice al código manual, prevalece el código manual y la regla obsoleta debe corregirse.
 
@@ -26,9 +26,10 @@ UXM Alliance es un sitio web estático publicado en GitHub Pages. La portada viv
 | `pages/estrategia.html` | Estrategia |
 | `pages/contacto.html` | Contacto |
 | `css/style.css` | Estilos del sitio (se carga después de Bootstrap) |
+| `css/activities-daily.css` | Estilos propios de los cronogramas (solo en actividades diarias) |
 | `js/i18n.js` | Textos por idioma (8 idiomas) |
 | `js/app.js` | Lógica del sitio: navegación, idiomas, contenido y video |
-| `js/battle-survival-schedule.js` | Calendario de Batalla de Supervivencia (solo en actividades diarias) |
+| `js/activities-daily.js` | Script único de la subpágina de actividades diarias: datos, cronogramas y utilidades |
 | `js/video-cards.js` | Tarjetas de video de YouTube (solo en video tutoriales) |
 | `media/subpages/*.svg` | Fondos temáticos de las portadas de subpágina |
 | `tests/ui-contract.test.cjs` | Contrato funcional y visual del sitio |
@@ -70,6 +71,8 @@ Reglas:
 - `allianceMessage` usa el texto manual vigente de `index.html` como fuente y se traduce a los 8 idiomas.
 - Las etiquetas de la tabla de bonos tienen su propia clave por fila, de modo que los porcentajes y las estrellas quedan fuera del ámbito de la traducción.
 - La clave `visitTitle` replica el encabezado de la sección de alianza y debe existir en los 8 idiomas, aunque hoy solo la consume la navegación.
+- Las introducciones de cada subpágina (`#pageLead`) se resuelven a partir de `titleKey.replace("Title", "Lead")` en `js/app.js`, de modo que cada página usa su clave `page*Lead`: `pageDailyLead`, `pageRulesLead`, `pageTutorialsLead`, `pageStrategyLead` y `pageContactLead`, presentes en los 8 idiomas.
+- Las introducciones describen el contenido real de la página: ninguna vuelve a usar el marcador «Próximamente».
 
 ### Paleta base del sitio
 
@@ -220,17 +223,53 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - No usar márgenes negativos ni `100vw` para alcanzar el ancho completo: `100vw` incluye el ancho de la barra de desplazamiento y genera overflow horizontal.
 - La portada contiene las secciones de bienvenida (`infoTitle`), arenga (`arengaTitle` y `arengaMessage`), video tutorial (`tutoTitle`) y alliance (`allianceTitle`, `allianceMessage` y la tabla de bonos).
 
+### Script único de Actividades Diarias
+
+- La subpágina `pages/actividades-diarias.html` carga un **único script propio**: `js/activities-daily.js`, al final de `<body>`, después de `js/i18n.js` y `js/app.js`.
+- Este script sustituye a los anteriores `js/battle-survival-schedule.js` y `js/alliance-duel-schedule.js`, que fueron eliminados.
+- Su estructura interna es:
+  1. **Datos fuente de verdad**: `ACTIVITIES`, `CALENDAR`, `ACTIVITY_CODE`, `EVENT_CODE`, `PHASES` y `DAILY`, declaradas una sola vez cada una y con los horarios en UTC-2.
+  2. **Utilidades compartidas**: resolución del idioma, `pad`, `appendCell`, `tzLabel`, `tzName`, `renderTzInfo` y las constantes de desplazamiento horario y días de la semana.
+  3. **Inicializadores independientes**: `initBattleSurvival()` y `initAllianceDuel()`. Cada uno comprueba sus elementos antes de actuar y devuelve su función de actualización o `null`.
+- Los dos cronogramas comparten **un único `setInterval`** de `1 s` que invoca las actualizaciones disponibles.
+- Los estilos de ambos cronogramas viven en `css/activities-daily.css`, que se carga después de `css/style.css`. El script ya no crea ni inyecta elementos `<style>`.
+- El script no usa `fetch` ni carga archivos JSON: los datos son literales dentro del propio archivo.
+- El script no modifica `document.title` ni `document.documentElement.lang`: la página anfitriona conserva su título y su idioma.
+- El idioma se toma de `<html data-lang>`, que fija `js/app.js`, con inglés como respaldo.
+
+### Datos de actividades (fuente de verdad)
+
+- La fuente de verdad de los datos son las variables de `js/activities-daily.js`:
+
+| Variable | Registros | Contenido |
+|---|---|---|
+| `ACTIVITIES` | 6 | Actividades y objetivos de Battle Survival |
+| `CALENDAR` | 42 | Calendario semanal de Battle Survival, 6 slots por día |
+| `ACTIVITY_CODE` | 44 | Actividades codificadas (objetive, point, phase) |
+| `EVENT_CODE` | 5 | Definición de eventos (es/en) |
+| `PHASES` | 6 | Fases del Duelo de Alianzas (P01-P06) |
+| `DAILY` | 60 | Actividades diarias del Duelo de Alianzas por día (noday) |
+
+- Los archivos `db/*.json` son **obsoletos**: se conservan como histórico, no los carga el sitio y no deben editarse ni usarse como referencia.
+- La estructura `src/` también es obsoleta y no se enlaza.
+- Al modificar datos deben respetarse las referencias: todo `CALENDAR.codebs` existe en `ACTIVITIES`, todo `DAILY.code_task` en `ACTIVITY_CODE`, todo `DAILY.event` en `EVENT_CODE` y toda fase usada en `PHASES`.
+
 ### Cronograma de Batalla de Supervivencia
 
 - La subpágina de actividades diarias incluye el calendario de Batalla de Supervivencia dentro de `<div class="battle-content">`, en la sección `#textBS`.
-- El contenido se integró a partir de `src/battle-survival-schedule.html` (obsoleto) sin `fetch` ni dependencias de red. El fragmento original en `src/` no se modifica ni se enlaza.
-- La lógica del calendario vive en `js/battle-survival-schedule.js` y se carga al final de `<body>`, después de `js/i18n.js` y `js/app.js`.
-- El script no modifica `document.title` ni `document.documentElement.lang`: la página anfitriona conserva su título y su idioma.
-- El idioma se toma de `<html data-lang>`, que fija `js/app.js`, con inglés como respaldo. El script no implementa su propia resolución de idioma.
+- La lógica vive en `initBattleSurvival()` de `js/activities-daily.js`.
 - Las traducciones del calendario viven exclusivamente en `js/i18n.js`: `bsHeaders` (cinco encabezados), `bsPast`, `bsCurrent` y `bsNext`, presentes en los 8 idiomas. El calendario no mantiene una tabla de traducciones propia.
 - La tabla conserva el comportamiento responsivo original: `.bs-schedule` usa `min-width: 640px` y `max-width: 900px`, y `.bs-wrap` aplica `overflow-x: auto` para el desplazamiento horizontal en pantallas pequeñas. La tabla no se estira al ancho de la página.
 - El calendario actualiza los contadores con un ciclo de `1 s`.
 - El subtítulo propio `bs-subtitle` se eliminó: el encabezado de la sección es el que identifica el cronograma.
+
+### Cronograma de Duelo de Alianzas
+
+- La subpágina de actividades diarias incluye el calendario de Duelo de Alianzas dentro de `<div class="duel-alliance-content">`, en la sección `#textAD`.
+- La lógica vive en `initAllianceDuel()` de `js/activities-daily.js`.
+- Las traducciones del calendario viven exclusivamente en `js/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (cuatro encabezados de tabla), presentes en los 8 idiomas. El calendario no mantiene una tabla de traducciones propia.
+- El calendario presenta los siete días desde el día actual en UTC-2, con el día actual destacado, los dos primeros paneles abiertos y conversión de horarios a la zona local del visitante.
+- El subtítulo propio `ad-subtitle` se eliminó: el encabezado de la sección es el que identifica el cronograma.
 
 ### Encabezados de sección traducidos
 
@@ -238,6 +277,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - `js/app.js` los reconstruye con `applySectionTitles()`, que invoca `setSectionTitle()` y aplica la inicial escarlata mediante `<span class="info-initial">`, igual que el resto de subtítulos.
 - `applySectionTitles()` se ejecuta antes de `applyInfoContent()`, que detecta la inicial ya presente y no la duplica.
 - La clave i18n `scheduleBattleSurvival` traduce el encabezado «Cronograma Batalla Supervivencia» en los 8 idiomas.
+- La clave i18n `scheduleAllianceDuel` traduce el encabezado «Duelo de Alianzas» en los 8 idiomas.
 - Los encabezados de la subpágina de tutoriales usan claves propias: `tutorialLearningPriorityTitle` («Aprendizaje Prioritario»), `tutorialTipsTitle` («Dato Práctico») y `tutorialEventsTitle` («Eventos»), presentes en los 8 idiomas.
 - Las claves `learningPriority`, `tips` y `events` se reservan para los botones de la portada y no deben reutilizarse para los encabezados: sus textos difieren.
 
@@ -249,6 +289,41 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Las descripciones de las tarjetas de video usan `videoTutorialPriority1..3`, `videoTutorialTip1..3` y `videoTutorialEvent1..4`, presentes en los 8 idiomas. El texto español conserva la redacción manual del usuario, incluidos sus términos, cifras y mayúsculas.
 - Las descripciones detallan los objetivos, metas y condiciones de cada tutorial y evento. Al traducirlas, deben conservarse los valores del juego: `24H`, `8H`, `25%` a `60%`, `SSR`, `UR`, `Lv.6`, `225M`, `990M`, `150K`, `1.5M`, `MVP 1` y el reino `277`.
 - `videoTutorialPriority1` indica **no perder soldados y evitar dar puntos al enemigo**. Cualquier traducción debe conservar esa negación: es el sentido contrario al de una lectura literal de «perder soldados».
+
+### Contenido traducido con data-i18n-html
+
+- Los párrafos que contienen marcado en línea, como las reglas con enlaces, declaran el atributo `data-i18n-html="<clave>"`.
+- `js/app.js` los aplica con `applyRichTexts()`, que sustituye el `innerHTML` del nodo.
+- Las traducciones de este tipo son **textos locales y controlados**, escritos dentro de `js/i18n.js`; no provienen de ninguna fuente externa. Por eso el uso de `innerHTML` queda acotado a estas claves de contenido estático del sitio.
+- El marcado de la traducción conserva la estructura del original: mismas URL de destino y misma clase `link-info` en los enlaces.
+- `data-i18n-html` queda reservado a este contenido con enlaces. Para texto plano debe usarse `data-i18n-text`, que no admite marcado.
+
+### Atributos traducidos con data-i18n-title
+
+- Los elementos que necesitan un texto accesible en un atributo declaran `data-i18n-title="<clave>"`.
+- `js/app.js` los aplica con `applyTitles()`, que escribe el atributo `title` del nodo.
+- Se usa en el `iframe` del formulario de contacto con la clave `contactFormFrameTitle`, presente en los 8 idiomas.
+
+### Subpágina de Normas UXM
+
+- La subpágina `pages/normas-uxm.html` contiene tres bloques localizables: `.kingdom-content`, `.alliance-content` y `.positions-content`.
+- Los encabezados `#rulesKingdom`, `#rulesAlliance` y `#accendingAlliance` declaran `data-i18n` con las claves `rulesKingdomTitle`, `rulesAllianceTitle` y `rulesPositionsTitle`, presentes en los 8 idiomas.
+- El contenido se localiza con claves propias:
+  - Reino: `rulesKingdomK1` y `rulesKingdomK2`.
+  - Alianza: `rulesAllianceA1` a `rulesAllianceA11`, más `rulesAllianceHelp` para el mensaje de ayuda final.
+  - Posiciones: `rulesPositionR1` a `rulesPositionR5`, más los roles `rulesRoleDiplomat`, `rulesRoleGoddess`, `rulesRoleRecruiter` y `rulesRoleWarGod` con su texto asociado (`rulesRoleDiplomatText`, etc.).
+- Las reglas de la alianza se numeran de **A1 a A11** sin repeticiones. La numeración corregida sustituye a la duplicada A9 anterior.
+- Las reglas A4, A5, A6 y A9 contienen enlaces y se localizan con `data-i18n-html`.
+- El enlace interno a los tutoriales dentro de A9 usa la ruta relativa `video-tutoriales.html`, nunca una ruta absoluta con `/pages/`, para no romper en los sitios de proyecto de GitHub Pages.
+- Las etiquetas `K1`, `A1`, `R1` y las de los rangos son identificadores del juego y no se traducen; los nombres de los roles especiales sí.
+
+### Formulario de contacto
+
+- La subpágina `pages/contacto.html` incrusta el formulario de Google Forms dentro de `<div class="form-content">` mediante un `iframe` con la vista embebible `viewform?embedded=true` y `loading="lazy"`.
+- El encabezado `#contactForm` se localiza con `data-i18n="contactFormTitle"` («Formulario de contacto»).
+- Junto al `iframe` se ofrece un enlace alternativo a la URL corta del formulario, con `target="_blank"` y `rel="noopener noreferrer"`, cuyo texto se localiza con `contactFormOpen`.
+- Los estilos viven en `css/style.css`: `.form-content` apila sus hijos, `.form-embed` limita el ancho a `760px` y `.form-frame` ocupa el `100%` del contenedor con `border: 0`.
+- Este formulario es la única dependencia externa de contenido del sitio y se carga bajo demanda, sin `fetch` ni peticiones desde JavaScript.
 
 ### Bloque de bonos de la alianza
 

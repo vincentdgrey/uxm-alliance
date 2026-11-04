@@ -212,7 +212,7 @@ test("el banner de subpágina comparte estilo con el divisor y ocupa todo el anc
 test("el banner de subpágina usa un contenedor dedicado fuera del bloque informativo", () => {
   const html = read("pages/actividades-diarias.html");
   const css = read("css/style.css");
-  assert.match(html, /<section class="subpage-banner">\s*<h2 class="sibtitle-info banner-subpage"/);
+  assert.match(html, /<section class="subpage-banner">\s*<h3 class="sibtitle-info banner-subpage"/);
   assert.match(css, /\.subpage-banner \.banner-subpage\s*\{[^}]*margin:\s*0/s);
   assert.match(css, /\.subpage-banner \+ \.block-content-info\s*\{[^}]*margin-top:\s*0/s);
   assert.doesNotMatch(html, /<section class="block-content-info">\s*<h2 class="sibtitle-info banner-subpage"/);
@@ -227,7 +227,7 @@ test("la inicial escarlata del título de subpágina se centra verticalmente", (
 test("el título de subpágina usa el color gris claro solicitado", () => {
   const css = read("css/style.css");
   assert.match(css, /\.subpage-title\s*\{[^}]*color:\s*#adadad/s);
-  assert.match(css, /#content\.subpage-content \.subpage-title\s*\{[^}]*color:\s*#adadad/s);
+  assert.match(css, /#content\.subpage-content \.subpage-title\s*\{[^}]*color:\s*#565656/s);
 });
 
 test("todas las subpáginas usan el estándar de portada subpage-content", () => {
@@ -318,34 +318,70 @@ test("actividades diarias incluye el calendario de batalla de supervivencia", ()
   assert.match(html, /id="bs-tzinfo"/);
 });
 
-test("el calendario se carga desde un script propio en js y sin estilos en linea", () => {
+test("la subpagina carga un unico script propio y su hoja de estilos", () => {
   const html = read("pages/actividades-diarias.html");
-  assert.match(html, /<script src="\.\.\/js\/battle-survival-schedule\.js"><\/script>/);
+
+  assert.match(html, /<script src="\.\.\/js\/activities-daily\.js"><\/script>/);
+  assert.match(html, /<link rel="stylesheet" href="\.\.\/css\/activities-daily\.css">/);
+
+  /* Los scripts reemplazados no deben volver a referenciarse. */
+  assert.doesNotMatch(html, /battle-survival-schedule\.js/);
+  assert.doesNotMatch(html, /alliance-duel-schedule\.js/);
+
+  /* No se incrusta codigo ni estilos en linea. */
   assert.doesNotMatch(html, /<script>\s*\(function \(\) \{/);
   assert.doesNotMatch(html, /ACTIVITIES\s*=\s*\[/);
-  assert.ok(fs.existsSync(path.join(root, "js/battle-survival-schedule.js")));
+  assert.doesNotMatch(html, /<style/);
+
+  assert.ok(fs.existsSync(path.join(root, "js/activities-daily.js")));
+  assert.ok(fs.existsSync(path.join(root, "css/activities-daily.css")));
 });
 
-test("el script del calendario se carga despues de i18n y de app", () => {
+test("los scripts de calendario sustituidos ya no existen", () => {
+  assert.ok(!fs.existsSync(path.join(root, "js/battle-survival-schedule.js")));
+  assert.ok(!fs.existsSync(path.join(root, "js/alliance-duel-schedule.js")));
+});
+
+test("el script se carga despues de i18n y de app", () => {
   const html = read("pages/actividades-diarias.html");
   const i18nPos = html.indexOf('src="../js/i18n.js"');
   const appPos = html.indexOf('src="../js/app.js"');
-  const schedulePos = html.indexOf('src="../js/battle-survival-schedule.js"');
-  assert.ok(i18nPos >= 0 && appPos >= 0 && schedulePos >= 0);
+  const dailyPos = html.indexOf('src="../js/activities-daily.js"');
+  assert.ok(i18nPos >= 0 && appPos >= 0 && dailyPos >= 0);
   assert.ok(i18nPos < appPos, "i18n.js debe cargarse antes que app.js");
-  assert.ok(appPos < schedulePos, "battle-survival-schedule.js debe cargarse despues de app.js");
+  assert.ok(appPos < dailyPos, "activities-daily.js debe cargarse despues de app.js");
+});
+
+test("los estilos del calendario viven en su propia hoja y no se inyectan", () => {
+  const js = read("js/activities-daily.js");
+  const css = read("css/activities-daily.css");
+
+  /* El script ya no crea ni inyecta elementos de estilo. */
+  assert.doesNotMatch(js, /var\s+CSS\s*=/);
+  assert.doesNotMatch(js, /createElement\("style"\)/);
+  assert.doesNotMatch(js, /styleSheet/);
+  assert.doesNotMatch(js, /appendChild\(styleEl\)/);
+
+  /* Las reglas se conservan en la hoja propia. */
+  assert.match(css, /\.bs-wrap \{[^}]*overflow-x:\s*auto/s);
+  assert.match(css, /\.bs-schedule \{[^}]*min-width:\s*640px/s);
+  assert.match(css, /\.bs-schedule \{[^}]*max-width:\s*900px/s);
+  assert.match(css, /\.ad-wrap \{[^}]*overflow-x:\s*auto/s);
+  assert.match(css, /\.ad-item\.ad-open \.ad-item-body \{[^}]*display:\s*block/s);
+  assert.match(css, /tr\.bs-current td \{[^}]*background:\s*#009922/s);
+  assert.match(css, /\.ad-item\.ad-today \.ad-item-title \{[^}]*background:\s*#009922/s);
 });
 
 test("el calendario no declara subtitulo propio", () => {
   const html = read("pages/actividades-diarias.html");
-  const js = read("js/battle-survival-schedule.js");
+  const js = read("js/activities-daily.js");
   assert.doesNotMatch(html, /bs-subtitle/);
   assert.doesNotMatch(js, /bs-subtitle/);
 });
 
 test("las traducciones del calendario viven solo en js/i18n.js", () => {
   const html = read("pages/actividades-diarias.html");
-  const js = read("js/battle-survival-schedule.js");
+  const js = read("js/activities-daily.js");
   const i18n = read("js/i18n.js");
   assert.doesNotMatch(html, /var I18N\s*=\s*\{/);
   assert.doesNotMatch(js, /var I18N\s*=\s*\{/);
@@ -364,13 +400,15 @@ test("las traducciones del calendario viven solo en js/i18n.js", () => {
 
 test("la tabla del calendario conserva el comportamiento responsivo original", () => {
   const css = read("css/style.css");
-  const js = read("js/battle-survival-schedule.js");
-  assert.doesNotMatch(css, /\.battle-content\s*\{/);
+  const dailyCss = read("css/activities-daily.css");
+  const js = read("js/activities-daily.js");
+
   assert.doesNotMatch(css, /\.battle-content \.bs-schedule\s*\{/);
+  assert.doesNotMatch(dailyCss, /\.battle-content \.bs-schedule\s*\{/);
   assert.doesNotMatch(js, /max-width:\s*none/);
-  assert.match(js, /\.bs-schedule \{[^}]*min-width:\s*640px/s);
-  assert.match(js, /\.bs-schedule \{[^}]*max-width:\s*900px/s);
-  assert.match(js, /\.bs-wrap \{[^}]*overflow-x:\s*auto/s);
+  assert.match(dailyCss, /\.bs-schedule \{[^}]*min-width:\s*640px/s);
+  assert.match(dailyCss, /\.bs-schedule \{[^}]*max-width:\s*900px/s);
+  assert.match(dailyCss, /\.bs-wrap \{[^}]*overflow-x:\s*auto/s);
 });
 
 test("el encabezado del cronograma de batalla se traduce en todos los idiomas", () => {
@@ -378,7 +416,7 @@ test("el encabezado del cronograma de batalla se traduce en todos los idiomas", 
   const js = read("js/app.js");
   const i18n = read("js/i18n.js");
   assert.match(html, /data-i18n="scheduleBattleSurvival"/);
-  assert.match(html, />Cronograma Batalla Supervivencia<\/h2>/);
+  assert.match(html, />Cronograma Batalla Supervivencia<\/h3>/);
   assert.match(js, /function applySectionTitles\(\)/);
   assert.match(js, /querySelectorAll\("\[data-i18n\]"\)/);
   assert.match(js, /setSectionTitle\(heading, T\[key\]\)/);
@@ -389,14 +427,145 @@ test("el encabezado del cronograma de batalla se traduce en todos los idiomas", 
   assert.match(i18n, /scheduleBattleSurvival:"Cronograma Batalla Supervivencia"/);
 });
 
+test("actividades diarias incluye el calendario de duelo de alianzas", () => {
+  const html = read("pages/actividades-diarias.html");
+  assert.match(html, /<div class="duel-alliance-content">[\s\S]*?<div id="ad-lists"><\/div>[\s\S]*?<div id="ad-tzinfo"><\/div>[\s\S]*?<\/div>/);
+});
+
+test("los datos de los cronogramas viven en el script unificado y no dependen de red", () => {
+  const js = read("js/activities-daily.js");
+
+  assert.doesNotMatch(js, /\bfetch\s*\(/);
+  assert.doesNotMatch(js, /XMLHttpRequest/);
+  assert.doesNotMatch(js, /var I18N\s*=\s*\{/);
+  assert.doesNotMatch(js, /document\.title\s*=/);
+  assert.doesNotMatch(js, /document\.documentElement\.lang\s*=/);
+  assert.match(js, /window\.I18N/);
+  assert.match(js, /T\.adHeaders/);
+
+  /* Los datos obsoletos de db no se cargan ni se leen. */
+  assert.doesNotMatch(js, /db\//);
+  assert.doesNotMatch(js, /\.json/);
+});
+
+test("las variables de datos son la fuente de verdad y estan completas", () => {
+  const js = read("js/activities-daily.js");
+
+  const readArray = (name) => {
+    const match = js.match(new RegExp("var " + name + " = (\\[[\\s\\S]*?\\n  \\]);"));
+    assert.ok(match, name + " debe estar declarado");
+    return JSON.parse(match[1]);
+  };
+
+  const activities = readArray("ACTIVITIES");
+  const calendar = readArray("CALENDAR");
+  const activityCode = readArray("ACTIVITY_CODE");
+  const eventCode = readArray("EVENT_CODE");
+  const phases = readArray("PHASES");
+  const daily = readArray("DAILY");
+
+  assert.equal(activities.length, 6);
+  assert.equal(calendar.length, 42);
+  assert.equal(activityCode.length, 44);
+  assert.equal(eventCode.length, 5);
+  assert.equal(phases.length, 6);
+  assert.equal(daily.length, 60);
+
+  /* Cada variable se declara una sola vez. */
+  for (const name of ["ACTIVITIES", "CALENDAR", "ACTIVITY_CODE", "EVENT_CODE", "PHASES", "DAILY"]) {
+    const found = js.match(new RegExp("var " + name + " =", "g")) || [];
+    assert.equal(found.length, 1, name + " debe declararse una sola vez");
+  }
+});
+
+test("los datos de los cronogramas mantienen su integridad referencial", () => {
+  const js = read("js/activities-daily.js");
+
+  const readArray = (name) => {
+    const match = js.match(new RegExp("var " + name + " = (\\[[\\s\\S]*?\\n  \\]);"));
+    return JSON.parse(match[1]);
+  };
+
+  const activities = readArray("ACTIVITIES");
+  const calendar = readArray("CALENDAR");
+  const activityCode = readArray("ACTIVITY_CODE");
+  const eventCode = readArray("EVENT_CODE");
+  const phases = readArray("PHASES");
+  const daily = readArray("DAILY");
+
+  const activityCodes = new Set(activities.map((a) => a.codebs));
+  const codedActivities = new Set(activityCode.map((a) => a.code));
+  const events = new Set(eventCode.map((e) => e.event));
+  const phaseIds = new Set(phases.map((p) => p.phase));
+
+  /* Cada slot del calendario apunta a una actividad existente. */
+  for (const slot of calendar) {
+    assert.ok(activityCodes.has(slot.codebs), "codet " + slot.codet + " debe existir en ACTIVITIES");
+  }
+
+  /* Cada tarea diaria apunta a una actividad codificada y a un evento existente. */
+  for (const row of daily) {
+    assert.ok(codedActivities.has(row.code_task), "code_task " + row.code_task + " debe existir en ACTIVITY_CODE");
+    assert.ok(events.has(row.event), "event " + row.event + " debe existir en EVENT_CODE");
+  }
+
+  /* Las fases usadas por el calendario diario existen en PHASES. */
+  for (const row of daily) {
+    if (!row.phase) continue;
+    const normalized = row.phase.replace(/^PH/, "P");
+    assert.ok(phaseIds.has(normalized), "fase " + row.phase + " debe existir en PHASES");
+  }
+
+  /* El calendario cubre los siete dias con seis slots por dia. */
+  const perDay = {};
+  for (const slot of calendar) perDay[slot.noday] = (perDay[slot.noday] || 0) + 1;
+  assert.equal(Object.keys(perDay).length, 7);
+  for (const day of Object.keys(perDay)) assert.equal(perDay[day], 6, "noday " + day + " debe tener 6 slots");
+});
+
+test("los horarios de los datos siguen expresados en UTC-2", () => {
+  const js = read("js/activities-daily.js");
+  assert.match(js, /var SRC_TO_UTC_MS = 2 \* 3600 \* 1000/);
+});
+
+test("el encabezado y las tablas del duelo de alianzas se traducen en todos los idiomas", () => {
+  const html = read("pages/actividades-diarias.html");
+  const i18n = read("js/i18n.js");
+
+  assert.match(html, /id="textAD" data-i18n="scheduleAllianceDuel"/);
+  assert.match(html, />Duelo de Alianzas<\/h3>/);
+
+  const titles = i18n.match(/scheduleAllianceDuel:"[^"]+"/g) || [];
+  const headers = i18n.match(/adHeaders:\[/g) || [];
+  assert.equal(titles.length, 8);
+  assert.equal(headers.length, 8);
+  assert.match(i18n, /scheduleAllianceDuel:"Duelo de Alianzas"/);
+  assert.match(i18n, /adHeaders:\["Hora Inicio", "Objetivo", "Evento", "Fase"\]/);
+});
+
+test("el texto introductorio de actividades diarias explica el contenido de la pagina", () => {
+  const i18n = read("js/i18n.js");
+  const matches = i18n.match(/pageDailyLead:"[^"]+"/g) || [];
+  assert.equal(matches.length, 8);
+  assert.match(i18n, /pageDailyLead:"Detalles de las actividades diarias que te ayudaran a mejorar diariamente\."/);
+});
+
 test("el calendario no altera el titulo ni el idioma de la pagina", () => {
   const html = read("pages/actividades-diarias.html");
-  const js = read("js/battle-survival-schedule.js");
+  const js = read("js/activities-daily.js");
   assert.doesNotMatch(html, /document\.title\s*=/);
   assert.doesNotMatch(html, /document\.documentElement\.lang\s*=/);
   assert.doesNotMatch(js, /document\.title\s*=/);
   assert.doesNotMatch(js, /document\.documentElement\.lang\s*=/);
   assert.match(html, /<title>Actividades Diarias – UXM<\/title>/);
+});
+
+test("los dos cronogramas comparten un unico temporizador", () => {
+  const js = read("js/activities-daily.js");
+  const intervals = js.match(/setInterval\s*\(/g) || [];
+  assert.equal(intervals.length, 1, "debe existir un solo setInterval");
+  assert.match(js, /function initBattleSurvival\(\)/);
+  assert.match(js, /function initAllianceDuel\(\)/);
 });
 
 test("el autor de la arenga se muestra en cursiva, a la derecha y en gris", () => {
@@ -647,3 +816,172 @@ test("el video declara poster, reproducción automática silenciada y fallback",
   assert.match(js, /\.catch\(/);
   assert.ok(fs.existsSync(path.join(root, "media/video-particles-cyan-poster.jpg")));
 });
+
+/* ---------- Introducciones de subpágina ---------- */
+
+test("las introducciones de subpágina anuncian el contenido real de cada página", () => {
+  const i18n = read("js/i18n.js");
+
+  const leads = {
+    pageRulesLead: "¡Código de conducta de nuestra alianza para trabajar unidos!",
+    pageTutorialsLead: "¡Tu mejor guía visual para sobrevivir en el juego y dar pelea!",
+    pageStrategyLead: "Instrucciones tácticas que te ayudarán en los eventos y en tu proyección de crecimiento de héroes.",
+    pageContactLead: "Escríbenos para compartir tu opinión o informarnos sobre saqueos, y comparte nuestro canal de YouTube @VincentDantesGrey."
+  };
+
+  for (const [key, text] of Object.entries(leads)) {
+    /* Las traducciones pueden contener comillas, así que se cuenta la clave
+       por su declaración y no por el cierre de la cadena. Sin \b porque no
+       funciona con caracteres CJK. */
+    const found = i18n.match(new RegExp(`${key}:"`, "g")) || [];
+    assert.equal(found.length, 8, key + " debe existir en los 8 idiomas");
+    assert.ok(
+      i18n.includes(`${key}:"${text}"`),
+      key + " debe conservar el texto español vigente"
+    );
+  }
+
+  /* Las introducciones ya no son marcadores de contenido pendiente. */
+  assert.doesNotMatch(i18n, /pageRulesLead:"Próximamente/);
+  assert.doesNotMatch(i18n, /pageTutorialsLead:"Próximamente/);
+  assert.doesNotMatch(i18n, /pageStrategyLead:"Próximamente/);
+  assert.doesNotMatch(i18n, /pageContactLead:"Escríbenos por el canal/);
+});
+
+/* ---------- Normas UXM ---------- */
+
+test("los encabezados de las normas se traducen con claves propias", () => {
+  const html = read("pages/normas-uxm.html");
+  const i18n = read("js/i18n.js");
+
+  assert.match(html, /id="rulesKingdom" data-i18n="rulesKingdomTitle"/);
+  assert.match(html, /id="rulesAlliance" data-i18n="rulesAllianceTitle"/);
+  assert.match(html, /id="accendingAlliance" data-i18n="rulesPositionsTitle"/);
+
+  for (const key of ["rulesKingdomTitle", "rulesAllianceTitle", "rulesPositionsTitle"]) {
+    const found = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
+    assert.equal(found.length, 8, key + " debe existir en los 8 idiomas");
+  }
+
+  assert.match(i18n, /rulesKingdomTitle:"Normas del Reino 277"/);
+  assert.match(i18n, /rulesAllianceTitle:"Normas de la Alianza"/);
+  assert.match(i18n, /rulesPositionsTitle:"Posiciones y Roles"/);
+});
+
+test("cada bloque de las normas declara su clave de traducción", () => {
+  const html = read("pages/normas-uxm.html");
+
+  assert.match(html, /<div class="kingdom-content">[\s\S]*?data-i18n-text="rulesKingdomK1"[\s\S]*?data-i18n-text="rulesKingdomK2"/);
+  assert.match(html, /<div class="alliance-content">[\s\S]*?data-i18n-text="rulesAllianceA1"[\s\S]*?data-i18n-text="rulesAllianceA11"/);
+  assert.match(html, /<div class="positions-content">[\s\S]*?data-i18n-text="rulesPositionR1"[\s\S]*?data-i18n-text="rulesRoleWarGodText"/);
+
+  /* El mensaje de ayuda del bloque de la alianza también se traduce. */
+  assert.match(html, /data-i18n-text="rulesAllianceHelp"/);
+});
+
+test("las reglas de la alianza se numeran de A1 a A11 sin repeticiones", () => {
+  const html = read("pages/normas-uxm.html");
+
+  const labels = [...html.matchAll(/<dt>(A\d+)\.<\/dt>/g)].map((m) => m[1]);
+  const expected = Array.from({ length: 11 }, (_, i) => `A${i + 1}`);
+
+  assert.deepEqual(labels, expected);
+  assert.equal(new Set(labels).size, labels.length);
+});
+
+test("las reglas con enlaces se localizan con data-i18n-html y conservan sus enlaces", () => {
+  const html = read("pages/normas-uxm.html");
+  const js = read("js/app.js");
+  const i18n = read("js/i18n.js");
+
+  const richKeys = ["rulesAllianceA4", "rulesAllianceA5", "rulesAllianceA6", "rulesAllianceA9"];
+
+  for (const key of richKeys) {
+    assert.match(html, new RegExp(`data-i18n-html="${key}"`));
+    const found = i18n.match(new RegExp(`${key}:"[^"]*"`, "g")) || [];
+    assert.equal(found.length, 8, key + " debe existir en los 8 idiomas");
+  }
+
+  /* El motor de traduccion reconoce el contenido con marcado. */
+  assert.match(js, /function applyRichTexts\(\)/);
+  assert.match(js, /querySelectorAll\("\[data-i18n-html\]"\)/);
+  assert.match(js, /applyRichTexts\(\);/);
+
+  /* Las URL de los enlaces no cambian con el idioma. */
+  assert.match(html, /href="https:\/\/youtube\.com\/shorts\/gq-YtFJryok"/);
+  assert.match(html, /href="https:\/\/www\.youtube\.com\/shorts\/0InXLpMJIvg"/);
+  assert.match(html, /href="https:\/\/www\.youtube\.com\/watch\?v=wWOcYrf1R9c"/);
+  assert.match(html, /href="https:\/\/www\.youtube\.com\/watch\?v=dSniK89OYKk"/);
+  assert.match(html, /class="link-info"/);
+
+  /* El enlace interno a los tutoriales es relativo, para GitHub Pages. */
+  assert.match(html, /data-i18n-html="rulesAllianceA9"[\s\S]*?href="video-tutoriales\.html"/);
+  assert.doesNotMatch(html, /href="\/pages\/video-tutoriales\.html"/);
+});
+
+test("las reglas y los roles se localizan en los 8 idiomas", () => {
+  const i18n = read("js/i18n.js");
+
+  const keys = [
+    "rulesKingdomK1", "rulesKingdomK2",
+    "rulesAllianceA1", "rulesAllianceA2", "rulesAllianceA3", "rulesAllianceA4",
+    "rulesAllianceA5", "rulesAllianceA6", "rulesAllianceA7", "rulesAllianceA8",
+    "rulesAllianceA9", "rulesAllianceA10", "rulesAllianceA11", "rulesAllianceHelp",
+    "rulesPositionR1", "rulesPositionR2", "rulesPositionR3", "rulesPositionR4", "rulesPositionR5",
+    "rulesRoleDiplomat", "rulesRoleDiplomatText",
+    "rulesRoleGoddess", "rulesRoleGoddessText",
+    "rulesRoleRecruiter", "rulesRoleRecruiterText",
+    "rulesRoleWarGod", "rulesRoleWarGodText"
+  ];
+
+  for (const key of keys) {
+    const found = i18n.match(new RegExp(`\\b${key}:"`, "g")) || [];
+    assert.equal(found.length, 8, key + " debe existir en los 8 idiomas");
+  }
+});
+
+/* ---------- Formulario de contacto ---------- */
+
+test("la página de contacto incrusta el formulario y ofrece el enlace alternativo", () => {
+  const html = read("pages/contacto.html");
+  const i18n = read("js/i18n.js");
+
+  assert.match(html, /<h3 class="sibtitle-info" id="contactForm" data-i18n="contactFormTitle">/);
+  assert.match(html, /<div class="form-content">[\s\S]*?<iframe class="form-frame"[\s\S]*?<\/div>/);
+
+  /* El formulario incrustado usa la vista embebible de Google Forms. */
+  assert.match(html, /src="https:\/\/docs\.google\.com\/forms\/d\/e\/[^"]+\/viewform\?embedded=true"/);
+  assert.match(html, /loading="lazy"/);
+  assert.match(html, /data-i18n-title="contactFormFrameTitle"/);
+  assert.match(html, /title="Formulario de contacto de UXM"/);
+
+  /* El enlace alternativo apunta al formulario corto y es seguro. */
+  assert.match(html, /href="https:\/\/forms\.gle\/hMnvZXTBjM81mPsL9"/);
+  assert.match(html, /target="_blank"/);
+  assert.match(html, /rel="noopener noreferrer"/);
+
+  for (const key of ["contactFormTitle", "contactFormOpen", "contactFormFrameTitle"]) {
+    const found = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
+    assert.equal(found.length, 8, key + " debe existir en los 8 idiomas");
+  }
+});
+
+test("el iframe del formulario se adapta al ancho de la pagina", () => {
+  const css = read("css/style.css");
+
+  assert.match(css, /\.form-content\s*\{[^}]*display:\s*flex/s);
+  assert.match(css, /\.form-embed\s*\{[^}]*max-width:\s*760px/s);
+  assert.match(css, /\.form-frame\s*\{[^}]*width:\s*100%/s);
+  assert.match(css, /\.form-frame\s*\{[^}]*border:\s*0/s);
+  assert.match(css, /\.form-fallback\s*\{[^}]*text-align:\s*center/s);
+});
+
+test("el titulo accesible del iframe se localiza con data-i18n-title", () => {
+  const js = read("js/app.js");
+
+  assert.match(js, /function applyTitles\(\)/);
+  assert.match(js, /querySelectorAll\("\[data-i18n-title\]"\)/);
+  assert.match(js, /setAttribute\("title", title\)/);
+  assert.match(js, /applyTitles\(\);/);
+});
+

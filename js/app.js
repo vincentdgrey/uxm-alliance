@@ -211,6 +211,29 @@
     }
   }
 
+  /* Aplica la traduccion a los textos con marcado, como reglas con enlaces.
+     Las traducciones son textos locales y controlados, sin contenido externo. */
+  function applyRichTexts() {
+    var nodes = document.querySelectorAll("[data-i18n-html]");
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i];
+      var key = node.getAttribute("data-i18n-html");
+      var html = T[key];
+      if (html) node.innerHTML = html;
+    }
+  }
+
+  /* Aplica la traduccion al atributo title de los elementos que lo declaran. */
+  function applyTitles() {
+    var nodes = document.querySelectorAll("[data-i18n-title]");
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i];
+      var key = node.getAttribute("data-i18n-title");
+      var title = T[key];
+      if (title) node.setAttribute("title", title);
+    }
+  }
+
   /* El título de subpagina se reconstruye para aplicar la inicial escarlata. */
   function setSubpageTitle(el, title) {
     if (!el) return;
@@ -437,6 +460,8 @@
   applyPageContent();
   applySectionTitles();
   applyTexts();
+  applyRichTexts();
+  applyTitles();
   applyInfoContent();
   syncNavState();
   initHeroVideo();
