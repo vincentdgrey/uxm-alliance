@@ -109,7 +109,7 @@ Colores neutros complementarios (no requieren token):
 
 ## Reglas de Commits Atómicos
 
-usuario creara manualmente
+usuario creara manualmente cada commit
 
 ---
 
