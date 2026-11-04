@@ -91,6 +91,114 @@ test("la subpágina de tutoriales usa banners y anclas únicas", () => {
   assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*color:\s*#3d3d3d/s);
 });
 
+test("las tarjetas de video tutorial se identifican de forma única", () => {
+  const html = read("pages/video-tutoriales.html");
+  assert.equal((html.match(/class="card-video"/g) || []).length, 10);
+  const ids = [...html.matchAll(/id="(desc-video-[^"]+)"/g)].map((m) => m[1]);
+  assert.equal(ids.length, 10);
+  assert.equal(new Set(ids).size, 10);
+  const videos = [...html.matchAll(/data-youtube-id="([^"]+)"/g)].map((m) => m[1]);
+  assert.equal(videos.length, 10);
+  assert.equal(new Set(videos).size, 10);
+});
+
+test("las tarjetas no usan elementos video con paginas de YouTube", () => {
+  const html = read("pages/video-tutoriales.html");
+  assert.doesNotMatch(html, /<video[^>]*youtube\.com\/watch/s);
+  assert.doesNotMatch(html, /<video[^>]*src=/s);
+  assert.equal((html.match(/<video/gi) || []).length, 0);
+});
+
+test("cada tarjeta declara su video, miniatura y controles", () => {
+  const html = read("pages/video-tutoriales.html");
+  assert.equal((html.match(/class="card-video-media"/g) || []).length, 10);
+  assert.equal((html.match(/class="card-video-thumb"/g) || []).length, 10);
+  assert.equal((html.match(/class="card-video-play"/g) || []).length, 10);
+  assert.equal((html.match(/class="card-video-sound"/g) || []).length, 10);
+  assert.equal((html.match(/loading="lazy"/g) || []).length, 10);
+  assert.equal((html.match(/i\.ytimg\.com\/vi\//g) || []).length, 10);
+  assert.match(html, /class="text-video-learnig" id="desc-video-p1"/);
+});
+
+test("las tarjetas se muestran de a dos por ancho y se apilan en movil", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.tutorials-content\s*\{[^}]*display:\s*grid/s);
+  assert.match(css, /\.tutorials-content\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/s);
+  assert.match(css, /\.card-video\s*\{[^}]*display:\s*flex/s);
+  assert.match(css, /\.card-video\s*\{[^}]*flex-direction:\s*column/s);
+  assert.match(css, /\.card-video\s*\{[^}]*border-radius:\s*var\(--button-radius\)/s);
+  assert.match(css, /\.card-video-media\s*\{[^}]*aspect-ratio:\s*16 \/ 9/s);
+  assert.match(css, /\.text-video-learnig\s*\{[^}]*padding:\s*12px 14px 14px/s);
+  assert.match(css, /@media\s*\(max-width:\s*640px\)\s*\{[^}]*\.tutorials-content\s*\{\s*grid-template-columns:\s*1fr/s);
+});
+
+test("el reproductor se crea bajo demanda y exige un clic para el audio", () => {
+  const js = read("js/video-cards.js");
+  assert.match(js, /https:\/\/www\.youtube\.com\/iframe_api/);
+  assert.match(js, /autoplay:\s*1/);
+  assert.match(js, /mute:\s*1/);
+  assert.match(js, /playsinline:\s*1/);
+  assert.match(js, /unMute\(\)/);
+  assert.match(js, /setVolume\(100\)/);
+  assert.match(js, /mouseenter/);
+  assert.match(js, /mouseleave/);
+  assert.match(js, /pauseVideo\(\)/);
+  assert.match(js, /prefers-reduced-motion/);
+  assert.match(js, /\(hover: hover\) and \(pointer: fine\)/);
+});
+
+test("el script de tarjetas se carga despues de i18n y de app", () => {
+  const html = read("pages/video-tutoriales.html");
+  const i18nPos = html.indexOf('src="../js/i18n.js"');
+  const appPos = html.indexOf('src="../js/app.js"');
+  const cardsPos = html.indexOf('src="../js/video-cards.js"');
+  assert.ok(i18nPos >= 0 && appPos >= 0 && cardsPos >= 0);
+  assert.ok(i18nPos < appPos, "i18n.js debe cargarse antes que app.js");
+  assert.ok(appPos < cardsPos, "video-cards.js debe cargarse despues de app.js");
+  assert.ok(fs.existsSync(path.join(root, "js/video-cards.js")));
+});
+
+test("las descripciones de las tarjetas se traducen con data-i18n-text", () => {
+  const html = read("pages/video-tutoriales.html");
+  const js = read("js/app.js");
+  const i18n = read("js/i18n.js");
+  assert.equal((html.match(/data-i18n-text="videoTutorial/g) || []).length, 10);
+  assert.match(js, /function applyTexts\(\)/);
+  assert.match(js, /querySelectorAll\("\[data-i18n-text\]"\)/);
+  assert.match(js, /applyTexts\(\);/);
+  const keys = [
+    "videoTutorialPriority1", "videoTutorialPriority2", "videoTutorialPriority3",
+    "videoTutorialTip1", "videoTutorialTip2", "videoTutorialTip3",
+    "videoTutorialEvent1", "videoTutorialEvent2", "videoTutorialEvent3", "videoTutorialEvent4"
+  ];
+  for (const key of keys) {
+    const found = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
+    assert.equal(found.length, 8, key + " debe existir en los 8 idiomas");
+  }
+});
+
+test("los encabezados de tutoriales se traducen con claves propias", () => {
+  const html = read("pages/video-tutoriales.html");
+  const i18n = read("js/i18n.js");
+  assert.match(html, /id="learningPriority" data-i18n="tutorialLearningPriorityTitle"/);
+  assert.match(html, /id="tips" data-i18n="tutorialTipsTitle"/);
+  assert.match(html, /id="events" data-i18n="tutorialEventsTitle"/);
+  for (const key of ["tutorialLearningPriorityTitle", "tutorialTipsTitle", "tutorialEventsTitle"]) {
+    const found = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
+    assert.equal(found.length, 8, key + " debe existir en los 8 idiomas");
+  }
+  assert.match(i18n, /tutorialLearningPriorityTitle:"Aprendizaje Prioritario"/);
+  assert.match(i18n, /tutorialTipsTitle:"Dato Práctico"/);
+  assert.match(i18n, /tutorialEventsTitle:"Eventos"/);
+});
+
+test("los botones de la portada conservan sus etiquetas originales", () => {
+  const i18n = read("js/i18n.js");
+  assert.match(i18n, /learningPriority:"Prioritario"/);
+  assert.match(i18n, /tips:"TIPS"/);
+  assert.match(i18n, /events:"Eventos"/);
+});
+
 test("el banner de subpágina comparte estilo con el divisor y ocupa todo el ancho", () => {
   const css = read("css/style.css");
   assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*padding:\s*12px 16px/s);

@@ -29,6 +29,7 @@ UXM Alliance es un sitio web estático publicado en GitHub Pages. La portada viv
 | `js/i18n.js` | Textos por idioma (8 idiomas) |
 | `js/app.js` | Lógica del sitio: navegación, idiomas, contenido y video |
 | `js/battle-survival-schedule.js` | Calendario de Batalla de Supervivencia (solo en actividades diarias) |
+| `js/video-cards.js` | Tarjetas de video de YouTube (solo en video tutoriales) |
 | `media/subpages/*.svg` | Fondos temáticos de las portadas de subpágina |
 | `tests/ui-contract.test.cjs` | Contrato funcional y visual del sitio |
 
@@ -120,7 +121,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 - Los fondos son ilustraciones SVG originales, locales y sin dependencias externas, con ambiente oscuro postapocalíptico y acentos escarlata/cian.
 - El título y el tag de la subpágina usan texto claro (`#f1f3f5`) con sombra de relieve; el texto introductorio (`.welcome`) usa `#e9ecef`.
-- El contenido posterior de cada subpágina (secciones informativas, anclas y banners) se conserva sin cambios.
+- El contenido posterior de cada subpágina (secciones informativas, anclas y banners) se conserva sin cambios, salvo las actualizaciones de contenido acordadas de forma explícita con el usuario, como las tarjetas de video de tutoriales.
 
 ## Navbar & Menu
 
@@ -174,12 +175,35 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - A `640px` o menos, `.video-tutorial` cambia a columna y `.component-buttons` ocupa el `100%` con margen superior de `24px`.
 - El video de YouTube usa el ID `kU9m5eJxbCQ` con reproducción automática silenciada (`autoplay=1&mute=1&playsinline=1`).
 
+#### Tarjetas de video tutorial
+
+- La subpágina `pages/video-tutoriales.html` muestra sus videos en tarjetas `<div class="card-video">`, agrupadas en `<div class="tutorials-content">`.
+- Cada tarjeta declara el video en `data-youtube-id="<ID de YouTube>"` y contiene:
+  - `<div class="card-video-media">` con la miniatura `<img class="card-video-thumb">` y los controles.
+  - `<button class="card-video-play">` para reproducir y `<button class="card-video-sound">` para activar el audio.
+  - La descripción `<p class="text-video-learnig" id="desc-video-...">`, debajo del video.
+- No usar `<video>` con URL de página de YouTube (`youtube.com/watch?v=...`): ese elemento no reproduce ese tipo de contenido. El reproductor se crea con la API de YouTube.
+- `.tutorials-content` usa `display: grid` con `grid-template-columns: repeat(2, minmax(0, 1fr))`, de modo que se muestran **dos tarjetas por ancho de página**; a `640px` o menos pasa a una sola columna.
+- `.card-video` se muestra como tarjeta: fondo `var(--panel)`, borde `var(--line)`, `border-radius: var(--button-radius)`, sombra suave y elevación en `hover` y `focus-within`.
+- `.card-video-media` usa `aspect-ratio: 16 / 9` y oculta el contenido con `overflow: hidden`; el iframe del reproductor se posiciona de forma absoluta sobre él.
+- `.text-video-learnig` es el texto descriptivo de la tarjeta, con `padding: 12px 14px 14px` y alineación izquierda.
+- El contenido se carga bajo demanda: la miniatura se muestra siempre con `loading="lazy"` y el iframe del reproductor se crea únicamente cuando el visitante interactúa con la tarjeta. Así no se cargan los 10 reproductores a la vez.
+- La lógica vive en `js/video-cards.js`, que se carga después de `js/app.js`. El script carga la API de YouTube (`https://www.youtube.com/iframe_api`) de forma diferida y solo una vez.
+- Comportamiento de reproducción:
+  - Al pasar el mouse se crea el reproductor y se reproduce **silenciado** (`autoplay=1`, `mute=1`).
+  - Al hacer clic en el control de sonido se habilita el audio (`unMute` y `setVolume(100)`) y se reproduce.
+  - Al salir de la tarjeta se pausa (`pauseVideo`) y al volver se reanuda conservando la preferencia de audio ya autorizada.
+  - El hover solo se activa en punteros finos (`(hover: hover) and (pointer: fine)`); con `prefers-reduced-motion: reduce` no hay reproducción automática.
+- **Limitación del navegador:** los navegadores bloquean el audio sin una interacción explícita del usuario, por lo que el sonido exige un clic. El hover solo puede reproducir en silencio.
+- Los estados visuales se controlan con las clases `.is-playing` (tarjeta activa) y `.is-muted` (reproductor sin sonido).
+- Con `prefers-reduced-motion: reduce` las transiciones de la tarjeta se desactivan.
+
 ### Contenido común de las secciones
 
 - Los bloques comunes son `<section class="block-content-info">` y `<section class="block-content-destacated">`. Ambos usan `margin: 40px auto`, `padding: 0 10%` y alineación izquierda por defecto.
 - `.center-content` centra visualmente el contenido y el subtítulo. Sin esa clase, `.sibtitle-info` permanece alineado a la izquierda.
 - `.block-content-destacated` usa fondo `#d3d3d3` y texto `#ccc` como contraste frente al bloque informativo.
-- Los subtítulos son `<h2 class="sibtitle-info">` y usan Cinzel, texto `var(--concrete)`, sombra gris y primera letra escarlata mediante `.info-initial`.
+- Los subtítulos son `<h2 class="sibtitle-info">` y usan Cinzel, texto `var(--concrete)`, sombra gris y primera letra escarlata mediante `.info-initial`. En la subpágina de tutoriales son `<h3 class="sibtitle-info banner-divisor">` por decisión manual del usuario.
 - `.dinamic-welcome` enumera la palabra «Bienvenido» de todos los idiomas definidos salvo el activo, separados por ` · `. No utiliza temporizadores ni rotación.
 - `.message-welcome` y `.message-arenga` limitan el texto a `760px`, lo centran y aplican `margin: 0 auto 24px`.
 - `.message-welcome p` y `.message-arenga p` eliminan el margen superior e inferior y usan `line-height: 1.7`. La arenga usa `white-space: pre-line` para conservar sus saltos de línea.
@@ -214,6 +238,17 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - `js/app.js` los reconstruye con `applySectionTitles()`, que invoca `setSectionTitle()` y aplica la inicial escarlata mediante `<span class="info-initial">`, igual que el resto de subtítulos.
 - `applySectionTitles()` se ejecuta antes de `applyInfoContent()`, que detecta la inicial ya presente y no la duplica.
 - La clave i18n `scheduleBattleSurvival` traduce el encabezado «Cronograma Batalla Supervivencia» en los 8 idiomas.
+- Los encabezados de la subpágina de tutoriales usan claves propias: `tutorialLearningPriorityTitle` («Aprendizaje Prioritario»), `tutorialTipsTitle` («Dato Práctico») y `tutorialEventsTitle` («Eventos»), presentes en los 8 idiomas.
+- Las claves `learningPriority`, `tips` y `events` se reservan para los botones de la portada y no deben reutilizarse para los encabezados: sus textos difieren.
+
+### Textos traducidos con data-i18n-text
+
+- Los textos simples que deben traducirse, como las descripciones de las tarjetas de video, declaran el atributo `data-i18n-text="<clave>"`.
+- `js/app.js` los aplica con `applyTexts()`, que sustituye el `textContent` del nodo. No se inserta ninguna inicial escarlata ni se modifica la estructura del párrafo.
+- `data-i18n` queda reservado para encabezados con inicial escarlata y `data-i18n-text` para párrafos y textos simples.
+- Las descripciones de las tarjetas de video usan `videoTutorialPriority1..3`, `videoTutorialTip1..3` y `videoTutorialEvent1..4`, presentes en los 8 idiomas. El texto español conserva la redacción manual del usuario, incluidos sus términos, cifras y mayúsculas.
+- Las descripciones detallan los objetivos, metas y condiciones de cada tutorial y evento. Al traducirlas, deben conservarse los valores del juego: `24H`, `8H`, `25%` a `60%`, `SSR`, `UR`, `Lv.6`, `225M`, `990M`, `150K`, `1.5M`, `MVP 1` y el reino `277`.
+- `videoTutorialPriority1` indica **no perder soldados y evitar dar puntos al enemigo**. Cualquier traducción debe conservar esa negación: es el sentido contrario al de una lectura literal de «perder soldados».
 
 ### Bloque de bonos de la alianza
 

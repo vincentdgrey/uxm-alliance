@@ -1,5 +1,26 @@
 # Changelog
 
+## [261104b] - 2026-11-04
+
+### Added
+- Tarjetas `<div class="card-video">` en la subpágina de Video Tutoriales, con el video de YouTube, la miniatura y la descripción `<p class="text-video-learnig">` debajo.
+- Script propio `js/video-cards.js` con la lógica de reproducción, cargado después de `js/app.js`.
+- Reproducción bajo demanda: la miniatura se muestra con `loading="lazy"` y el iframe del reproductor se crea solo cuando el visitante interactúa con la tarjeta.
+- Controles de reproducción y de activación de audio (`button.card-video-play` y `button.card-video-sound`) en cada tarjeta.
+- Traducción de las descripciones: `js/app.js` incorpora `applyTexts()`, que aplica el atributo `data-i18n-text` a los textos simples.
+- Claves i18n `tutorialLearningPriorityTitle`, `tutorialTipsTitle` y `tutorialEventsTitle` para los encabezados de tutoriales, en los 8 idiomas.
+- Claves i18n `videoTutorialPriority1..3`, `videoTutorialTip1..3` y `videoTutorialEvent1..4` para las descripciones de las tarjetas, en los 8 idiomas.
+
+### Changed
+- `.tutorials-content` usa `display: grid` con `grid-template-columns: repeat(2, minmax(0, 1fr))`: dos tarjetas por ancho de página, y una sola columna a `640px` o menos.
+- `.card-video` adopta apariencia de tarjeta con fondo, borde, radio, sombra y elevación en `hover` y `focus-within`; el área de video usa `aspect-ratio: 16 / 9`.
+- El hover reproduce el video en silencio, el clic en el control de sonido habilita el audio y al salir de la tarjeta el video se pausa. Con `prefers-reduced-motion: reduce` no hay reproducción automática.
+- Los encabezados de tutoriales pasaron de `<h2>` a `<h3>` y «TIPS» se renombró a «Dato Práctico», conservando la redacción manual del usuario.
+- Se amplían las descripciones de las 10 tarjetas de video con los objetivos, metas y condiciones de cada evento, y se actualizan en los 8 idiomas. La descripción de `videoTutorialPriority1` ahora indica correctamente **no perder soldados y evitar dar puntos al enemigo**, corrigiendo la redacción anterior que decía lo contrario.
+
+### Removed
+- Los elementos `<video src="youtube.com/watch...">`, que no podían reproducir las páginas de YouTube.
+
 ## [261104] - 2026-11-04
 
 ### Added

@@ -200,6 +200,17 @@
     }
   }
 
+  /* Aplica la traduccion a los textos simples que declaran su clave. */
+  function applyTexts() {
+    var nodes = document.querySelectorAll("[data-i18n-text]");
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i];
+      var key = node.getAttribute("data-i18n-text");
+      var text = T[key];
+      if (text) node.textContent = text;
+    }
+  }
+
   /* El título de subpagina se reconstruye para aplicar la inicial escarlata. */
   function setSubpageTitle(el, title) {
     if (!el) return;
@@ -425,6 +436,7 @@
   buildLangs();
   applyPageContent();
   applySectionTitles();
+  applyTexts();
   applyInfoContent();
   syncNavState();
   initHeroVideo();
