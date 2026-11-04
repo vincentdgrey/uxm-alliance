@@ -1,5 +1,27 @@
 # Changelog
 
+## [261104] - 2026-11-04
+
+### Added
+- Calendario de Batalla de Supervivencia en la subpágina de Actividades Diarias, dentro de `<div class="battle-content">`, con la tabla de slots, contadores en vivo y zona horaria local.
+- Script propio `js/battle-survival-schedule.js` con la lógica del calendario, cargado después de `js/i18n.js` y `js/app.js`.
+- Contenedor dedicado `<section class="subpage-banner">` para los encabezados de sección de Actividades Diarias, con `width: 100%` y sin márgenes negativos.
+- Traducción del encabezado de sección: `js/app.js` incorpora `applySectionTitles()` y `setSectionTitle()`, que aplican el atributo `data-i18n` conservando la inicial escarlata.
+- Clave i18n `scheduleBattleSurvival` («Cronograma Batalla Supervivencia») en los 8 idiomas.
+- Claves i18n `bsHeaders`, `bsPast`, `bsCurrent` y `bsNext` del calendario en los 8 idiomas, incluido el ruso.
+
+### Changed
+- La inicial escarlata de los títulos de subpágina queda centrada verticalmente con el resto del texto: `.subpage-title-word` usa `align-items: center` y `.hero-title-word` conserva `align-items: flex-start`.
+- El texto de los títulos de subpágina usa el gris claro `#adadad` en `.subpage-title` y en `#content.subpage-content .subpage-title`.
+- El encabezado `#textBS` pasa de «Batalla Supervivencia» a «Cronograma Batalla Supervivencia».
+- El calendario toma el idioma de `<html data-lang>` y usa `window.I18N`; ya no mantiene su propia tabla de traducciones ni su propia resolución de idioma.
+- La tabla del calendario conserva el comportamiento responsivo original (`min-width: 640px`, `max-width: 900px` y scroll horizontal en `.bs-wrap`) y ya no se estira al ancho de la página.
+
+### Removed
+- Las asignaciones `document.title` y `document.documentElement.lang` del script del calendario, para no sobrescribir el título ni el idioma de la página anfitriona.
+- El subtítulo propio del calendario (`<div class="bs-subtitle">`) y su regla CSS, además de su asignación en JavaScript.
+- Los márgenes negativos de `.banner-subpage` y las reglas de ancho completo de `.battle-content` y `.battle-content .bs-schedule`.
+
 ## [261103] - 2026-11-03
 
 ### Added

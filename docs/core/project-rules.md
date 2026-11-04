@@ -28,6 +28,7 @@ UXM Alliance es un sitio web estático publicado en GitHub Pages. La portada viv
 | `css/style.css` | Estilos del sitio (se carga después de Bootstrap) |
 | `js/i18n.js` | Textos por idioma (8 idiomas) |
 | `js/app.js` | Lógica del sitio: navegación, idiomas, contenido y video |
+| `js/battle-survival-schedule.js` | Calendario de Batalla de Supervivencia (solo en actividades diarias) |
 | `media/subpages/*.svg` | Fondos temáticos de las portadas de subpágina |
 | `tests/ui-contract.test.cjs` | Contrato funcional y visual del sitio |
 
@@ -103,6 +104,8 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
   - `<h1 id="heroTitle" class="subpage-title">` con el título agrupado en `.subpage-title-word`.
 - La primera letra del título vive en `<span class="subpage-title-initial subpage-title-accent">` y se pinta en rojo escarlata `var(--scarlet)` con relieve propio. El resto de la palabra va en un `<span>` contiguo.
 - `js/app.js` reconstruye el `<h1>` con `setSubpageTitle()` al aplicar el idioma, de modo que la inicial escarlata se conserva en los 8 idiomas.
+- En las subpáginas la inicial escarlata queda **centrada verticalmente** respecto al resto del texto: `.subpage-title-word` usa `display: inline-flex` y `align-items: center`. El hero de portada mantiene su alineación superior con `.hero-title-word { align-items: flex-start; }`.
+- El texto del título de subpágina usa el gris claro `#adadad`, tanto en `.subpage-title` como en la regla contextual `#content.subpage-content .subpage-title`.
 - La portada se extiende a todo el ancho de la ventana: `#content.subpage-content` usa `max-width: none`, `width: 100%` y `background-size: cover`.
 - Una capa de contraste (`#content.subpage-content::before`) garantiza la legibilidad del título, el tag y el texto introductorio sobre la ilustración.
 - Cada subpágina declara su clase temática para asociar el fondo SVG correspondiente de `media/subpages/`:
@@ -187,7 +190,30 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - `.ha-author` se muestra en cursiva, color `#7c7c7c`, alineado a la derecha y con `padding-bottom: 2px`. Su pseudoelemento `::after` dibuja el subrayado gris.
 - `.line-divisor-scarlet` dibuja una línea `3px` de rojo escarlata, `width: 100%`, centrada y con `margin: 24px auto 0`.
 - `.banner-divisor` convierte los subtítulos de la subpágina de tutoriales en banners con fondo `#ccc` y texto `#3d3d3d`, manteniendo la inicial escarlata.
+- `.banner-subpage` comparte el mismo estilo que `.banner-divisor` (fondo `#ccc`, texto `#3d3d3d`, `padding: 12px 16px`, centrado, sin sombra e inicial escarlata) y se usa en los encabezados de sección de la subpágina de actividades diarias.
+- Los encabezados con `.banner-subpage` viven en un contenedor dedicado `<section class="subpage-banner">`, hermano de `.block-content-info` dentro de `<main>`. Ese contenedor usa `width: 100%` y el fondo del `h2` ocupa de ese modo todo el ancho de la página.
+- El contenedor `.subpage-banner` usa `margin: 40px 0 12px` y `.subpage-banner + .block-content-info` anula el `margin-top` del bloque informativo para no duplicar la separación vertical.
+- No usar márgenes negativos ni `100vw` para alcanzar el ancho completo: `100vw` incluye el ancho de la barra de desplazamiento y genera overflow horizontal.
 - La portada contiene las secciones de bienvenida (`infoTitle`), arenga (`arengaTitle` y `arengaMessage`), video tutorial (`tutoTitle`) y alliance (`allianceTitle`, `allianceMessage` y la tabla de bonos).
+
+### Cronograma de Batalla de Supervivencia
+
+- La subpágina de actividades diarias incluye el calendario de Batalla de Supervivencia dentro de `<div class="battle-content">`, en la sección `#textBS`.
+- El contenido se integró a partir de `src/battle-survival-schedule.html` (obsoleto) sin `fetch` ni dependencias de red. El fragmento original en `src/` no se modifica ni se enlaza.
+- La lógica del calendario vive en `js/battle-survival-schedule.js` y se carga al final de `<body>`, después de `js/i18n.js` y `js/app.js`.
+- El script no modifica `document.title` ni `document.documentElement.lang`: la página anfitriona conserva su título y su idioma.
+- El idioma se toma de `<html data-lang>`, que fija `js/app.js`, con inglés como respaldo. El script no implementa su propia resolución de idioma.
+- Las traducciones del calendario viven exclusivamente en `js/i18n.js`: `bsHeaders` (cinco encabezados), `bsPast`, `bsCurrent` y `bsNext`, presentes en los 8 idiomas. El calendario no mantiene una tabla de traducciones propia.
+- La tabla conserva el comportamiento responsivo original: `.bs-schedule` usa `min-width: 640px` y `max-width: 900px`, y `.bs-wrap` aplica `overflow-x: auto` para el desplazamiento horizontal en pantallas pequeñas. La tabla no se estira al ancho de la página.
+- El calendario actualiza los contadores con un ciclo de `1 s`.
+- El subtítulo propio `bs-subtitle` se eliminó: el encabezado de la sección es el que identifica el cronograma.
+
+### Encabezados de sección traducidos
+
+- Los subtítulos de sección que deben traducirse declaran el atributo `data-i18n="<clave>"`.
+- `js/app.js` los reconstruye con `applySectionTitles()`, que invoca `setSectionTitle()` y aplica la inicial escarlata mediante `<span class="info-initial">`, igual que el resto de subtítulos.
+- `applySectionTitles()` se ejecuta antes de `applyInfoContent()`, que detecta la inicial ya presente y no la duplica.
+- La clave i18n `scheduleBattleSurvival` traduce el encabezado «Cronograma Batalla Supervivencia» en los 8 idiomas.
 
 ### Bloque de bonos de la alianza
 
