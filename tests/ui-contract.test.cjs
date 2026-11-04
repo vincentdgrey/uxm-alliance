@@ -96,8 +96,18 @@ test("el banner de subpágina comparte estilo con el divisor y ocupa todo el anc
   assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*padding:\s*12px 16px/s);
   assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*text-align:\s*center/s);
   assert.match(css, /\.banner-divisor \.info-initial,\s*\.banner-subpage \.info-initial\s*\{[^}]*color:\s*var\(--scarlet\)/s);
-  assert.match(css, /\.banner-subpage\s*\{[^}]*margin-left:\s*-12\.5%/s);
-  assert.match(css, /\.banner-subpage\s*\{[^}]*margin-right:\s*-12\.5%/s);
+  assert.match(css, /\.subpage-banner\s*\{[^}]*width:\s*100%/s);
+  assert.doesNotMatch(css, /\.banner-subpage\s*\{[^}]*margin-left:\s*-/s);
+  assert.doesNotMatch(css, /\.banner-subpage\s*\{[^}]*margin-right:\s*-/s);
+});
+
+test("el banner de subpágina usa un contenedor dedicado fuera del bloque informativo", () => {
+  const html = read("pages/actividades-diarias.html");
+  const css = read("css/style.css");
+  assert.match(html, /<section class="subpage-banner">\s*<h2 class="sibtitle-info banner-subpage"/);
+  assert.match(css, /\.subpage-banner \.banner-subpage\s*\{[^}]*margin:\s*0/s);
+  assert.match(css, /\.subpage-banner \+ \.block-content-info\s*\{[^}]*margin-top:\s*0/s);
+  assert.doesNotMatch(html, /<section class="block-content-info">\s*<h2 class="sibtitle-info banner-subpage"/);
 });
 
 test("la inicial escarlata del título de subpágina se centra verticalmente", () => {
@@ -194,16 +204,65 @@ test("los bloques informativos se centran solo con center-content y usan padding
   assert.match(css, /\.block-content-info\.center-content,\s*\.block-content-destacated\.center-content\s*\{[^}]*text-align:\s*center/s);
 });
 
-test("actividades diarias incluye el calendario de batalla de supervivencia a ancho completo", () => {
+test("actividades diarias incluye el calendario de batalla de supervivencia", () => {
   const html = read("pages/actividades-diarias.html");
-  const css = read("css/style.css");
-  assert.match(html, /<h2 class="sibtitle-info banner-subpage" id="textBS"[^>]*>/);
   assert.match(html, /<div class="battle-content">[\s\S]*?<table class="bs-schedule">[\s\S]*?<tbody id="bs-body"><\/tbody>[\s\S]*?<\/div>/);
-  assert.match(html, /id="bs-subtitle"/);
   assert.match(html, /id="bs-tzinfo"/);
-  assert.match(css, /\.battle-content\s*\{[^}]*margin-left:\s*-12\.5%/s);
-  assert.match(css, /\.battle-content\s*\{[^}]*margin-right:\s*-12\.5%/s);
-  assert.match(css, /\.battle-content \.bs-schedule\s*\{[^}]*max-width:\s*none/s);
+});
+
+test("el calendario se carga desde un script propio en js y sin estilos en linea", () => {
+  const html = read("pages/actividades-diarias.html");
+  assert.match(html, /<script src="\.\.\/js\/battle-survival-schedule\.js"><\/script>/);
+  assert.doesNotMatch(html, /<script>\s*\(function \(\) \{/);
+  assert.doesNotMatch(html, /ACTIVITIES\s*=\s*\[/);
+  assert.ok(fs.existsSync(path.join(root, "js/battle-survival-schedule.js")));
+});
+
+test("el script del calendario se carga despues de i18n y de app", () => {
+  const html = read("pages/actividades-diarias.html");
+  const i18nPos = html.indexOf('src="../js/i18n.js"');
+  const appPos = html.indexOf('src="../js/app.js"');
+  const schedulePos = html.indexOf('src="../js/battle-survival-schedule.js"');
+  assert.ok(i18nPos >= 0 && appPos >= 0 && schedulePos >= 0);
+  assert.ok(i18nPos < appPos, "i18n.js debe cargarse antes que app.js");
+  assert.ok(appPos < schedulePos, "battle-survival-schedule.js debe cargarse despues de app.js");
+});
+
+test("el calendario no declara subtitulo propio", () => {
+  const html = read("pages/actividades-diarias.html");
+  const js = read("js/battle-survival-schedule.js");
+  assert.doesNotMatch(html, /bs-subtitle/);
+  assert.doesNotMatch(js, /bs-subtitle/);
+});
+
+test("las traducciones del calendario viven solo en js/i18n.js", () => {
+  const html = read("pages/actividades-diarias.html");
+  const js = read("js/battle-survival-schedule.js");
+  const i18n = read("js/i18n.js");
+  assert.doesNotMatch(html, /var I18N\s*=\s*\{/);
+  assert.doesNotMatch(js, /var I18N\s*=\s*\{/);
+  assert.match(js, /window\.I18N/);
+  assert.match(js, /T\.bsHeaders/);
+  assert.match(js, /T\.bsPast/);
+  assert.match(js, /T\.bsCurrent/);
+  assert.match(js, /T\.bsNext/);
+  const headers = i18n.match(/bsHeaders:\[/g) || [];
+  assert.equal(headers.length, 8);
+  for (const key of ["bsPast", "bsCurrent", "bsNext"]) {
+    const found = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
+    assert.equal(found.length, 8, key + " debe existir en los 8 idiomas");
+  }
+});
+
+test("la tabla del calendario conserva el comportamiento responsivo original", () => {
+  const css = read("css/style.css");
+  const js = read("js/battle-survival-schedule.js");
+  assert.doesNotMatch(css, /\.battle-content\s*\{/);
+  assert.doesNotMatch(css, /\.battle-content \.bs-schedule\s*\{/);
+  assert.doesNotMatch(js, /max-width:\s*none/);
+  assert.match(js, /\.bs-schedule \{[^}]*min-width:\s*640px/s);
+  assert.match(js, /\.bs-schedule \{[^}]*max-width:\s*900px/s);
+  assert.match(js, /\.bs-wrap \{[^}]*overflow-x:\s*auto/s);
 });
 
 test("el encabezado del cronograma de batalla se traduce en todos los idiomas", () => {
@@ -222,10 +281,13 @@ test("el encabezado del cronograma de batalla se traduce en todos los idiomas", 
   assert.match(i18n, /scheduleBattleSurvival:"Cronograma Batalla Supervivencia"/);
 });
 
-test("el calendario incrustado no altera el titulo ni el idioma de la pagina", () => {
+test("el calendario no altera el titulo ni el idioma de la pagina", () => {
   const html = read("pages/actividades-diarias.html");
+  const js = read("js/battle-survival-schedule.js");
   assert.doesNotMatch(html, /document\.title\s*=/);
   assert.doesNotMatch(html, /document\.documentElement\.lang\s*=/);
+  assert.doesNotMatch(js, /document\.title\s*=/);
+  assert.doesNotMatch(js, /document\.documentElement\.lang\s*=/);
   assert.match(html, /<title>Actividades Diarias – UXM<\/title>/);
 });
 
