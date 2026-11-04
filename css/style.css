@@ -338,7 +338,7 @@ button,
   z-index: 2;
 }
 #content.subpage-content .subpage-title {
-  color: #f1f3f5;
+  color: #adadad;
   text-shadow:
     0 1px 0 #d7d1c5,
     0 2px 0 #8c857b,
@@ -441,10 +441,15 @@ button,
   animation: uxm-title-float 6s ease-in-out infinite;
   will-change: transform;
 }
-.hero-title-word,
-.subpage-title-word {
+.hero-title-word {
   display: inline-flex;
   align-items: flex-start;
+  white-space: nowrap;
+}
+/* En las subpaginas la inicial escarlata se centra verticalmente con el resto del texto */
+.subpage-title-word {
+  display: inline-flex;
+  align-items: center;
   white-space: nowrap;
 }
 .hero-title-initial,
@@ -526,7 +531,7 @@ button,
   line-height: 1.08;
   letter-spacing: .06em;
   text-transform: uppercase;
-  color: #808080;
+  color: #adadad;
   text-shadow: 0 2px 0 rgba(199, 194, 194, 0.75), 0 8px 22px rgba(33, 33, 33, .28);
 }
 
@@ -545,15 +550,34 @@ button,
   background-color: #d3d3d3;
   color: #ccc;
 }
-.banner-divisor {
+.banner-divisor,
+.banner-subpage {
   padding: 12px 16px;
   background-color: #ccc;
   color: #3d3d3d;
   text-align: center;
   text-shadow: none;
 }
-.banner-divisor .info-initial {
+.banner-divisor .info-initial,
+.banner-subpage .info-initial {
   color: var(--scarlet);
+}
+/* El banner de subpagina ocupa el ancho completo de la pagina.
+   El bloque padre usa padding: 0 10%, por eso se compensa con margenes
+   negativos del 12.5% del ancho de su caja de contenido (10% de la pagina). */
+.banner-subpage {
+  margin-left: -12.5%;
+  margin-right: -12.5%;
+}
+/* El contenido de batalla de supervivencia ocupa el ancho completo de la pagina */
+.battle-content {
+  margin-left: -12.5%;
+  margin-right: -12.5%;
+}
+/* La tabla del calendario se estira a todo el ancho disponible */
+.battle-content .bs-schedule {
+  width: 100%;
+  max-width: none;
 }
 .sibtitle-info {
   margin: 0 0 12px;
