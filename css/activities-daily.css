@@ -111,15 +111,18 @@ tr.bs-current td.bs-event::after {
 }
 .ad-item-title {
   font-family: Roboto, Arial, Helvetica, sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #6d6d6d;
-  padding: 0 10px 20px 0px;
-  border-bottom: 2px solid #008cff;
+  font-size: 1.1rem;
+  /* font-weight: 300; */
+  color: #4d7799;
+  padding: 0 10px 0 10px;
+  border: 2px solid #4d7799;
+  border-radius: 3px;
+  background: #9b9b9b36;
   cursor: pointer;
   position: relative;
 }
 .ad-item.ad-today .ad-item-title {
+  border: 2px solid #009922;
   background: #009922;
   color: #fff;
 }

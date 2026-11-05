@@ -71,50 +71,52 @@
   ];
 
   var ACTIVITY_CODE = [
-    { "code": "ANTX",    "objetive": "660 Antitoxin",                        "point": "+2.4",         "phase": "P01" },
-    { "code": "EPIUR",   "objetive": "1 Epigrafe Shard UR",                  "point": "+2'700.0",     "phase": "P01" },
-    { "code": "FAQS",    "objetive": "Falcon Quest once",                    "point": "+29'000.0",    "phase": "P01" },
-    { "code": "HERBS",   "objetive": "60 Herbs [Lv.10 8H]",                  "point": "+12.0",        "phase": "P01" },
-    { "code": "GRAIN",   "objetive": "100 Grain/100 Timber",                 "point": "+12.0",        "phase": "P01" },
-    { "code": "RAVESS",  "objetive": "1 Raven Essence",                      "point": "+6'000.0",     "phase": "P01" },
-    { "code": "RAVFRT",  "objetive": "1 Raven Fruit",                        "point": "+7.2",         "phase": "P01" },
-    { "code": "STMN",    "objetive": "1 Stamina",                            "point": "+360.0",       "phase": "P01" },
-    { "code": "CON1SP",  "objetive": "1min Construction Speedup",            "point": "+147.5",       "phase": "P02" },
-    { "code": "CONMGH",  "objetive": "Increase 1 Building Might",            "point": "+27.5",        "phase": "P02" },
-    { "code": "CRVNUR",  "objetive": "1 UR Caravan, Dispatch",               "point": "+290'000.0",   "phase": "P02" },
-    { "code": "OPENUR",  "objetive": "1 UR Covert Operation",                "point": "+217'500.0",   "phase": "P02" },
-    { "code": "TCKSUR",  "objetive": "Ticket Recruit Survivor",              "point": "+4'350.0",     "phase": "P02" },
-    { "code": "RAVCH1",  "objetive": "Lv.1 Raven Gear Chest opened",         "point": "+2'585.0",     "phase": "P03" },
-    { "code": "RAVCH2",  "objetive": "Lv.2 Raven Gear Chest opened",         "point": "+7'755.0",     "phase": "P03" },
-    { "code": "RAVCH3",  "objetive": "Lv.3 Raven Gear Chest opened",         "point": "+23'500.0",    "phase": "P03" },
-    { "code": "RAVCH4",  "objetive": "Lv.4 Raven Gear Chest opened",         "point": "+70'500.0",    "phase": "P03" },
-    { "code": "RAVCH5",  "objetive": "Lv.5 Raven Gear Chest opened",         "point": "+211'500.0",   "phase": "P03" },
-    { "code": "RAVCH6",  "objetive": "Lv.6 Raven Gear Chest opened",         "point": "+634'500.0",   "phase": "P03" },
-    { "code": "RAVCH7",  "objetive": "Lv.7 Raven Gear Chest opened",         "point": "+1'903'500.0", "phase": "P03" },
-    { "code": "STDSCR",  "objetive": "Consume 1 Study Scroll",               "point": "+705.0",       "phase": "P03" },
-    { "code": "TCH1SP",  "objetive": "1min Research Speedup",                "point": "+145.0",       "phase": "P03" },
-    { "code": "TCHMGH",  "objetive": "Increase 1 Tech Might",                "point": "+27.0",        "phase": "P03" },
-    { "code": "SHRDSR",  "objetive": "1 SR Hero Shard",                      "point": "+2'350.0",     "phase": "P04" },
-    { "code": "SHRDSS",  "objetive": "1 SSR Hero Shard",                     "point": "+8'225.0",     "phase": "P04" },
-    { "code": "SHRDUR",  "objetive": "1 UR Hero Shard",                      "point": "+23'500.0",    "phase": "P04" },
-    { "code": "SKILLB",  "objetive": "1 Skill Badge",                        "point": "+23.5",        "phase": "P04" },
-    { "code": "TCKHER",  "objetive": "Ticket Recruit Heroes",                "point": "+4'275.0",     "phase": "P04" },
-    { "code": "SOLD1TRN","objetive": "1min Training Boost",                  "point": "+145.0",       "phase": "P05" },
-    { "code": "SOLDT05", "objetive": "Train 1 Lv.5 Soldier",                 "point": "+162.0",       "phase": "P05" },
-    { "code": "SOLDT06", "objetive": "Train 1 Lv.6 Soldier",                 "point": "+189.0",       "phase": "P05" },
-    { "code": "SOLDT07", "objetive": "Train 1 Lv.7 Soldier",                 "point": "+216.0",       "phase": "P05" },
-    { "code": "SOLDT08", "objetive": "Train 1 Lv.8 Soldier",                 "point": "+243.0",       "phase": "P05" },
-    { "code": "SOLDT09", "objetive": "Train 1 Lv.9 Soldier",                 "point": "+270.0",       "phase": "P05" },
-    { "code": "SOLDT10", "objetive": "Train 1 Lv.10 Soldier",                "point": "+297.0",       "phase": "P05" },
-    { "code": "HEA1SP",  "objetive": "1min Healing Speedup",                 "point": "+145.0",       "phase": "P06" },
-    { "code": "SOLDDFT", "objetive": "For each Lv.8 Soldier defeated",       "point": "+24.3",        "phase": "P06" },
-    { "code": "SOLDLST", "objetive": "For each Lv.8 Soldier lost",           "point": "+21.6",        "phase": "P06" },
+    { "code": "ANTX",    "objetive": "Use 660 Antitoxin",                    "resource":"","point": "+2.4",         "phase": "P01" },
+    { "code": "FAQS",    "objetive": "Complete Falcon Quest Once",           "resource":"","point": "+29'000.0",    "phase": "P01" },
+
+    { "code": "EPIUR",   "objetive": "1 Epigrafe Shard UR",                  "resource":"","point": "+2'700.0",     "phase": "P01" },
+    { "code": "HERBS",   "objetive": "60 Herbs [Lv.10 8H]",                  "resource":"","point": "+12.0",        "phase": "P01" },
+    { "code": "GRAIN",   "objetive": "Gather 100 Grain/100 Timber",          "resource":"","point": "+12.0",        "phase": "P01" },
+    { "code": "RAVESS",  "objetive": "Consume 1 Raven Essence",              "resource":"","point": "+6'000.0",     "phase": "P01" },
+    { "code": "RAVFRT",  "objetive": "Consume 1 Raven Fruit",                "resource":"","point": "+7.2",         "phase": "P01" },
+    { "code": "STMN",    "objetive": "Consume 1 Stamina",                    "resource":"","point": "+360.0",       "phase": "P01" },
+    
+    { "code": "CON1SP",  "objetive": "1min Construction Speedup",            "resource":"","point": "+147.5",       "phase": "P02" },
+    { "code": "CONMGH",  "objetive": "Increase 1 Building Might",            "resource":"","point": "+27.5",        "phase": "P02" },
+    { "code": "CRVNUR",  "objetive": "1 UR Caravan, Dispatch",               "resource":"","point": "+290'000.0",   "phase": "P02" },
+    { "code": "OPENUR",  "objetive": "1 UR Covert Operation",                "resource":"","point": "+217'500.0",   "phase": "P02" },
+    { "code": "TCKSUR",  "objetive": "Ticket Recruit Survivor",              "resource":"","point": "+4'350.0",     "phase": "P02" },
+    { "code": "RAVCH1",  "objetive": "Lv.1 Raven Gear Chest opened",         "resource":"","point": "+2'585.0",     "phase": "P03" },
+    { "code": "RAVCH2",  "objetive": "Lv.2 Raven Gear Chest opened",         "resource":"","point": "+7'755.0",     "phase": "P03" },
+    { "code": "RAVCH3",  "objetive": "Lv.3 Raven Gear Chest opened",         "resource":"","point": "+23'500.0",    "phase": "P03" },
+    { "code": "RAVCH4",  "objetive": "Lv.4 Raven Gear Chest opened",         "resource":"","point": "+70'500.0",    "phase": "P03" },
+    { "code": "RAVCH5",  "objetive": "Lv.5 Raven Gear Chest opened",         "resource":"","point": "+211'500.0",   "phase": "P03" },
+    { "code": "RAVCH6",  "objetive": "Lv.6 Raven Gear Chest opened",         "resource":"","point": "+634'500.0",   "phase": "P03" },
+    { "code": "RAVCH7",  "objetive": "Lv.7 Raven Gear Chest opened",         "resource":"","point": "+1'903'500.0", "phase": "P03" },
+    { "code": "STDSCR",  "objetive": "Consume 1 Study Scroll",               "resource":"","point": "+705.0",       "phase": "P03" },
+    { "code": "TCH1SP",  "objetive": "1min Research Speedup",                "resource":"","point": "+145.0",       "phase": "P03" },
+    { "code": "TCHMGH",  "objetive": "Increase 1 Tech Might",                "resource":"","point": "+27.0",        "phase": "P03" },
+    { "code": "SHRDSR",  "objetive": "1 SR Hero Shard",                      "resource":"","point": "+2'350.0",     "phase": "P04" },
+    { "code": "SHRDSS",  "objetive": "1 SSR Hero Shard",                     "resource":"","point": "+8'225.0",     "phase": "P04" },
+    { "code": "SHRDUR",  "objetive": "1 UR Hero Shard",                      "resource":"","point": "+23'500.0",    "phase": "P04" },
+    { "code": "SKILLB",  "objetive": "1 Skill Badge",                        "resource":"","point": "+23.5",        "phase": "P04" },
+    { "code": "TCKHER",  "objetive": "Ticket Recruit Heroes",                "resource":"","point": "+4'275.0",     "phase": "P04" },
+    { "code": "SOLD1TRN","objetive": "1min Training Boost",                  "resource":"","point": "+145.0",       "phase": "P05" },
+    { "code": "SOLDT05", "objetive": "Train 1 Lv.5 Soldier",                 "resource":"","point": "+162.0",       "phase": "P05" },
+    { "code": "SOLDT06", "objetive": "Train 1 Lv.6 Soldier",                 "resource":"","point": "+189.0",       "phase": "P05" },
+    { "code": "SOLDT07", "objetive": "Train 1 Lv.7 Soldier",                 "resource":"","point": "+216.0",       "phase": "P05" },
+    { "code": "SOLDT08", "objetive": "Train 1 Lv.8 Soldier",                 "resource":"","point": "+243.0",       "phase": "P05" },
+    { "code": "SOLDT09", "objetive": "Train 1 Lv.9 Soldier",                 "resource":"","point": "+270.0",       "phase": "P05" },
+    { "code": "SOLDT10", "objetive": "Train 1 Lv.10 Soldier",                "resource":"","point": "+297.0",       "phase": "P05" },
+    { "code": "HEA1SP",  "objetive": "1min Healing Speedup",                 "resource":"","point": "+145.0",       "phase": "P06" },
+    { "code": "SOLDDFT", "objetive": "For each Lv.8 Soldier defeated",       "resource":"","point": "+24.3",        "phase": "P06" },
+    { "code": "SOLDLST", "objetive": "For each Lv.8 Soldier lost",           "resource":"","point": "+21.6",        "phase": "P06" },
     { "code": "SOLDMTC", "objetive": "Lv.8 Soldier defeated match",          "point": "+117.0",       "phase": "P06" },
-    { "code": "DYFALCON", "objetive": "Save Falcon Missions", "point": "", "phase": "" },
-    { "code": "DYELITE", "objetive": "Monsters Elite Blight", "point": "", "phase": "" },
-    { "code": "DYBOTT", "objetive": "Save Bottle Stamina", "point": "", "phase": "" },
-    { "code": "EQGEAR", "objetive": "1 Gearstone", "point": "", "phase": "" },
-    { "code": "EQBPRN", "objetive": "1 Gear Blueprint", "point": "", "phase": "" }
+    { "code": "DYFALCON", "objetive": "Save Falcon Missions",                "resource":"","point": "", "phase": "" },
+    { "code": "DYELITE", "objetive": "Monsters Elite Blight",                "resource":"","point": "", "phase": "" },
+    { "code": "DYBOTT", "objetive": "Save Bottle Stamina",                   "resource":"","point": "", "phase": "" },
+    { "code": "EQGEAR", "objetive": "1 Gearstone",                           "resource":"","point": "", "phase": "" },
+    { "code": "EQBPRN", "objetive": "1 Gear Blueprint",                      "resource":"","point": "", "phase": "" }
   ];
 
   var EVENT_CODE = [
@@ -124,10 +126,11 @@
     { "event": "BS",  "es": "Batalla Supervivencia", "en": "Battle Survival" },
     { "event": "EQ",  "es": "Mejora de Equipo",      "en": "Equipment Upgrade" },
     { "event": "BEX", "es": "Batalla del Elixir",    "en": "Battle Elixir" },
-    { "event": "CUM", "es": "Cúmulos de Cristal",    "en": "Battle Elixir" }
+    { "event": "CUM", "es": "Valle Cúmulos de Cristal",    "en": "Cumulus Cristal Valley" }
   ];
 
   var PHASES = [
+    { "phase": "P00", "desc": "Phase 0 : Preparation" },
     { "phase": "P01", "desc": "Phase 1 : Enhance Raven" },
     { "phase": "P02", "desc": "Phase 2 : Territory Development" },
     { "phase": "P03", "desc": "Phase 3 : Tech Research" },
@@ -198,11 +201,11 @@
     { "noday": 6, "day": "Sat", "event": "EQ", "phase": "", "time_init": "", "code_task": "EQGEAR" },
     { "noday": 6, "day": "Sat", "event": "EQ", "phase": "", "time_init": "", "code_task": "EQBPRN" },
     
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "", "time_init": "", "code_task": "DYFALCON" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "", "time_init": "", "code_task": "DYELITE" },
-    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "", "time_init": "", "code_task": "EQGEAR" },
-    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "", "time_init": "", "code_task": "EQBPRN" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "", "time_init": "", "code_task": "DYBOTT" }
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "time_init": "", "code_task": "DYFALCON" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "time_init": "", "code_task": "DYELITE" },
+    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "time_init": "", "code_task": "EQGEAR" },
+    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "time_init": "", "code_task": "EQBPRN" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "time_init": "", "code_task": "DYBOTT" }
   ];
 
   /* ---------- Utilidades compartidas ---------- */
@@ -415,7 +418,7 @@
 
     function dayTitle(noday) {
       var ph = dayPhase[noday];
-      return DAY_ABBR[noday] + " · " + (ph ? (phaseMap[ph] || ph) : NO_PHASE_TITLE);
+      return (ph ? (phaseMap[ph] || ph) : NO_PHASE_TITLE) + " · " + DAY_ABBR[noday];
     }
 
     function buildRow(r, offset, startDayMs, nowSec) {
