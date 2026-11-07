@@ -16,6 +16,7 @@
     { "codebs": "RAVEN",   "event": "Enhance Raven",       "activity_1": "10 Raven Fruit",                        "activity_2": "1 Stamina (15 Rallys) [+100]",            "goal": "30.000 pts" },
     { "codebs": "SOLDIER", "event": "Train Soldiers",      "activity_1": "1min Training Boost (17H) [+10]",       "activity_2": "Train 1 Lv.8 Soldier (2.800) [+25]",      "goal": "60.000 pts" },
     { "codebs": "TECH",    "event": "Technology Research", "activity_1": "1min Research Speedup (50H) [+10]",     "activity_2": "Increase 1 Tech Might (30.000) [+1]",     "goal": "30.000 pts" },
+    
     { "codebs": "STANDBY", "event": "Stand by", "activity_1": "Stand by", "activity_2": "Stand by", "goal": "" }
   ];
 
@@ -101,22 +102,28 @@
     { "code": "SOLD1TRN","group":"SOLDIER", "objetive": "Use 1min Training Boost",  "resource":"", "icon":"boost-training","point": "+145.0",              "codebs": "SOLDIER" },
     { "code": "SOLDT10", "group":"SOLDIER", "objetive": "Train 1 Soldier",          "resource":"Promote Soldiers +150%", "icon":"soldier-t7","point": "+297.0",  "codebs": "SOLDIER" },
     { "code": "HEA1SP",  "group":"HEAL",    "objetive": "Use 1min Healing Speedup", "resource":"Healing Buff", "icon":"speedup-healing","point": "+145.0", "codebs": "" },
-    { "code": "SOLDDFT", "group":"SOLDIER", "objetive": "For each Soldier defeated","resource":"", "icon":"soldier-defeat","point": "+24.3",               "codebs": "" },
-    { "code": "SOLDLST", "group":"SOLDIER", "objetive": "For each Soldier lost",    "resource":"", "icon":"soldier-lost","point": "+21.6",                 "codebs": "" },
-    { "code": "SOLDMTC", "group":"SOLDIER", "objetive": "Soldier defeated specific match", "resource":"", "icon":"soldier-attack","point": "+117.0",       "codebs": "" },
+    { "code": "SOLDDFT", "group":"SOLDIER", "objetive": "For each Soldier defeated, ALL DAY","resource":"", "icon":"soldier-defeat","point": "+24.3",               "codebs": "" },
+    { "code": "SOLDLST", "group":"SOLDIER", "objetive": "For each Soldier lost, ALL DAY",    "resource":"", "icon":"soldier-lost","point": "+21.6",                 "codebs": "" },
+    { "code": "SOLDMTC", "group":"SOLDIER", "objetive": "Soldier defeated specific match, ALL DAY", "resource":"", "icon":"soldier-attack","point": "+117.0",       "codebs": "" },
 
-    { "code": "DYFALCON", "group":"FOCUS", "objetive": "Undertake but Do Not Complete Falcon Missions", "resource":"Save 35 missions for the next day", "icon":"falcon","point": "", "codebs": "" },
-    { "code": "DYELITE", "group":"MONSTER","objetive": "Monsters Elite Blight",        "resource":"", "icon":"elite-blight","point": "",       "codebs": "" },
-    { "code": "DYBOTT",  "group":"FOCUS",  "objetive": "Save Bottle Stamina",           "resource":"", "icon":"stamina","point": "",           "codebs": "" },
+    { "code": "DYFALCON", "group":"FOCUS", "objetive": "Undertake but Do Not Complete Falcon Missions for the next day", "resource":"Save 35 missions", "icon":"falcon","point": "", "codebs": "" },
+    { "code": "DYELITE", "group":"MONSTER","objetive": "Monsters Elite Blight, get Hero Ticket & Antitoxin", "resource":"", "icon":"elite-blight","point": "",       "codebs": "" },
+    { "code": "DYBOTT",  "group":"FOCUS",  "objetive": "Save Stamina",          "resource":"Bottle Stamina", "icon":"stamina","point": "",           "codebs": "" },
 
-    { "code": "EQGEAR",  "group":"GEAR", "objetive": "Use Gearstone",                   "resource":"", "icon":"gearstone","point": "",         "codebs": "" },
-    { "code": "EQBPRN",  "group":"GEAR", "objetive": "Use Gear Blueprint",              "resource":"", "icon":"gear-blueprint-ur","point": "", "codebs": "" }
+    { "code": "EQGEAR",  "group":"GEAR", "objetive": "Use Gearstone, at UR Equipment", "resource":"Upgrade Equipment", "icon":"gearstone","point": "",         "codebs": "" },
+    { "code": "EQBPRN",  "group":"GEAR", "objetive": "Use Gear Blueprint, Promote Additional Stats UR", "resource":"Promote Equipment", "icon":"gear-blueprint-ur","point": "", "codebs": "" },
+
+    { "code": "ELIXIR",  "group":"FOCUS", "objetive": "Capture Buildings, Gain Points", "resource":"", "icon":"","point": "", "codebs": "" },
+    { "code": "SCRAMBLE",  "group":"FOCUS", "objetive": "Capture/Defense Farm, 100K Point Honor", "resource":"Farm Royal City in Mud", "icon":"","point": "", "codebs": "" },
+    { "code": "KWAR",  "group":"FOCUS", "objetive": "Kill/Defeat Soldiers, 1.5M Point Honor", "resource":"Kingdom War", "icon":"","point": "", "codebs": "" },
+    { "code": "CUMULUS",  "group":"FOCUS", "objetive": "Gather Cristal, from Cumulus", "resource":"Event Culumus Valley", "icon":"cumulus-cristal","point": "", "codebs": "" }
   ];
 
   var EVENT_CODE = [
     { "event": "AD",  "es": "Duelo de Alianza",         "en": "Alliance Duel" },
     { "event": "DY",  "es": "Consejo Diario",           "en": "Tips Daily" },
-    { "event": "KVK", "es": "Guerra Reinos",            "en": "Kingdoms War" },
+    { "event": "KVK", "es": "Guerra de Reinos",         "en": "Kingdoms War" },
+    { "event": "ROY", "es": "Alboroto Ciudad Real",     "en": "Scramble Royal City" },
     { "event": "BS",  "es": "Batalla Supervivencia",    "en": "Battle Survival" },
     { "event": "EQ",  "es": "Mejora de Equipo",         "en": "Equipment Upgrade" },
     { "event": "BEX", "es": "Batalla del Elixir",       "en": "Battle Elixir" },
@@ -134,63 +141,72 @@
   ];
 
   var DAILY = [
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "time_init": "00:00:00", "code_task": "ANTX" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "time_init": "", "code_task": "FAQS" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "time_init": "", "code_task": "RAVESS" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "time_init": "16:00:00", "code_task": "RAVFRT" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "time_init": "16:00:00", "code_task": "STMN" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "time_init": "", "code_task": "EPIUR" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "time_init": "", "code_task": "HERBS" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "time_init": "", "code_task": "FAQS" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "ANTX" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "FAQS" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVESS" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVFRT" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "STMN" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "EPIUR" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "HERBS" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "FAQS" },
     
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "time_init": "", "code_task": "TCKSUR" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "time_init": "00:00:00", "code_task": "CON1SP" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "time_init": "00:00:00", "code_task": "CONMGH" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "time_init": "", "code_task": "CRVNUR" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "time_init": "", "code_task": "OPENUR" },
-    { "noday": 2, "day": "Tue", "event": "DY", "phase": "", "time_init": "", "code_task": "DYFALCON" },
-    { "noday": 2, "day": "Tue", "event": "DY", "phase": "", "time_init": "", "code_task": "DYELITE" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "TCKSUR" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CON1SP" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CONMGH" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CRVNUR" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "OPENUR" },
+
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "",     "code_task": "DYFALCON" },
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "",     "code_task": "DYELITE" },
     
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "", "code_task": "RAVCH1" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "04:00:00", "code_task": "STDSCR" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "04:00:00", "code_task": "TCH1SP" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "04:00:00", "code_task": "TCHMGH" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "", "code_task": "FAQS" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "RAVCH1" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "STDSCR" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCH1SP" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCHMGH" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "FAQS" },
     
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "time_init": "08:00:00", "code_task": "TCKHER" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "time_init": "08:00:00", "code_task": "ANTX" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "time_init": "", "code_task": "SHRDSR" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "time_init": "", "code_task": "SHRDSS" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "time_init": "", "code_task": "SHRDUR" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "time_init": "", "code_task": "SKILLB" },
-    { "noday": 4, "day": "Thu", "event": "DY", "phase": "", "time_init": "", "code_task": "DYFALCON" },
-    { "noday": 4, "day": "Thu", "event": "DY", "phase": "", "time_init": "", "code_task": "DYELITE" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "TCKHER" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "ANTX" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDSR" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDSS" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDUR" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SKILLB" },
+
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "",     "code_task": "DYFALCON" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "",     "code_task": "DYELITE" },
     
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "12:00:00", "code_task": "SOLDT10" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "12:00:00", "code_task": "SOLD1TRN" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "", "code_task": "FAQS" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "08:00:00", "code_task": "CON1SP" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "08:00:00", "code_task": "CONMGH" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "16:00:00", "code_task": "TCH1SP" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "16:00:00", "code_task": "TCHMGH" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLDT10" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLD1TRN" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "FAQS" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CON1SP" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CONMGH" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCH1SP" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCHMGH" },
+
+    { "noday": 5, "day": "Fri", "event": "ROY", "phase": "",    "code_task": "SCRAMBLE" },
+    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "",    "code_task": "ELIXIR" },
     
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "time_init": "04:00:00", "code_task": "CON1SP" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "time_init": "12:00:00", "code_task": "TCH1SP" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "time_init": "08:00:00", "code_task": "SOLD1TRN" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "time_init": "", "code_task": "HEA1SP" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "time_init": "", "code_task": "SOLDDFT" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "time_init": "", "code_task": "SOLDLST" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "time_init": "", "code_task": "SOLDMTC" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "time_init": "", "code_task": "CRVNUR" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "time_init": "", "code_task": "OPENUR" },
-    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "", "time_init": "", "code_task": "EQGEAR" },
-    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "", "time_init": "", "code_task": "EQBPRN" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CON1SP" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "TCH1SP" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLD1TRN" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "HEA1SP" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDDFT" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDLST" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDMTC" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CRVNUR" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "OPENUR" },
+
+    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "",     "code_task": "EQGEAR" },
+    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "",     "code_task": "EQBPRN" },
+    { "noday": 6, "day": "Sat", "event": "KVK", "phase": "",    "code_task": "KWAR" },
     
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "time_init": "", "code_task": "DYFALCON" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "time_init": "", "code_task": "DYELITE" },
-    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "time_init": "", "code_task": "EQGEAR" },
-    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "time_init": "", "code_task": "EQBPRN" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "time_init": "", "code_task": "DYBOTT" }
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYFALCON" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYELITE" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYBOTT" },
+    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQGEAR" },
+    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQBPRN" },
+
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS" }
   ];
 
   /* ---------- Utilidades compartidas ---------- */
