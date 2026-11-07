@@ -1,5 +1,33 @@
 # Changelog
 
+## [261105a] - 2026-11-05
+
+### Added
+- Traducción de los nombres de evento de Battle Survival mediante la clave `bsEvents`, indexada por `codebs` (`BUILD`, `HEROE`, `RAVEN`, `SOLDIER`, `TECH`, `STANDBY`) y presente en los 8 idiomas.
+- Columna `Recurso` en las tablas del Duelo de Alianzas, con el valor `resource` de `ACTIVITY_CODE`.
+- Iconos de tarea en la segunda columna de las tablas del Duelo de Alianzas, cargados desde `media/glyph/<icon>.png`.
+- Columna reservada para futuros iconos de recurso, con el atributo `data-code`.
+- `<colgroup>` compartido (`AD_COLUMNS`) para que todas las tablas de los días mantengan el mismo ancho y la misma alineación de columnas.
+- Contadores en vivo para las tareas vinculadas del Duelo de Alianzas: `+ HH:MM:SS` en curso, `T-HH:MM:SS` para el próximo horario y `End` al finalizar.
+- Fechas `MM/DD` para las tareas vinculadas en las tablas de los días futuros.
+
+### Changed
+- La tabla de cada día del Duelo de Alianzas pasa de cuatro a seis columnas: Hora Inicio, imagen, Tarea, imagen, Recurso y Evento. La columna `Tarea` sustituye a «Objetivo».
+- Las filas del Duelo de Alianzas se ordenan alfabéticamente por el nombre visible del Evento y los grupos se separan con `border-bottom: 2px solid #4d7799`.
+- `.ad-schedule` usa `table-layout: fixed`, `width: 100%` y `min-width: 760px`; los textos largos pueden envolver su contenido.
+- `.ad-item-title` conserva sin cambios los estilos definidos manualmente por el usuario (color `#4d7799`, borde, radio, fondo y tamaño de letra).
+- `ACTIVITY_CODE` usa `codebs` para vincular cada tarea con Battle Survival; la columna `Hora Inicio` solo calcula tiempos para tareas vinculadas.
+- Las tareas sin vínculo muestran `—` en `Hora Inicio`; `DAILY.time_init` deja de utilizarse para este renderizado.
+
+### Removed
+- La columna `Fase` de las tablas del Duelo de Alianzas: la fase solo se muestra en el título del día.
+- El reloj de zona horaria `#ad-tzinfo` del Duelo de Alianzas y la clase visual `ad-past`.
+
+### Fixed
+- Los resaltados de Battle Survival (`bs-hl-special` y `bs-hl-track`) dependen ahora del código de actividad y no del texto del evento, por lo que se mantienen al cambiar de idioma.
+- Los iconos de tarea cuya imagen aún no está disponible en `media/glyph/` se ocultan en lugar de mostrar una imagen rota.
+- Los contadores del Duelo de Alianzas usan segundos dentro del día y consideran que cada horario de Battle Survival termina cuando empieza el siguiente, aunque tenga otro código; así pasan correctamente al segundo horario y muestran `End` al finalizar el último.
+
 ## [261104c] - 2026-11-04
 
 ### Added

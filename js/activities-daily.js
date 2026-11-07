@@ -71,62 +71,56 @@
   ];
 
   var ACTIVITY_CODE = [
-    { "code": "ANTX",    "objetive": "Use 660 Antitoxin",                    "resource":"","point": "+2.4",         "phase": "P01" },
-    { "code": "FAQS",    "objetive": "Complete Falcon Quest Once",           "resource":"","point": "+29'000.0",    "phase": "P01" },
+    { "code": "ANTX",    "group":"FOCUS", "objetive": "Consume 660 Antitoxins",       "resource":"Purchase Antidote Supplies", "icon":"antitoxin","point": "+2.4",  "codebs": "HEROE" },
+    { "code": "FAQS",    "group":"FOCUS", "objetive": "Complete Falcon Missions",     "resource":"Falcon Tower", "icon":"falcon-mission","point": "+29'000.0",      "codebs": "" },
 
-    { "code": "EPIUR",   "objetive": "1 Epigrafe Shard UR",                  "resource":"","point": "+2'700.0",     "phase": "P01" },
-    { "code": "HERBS",   "objetive": "60 Herbs [Lv.10 8H]",                  "resource":"","point": "+12.0",        "phase": "P01" },
-    { "code": "GRAIN",   "objetive": "Gather 100 Grain/100 Timber",          "resource":"","point": "+12.0",        "phase": "P01" },
-    { "code": "RAVESS",  "objetive": "Consume 1 Raven Essence",              "resource":"","point": "+6'000.0",     "phase": "P01" },
-    { "code": "RAVFRT",  "objetive": "Consume 1 Raven Fruit",                "resource":"","point": "+7.2",         "phase": "P01" },
-    { "code": "STMN",    "objetive": "Consume 1 Stamina",                    "resource":"","point": "+360.0",       "phase": "P01" },
+    { "code": "EPIUR",   "group":"RAVEN", "objetive": "Get 1 UR Epigraph Shard",      "resource":"Open Epigraph Chest", "icon":"epigraf-chest","point": "+2'700.0", "codebs": "" },
+    { "code": "HERBS",   "group":"FARM",  "objetive": "Gather 60 Herbs",              "resource":"Herb Garden Lv.10 > 8H", "icon":"garden","point": "+12.0",        "codebs": "" },
+    { "code": "GRAIN",   "group":"FARM",  "objetive": "Gather 100 Grain/100 Timber",  "resource":"Herb Garden Lv.10 > 8H", "icon":"farm","point": "+12.0",          "codebs": "" },
+    { "code": "RAVESS",  "group":"RAVEN", "objetive": "Consume 1 Raven Essence",      "resource":"", "icon":"raven-essence","point": "+6'000.0",                    "codebs": "" },
+    { "code": "RAVFRT",  "group":"RAVEN", "objetive": "Consume 1 Raven Fruit",        "resource":"", "icon":"raven-fruit","point": "+7.2",                          "codebs": "RAVEN" },
+    { "code": "STMN",    "group":"FOCUS", "objetive": "Consume 1 Stamina",            "resource":"Use Stamina Bottles", "icon":"stamina-bottle","point": "+360.0",  "codebs": "RAVEN" },
     
-    { "code": "CON1SP",  "objetive": "1min Construction Speedup",            "resource":"","point": "+147.5",       "phase": "P02" },
-    { "code": "CONMGH",  "objetive": "Increase 1 Building Might",            "resource":"","point": "+27.5",        "phase": "P02" },
-    { "code": "CRVNUR",  "objetive": "1 UR Caravan, Dispatch",               "resource":"","point": "+290'000.0",   "phase": "P02" },
-    { "code": "OPENUR",  "objetive": "1 UR Covert Operation",                "resource":"","point": "+217'500.0",   "phase": "P02" },
-    { "code": "TCKSUR",  "objetive": "Ticket Recruit Survivor",              "resource":"","point": "+4'350.0",     "phase": "P02" },
-    { "code": "RAVCH1",  "objetive": "Lv.1 Raven Gear Chest opened",         "resource":"","point": "+2'585.0",     "phase": "P03" },
-    { "code": "RAVCH2",  "objetive": "Lv.2 Raven Gear Chest opened",         "resource":"","point": "+7'755.0",     "phase": "P03" },
-    { "code": "RAVCH3",  "objetive": "Lv.3 Raven Gear Chest opened",         "resource":"","point": "+23'500.0",    "phase": "P03" },
-    { "code": "RAVCH4",  "objetive": "Lv.4 Raven Gear Chest opened",         "resource":"","point": "+70'500.0",    "phase": "P03" },
-    { "code": "RAVCH5",  "objetive": "Lv.5 Raven Gear Chest opened",         "resource":"","point": "+211'500.0",   "phase": "P03" },
-    { "code": "RAVCH6",  "objetive": "Lv.6 Raven Gear Chest opened",         "resource":"","point": "+634'500.0",   "phase": "P03" },
-    { "code": "RAVCH7",  "objetive": "Lv.7 Raven Gear Chest opened",         "resource":"","point": "+1'903'500.0", "phase": "P03" },
-    { "code": "STDSCR",  "objetive": "Consume 1 Study Scroll",               "resource":"","point": "+705.0",       "phase": "P03" },
-    { "code": "TCH1SP",  "objetive": "1min Research Speedup",                "resource":"","point": "+145.0",       "phase": "P03" },
-    { "code": "TCHMGH",  "objetive": "Increase 1 Tech Might",                "resource":"","point": "+27.0",        "phase": "P03" },
-    { "code": "SHRDSR",  "objetive": "1 SR Hero Shard",                      "resource":"","point": "+2'350.0",     "phase": "P04" },
-    { "code": "SHRDSS",  "objetive": "1 SSR Hero Shard",                     "resource":"","point": "+8'225.0",     "phase": "P04" },
-    { "code": "SHRDUR",  "objetive": "1 UR Hero Shard",                      "resource":"","point": "+23'500.0",    "phase": "P04" },
-    { "code": "SKILLB",  "objetive": "1 Skill Badge",                        "resource":"","point": "+23.5",        "phase": "P04" },
-    { "code": "TCKHER",  "objetive": "Ticket Recruit Heroes",                "resource":"","point": "+4'275.0",     "phase": "P04" },
-    { "code": "SOLD1TRN","objetive": "1min Training Boost",                  "resource":"","point": "+145.0",       "phase": "P05" },
-    { "code": "SOLDT05", "objetive": "Train 1 Lv.5 Soldier",                 "resource":"","point": "+162.0",       "phase": "P05" },
-    { "code": "SOLDT06", "objetive": "Train 1 Lv.6 Soldier",                 "resource":"","point": "+189.0",       "phase": "P05" },
-    { "code": "SOLDT07", "objetive": "Train 1 Lv.7 Soldier",                 "resource":"","point": "+216.0",       "phase": "P05" },
-    { "code": "SOLDT08", "objetive": "Train 1 Lv.8 Soldier",                 "resource":"","point": "+243.0",       "phase": "P05" },
-    { "code": "SOLDT09", "objetive": "Train 1 Lv.9 Soldier",                 "resource":"","point": "+270.0",       "phase": "P05" },
-    { "code": "SOLDT10", "objetive": "Train 1 Lv.10 Soldier",                "resource":"","point": "+297.0",       "phase": "P05" },
-    { "code": "HEA1SP",  "objetive": "1min Healing Speedup",                 "resource":"","point": "+145.0",       "phase": "P06" },
-    { "code": "SOLDDFT", "objetive": "For each Lv.8 Soldier defeated",       "resource":"","point": "+24.3",        "phase": "P06" },
-    { "code": "SOLDLST", "objetive": "For each Lv.8 Soldier lost",           "resource":"","point": "+21.6",        "phase": "P06" },
-    { "code": "SOLDMTC", "objetive": "Lv.8 Soldier defeated match",          "point": "+117.0",       "phase": "P06" },
-    { "code": "DYFALCON", "objetive": "Save Falcon Missions",                "resource":"","point": "", "phase": "" },
-    { "code": "DYELITE", "objetive": "Monsters Elite Blight",                "resource":"","point": "", "phase": "" },
-    { "code": "DYBOTT", "objetive": "Save Bottle Stamina",                   "resource":"","point": "", "phase": "" },
-    { "code": "EQGEAR", "objetive": "1 Gearstone",                           "resource":"","point": "", "phase": "" },
-    { "code": "EQBPRN", "objetive": "1 Gear Blueprint",                      "resource":"","point": "", "phase": "" }
+    { "code": "CON1SP",  "group":"BUILD", "objetive": "Use 1min Construction Speedup","resource":"", "icon":"speedup-build","point": "+147.5",      "codebs": "BUILD" },
+    { "code": "CONMGH",  "group":"BUILD", "objetive": "Increase 1 Building Might",   "resource":"", "icon":"might-building","point": "+27.5",       "codebs": "BUILD" },
+    { "code": "CRVNUR",  "group":"OPER",  "objetive": "Dispatch 1 UR Caravan",       "resource":"", "icon":"caravan","point": "+290'000.0",         "codebs": "" },
+    { "code": "OPENUR",  "group":"OPER",  "objetive": "Execute 1 UR Covert Operation","resource":"", "icon":"black-ops-swag","point": "+217'500.0", "codebs": "" },
+    { "code": "TCKSUR",  "group":"TAVERN","objetive": "Recruit Survivor once",      "resource":"Ticket Survivor", "icon":"ticket-survivor","point": "+4'350.0", "codebs": "" },
+
+    { "code": "RAVCH1",  "group":"RAVEN","objetive": "Raven Gear Chest opened",   "resource":"", "icon":"raven-chest","point": "+2'585.0",        "codebs": "" },
+    { "code": "STDSCR",  "group":"TECH", "objetive": "Consume 1 Study Scroll",    "resource":"Alliance Duel Reward", "icon":"study-scroll","point": "+705.0", "codebs": "" },
+    { "code": "TCH1SP",  "group":"TECH", "objetive": "Use 1min Research Speedup", "resource":"", "icon":"speedup-tech","point": "+145.0",         "codebs": "TECH" },
+    { "code": "TCHMGH",  "group":"TECH", "objetive": "Increase 1 Tech Might",     "resource":"", "icon":"might-research","point": "+27.0",        "codebs": "TECH" },
+
+    { "code": "SHRDSR",  "group":"HERO", "objetive": "Consume 1 SR Hero Shard",           "resource":"", "icon":"shard-sr","point": "+2'350.0",   "codebs": "" },
+    { "code": "SHRDSS",  "group":"HERO", "objetive": "Consume 1 SSR Hero Shard",          "resource":"", "icon":"shard-ssr","point": "+8'225.0",  "codebs": "" },
+    { "code": "SHRDUR",  "group":"HERO", "objetive": "Consume 1 UR Hero Shard",           "resource":"", "icon":"shard-ur","point": "+23'500.0",  "codebs": "" },
+    { "code": "SKILLB",  "group":"HERO", "objetive": "Use 1 Skill Badge",             "resource":"", "icon":"skill-badge","point": "+23.5",       "codebs": "" },
+    { "code": "TCKHER",  "group":"TAVERN","objetive": "Recruit Heroes once",    "resource":"Ticket Heroe", "icon":"ticket-hero","point": "+4'275.0", "codebs": "HEROE" },
+
+    { "code": "SOLD1TRN","group":"SOLDIER", "objetive": "Use 1min Training Boost",  "resource":"", "icon":"boost-training","point": "+145.0",              "codebs": "SOLDIER" },
+    { "code": "SOLDT10", "group":"SOLDIER", "objetive": "Train 1 Soldier",          "resource":"Promote Soldiers +150%", "icon":"soldier-t7","point": "+297.0",  "codebs": "SOLDIER" },
+    { "code": "HEA1SP",  "group":"HEAL",    "objetive": "Use 1min Healing Speedup", "resource":"Healing Buff", "icon":"speedup-healing","point": "+145.0", "codebs": "" },
+    { "code": "SOLDDFT", "group":"SOLDIER", "objetive": "For each Soldier defeated","resource":"", "icon":"soldier-defeat","point": "+24.3",               "codebs": "" },
+    { "code": "SOLDLST", "group":"SOLDIER", "objetive": "For each Soldier lost",    "resource":"", "icon":"soldier-lost","point": "+21.6",                 "codebs": "" },
+    { "code": "SOLDMTC", "group":"SOLDIER", "objetive": "Soldier defeated specific match", "resource":"", "icon":"soldier-attack","point": "+117.0",       "codebs": "" },
+
+    { "code": "DYFALCON", "group":"FOCUS", "objetive": "Undertake but Do Not Complete Falcon Missions", "resource":"Save 35 missions for the next day", "icon":"falcon","point": "", "codebs": "" },
+    { "code": "DYELITE", "group":"MONSTER","objetive": "Monsters Elite Blight",        "resource":"", "icon":"elite-blight","point": "",       "codebs": "" },
+    { "code": "DYBOTT",  "group":"FOCUS",  "objetive": "Save Bottle Stamina",           "resource":"", "icon":"stamina","point": "",           "codebs": "" },
+
+    { "code": "EQGEAR",  "group":"GEAR", "objetive": "Use Gearstone",                   "resource":"", "icon":"gearstone","point": "",         "codebs": "" },
+    { "code": "EQBPRN",  "group":"GEAR", "objetive": "Use Gear Blueprint",              "resource":"", "icon":"gear-blueprint-ur","point": "", "codebs": "" }
   ];
 
   var EVENT_CODE = [
-    { "event": "AD",  "es": "Duelo de Alianza",      "en": "Alliance Duel" },
-    { "event": "DY",  "es": "Diario",                "en": "Daily" },
-    { "event": "KVK", "es": "Guerra Reinos",         "en": "Kingdoms War" },
-    { "event": "BS",  "es": "Batalla Supervivencia", "en": "Battle Survival" },
-    { "event": "EQ",  "es": "Mejora de Equipo",      "en": "Equipment Upgrade" },
-    { "event": "BEX", "es": "Batalla del Elixir",    "en": "Battle Elixir" },
-    { "event": "CUM", "es": "Valle Cúmulos de Cristal",    "en": "Cumulus Cristal Valley" }
+    { "event": "AD",  "es": "Duelo de Alianza",         "en": "Alliance Duel" },
+    { "event": "DY",  "es": "Consejo Diario",           "en": "Tips Daily" },
+    { "event": "KVK", "es": "Guerra Reinos",            "en": "Kingdoms War" },
+    { "event": "BS",  "es": "Batalla Supervivencia",    "en": "Battle Survival" },
+    { "event": "EQ",  "es": "Mejora de Equipo",         "en": "Equipment Upgrade" },
+    { "event": "BEX", "es": "Batalla del Elixir",       "en": "Battle Elixir" },
+    { "event": "CUM", "es": "Valle Cúmulos de Cristal", "en": "Cumulus Cristal Valley" }
   ];
 
   var PHASES = [
@@ -158,12 +152,6 @@
     { "noday": 2, "day": "Tue", "event": "DY", "phase": "", "time_init": "", "code_task": "DYELITE" },
     
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "", "code_task": "RAVCH1" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "", "code_task": "RAVCH2" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "", "code_task": "RAVCH3" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "", "code_task": "RAVCH4" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "", "code_task": "RAVCH5" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "", "code_task": "RAVCH6" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "", "code_task": "RAVCH7" },
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "04:00:00", "code_task": "STDSCR" },
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "04:00:00", "code_task": "TCH1SP" },
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "time_init": "04:00:00", "code_task": "TCHMGH" },
@@ -178,9 +166,6 @@
     { "noday": 4, "day": "Thu", "event": "DY", "phase": "", "time_init": "", "code_task": "DYFALCON" },
     { "noday": 4, "day": "Thu", "event": "DY", "phase": "", "time_init": "", "code_task": "DYELITE" },
     
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "12:00:00", "code_task": "SOLDT07" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "12:00:00", "code_task": "SOLDT08" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "12:00:00", "code_task": "SOLDT09" },
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "12:00:00", "code_task": "SOLDT10" },
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "12:00:00", "code_task": "SOLD1TRN" },
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "time_init": "", "code_task": "FAQS" },
@@ -239,6 +224,15 @@
     return td;
   }
 
+  function fmtCounter(sec) {
+    return pad(Math.floor(sec / 3600)) + ":" + pad(Math.floor((sec % 3600) / 60)) + ":" + pad(sec % 60);
+  }
+
+  function nowSecondsSrc() {
+    var d = new Date(Date.now() - SRC_TO_UTC_MS);
+    return d.getUTCDay() * 86400 + d.getUTCHours() * 3600 + d.getUTCMinutes() * 60 + d.getUTCSeconds();
+  }
+
   function tzLabel() {
     var off = -new Date(Date.now()).getTimezoneOffset() / 60;
     var h = Math.floor(Math.abs(off));
@@ -278,14 +272,18 @@
 
     var slots = CALENDAR.map(function (c) {
       var p = c.time_init.split(":");
+      /* El nombre del evento se localiza con bsEvents; el valor ingles
+         de ACTIVITIES.event queda como respaldo. */
+      var events = T.bsEvents || {};
       return {
         noday: c.noday,
         sec: c.noday * 86400 + (+p[0]) * 3600 + (+p[1]) * 60 + (+p[2]),
-        event: actMap[c.codebs].event,
-        act1: actMap[c.codebs].activity_1,
-        act2: actMap[c.codebs].activity_2,
-        hlSpecial: actMap[c.codebs].event.toLowerCase().indexOf("soldiers") >= 0,
-        hlTrack: actMap[c.codebs].event.toLowerCase().indexOf("raven") >= 0 || actMap[c.codebs].event.toLowerCase().indexOf("heroes") >= 0
+        event: events[c.codebs] || actMap[c.codebs].event,
+        act1: actMap[c.codebs].activity_2,
+        act2: actMap[c.codebs].activity_1,
+        /* Los resaltados dependen del codigo, no del texto traducido. */
+        hlSpecial: c.codebs === "SOLDIER",
+        hlTrack: c.codebs === "RAVEN" || c.codebs === "HEROE"
       };
     });
     slots.sort(function (a, b) { return a.sec - b.sec; });
@@ -295,11 +293,6 @@
       if (lastSecByDay[s.noday] === undefined || s.sec > lastSecByDay[s.noday]) lastSecByDay[s.noday] = s.sec;
     });
     slots.forEach(function (s) { s.dayEnd = s.sec === lastSecByDay[s.noday]; });
-
-    function nowSecondsSrc() {
-      var d = new Date(Date.now() - SRC_TO_UTC_MS);
-      return d.getUTCDay() * 86400 + d.getUTCHours() * 3600 + d.getUTCMinutes() * 60 + d.getUTCSeconds();
-    }
 
     function weekStartMs() {
       var s = new Date(Date.now() - SRC_TO_UTC_MS);
@@ -313,10 +306,6 @@
         if (slots[i].sec <= sec) idx = i; else break;
       }
       return idx;
-    }
-
-    function fmtCounter(sec) {
-      return pad(Math.floor(sec / 3600)) + ":" + pad(Math.floor((sec % 3600) / 60)) + ":" + pad(sec % 60);
     }
 
     var counters = [];
@@ -387,13 +376,30 @@
 
   function initAllianceDuel() {
     var listsEl = byId("ad-lists");
-    var tzInfoEl = byId("ad-tzinfo");
-    if (!listsEl || !tzInfoEl) return null;
+    if (!listsEl) return null;
 
     var NO_PHASE_TITLE = "Daily & Equipment";
 
     var actMap = {};
     ACTIVITY_CODE.forEach(function (a) { actMap[a.code] = a; });
+
+    /* Agrupa los horarios de Battle Survival por codigo para enlazar tareas. */
+    var slotsByCodebs = {};
+    var slotsByDay = [];
+    CALENDAR.forEach(function (c) {
+      var p = c.time_init.split(":");
+      var sec = (+p[0]) * 3600 + (+p[1]) * 60 + (+p[2]);
+      if (!slotsByCodebs[c.codebs]) slotsByCodebs[c.codebs] = [];
+      slotsByCodebs[c.codebs].push({ noday: c.noday, sec: sec });
+      if (!slotsByDay[c.noday]) slotsByDay[c.noday] = [];
+      slotsByDay[c.noday].push({ codebs: c.codebs, sec: sec });
+    });
+    Object.keys(slotsByCodebs).forEach(function (codebs) {
+      slotsByCodebs[codebs].sort(function (a, b) { return a.sec - b.sec; });
+    });
+    slotsByDay.forEach(function (daySlots) {
+      daySlots.sort(function (a, b) { return a.sec - b.sec; });
+    });
 
     var evMap = {};
     EVENT_CODE.forEach(function (e) { evMap[e.event] = e; });
@@ -415,29 +421,145 @@
     });
 
     var lastDay = -1;
+    var counters = [];
 
     function dayTitle(noday) {
       var ph = dayPhase[noday];
       return (ph ? (phaseMap[ph] || ph) : NO_PHASE_TITLE) + " · " + DAY_ABBR[noday];
     }
 
+    function eventLabel(r) {
+      var ev = evMap[r.event];
+      return ev ? (ev[LANG] || ev.en || r.event) : r.event;
+    }
+
+    function sortRowsByEvent(rows) {
+      return rows.map(function (r, index) {
+        return { row: r, index: index };
+      }).sort(function (a, b) {
+        var cmp = eventLabel(a.row).localeCompare(eventLabel(b.row), LANG);
+        return cmp !== 0 ? cmp : a.index - b.index;
+      }).map(function (item) {
+        return item.row;
+      });
+    }
+
+    function counterState(codebs, noday, nowSec) {
+      var allDaySlots = slotsByDay[noday] || [];
+      var codebsSlots = slotsByCodebs[codebs] || [];
+      var currentSlot = null;
+      var nextSlot = null;
+
+      for (var s = 0; s < allDaySlots.length; s++) {
+        /* Cada horario permanece activo hasta el siguiente horario del dia,
+           aunque el siguiente evento tenga otro codigo. */
+        var endSec = s + 1 < allDaySlots.length ? allDaySlots[s + 1].sec : 86400;
+        if (allDaySlots[s].codebs === codebs && nowSec >= allDaySlots[s].sec && nowSec < endSec) {
+          currentSlot = allDaySlots[s];
+          break;
+        }
+      }
+
+      for (var c = 0; c < codebsSlots.length; c++) {
+        if (codebsSlots[c].noday === noday && codebsSlots[c].sec > nowSec) {
+          nextSlot = codebsSlots[c];
+          break;
+        }
+      }
+
+      if (currentSlot) return "+ " + fmtCounter(nowSec - currentSlot.sec);
+      if (nextSlot) return "T-" + fmtCounter(nextSlot.sec - nowSec);
+      return "End";
+    }
+
+    function linkedDateLabel(startDayMs, offset, noday, codebs) {
+      var hasDaySlot = (slotsByCodebs[codebs] || []).some(function (slot) {
+        return slot.noday === noday;
+      });
+      if (!hasDaySlot) return "—";
+      var loc = new Date(startDayMs + offset * 86400000);
+      return pad(loc.getUTCMonth() + 1) + "/" + pad(loc.getUTCDate());
+    }
+
     function buildRow(r, offset, startDayMs, nowSec) {
       var tr = document.createElement("tr");
       var timeTxt = "—";
-      if (r.time_init) {
-        var p = r.time_init.split(":");
-        var sec = (+p[0]) * 3600 + (+p[1]) * 60 + (+p[2]);
-        var loc = new Date(startDayMs + offset * 86400000 + sec * 1000 + SRC_TO_UTC_MS);
-        timeTxt = pad(loc.getHours()) + ":" + pad(loc.getMinutes());
-        if (offset === 0 && nowSec > sec) tr.className = "ad-past";
-      }
       var a = actMap[r.code_task];
-      var ev = evMap[r.event];
-      appendCell(tr, timeTxt, "ad-time");
+      var codebs = a && a.codebs;
+      var timeCell = null;
+
+      if (codebs) {
+        if (offset === 0) {
+          /* El dia actual muestra el contador del horario vinculado. */
+          timeTxt = counterState(codebs, r.noday, nowSec);
+          timeCell = appendCell(tr, timeTxt, "ad-time");
+          counters.push({ td: timeCell, codebs: codebs, noday: r.noday });
+        } else {
+          /* Los dias futuros muestran la fecha de la tarea vinculada. */
+          timeTxt = linkedDateLabel(startDayMs, offset, r.noday, codebs);
+        }
+      }
+
+      /* 1. Hora Inicio */
+      if (!timeCell) appendCell(tr, timeTxt, "ad-time");
+
+      /* 2. Imagen de referencia de la tarea. */
+      appendIconCell(tr, "ad-task-icon", r.code_task);
+
+      /* 3. Tarea */
       appendCell(tr, a ? a.objetive : r.code_task, "ad-obj");
-      appendCell(tr, ev ? (ev[LANG] || ev.en || r.event) : r.event, "ad-event");
-      appendCell(tr, a && a.phase ? a.phase : "—", "ad-phase");
+
+      /* 4. Imagen de referencia del recurso: se configura a futuro. */
+      appendIconCell(tr, "ad-resource-icon", r.code_task);
+
+      /* 5. Recurso */
+      appendCell(tr, a && a.resource ? a.resource : "", "ad-resource");
+
+      /* 6. Evento */
+      appendCell(tr, eventLabel(r), "ad-event");
+
       return tr;
+    }
+
+    /* Celdas reservadas para las imágenes de tarea y recurso. */
+    function appendIconCell(tr, cls, code) {
+      var td = document.createElement("td");
+      td.className = "ad-icon " + cls;
+      td.setAttribute("data-code", code || "");
+
+      var activity = actMap[code];
+      if (cls === "ad-task-icon" && activity && activity.icon) {
+        var img = document.createElement("img");
+        img.src = "../media/glyph/" + encodeURIComponent(activity.icon) + ".png";
+        img.alt = "";
+        img.addEventListener("error", function () {
+          img.style.display = "none";
+        });
+        td.appendChild(img);
+      }
+
+      tr.appendChild(td);
+      return td;
+    }
+
+    /* Anchos compartidos: todas las tablas mantienen las mismas columnas. */
+    var AD_COLUMNS = [
+      "ad-col-time",
+      "ad-col-icon",
+      "ad-col-task",
+      "ad-col-icon",
+      "ad-col-resource",
+      "ad-col-event"
+    ];
+
+    function buildColGroup() {
+      var colgroup = document.createElement("colgroup");
+      for (var c = 0; c < AD_COLUMNS.length; c++) {
+        var col = document.createElement("col");
+        col.className = AD_COLUMNS[c];
+        colgroup.appendChild(col);
+      }
+      return colgroup;
     }
 
     function build() {
@@ -447,11 +569,12 @@
       var startDayMs = Date.UTC(origin.getUTCFullYear(), origin.getUTCMonth(), origin.getUTCDate());
       var nowSec = origin.getUTCHours() * 3600 + origin.getUTCMinutes() * 60 + origin.getUTCSeconds();
 
+      counters = [];
       listsEl.innerHTML = "";
 
       for (var k = 0; k < 7; k++) {
         var noday = (today + k) % 7;
-        var rows = byDay[noday] || [];
+        var rows = sortRowsByEvent(byDay[noday] || []);
 
         var item = document.createElement("div");
         var baseCls = "ad-item" + (k === 0 ? " ad-today" : "");
@@ -471,6 +594,7 @@
         wrap.className = "ad-wrap";
         var table = document.createElement("table");
         table.className = "ad-schedule";
+        table.appendChild(buildColGroup());
 
         var thead = document.createElement("thead");
         var trh = document.createElement("tr");
@@ -484,7 +608,12 @@
 
         var tbody = document.createElement("tbody");
         for (var i = 0; i < rows.length; i++) {
-          tbody.appendChild(buildRow(rows[i], k, startDayMs, nowSec));
+          var row = buildRow(rows[i], k, startDayMs, nowSec);
+          var nextRow = rows[i + 1];
+          if (nextRow && rows[i].event !== nextRow.event) {
+            row.className += " ad-event-separator";
+          }
+          tbody.appendChild(row);
         }
         table.appendChild(tbody);
 
@@ -504,9 +633,17 @@
     }
 
     function tick() {
-      renderTzInfo(tzInfoEl);
       var origin = new Date(Date.now() - SRC_TO_UTC_MS);
-      if (origin.getUTCDay() !== lastDay) build();
+      if (origin.getUTCDay() !== lastDay) {
+        build();
+        return;
+      }
+
+      var nowSec = origin.getUTCHours() * 3600 + origin.getUTCMinutes() * 60 + origin.getUTCSeconds();
+      for (var i = 0; i < counters.length; i++) {
+        var counter = counters[i];
+        counter.td.textContent = counterState(counter.codebs, counter.noday, nowSec);
+      }
     }
 
     build();

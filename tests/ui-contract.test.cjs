@@ -368,7 +368,7 @@ test("los estilos del calendario viven en su propia hoja y no se inyectan", () =
   assert.match(css, /\.bs-schedule \{[^}]*max-width:\s*900px/s);
   assert.match(css, /\.ad-wrap \{[^}]*overflow-x:\s*auto/s);
   assert.match(css, /\.ad-item\.ad-open \.ad-item-body \{[^}]*display:\s*block/s);
-  assert.match(css, /tr\.bs-current td \{[^}]*background:\s*#009922/s);
+  assert.match(css, /tr\.bs-current td \{[^}]*background:\s*#069726/s);
   assert.match(css, /\.ad-item\.ad-today \.ad-item-title \{[^}]*background:\s*#009922/s);
 });
 
@@ -427,9 +427,33 @@ test("el encabezado del cronograma de batalla se traduce en todos los idiomas", 
   assert.match(i18n, /scheduleBattleSurvival:"Cronograma Batalla Supervivencia"/);
 });
 
-test("actividades diarias incluye el calendario de duelo de alianzas", () => {
+test("actividades diarias incluye el calendario de duelo de alianzas sin informacion de zona horaria", () => {
   const html = read("pages/actividades-diarias.html");
-  assert.match(html, /<div class="duel-alliance-content">[\s\S]*?<div id="ad-lists"><\/div>[\s\S]*?<div id="ad-tzinfo"><\/div>[\s\S]*?<\/div>/);
+  const js = read("js/activities-daily.js");
+  const css = read("css/activities-daily.css");
+
+  assert.match(html, /<div class="duel-alliance-content">[\s\S]*?<div id="ad-lists"><\/div>[\s\S]*?<\/div>/);
+  assert.doesNotMatch(html, /id="ad-tzinfo"/);
+  assert.doesNotMatch(js, /ad-tzinfo/);
+  assert.doesNotMatch(css, /#ad-tzinfo/);
+});
+
+test("el duelo de alianzas vincula sus tareas con los horarios de battle survival", () => {
+  const js = read("js/activities-daily.js");
+
+  assert.match(js, /a && a\.codebs/);
+  assert.match(js, /slotsByCodebs/);
+  assert.match(js, /function counterState\(codebs, noday, nowSec\)/);
+  assert.match(js, /function linkedDateLabel\(startDayMs, offset, noday, codebs\)/);
+  assert.match(js, /var allDaySlots = slotsByDay\[noday\] \|\| \[\]/);
+  assert.match(js, /var endSec = s \+ 1 < allDaySlots\.length \? allDaySlots\[s \+ 1\]\.sec : 86400/);
+  assert.match(js, /allDaySlots\[s\]\.codebs === codebs && nowSec >= allDaySlots\[s\]\.sec && nowSec < endSec/);
+  assert.match(js, /"T-"/);
+  assert.match(js, /"\+ "/);
+  assert.match(js, /"End"/);
+  assert.match(js, /pad\(loc\.getUTCMonth\(\) \+ 1\) \+ "\/" \+ pad\(loc\.getUTCDate\(\)\)/);
+  assert.match(js, /var nowSec = origin\.getUTCHours\(\) \* 3600 \+ origin\.getUTCMinutes\(\) \* 60 \+ origin\.getUTCSeconds\(\)/);
+  assert.doesNotMatch(js, /ad-past/);
 });
 
 test("los datos de los cronogramas viven en el script unificado y no dependen de red", () => {
@@ -466,16 +490,20 @@ test("las variables de datos son la fuente de verdad y estan completas", () => {
 
   assert.equal(activities.length, 6);
   assert.equal(calendar.length, 42);
-  assert.equal(activityCode.length, 44);
-  assert.equal(eventCode.length, 5);
-  assert.equal(phases.length, 6);
-  assert.equal(daily.length, 60);
+  assert.equal(activityCode.length, 33);
+  assert.equal(eventCode.length, 7);
+  assert.equal(phases.length, 7);
+  assert.equal(daily.length, 51);
 
   /* Cada variable se declara una sola vez. */
   for (const name of ["ACTIVITIES", "CALENDAR", "ACTIVITY_CODE", "EVENT_CODE", "PHASES", "DAILY"]) {
     const found = js.match(new RegExp("var " + name + " =", "g")) || [];
     assert.equal(found.length, 1, name + " debe declararse una sola vez");
   }
+
+  /* La columna de recurso existe en ACTIVITY_CODE. */
+  assert.ok(activityCode.every((a) => "resource" in a));
+  assert.ok(activityCode.some((a) => "resource" in a));
 });
 
 test("los datos de los cronogramas mantienen su integridad referencial", () => {
@@ -501,6 +529,12 @@ test("los datos de los cronogramas mantienen su integridad referencial", () => {
   /* Cada slot del calendario apunta a una actividad existente. */
   for (const slot of calendar) {
     assert.ok(activityCodes.has(slot.codebs), "codet " + slot.codet + " debe existir en ACTIVITIES");
+  }
+
+  /* La vinculacion con Battle Survival solo usa codigos existentes. */
+  for (const activity of activityCode) {
+    assert.ok("codebs" in activity, activity.code + " debe declarar codebs");
+    assert.ok(!activity.codebs || activityCodes.has(activity.codebs), activity.code + " debe usar un codebs valido");
   }
 
   /* Cada tarea diaria apunta a una actividad codificada y a un evento existente. */
@@ -540,7 +574,136 @@ test("el encabezado y las tablas del duelo de alianzas se traducen en todos los 
   assert.equal(titles.length, 8);
   assert.equal(headers.length, 8);
   assert.match(i18n, /scheduleAllianceDuel:"Duelo de Alianzas"/);
-  assert.match(i18n, /adHeaders:\["Hora Inicio", "Objetivo", "Evento", "Fase"\]/);
+  assert.match(i18n, /adHeaders:\["Hora Inicio", "", "Tarea", "", "Recurso", "Evento"\]/);
+
+  /* La columna de fase se retiro de la tabla. */
+  assert.doesNotMatch(i18n, /adHeaders:\[[^\]]*"Fase"/);
+});
+
+test("los encabezados del duelo de alianzas tienen seis columnas en los 8 idiomas", () => {
+  const i18n = read("js/i18n.js");
+
+  const blocks = i18n.split(/^  [a-z]{2}: \{/m).slice(1);
+  assert.equal(blocks.length, 8);
+
+  for (const block of blocks) {
+    const match = block.match(/adHeaders:\[([^\]]*)\]/);
+    assert.ok(match, "cada idioma debe declarar adHeaders");
+    const values = match[1].split(",").map((v) => v.trim().replace(/^"|"$/g, ""));
+    assert.equal(values.length, 6, "adHeaders debe tener seis columnas");
+
+    /* Hora, Tarea, Recurso y Evento llevan texto; las de imagen van vacias. */
+    assert.notEqual(values[0], "");
+    assert.equal(values[1], "");
+    assert.notEqual(values[2], "");
+    assert.equal(values[3], "");
+    assert.notEqual(values[4], "");
+    assert.notEqual(values[5], "");
+  }
+});
+
+test("la tabla del duelo de alianzas usa seis columnas con iconos reservados", () => {
+  const js = read("js/activities-daily.js");
+  const css = read("css/activities-daily.css");
+
+  /* Orden de las columnas: hora, icono, tarea, icono, recurso, evento. */
+  assert.match(js, /appendCell\(tr, timeTxt, "ad-time"\)/);
+  assert.match(js, /appendIconCell\(tr, "ad-task-icon", r\.code_task\)/);
+  assert.match(js, /appendCell\(tr, a \? a\.objetive : r\.code_task, "ad-obj"\)/);
+  assert.match(js, /appendIconCell\(tr, "ad-resource-icon", r\.code_task\)/);
+  assert.match(js, /appendCell\(tr, a && a\.resource \? a\.resource : "", "ad-resource"\)/);
+  assert.match(js, /appendCell\(tr, eventLabel\(r\), "ad-event"\)/);
+
+  /* La columna de fase ya no se renderiza. */
+  assert.doesNotMatch(js, /ad-phase/);
+  assert.doesNotMatch(css, /\.ad-phase/);
+
+  /* El recurso se toma de ACTIVITY_CODE. */
+  assert.match(js, /a && a\.resource/);
+});
+
+test("las tablas del duelo de alianzas comparten ancho y anchos de columna", () => {
+  const js = read("js/activities-daily.js");
+  const css = read("css/activities-daily.css");
+
+  /* Todas las tablas reciben el mismo colgroup. */
+  assert.match(js, /var AD_COLUMNS = \[/);
+  assert.match(js, /function buildColGroup\(\)/);
+  assert.match(js, /table\.appendChild\(buildColGroup\(\)\)/);
+
+  /* Anchos compartidos y ancho minimo comun. */
+  assert.match(css, /\.ad-schedule \{[^}]*min-width:\s*760px/s);
+  assert.match(css, /\.ad-schedule \{[^}]*table-layout:\s*fixed/s);
+  assert.match(css, /\.ad-schedule \{[^}]*width:\s*100%/s);
+  assert.match(css, /\.ad-col-time \{[^}]*width:\s*84px/s);
+  assert.match(css, /\.ad-col-icon \{[^}]*width:\s*32px/s);
+  assert.match(css, /\.ad-col-resource \{[^}]*width:\s*20%/s);
+  assert.match(css, /\.ad-col-event \{[^}]*width:\s*170px/s);
+
+  /* Las columnas de imagen conservan el tamaño definido manualmente. */
+  assert.match(css, /\.ad-icon img \{[^}]*max-width:\s*64px/s);
+  assert.match(css, /\.ad-icon img \{[^}]*height:\s*24px/s);
+});
+
+test("el duelo de alianzas ordena por evento y muestra iconos de tarea", () => {
+  const js = read("js/activities-daily.js");
+  const css = read("css/activities-daily.css");
+
+  /* Orden alfabetico por el evento visible, estable dentro de cada grupo. */
+  assert.match(js, /function sortRowsByEvent\(rows\)/);
+  assert.match(js, /eventLabel\(a\.row\)\.localeCompare\(eventLabel\(b\.row\), LANG\)/);
+  assert.match(js, /return cmp !== 0 \? cmp : a\.index - b\.index/);
+  assert.match(js, /var rows = sortRowsByEvent\(byDay\[noday\] \|\| \[\]\)/);
+
+  /* Separador de 2 px unicamente entre grupos de eventos. */
+  assert.match(js, /rows\[i\]\.event !== nextRow\.event/);
+  assert.match(js, /row\.className \+= " ad-event-separator"/);
+  assert.match(css, /\.ad-schedule tbody tr\.ad-event-separator td \{[^}]*border-bottom:\s*2px solid #4d7799/s);
+
+  /* La segunda columna carga el PNG indicado por ACTIVITY_CODE.icon. */
+  assert.match(js, /activity && activity\.icon/);
+  assert.match(js, /img\.src = "\.\.\/media\/glyph\/" \+ encodeURIComponent\(activity\.icon\) \+ "\.png"/);
+  assert.match(js, /img\.addEventListener\("error", function \(\) \{/);
+  assert.match(js, /img\.style\.display = "none"/);
+});
+
+test("los eventos de battle survival se traducen y los resaltados no dependen del idioma", () => {
+  const js = read("js/activities-daily.js");
+  const i18n = read("js/i18n.js");
+
+  const blocks = i18n.split(/^  [a-z]{2}: \{/m).slice(1);
+  assert.equal(blocks.length, 8);
+
+  for (const block of blocks) {
+    const match = block.match(/bsEvents:\{([^}]*)\}/);
+    assert.ok(match, "cada idioma debe declarar bsEvents");
+    const codes = [...match[1].matchAll(/([A-Z]+):"/g)].map((m) => m[1]);
+    assert.deepEqual(codes, ["BUILD", "HEROE", "RAVEN", "SOLDIER", "TECH", "STANDBY"]);
+  }
+
+  /* El render usa la traduccion con el valor ingles como respaldo. */
+  assert.match(js, /events\[c\.codebs\] \|\| actMap\[c\.codebs\]\.event/);
+  assert.match(js, /T\.bsEvents/);
+
+  /* Los resaltados dependen del codigo y no del texto traducido. */
+  assert.match(js, /hlSpecial: c\.codebs === "SOLDIER"/);
+  assert.match(js, /hlTrack: c\.codebs === "RAVEN" \|\| c\.codebs === "HEROE"/);
+  assert.doesNotMatch(js, /indexOf\("soldiers"\)/);
+  assert.doesNotMatch(js, /indexOf\("raven"\)/);
+});
+
+test("los estilos manuales del titulo del duelo de alianzas se conservan", () => {
+  const css = read("css/activities-daily.css");
+
+  /* Valores definidos manualmente por el usuario. */
+  assert.match(css, /\.ad-item-title \{[^}]*font-size:\s*1\.1rem/s);
+  assert.match(css, /\.ad-item-title \{[^}]*color:\s*#4d7799/s);
+  assert.match(css, /\.ad-item-title \{[^}]*border:\s*2px solid #4d7799/s);
+  assert.match(css, /\.ad-item-title \{[^}]*border-radius:\s*3px/s);
+  assert.match(css, /\.ad-item-title \{[^}]*background:\s*#9b9b9b36/s);
+  assert.match(css, /\.ad-item-title \{[^}]*padding:\s*0 10px 0 10px/s);
+  assert.match(css, /\.ad-item\.ad-today \.ad-item-title \{[^}]*background:\s*#009922/s);
+  assert.match(css, /\.ad-item\.ad-today \.ad-item-title \{[^}]*border:\s*2px solid #009922/s);
 });
 
 test("el texto introductorio de actividades diarias explica el contenido de la pagina", () => {

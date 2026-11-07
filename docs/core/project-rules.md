@@ -245,20 +245,22 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 |---|---|---|
 | `ACTIVITIES` | 6 | Actividades y objetivos de Battle Survival |
 | `CALENDAR` | 42 | Calendario semanal de Battle Survival, 6 slots por día |
-| `ACTIVITY_CODE` | 44 | Actividades codificadas (objetive, point, phase) |
-| `EVENT_CODE` | 5 | Definición de eventos (es/en) |
-| `PHASES` | 6 | Fases del Duelo de Alianzas (P01-P06) |
-| `DAILY` | 60 | Actividades diarias del Duelo de Alianzas por día (noday) |
+| `ACTIVITY_CODE` | 33 | Actividades codificadas (objetive, resource, point, codebs) |
+| `EVENT_CODE` | 7 | Definición de eventos (es/en) |
+| `PHASES` | 7 | Fases del Duelo de Alianzas (P00-P06) |
+| `DAILY` | 51 | Actividades diarias del Duelo de Alianzas por día (noday) |
 
 - Los archivos `db/*.json` son **obsoletos**: se conservan como histórico, no los carga el sitio y no deben editarse ni usarse como referencia.
 - La estructura `src/` también es obsoleta y no se enlaza.
-- Al modificar datos deben respetarse las referencias: todo `CALENDAR.codebs` existe en `ACTIVITIES`, todo `DAILY.code_task` en `ACTIVITY_CODE`, todo `DAILY.event` en `EVENT_CODE` y toda fase usada en `PHASES`.
+- Al modificar datos deben respetarse las referencias: todo `CALENDAR.codebs` existe en `ACTIVITIES`, todo `ACTIVITY_CODE.codebs` vacío o existente en `ACTIVITIES`, todo `DAILY.code_task` en `ACTIVITY_CODE`, todo `DAILY.event` en `EVENT_CODE` y toda fase usada en `PHASES`.
 
 ### Cronograma de Batalla de Supervivencia
 
 - La subpágina de actividades diarias incluye el calendario de Batalla de Supervivencia dentro de `<div class="battle-content">`, en la sección `#textBS`.
 - La lógica vive en `initBattleSurvival()` de `js/activities-daily.js`.
 - Las traducciones del calendario viven exclusivamente en `js/i18n.js`: `bsHeaders` (cinco encabezados), `bsPast`, `bsCurrent` y `bsNext`, presentes en los 8 idiomas. El calendario no mantiene una tabla de traducciones propia.
+- Los nombres de los eventos de la columna Evento se traducen con la clave `bsEvents`, indexada por `codebs` (`BUILD`, `HEROE`, `RAVEN`, `SOLDIER`, `TECH`, `STANDBY`) y presente en los 8 idiomas. El valor inglés de `ACTIVITIES.event` queda como respaldo.
+- Los resaltados de la tabla no dependen del texto traducido: `bs-hl-special` se aplica al código `SOLDIER` y `bs-hl-track` a `RAVEN` y `HEROE`.
 - La tabla conserva el comportamiento responsivo original: `.bs-schedule` usa `min-width: 640px` y `max-width: 900px`, y `.bs-wrap` aplica `overflow-x: auto` para el desplazamiento horizontal en pantallas pequeñas. La tabla no se estira al ancho de la página.
 - El calendario actualiza los contadores con un ciclo de `1 s`.
 - El subtítulo propio `bs-subtitle` se eliminó: el encabezado de la sección es el que identifica el cronograma.
@@ -267,7 +269,23 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 - La subpágina de actividades diarias incluye el calendario de Duelo de Alianzas dentro de `<div class="duel-alliance-content">`, en la sección `#textAD`.
 - La lógica vive en `initAllianceDuel()` de `js/activities-daily.js`.
-- Las traducciones del calendario viven exclusivamente en `js/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (cuatro encabezados de tabla), presentes en los 8 idiomas. El calendario no mantiene una tabla de traducciones propia.
+- Las traducciones del calendario viven exclusivamente en `js/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (seis encabezados de tabla), presentes en los 8 idiomas. El calendario no mantiene una tabla de traducciones propia.
+- La tabla de cada día tiene **seis columnas** en este orden:
+  1. `Hora Inicio`.
+  2. Columna de imagen de la tarea, cargada desde `media/glyph/<icon>.png` según el valor `icon` de `ACTIVITY_CODE`.
+  3. `Tarea`, con el valor `objetive` de `ACTIVITY_CODE`.
+  4. Columna de imagen del recurso, visualmente vacía y reservada a futuro.
+  5. `Recurso`, con el valor `resource` de `ACTIVITY_CODE`.
+  6. `Evento`, con el valor localizado de `EVENT_CODE`.
+- La columna `Fase` se retiró de la tabla: la fase solo se muestra en el título del día.
+- La columna `Hora Inicio` usa la vinculación `ACTIVITY_CODE.codebs → ACTIVITIES.codebs → CALENDAR.codebs`. Solo la tabla del día actual (`ad-today`) calcula contadores en vivo: `+ HH:MM:SS` mientras el horario está en curso, `T-HH:MM:SS` para el próximo horario y `End` cuando ya no queda ninguno. Cada horario de Battle Survival permanece en curso hasta que empieza el siguiente horario del día, aunque este tenga otro código; si un código tiene dos horarios en el mismo día, el contador pasa al segundo cuando termina el primero.
+- Las tablas de días futuros muestran la fecha `MM/DD` de la tabla para las tareas vinculadas. Las tareas sin `codebs` muestran `—` en la columna `Hora Inicio`; el valor `DAILY.time_init` ya no se utiliza para este renderizado.
+- El Duelo de Alianzas no muestra un reloj de zona horaria: se eliminaron `#ad-tzinfo`, su regla CSS y sus referencias en JavaScript.
+- Las celdas de imagen usan las clases `.ad-icon`, `.ad-task-icon` y `.ad-resource-icon`; la columna conserva `32 px` de ancho y la imagen admite hasta `64 px`. La segunda columna muestra el PNG indicado por `ACTIVITY_CODE.icon`; si el archivo no existe, la imagen se oculta y la celda queda vacía. La cuarta columna continúa reservada para futuros iconos de recurso. El atributo `data-code` guarda el código de la tarea.
+- El valor `resource` se toma de `ACTIVITY_CODE`; si está vacío o ausente, la celda queda vacía.
+- Las filas de cada día se ordenan alfabéticamente por el nombre visible del evento, manteniendo el orden original dentro de cada grupo. Los grupos se separan con `border-bottom: 2px solid #4d7799`.
+- Todas las tablas comparten el mismo `<colgroup>` (`AD_COLUMNS`) para conservar ancho y alineación entre días: `.ad-schedule` usa `table-layout: fixed`, `width: 100%` y `min-width: 760px`, con `.ad-col-time` (84 px), `.ad-col-icon` (32 px), `.ad-col-task` (automático), `.ad-col-resource` (20 %) y `.ad-col-event` (170 px). En pantallas estrechas la tabla se desplaza horizontalmente dentro de `.ad-wrap`.
+- Los estilos de `.ad-item-title` son ajustes manuales del usuario y no deben alterarse: color `#4d7799`, borde `2px solid #4d7799`, `border-radius: 3px`, fondo `#9b9b9b36`, `font-size: 1.1rem` y `padding: 0 10px 0 10px`. El día actual mantiene el verde `#009922`.
 - El calendario presenta los siete días desde el día actual en UTC-2, con el día actual destacado, los dos primeros paneles abiertos y conversión de horarios a la zona local del visitante.
 - El subtítulo propio `ad-subtitle` se eliminó: el encabezado de la sección es el que identifica el cronograma.
 

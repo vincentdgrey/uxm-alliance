@@ -130,9 +130,9 @@ La fuente de verdad de los datos de actividades son las variables declaradas en 
 |---|---|
 | `ACTIVITIES` | Actividades y objetivos de Battle Survival (6 registros) |
 | `CALENDAR` | Calendario semanal de Battle Survival (42 slots, 6 por día) |
-| `ACTIVITY_CODE` | Actividades codificadas del Duelo de Alianzas (objetive, point, phase) |
+| `ACTIVITY_CODE` | Actividades codificadas del Duelo de Alianzas (objetive, resource, point, codebs) |
 | `EVENT_CODE` | Definición de eventos (es/en) |
-| `PHASES` | Fases del Duelo de Alianzas (P01-P06) |
+| `PHASES` | Fases del Duelo de Alianzas (P00-P06) |
 | `DAILY` | Actividades diarias del Duelo de Alianzas por día (noday) |
 
 ### Archivos obsoletos en db/

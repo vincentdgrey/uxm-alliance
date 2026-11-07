@@ -112,7 +112,6 @@ tr.bs-current td.bs-event::after {
 .ad-item-title {
   font-family: Roboto, Arial, Helvetica, sans-serif;
   font-size: 1.1rem;
-  /* font-weight: 300; */
   color: #4d7799;
   padding: 0 10px 0 10px;
   border: 2px solid #4d7799;
@@ -150,48 +149,72 @@ tr.bs-current td.bs-event::after {
 }
 .ad-schedule {
   width: 100%;
+  min-width: 760px;
+  table-layout: fixed;
   border-collapse: collapse;
   background: #fff;
   color: #888;
   font: 13px/1.45 Roboto, Arial, Helvetica, sans-serif;
 }
+/* Anchos compartidos: todas las tablas mantienen las mismas columnas. */
+.ad-col-time {
+  width: 84px;
+}
+.ad-col-icon {
+  width: 32px;
+}
+.ad-col-task {
+  width: auto;
+}
+.ad-col-resource {
+  width: 20%;
+}
+.ad-col-event {
+  width: 170px;
+}
 .ad-schedule th {
-  padding: 3px 10px;
+  padding: 6px 10px;
   text-align: left;
   font-size: 11px;
   font-weight: 700;
   color: #ebebeb;
-  background: #727374;
+  background: #4d7799;
   text-transform: uppercase;
   letter-spacing: .05em;
   border-bottom: 1px solid #eee;
   white-space: nowrap;
 }
 .ad-schedule td {
-  padding: 3px 10px;
+  padding: 6px 10px;
   border-bottom: 1px solid #eee;
   vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.ad-schedule tbody tr.ad-event-separator td {
+  border-bottom: 2px solid #4d7799;
 }
 .ad-schedule tbody tr:last-child td {
   border-bottom: none;
 }
-.ad-time,
-.ad-event,
-.ad-phase {
-  white-space: nowrap;
-}
 .ad-time {
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 .ad-event {
   font-weight: 700;
 }
-tr.ad-past td {
-  color: #b3b3b3;
+/* Columnas de imágenes de tarea y recurso. */
+.ad-icon {
+  padding-left: 4px;
+  padding-right: 8px;
+  text-align: center;
 }
-#ad-tzinfo {
-  font-family: Roboto, Arial, Helvetica, sans-serif;
-  font-size: 10px;
-  color: #aaa;
-  padding: 10px 10px 0 10px;
+.ad-icon img {
+  display: block;
+  width: auto;
+  height: 24px;
+  max-width: 64px;
+  max-height: 24px;
+  object-fit: contain;
+  margin: 0 auto;
 }
