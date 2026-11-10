@@ -6,11 +6,11 @@ const path = require("node:path");
 const root = path.resolve(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 
-test("todos los botones usan radio de 4px", () => {
+test("los botones usan el radio de 4px y el menu lateral el ajuste manual de 1px", () => {
   const css = read("css/style.css");
   assert.match(css, /--button-radius:\s*4px/);
   assert.match(css, /button,\s*\.btn,\s*\.btn-outline[^{]*\{[^}]*border-radius:\s*var\(--button-radius\)/s);
-  assert.match(css, /\.nav-list a\.active\s*\{[^}]*border-radius:\s*var\(--button-radius\)/s);
+  assert.match(css, /\.nav-list a\s*\{[^}]*border-radius:\s*1px/s);
 });
 
 test("la portada incluye la sección informativa con el subtítulo centrado", () => {
@@ -195,7 +195,7 @@ test("los encabezados de tutoriales se traducen con claves propias", () => {
 test("los botones de la portada conservan sus etiquetas originales", () => {
   const i18n = read("js/i18n.js");
   assert.match(i18n, /learningPriority:"Prioritario"/);
-  assert.match(i18n, /tips:"TIPS"/);
+  assert.match(i18n, /tips:"Tips"/);
   assert.match(i18n, /events:"Eventos"/);
 });
 
@@ -398,6 +398,44 @@ test("las traducciones del calendario viven solo en js/i18n.js", () => {
   }
 });
 
+test("el mensaje de supervivencia se traduce en todos los idiomas", () => {
+  const html = read("pages/actividades-diarias.html");
+  const i18n = read("js/i18n.js");
+
+  assert.match(html, /id="survivalMessage" data-i18n-text="survivalMessage"/);
+  const matches = i18n.match(/survivalMessage:"[^"]+"/g) || [];
+  assert.equal(matches.length, 8);
+  assert.match(i18n, /survivalMessage:"Ciclo automatico de actividades calculado según el horario del navegador web\."/);
+});
+
+test("los titulos del duelo de alianzas muestran el reset local en formato MM/DD HH:mm", () => {
+  const js = read("js/activities-daily.js");
+
+  assert.match(js, /function phaseTitle\(noday\)/);
+  assert.match(js, /function resetTitle\(resetMs\)/);
+  assert.match(js, /var reset = new Date\(resetMs\)/);
+  assert.match(js, /return "· " \+ pad\(reset\.getMonth\(\) \+ 1\) \+ "\/" \+ pad\(reset\.getDate\(\)\) \+ " " \+/);
+  assert.match(js, /pad\(reset\.getHours\(\)\) \+ ":" \+ pad\(reset\.getMinutes\(\)\)/);
+  assert.match(js, /var resetMs = startDayMs \+ k \* 86400000 \+ SRC_TO_UTC_MS/);
+  assert.match(js, /phase\.className = "ad-title-phase"/);
+  assert.match(js, /phase\.textContent = phaseTitle\(noday\)/);
+  assert.match(js, /reset\.className = "ad-title-reset"/);
+  assert.match(js, /reset\.textContent = resetTitle\(resetMs\)/);
+  assert.doesNotMatch(js, /dayTitle\(noday\) \+ " · " \+ DAY_ABBR\[noday\]/);
+});
+
+test("el titulo del duelo de alianzas alinea la fase a la izquierda y el reset a la derecha", () => {
+  const css = read("css/activities-daily.css");
+
+  assert.match(css, /\.ad-item-title \{[^}]*display:\s*flex/s);
+  assert.match(css, /\.ad-item-title \{[^}]*align-items:\s*center/s);
+  assert.match(css, /\.ad-title-phase \{[^}]*text-align:\s*left/s);
+  assert.match(css, /\.ad-title-reset \{[^}]*margin-left:\s*auto/s);
+  assert.match(css, /\.ad-title-reset \{[^}]*font-size:\s*0\.75rem/s);
+  assert.match(css, /\.ad-title-reset \{[^}]*white-space:\s*nowrap/s);
+  assert.match(css, /\.ad-arrow \{[^}]*flex:\s*0 0 auto/s);
+});
+
 test("la tabla del calendario conserva el comportamiento responsivo original", () => {
   const css = read("css/style.css");
   const dailyCss = read("css/activities-daily.css");
@@ -456,6 +494,22 @@ test("el duelo de alianzas vincula sus tareas con los horarios de battle surviva
   assert.doesNotMatch(js, /ad-past/);
 });
 
+test("el contador del duelo de alianzas usa server_time con server_duration", () => {
+  const js = read("js/activities-daily.js");
+
+  /* La hora propia del servidor tiene prioridad sobre el vinculo codebs. */
+  assert.match(js, /function parseClock\(value\)/);
+  assert.match(js, /function serverCounterState\(serverTime, serverDuration, nowSec\)/);
+  assert.match(js, /if \(nowSec < startSec\) return "T-" \+ fmtCounter\(startSec - nowSec\)/);
+  assert.match(js, /if \(nowSec < endSec\) return "\+ " \+ fmtCounter\(nowSec - startSec\)/);
+  assert.match(js, /return "End";/);
+  assert.match(js, /if \(offset === 0 && r\.server_time\)/);
+  assert.match(js, /serverCounterState\(r\.server_time, r\.server_duration, nowSec\) \|\| "—"/);
+
+  /* El tick mantiene el mismo estado para las filas con hora propia. */
+  assert.match(js, /counter\.td\.textContent = serverCounterState\(counter\.serverTime, counter\.serverDuration, nowSec\)/);
+});
+
 test("los datos de los cronogramas viven en el script unificado y no dependen de red", () => {
   const js = read("js/activities-daily.js");
 
@@ -476,9 +530,11 @@ test("las variables de datos son la fuente de verdad y estan completas", () => {
   const js = read("js/activities-daily.js");
 
   const readArray = (name) => {
-    const match = js.match(new RegExp("var " + name + " = (\\[[\\s\\S]*?\\n  \\]);"));
-    assert.ok(match, name + " debe estar declarado");
-    return JSON.parse(match[1]);
+    const start = js.indexOf("var " + name + " = [");
+    assert.notEqual(start, -1, name + " debe estar declarado");
+    const end = js.indexOf("\n  ];", start);
+    const body = js.slice(start + ("var " + name + " = ").length, end).replace(/,\s*$/, "");
+    return JSON.parse(body + "]");
   };
 
   const activities = readArray("ACTIVITIES");
@@ -490,10 +546,10 @@ test("las variables de datos son la fuente de verdad y estan completas", () => {
 
   assert.equal(activities.length, 6);
   assert.equal(calendar.length, 42);
-  assert.equal(activityCode.length, 33);
-  assert.equal(eventCode.length, 7);
+  assert.equal(activityCode.length, 43);
+  assert.equal(eventCode.length, 8);
   assert.equal(phases.length, 7);
-  assert.equal(daily.length, 51);
+  assert.equal(daily.length, 71);
 
   /* Cada variable se declara una sola vez. */
   for (const name of ["ACTIVITIES", "CALENDAR", "ACTIVITY_CODE", "EVENT_CODE", "PHASES", "DAILY"]) {
@@ -510,8 +566,11 @@ test("los datos de los cronogramas mantienen su integridad referencial", () => {
   const js = read("js/activities-daily.js");
 
   const readArray = (name) => {
-    const match = js.match(new RegExp("var " + name + " = (\\[[\\s\\S]*?\\n  \\]);"));
-    return JSON.parse(match[1]);
+    const start = js.indexOf("var " + name + " = [");
+    assert.notEqual(start, -1, name + " debe estar declarado");
+    const end = js.indexOf("\n  ];", start);
+    const body = js.slice(start + ("var " + name + " = ").length, end).replace(/,\s*$/, "");
+    return JSON.parse(body + "]");
   };
 
   const activities = readArray("ACTIVITIES");
@@ -555,6 +614,17 @@ test("los datos de los cronogramas mantienen su integridad referencial", () => {
   for (const slot of calendar) perDay[slot.noday] = (perDay[slot.noday] || 0) + 1;
   assert.equal(Object.keys(perDay).length, 7);
   for (const day of Object.keys(perDay)) assert.equal(perDay[day], 6, "noday " + day + " debe tener 6 slots");
+
+  /* Toda hora propia del servidor declara su duracion en formato hh:mm:ss. */
+  const clock = /^([0-9]{2}):([0-9]{2}):([0-9]{2})$/;
+  const serverRows = daily.filter((row) => row.server_time);
+  assert.equal(serverRows.length, 9);
+  for (const row of serverRows) {
+    assert.match(row.server_time, clock, "server_time de " + row.code_task + " debe usar hh:mm:ss");
+    assert.match(row.server_duration, clock, "server_duration de " + row.code_task + " debe usar hh:mm:ss");
+    const [, , m, s] = clock.exec(row.server_duration);
+    assert.ok(+m < 60 && +s < 60, "server_duration de " + row.code_task + " debe ser una hora valida");
+  }
 });
 
 test("los horarios de los datos siguen expresados en UTC-2", () => {
@@ -574,7 +644,7 @@ test("el encabezado y las tablas del duelo de alianzas se traducen en todos los 
   assert.equal(titles.length, 8);
   assert.equal(headers.length, 8);
   assert.match(i18n, /scheduleAllianceDuel:"Duelo de Alianzas"/);
-  assert.match(i18n, /adHeaders:\["Hora Inicio", "", "Tarea", "", "Recurso", "Evento"\]/);
+  assert.match(i18n, /adHeaders:\["Contador", "", "Tarea", "", "Recurso", "Evento"\]/);
 
   /* La columna de fase se retiro de la tabla. */
   assert.doesNotMatch(i18n, /adHeaders:\[[^\]]*"Fase"/);
@@ -592,7 +662,7 @@ test("los encabezados del duelo de alianzas tienen seis columnas en los 8 idioma
     const values = match[1].split(",").map((v) => v.trim().replace(/^"|"$/g, ""));
     assert.equal(values.length, 6, "adHeaders debe tener seis columnas");
 
-    /* Hora, Tarea, Recurso y Evento llevan texto; las de imagen van vacias. */
+    /* Contador, Tarea, Recurso y Evento llevan texto; las de imagen van vacias. */
     assert.notEqual(values[0], "");
     assert.equal(values[1], "");
     assert.notEqual(values[2], "");
@@ -609,17 +679,17 @@ test("la tabla del duelo de alianzas usa seis columnas con iconos reservados", (
   /* Orden de las columnas: hora, icono, tarea, icono, recurso, evento. */
   assert.match(js, /appendCell\(tr, timeTxt, "ad-time"\)/);
   assert.match(js, /appendIconCell\(tr, "ad-task-icon", r\.code_task\)/);
-  assert.match(js, /appendCell\(tr, a \? a\.objetive : r\.code_task, "ad-obj"\)/);
+  assert.match(js, /appendCell\(tr, a \? activityText\(r\.code_task, "objetive"\) : r\.code_task, "ad-obj"\)/);
   assert.match(js, /appendIconCell\(tr, "ad-resource-icon", r\.code_task\)/);
-  assert.match(js, /appendCell\(tr, a && a\.resource \? a\.resource : "", "ad-resource"\)/);
+  assert.match(js, /appendCell\(tr, a \? activityText\(r\.code_task, "resource"\) : "", "ad-resource"\)/);
   assert.match(js, /appendCell\(tr, eventLabel\(r\), "ad-event"\)/);
 
   /* La columna de fase ya no se renderiza. */
   assert.doesNotMatch(js, /ad-phase/);
   assert.doesNotMatch(css, /\.ad-phase/);
 
-  /* El recurso se toma de ACTIVITY_CODE. */
-  assert.match(js, /a && a\.resource/);
+  /* El recurso se toma de la traduccion con respaldo en los datos. */
+  assert.match(js, /activityText\(r\.code_task, "resource"\)/);
 });
 
 test("las tablas del duelo de alianzas comparten ancho y anchos de columna", () => {
@@ -696,12 +766,13 @@ test("los estilos manuales del titulo del duelo de alianzas se conservan", () =>
   const css = read("css/activities-daily.css");
 
   /* Valores definidos manualmente por el usuario. */
-  assert.match(css, /\.ad-item-title \{[^}]*font-size:\s*1\.1rem/s);
+  assert.match(css, /\.ad-item-title \{[^}]*font-size:\s*1\.2rem/s);
   assert.match(css, /\.ad-item-title \{[^}]*color:\s*#4d7799/s);
   assert.match(css, /\.ad-item-title \{[^}]*border:\s*2px solid #4d7799/s);
   assert.match(css, /\.ad-item-title \{[^}]*border-radius:\s*3px/s);
   assert.match(css, /\.ad-item-title \{[^}]*background:\s*#9b9b9b36/s);
-  assert.match(css, /\.ad-item-title \{[^}]*padding:\s*0 10px 0 10px/s);
+  assert.match(css, /\.ad-item-title \{[^}]*padding:\s*2px 10px 2px 10px/s);
+  assert.match(css, /\.ad-item-title \{[^}]*box-shadow:\s*0 3px 5px rgba\(8, 47, 58, \.9\)/s);
   assert.match(css, /\.ad-item\.ad-today \.ad-item-title \{[^}]*background:\s*#009922/s);
   assert.match(css, /\.ad-item\.ad-today \.ad-item-title \{[^}]*border:\s*2px solid #009922/s);
 });
@@ -758,7 +829,7 @@ test("se eliminó join y el mouse apunta a la sección informativa", () => {
 
 test("el divisor escarlata ocupa todo el ancho disponible", () => {
   const css = read("css/style.css");
-  assert.match(css, /\.line-divisor-scarlet\s*\{[^}]*width:\s*100%/s);
+  assert.match(css, /\.line-divisor-scarlet,\s*\.line-divisor-grey\s*\{[^}]*width:\s*100%/s);
   assert.match(css, /\.line-divisor-scarlet\s*\{[^}]*border-top:\s*3px solid var\(--scarlet\)/s);
   assert.match(css, /\.line-divisor-scarlet\s*\{[^}]*margin:[^;]*auto/s);
 });
@@ -784,18 +855,60 @@ test("la navbar es fija y usa el acento caliente en la portada", () => {
   assert.match(css, /\.home-topbar\s+\.topbar-brand\s*\{[^}]*color:\s*var\(--hot\)/s);
 });
 
-test("la hamburguesa se anima cada 30 segundos con desplazamientos definidos", () => {
+test("el borde del boton de menu lo recorre un punto escarlata que se apaga", () => {
   const css = read("css/style.css");
-  assert.match(css, /@keyframes\s+uxm-nav-line-one/);
-  assert.match(css, /@keyframes\s+uxm-nav-line-two/);
-  assert.match(css, /30s/);
-  assert.match(css, /translateX\(20px\)/);
-  assert.match(css, /translateX\(10px\)/);
+
+  /* El punto se dibuja con un pseudoelemento, sin depender del HTML. */
+  assert.match(css, /\.nav-toggle::after\s*\{[^}]*content:\s*""/s);
+  assert.match(css, /\.nav-toggle::after\s*\{[^}]*border-radius:\s*50%/s);
+  assert.match(css, /\.nav-toggle::after\s*\{[^}]*background:\s*var\(--hot\)/s);
+  assert.match(css, /\.nav-toggle::after\s*\{[^}]*opacity:\s*0/s);
+  assert.match(css, /\.nav-toggle::after\s*\{[^}]*animation:\s*uxm-nav-border-dot\s+30s/s);
+  assert.match(css, /@keyframes\s+uxm-nav-border-dot/);
+
+  /* El recorrido apaga el punto al final del ciclo. */
+  const keyframes = css.match(/@keyframes\s+uxm-nav-border-dot\s*\{([\s\S]*?)\n\}/);
+  assert.ok(keyframes, "debe existir la animacion del punto");
+  assert.match(keyframes[1], /opacity:\s*0/);
+  assert.match(keyframes[1], /opacity:\s*1/);
+  assert.match(keyframes[1], /left:\s*calc\(100% \+ 2px\)/);
+  assert.match(keyframes[1], /top:\s*calc\(100% \+ 2px\)/);
+
+  /* Las barras ya no se desplazan: solo se mantiene el alargamiento de la tercera. */
+  assert.doesNotMatch(css, /@keyframes\s+uxm-nav-line-one/);
+  assert.doesNotMatch(css, /@keyframes\s+uxm-nav-line-two/);
+  assert.doesNotMatch(css, /translateX\(20px\)/);
+  assert.doesNotMatch(css, /translateX\(10px\)/);
+
+  /* Con el menu abierto el punto se oculta. */
+  assert.match(css, /\.nav-open\s+\.nav-toggle::after\s*\{[^}]*animation:\s*none/s);
+  assert.match(css, /\.nav-open\s+\.nav-toggle::after\s*\{[^}]*opacity:\s*0/s);
+
+  /* Con movimiento reducido el punto no se anima. */
   const reducedMotion = css.match(/@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{([\s\S]*?)\n\}/);
   assert.ok(reducedMotion, "debe existir el bloque de movimiento reducido");
-  assert.match(reducedMotion[1], /\.nav-toggle-bars i:nth-child\(1\)/);
-  assert.match(reducedMotion[1], /\.nav-toggle-bars i:nth-child\(2\)/);
+  assert.match(reducedMotion[1], /\.nav-toggle::after/);
   assert.match(reducedMotion[1], /animation:\s*none/);
+});
+
+test("el texto UXM, las barras y el punto comparten color y sombra", () => {
+  const css = read("css/style.css");
+
+  /* La sombra se declara una sola vez como variable compartida. */
+  assert.match(css, /--nav-uxm-shadow:\s*0 1px 3px rgba\(8,\s*47,\s*58,\s*\.65\)/);
+  assert.match(css, /\.home-topbar\s*\{[^}]*--nav-uxm-shadow:\s*0 1px 3px rgba\(8,\s*47,\s*58,\s*\.9\)/s);
+
+  /* El texto UXM, las barras y el punto la consumen. */
+  assert.match(css, /\.topbar-brand\s*\{[^}]*text-shadow:\s*var\(--nav-uxm-shadow\)/s);
+  assert.match(css, /\.nav-toggle-bars i\s*\{[^}]*box-shadow:\s*var\(--nav-uxm-shadow\)/s);
+  assert.match(css, /\.nav-toggle::after\s*\{[^}]*box-shadow:\s*var\(--nav-uxm-shadow\)/s);
+
+  /* El punto comparte el rojo de UXM en la portada. */
+  assert.match(css, /\.home-topbar\s+\.topbar-brand\s*\{[^}]*color:\s*var\(--hot\)/s);
+  assert.match(css, /\.nav-toggle::after\s*\{[^}]*background:\s*var\(--hot\)/s);
+
+  /* No queda ninguna sombra literal duplicada en esos tres elementos. */
+  assert.doesNotMatch(css, /\.nav-toggle::after\s*\{[^}]*rgba\(255,\s*36,\s*0/s);
 });
 
 test("el menú lateral incluye el enlace localizado de inicio", () => {
@@ -917,11 +1030,12 @@ test("las secciones de portada traducidas están conectadas en todos los idiomas
   assert.equal((i18n.match(/allianceMessage:""/g) || []).length, 0);
 });
 
-test("el bloque de bonos de la alianza se localiza en los 8 idiomas", () => {
+test("el bloque de bonos de la alianza se genera desde los datos y se localiza en los 8 idiomas", () => {
   const html = read("index.html");
   const js = read("js/app.js");
   const css = read("css/style.css");
   const i18n = read("js/i18n.js");
+  const data = read("js/alliance-bonuses.js");
 
   const bonusIds = [
     "bonusAlliance",
@@ -934,22 +1048,36 @@ test("el bloque de bonos de la alianza se localiza en los 8 idiomas", () => {
   ];
 
   assert.match(html, /<div class="bonus-alliance left-content">/);
-  assert.match(html, /<table class="info-data">/);
+  assert.match(html, /<table class="info-data">\s*<tbody id="allianceBonusBody"><\/tbody>\s*<\/table>/s);
+  assert.match(html, /<script src="js\/alliance-bonuses\.js"><\/script>/);
+
+  /* Los datos viven en su propio archivo y no se duplican en el HTML. */
+  assert.match(data, /window\.ALLIANCE_BONUSES = \[/);
+  assert.doesNotMatch(html, /id="bonusFastBuild"/);
+  assert.doesNotMatch(html, /id="bonusResearchSpeedup"/);
 
   for (const id of bonusIds) {
-    assert.match(html, new RegExp(`id="${id}"`));
-    assert.match(js, new RegExp(`setText\\("${id}", T\\.${id}\\)`));
-    assert.ok((i18n.match(new RegExp(`\\b${id}:"`, "g")) || []).length === 8);
+    if (id !== "bonusAlliance") {
+      assert.match(data, new RegExp(`"key": "${id}"`));
+      assert.ok((i18n.match(new RegExp(`\\b${id}:"`, "g")) || []).length === 8);
+    }
   }
+  assert.match(js, /setText\("bonusAlliance", T\.bonusAlliance\)/);
+  assert.match(js, /name\.id = bonus\.key/);
 
   assert.match(i18n, /bonusAlliance:"Bonos Tecnología de la Alianza"/);
   assert.match(i18n, /bonusInProgress:"En curso"/);
   assert.equal((i18n.match(/\bbonusInProgress:"/g) || []).length, 8);
 
   /* El estado "en curso" se localiza mediante el atributo data-progress. */
-  assert.match(html, /id="bonusCraftingSpeedup" class="in-progress" data-progress="/);
+  assert.match(js, /name\.className = "in-progress"/);
+  assert.match(js, /name\.setAttribute\("data-progress", T\.bonusInProgress\)/);
   assert.match(css, /\.in-progress::after\s*\{[^}]*content:\s*"\s*\(" attr\(data-progress\) "\)"/s);
-  assert.match(js, /byId\("bonusCraftingSpeedup"\);\s*\n\s*if \(bonusInProgress\) bonusInProgress\.setAttribute\("data-progress", T\.bonusInProgress\)/);
+
+  /* La estrella es decorativa y las claves repetidas se descartan. */
+  assert.match(js, /icon\.setAttribute\("scope", "row"\)/);
+  assert.match(js, /icon\.setAttribute\("aria-hidden", "true"\)/);
+  assert.match(js, /seen\[bonus\.key\]/);
 });
 
 test("la portada no conserva el bloque de bonos legado", () => {
@@ -1146,5 +1274,337 @@ test("el titulo accesible del iframe se localiza con data-i18n-title", () => {
   assert.match(js, /querySelectorAll\("\[data-i18n-title\]"\)/);
   assert.match(js, /setAttribute\("title", title\)/);
   assert.match(js, /applyTitles\(\);/);
+});
+
+/* ---------- Traducciones de la portada ---------- */
+
+test("los textos de tutoriales y estrategia de la portada se traducen en los 8 idiomas", () => {
+  const html = read("index.html");
+  const i18n = read("js/i18n.js");
+
+  /* Los parrafos usan data-i18n-text y el subtitulo data-i18n. */
+  assert.match(html, /<p id="tutorialsMessage" data-i18n-text="tutorialsMessage">/);
+  assert.match(html, /<p id="strategyMessage" data-i18n-text="strategyMessage">/);
+  assert.match(html, /<h2 class="sibtitle-info" id="strategyTitle" data-i18n="strategyTitle">/);
+
+  for (const key of ["tutorialsMessage", "strategyTitle", "strategyMessage"]) {
+    const found = i18n.match(new RegExp(`\\b${key}:"[^"]+"`, "g")) || [];
+    assert.equal(found.length, 8, key + " debe existir en los 8 idiomas");
+  }
+
+  /* El texto español conserva la redaccion manual de index.html. */
+  assert.match(i18n, /tutorialsMessage:"Videos de guia y ayuda, para los nuevos integrantes al juego/);
+  assert.match(i18n, /strategyTitle:"Biblioteca Estratégica"/);
+  assert.match(i18n, /strategyMessage:"Buscaremos distintas formas de ayudar/);
+});
+
+/* ---------- Traducciones de actividades, fases y eventos ---------- */
+
+test("las actividades, fases y eventos del duelo de alianzas se traducen en los 8 idiomas", () => {
+  const js = read("js/activities-daily.js");
+  const i18n = read("js/i18n.js");
+
+  const blocks = i18n.split(/^  [a-z]{2}: \{/m).slice(1);
+  assert.equal(blocks.length, 8);
+
+  /* El codigo de cada actividad debe estar en el mapa de los 8 idiomas. */
+  const activityCode = [...js.matchAll(/"code": "([A-Z0-9]+)"/g)].map((m) => m[1]);
+  assert.equal(activityCode.length, 43);
+
+  for (const block of blocks) {
+    const activities = block.match(/adActivities:\{([\s\S]*?)\n\s{8}adPhases:/);
+    assert.ok(activities, "cada idioma debe declarar adActivities");
+
+    for (const code of activityCode) {
+      assert.match(activities[1], new RegExp(`\\b${code}:\\{objetive:"[^"]*",resource:"[^"]*"\\}`),
+        code + " debe declararse con objetivo y recurso");
+    }
+
+    const phases = block.match(/adPhases:\{([^}]*)\}/);
+    assert.ok(phases, "cada idioma debe declarar adPhases");
+    for (const phase of ["P00", "P01", "P02", "P03", "P04", "P05", "P06"]) {
+      assert.match(phases[1], new RegExp(`\\b${phase}:"[^"]+"`), phase + " debe estar traducido");
+    }
+
+    const events = block.match(/adEvents:\{([^}]*)\}/);
+    assert.ok(events, "cada idioma debe declarar adEvents");
+    for (const event of ["DY", "AD", "KVK", "ROY", "BS", "EQ", "BEX", "CUM"]) {
+      assert.match(events[1], new RegExp(`\\b${event}:"[^"]+"`), event + " debe estar traducido");
+    }
+  }
+});
+
+test("el render del duelo de alianzas usa las traducciones con respaldo en los datos", () => {
+  const js = read("js/activities-daily.js");
+
+  /* El ingles actua como respaldo antes de recurrir al dato original. */
+  assert.match(js, /var T_EN = window\.I18N\[FALLBACK_LANG\] \|\| T/);
+  assert.match(js, /function activityText\(code, field\)/);
+  assert.match(js, /function phaseText\(phase\)/);
+  assert.match(js, /T\.adActivities && T\.adActivities\[code\]/);
+  assert.match(js, /T_EN\.adActivities && T_EN\.adActivities\[code\]/);
+  assert.match(js, /T\.adPhases && T\.adPhases\[phase\]/);
+  assert.match(js, /T\.adEvents && T\.adEvents\[r\.event\]/);
+
+  /* Los codigos y los datos de origen no se traducen. */
+  assert.match(js, /actMap\[a\.code\] = a/);
+  assert.match(js, /activity\.icon/);
+});
+
+test("las fases y los eventos se muestran traducidos en el duelo de alianzas", () => {
+  const js = read("js/activities-daily.js");
+
+  assert.match(js, /return ph \? phaseText\(ph\) : NO_PHASE_TITLE/);
+  assert.match(js, /var localized = T\.adEvents && T\.adEvents\[r\.event\]/);
+  assert.match(js, /phase\.textContent = phaseTitle\(noday\)/);
+});
+
+/* ---------- Aviso de cierre inminente ---------- */
+
+test("el contador de la proxima actividad se avisa cuando falta una hora o menos", () => {
+  const js = read("js/activities-daily.js");
+  const css = read("css/activities-daily.css");
+
+  /* La ventana de aviso es de una hora. */
+  assert.match(js, /var ALERT_WINDOW_SEC = 3600/);
+
+  /* El contador de la proxima actividad se resalta siempre, con independencia
+     del evento asignado, y es el unico que genera el aviso. */
+  assert.match(js, /var counterSpecial = rel === 1 \|\| \(rel > 0 && slot\.hlSpecial\)/);
+  assert.match(js, /"bs-counter" \+ \(counterSpecial \? " bs-hl-special" : ""\)/);
+  assert.match(js, /alert: rel === 1/);
+
+  /* La alerta no depende del evento ni del cierre de dia. */
+  assert.doesNotMatch(js, /alert: rel === 1 && slot\.dayEnd/);
+  assert.doesNotMatch(js, /alert: rel === 1 && slot\.hlSpecial/);
+
+  /* La clase se alterna sobre la fila, dentro de la ventana y sin anadir texto. */
+  assert.match(js, /c\.tr\.classList\.toggle\("bs-imminent", !!c\.alert && remaining > 0 && remaining <= ALERT_WINDOW_SEC\)/);
+  assert.doesNotMatch(js, /bs-imminent[^;]*textContent\s*=/);
+
+  /* El estilo se aplica al contador, al estado y al evento de esa fila. */
+  const aviso = css.match(/\.bs-schedule tbody tr\.bs-next\.bs-row-third\.bs-imminent > td\.[^{]*\{([^}]*)\}/);
+  assert.ok(aviso, "debe existir la regla del aviso sobre la fila");
+  assert.match(css, /\.bs-schedule tbody tr\.bs-next\.bs-row-third\.bs-imminent > td\.bs-counter,/);
+  assert.match(css, /\.bs-schedule tbody tr\.bs-next\.bs-row-third\.bs-imminent > td\.bs-status,/);
+  assert.match(css, /\.bs-schedule tbody tr\.bs-next\.bs-row-third\.bs-imminent > td\.bs-event\s*\{/);
+  assert.match(aviso[1], /color:\s*#ffee00/);
+  assert.match(aviso[1], /background-color:\s*var\(--scarlet\)/);
+
+  /* Las celdas de actividades y servidor quedan fuera del aviso. */
+  assert.doesNotMatch(css, /bs-imminent > td\.bs-activities/);
+  assert.doesNotMatch(css, /bs-imminent > td\.bs-server/);
+
+  /* El fondo varia suavemente entre escarlata y escarlata oscuro. */
+  const keyframes = css.match(/@keyframes\s+uxm-bs-counter-alert\s*\{([\s\S]*?)\n\}/);
+  assert.ok(keyframes, "debe existir la animacion del aviso");
+  assert.match(keyframes[1], /var\(--scarlet\)/);
+  assert.match(keyframes[1], /50%\s*\{\s*background-color:\s*#8f1200/);
+
+  /* Con movimiento reducido el fondo queda fijo. */
+  const reducedMotion = css.match(/@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{([\s\S]*?)\n\}/);
+  assert.ok(reducedMotion, "debe existir el bloque de movimiento reducido");
+  assert.match(reducedMotion[1], /bs-imminent/);
+  assert.match(reducedMotion[1], /animation:\s*none/);
+});
+
+/* ---------- Comportamiento dinamico del aviso ---------- */
+
+/* Minimal DOM para ejecutar js/activities-daily.js en un instante concreto.
+   className y classList se mantienen sincronizados, como en el navegador. */
+function renderBattleSurvival(nowMs) {
+  const vm = require("node:vm");
+
+  const makeEl = (tag) => {
+    const el = {
+      tagName: (tag || "").toUpperCase(),
+      children: [],
+      _cls: new Set(),
+      _text: "",
+      style: {},
+      attributes: {},
+      hidden: false,
+      classList: {
+        add(c) { el._cls.add(c); },
+        remove(c) { el._cls.delete(c); },
+        contains(c) { return el._cls.has(c); },
+        toggle(c, on) {
+          if (on === undefined) {
+            if (el._cls.has(c)) el._cls.delete(c); else el._cls.add(c);
+          } else if (on) el._cls.add(c); else el._cls.delete(c);
+        }
+      },
+      setAttribute(k, v) { el.attributes[k] = v; },
+      getAttribute(k) { return el.attributes[k]; },
+      appendChild(c) { el.children.push(c); return c; },
+      addEventListener() {}
+    };
+    Object.defineProperty(el, "className", {
+      get() { return [...el._cls].join(" "); },
+      set(v) { el._cls = new Set(String(v).split(/\s+/).filter(Boolean)); }
+    });
+    Object.defineProperty(el, "textContent", {
+      get() { return el._text; },
+      set(v) { el._text = String(v); }
+    });
+    Object.defineProperty(el, "offsetWidth", { get() { return 100; } });
+    return el;
+  };
+
+  const byId = {};
+  const doc = {
+    documentElement: { getAttribute() { return "es"; }, setAttribute() {}, lang: "" },
+    createElement: makeEl,
+    getElementById(id) { return byId[id] || null; },
+    addEventListener() {}
+  };
+  byId["bs-body"] = makeEl("tbody");
+  byId["bs-tzinfo"] = makeEl("div");
+  byId["ad-lists"] = makeEl("div");
+
+  const RealDate = Date;
+  const ctx = {
+    document: doc,
+    window: {
+      I18N: null,
+      location: { pathname: "/pages/actividades-diarias.html", search: "" },
+      setTimeout, clearTimeout
+    },
+    Date: class extends RealDate {
+      constructor(...args) { if (args.length === 0) super(nowMs); else super(...args); }
+      static now() { return nowMs; }
+    },
+    Math, JSON, Object, String, Number, Array, isNaN, parseInt, parseFloat,
+    setInterval: () => 0, clearInterval: () => {},
+    Intl, console, encodeURIComponent
+  };
+  ctx.window.setTimeout = setTimeout;
+  ctx.window.document = doc;
+  vm.createContext(ctx);
+
+  vm.runInContext(read("js/i18n.js"), ctx);
+  vm.runInContext(read("js/activities-daily.js"), ctx);
+
+  const rows = [];
+  (function walk(node) {
+    for (const child of node.children || []) {
+      if (child.tagName === "TR") rows.push(child);
+      walk(child);
+    }
+  })(byId["bs-body"]);
+
+  return rows;
+}
+
+test("el aviso se activa exactamente desde T-01:00:00 hasta T-00:00:01", () => {
+  /* El instante se expresa en UTC-2: el desplazamiento de origen es de 2 h. */
+  const SRC_TO_UTC_MS = 2 * 3600 * 1000;
+  const at = (minutesToNext) => Date.UTC(2026, 10, 10, 12, 0) - minutesToNext * 60000 + SRC_TO_UTC_MS;
+
+  const cases = [
+    { minutes: 61, alertado: false },
+    { minutes: 60, alertado: true },
+    { minutes: 59, alertado: true },
+    { minutes: 13.33, alertado: true },
+    { minutes: 0.01, alertado: true }
+  ];
+
+  for (const { minutes, alertado } of cases) {
+    const rows = renderBattleSurvival(at(minutes));
+    const next = rows.find((r) => r.className.includes("bs-row-third"));
+    assert.ok(next, "debe existir la fila de la proxima actividad");
+
+    const tieneAviso = next.classList.contains("bs-imminent");
+    assert.equal(tieneAviso, alertado,
+      "con " + minutes + " minutos restantes el aviso es " + (alertado ? "activo" : "inactivo"));
+
+    /* El contador conserva su texto con formato T- y no recibe texto extra. */
+    assert.match(next.children[0].textContent, /^T- /);
+  }
+});
+
+test("el aviso afecta al contador, al estado y al evento de la proxima actividad", () => {
+  const SRC_TO_UTC_MS = 2 * 3600 * 1000;
+  const now = Date.UTC(2026, 10, 10, 12, 0) - 30 * 60000 + SRC_TO_UTC_MS;
+  const rows = renderBattleSurvival(now);
+
+  const alertadas = rows.filter((r) => r.classList.contains("bs-imminent"));
+  assert.equal(alertadas.length, 1, "solo una fila puede estar alertada");
+
+  /* Es la fila inmediatamente siguiente a la actual. */
+  const indiceActual = rows.findIndex((r) => r.className.includes("bs-current"));
+  assert.equal(rows.indexOf(alertadas[0]), indiceActual + 1);
+
+  const fila = alertadas[0];
+
+  /* Contador, Estado y Evento reciben el aviso. */
+  assert.ok(fila.children[0].classList.contains("bs-counter"));
+  assert.ok(fila.children[1].classList.contains("bs-status"));
+  assert.ok(fila.children[2].classList.contains("bs-event"));
+
+  /* Su contador lleva siempre el resaltado especial, sea cual sea el evento. */
+  assert.ok(fila.children[0].classList.contains("bs-hl-special"));
+
+  /* Actividades y Servidor no se ven afectados por el aviso. */
+  assert.ok(!fila.children[3].classList.contains("bs-imminent"));
+  assert.ok(!fila.children[4].classList.contains("bs-imminent"));
+
+  /* Ninguna otra fila queda marcada. */
+  for (const otra of rows) {
+    if (otra === fila) continue;
+    assert.ok(!otra.classList.contains("bs-imminent"),
+      "ninguna otra fila puede estar alertada");
+  }
+});
+
+/* ---------- Regresion de las traducciones japonesas ---------- */
+
+test("las traducciones japonesas no contienen textos corruptos", () => {
+  const i18n = read("js/i18n.js");
+
+  /* Fragmentos que se corregieron: no deben reaparecer en ningun idioma. */
+  const corruptos = [
+    "rob得ます", "Cwす", "領土的建筑", "兵士的训练", "雾囲気",
+    "散发的", "estimar", "精 essence", "1.5MHonor", "ポイント上加算"
+  ];
+  for (const fragmento of corruptos) {
+    assert.ok(!i18n.includes(fragmento), "no debe existir el fragmento " + JSON.stringify(fragmento));
+  }
+
+  /* El bloque japones conserva sus valores del juego. */
+  const jaStart = i18n.indexOf('  ja: { name:"日本語"');
+  const jaEnd = i18n.indexOf('  ru: { name:"Русский"');
+  assert.ok(jaStart >= 0 && jaEnd > jaStart, "debe existir el bloque japones");
+  const ja = i18n.slice(jaStart, jaEnd);
+
+  assert.match(ja, /videoTutorialTip1:"王宮で大臣の公式な職位を申請すると、/);
+  assert.match(ja, /videoTutorialEvent3:"[^"]*1\.5MのHonorポイント/);
+  assert.match(ja, /videoTutorialEvent4:"[^"]*150KのHonorポイント/);
+  assert.match(ja, /bsEvents:\{ BUILD:"領土の建設"/);
+  assert.match(ja, /SOLDIER:"兵士の訓練"/);
+  assert.match(ja, /rulesRoleDiplomatText:"良好な雰囲気と同盟内のコミュニケーションを守ります。/);
+  assert.match(ja, /rulesPositionR2:"時折参加するプレイヤー/);
+  assert.match(ja, /rulesPositionR4:"リーダーチーム：同盟を支援し、メンバーを励ます/);
+  assert.match(ja, /rulesPositionR5:"[^"]*判断して追放します/);
+  assert.match(ja, /RAVESS:\{objetive:"レイベンのエッセンスを1個消費する"/);
+
+  /* Los valores del juego no se alteran al corregir. */
+  for (const valor of ["25%", "60%", "1.5M", "150K", "225M", "990M", "Lv.6", "MVP 1", "277"]) {
+    assert.ok(ja.includes(valor), "el japones debe conservar " + valor);
+  }
+});
+
+test("solo los japones y los chinos contienen caracteres CJK", () => {
+  const i18n = read("js/i18n.js");
+  const blocks = i18n.split(/^  ([a-z]{2}): \{/m).slice(1);
+
+  assert.equal(blocks.length / 2, 8);
+  for (let i = 0; i < blocks.length; i += 2) {
+    const lang = blocks[i];
+    const body = blocks[i + 1];
+    if (lang === "ja" || lang === "zh") continue;
+    const cjk = body.match(/[一-鿿]/g);
+    assert.ok(!cjk, lang + " no debe contener caracteres CJK");
+  }
 });
 

@@ -1,5 +1,64 @@
 # Changelog
 
+## [261110b] - 2026-11-10
+
+### Changed
+- La alerta de proximidad se extiende a las tres primeras celdas de la próxima actividad: `Contador`, `Estado` y `Evento`. Las celdas `Actividades` y `Servidor` conservan su apariencia habitual.
+- La clase `bs-imminent` pasa a aplicarse sobre la fila (`tr`) en lugar de sobre la celda del contador, de modo que las tres celdas compartan una sola regla y la animación vaya sincronizada. El umbral (`T- 01:00:00` o menos) y el aspecto (texto amarillo `#ffee00` sobre fondo escarlata animado) no cambian.
+
+### Fixed
+- Se actualizan las pruebas del aviso para validar la clase sobre la fila, la cobertura de `bs-counter`, `bs-status` y `bs-event` en el CSS, y que `bs-activities` y `bs-server` quedan fuera del aviso.
+- Se actualiza la documentación de `docs/core/project-rules.md` con el alcance ampliado de la alerta.
+
+## [261110a] - 2026-11-10
+
+### Changed
+- El aviso de proximidad se aplica al contador de la tercera actividad, la inmediatamente siguiente a la actual, con independencia del evento asignado y sin exigir `bs-dayend`.
+- El contador de esa próxima actividad recibe siempre `bs-hl-special`, de modo que el selector del aviso sea aplicable en cualquier caso; las demás filas futuras conservan su resaltado anterior.
+- El aspecto del aviso cambia: el texto pasa a amarillo `#ffee00` y el fondo varía suavemente entre escarlata `var(--scarlet)` (`#ff2400`) y escarlata oscuro `#8f1200`, con la animación `uxm-bs-counter-alert` de `1.8s`. El contador no recibe texto adicional.
+
+### Fixed
+- Se actualiza la documentación de `docs/core/project-rules.md` con el nuevo alcance del aviso y con la regla de `bs-hl-special` en la tabla de Batalla de Supervivencia.
+- Se añaden pruebas de comportamiento dinámico que ejecutan `js/activities-daily.js` sobre un DOM simulado y comprueban que el aviso se activa en `T- 01:00:00`, `T- 00:59:59` y `T- 00:13:20`, que no se activa antes de ese umbral y que solo afecta al contador de la próxima actividad.
+- Se actualiza la expectativa obsoleta de `.ad-title-reset`, que usa `font-size: 0.75rem`.
+
+## [261109a] - 2026-11-09
+
+### Added
+- Traducción de las secciones de tutoriales y estrategia de la portada: claves `tutorialsMessage`, `strategyTitle` y `strategyMessage` en los 8 idiomas, conectadas con `data-i18n-text` y `data-i18n`.
+- Mapas i18n `adActivities` (43 registros), `adPhases` (7 fases) y `adEvents` (8 eventos) en `js/i18n.js`, con la resolución idioma activo → inglés → dato original.
+- Aviso visual de cierre inminente en la tabla de Batalla de Supervivencia: la celda `td.bs-counter` de la fila `tr.bs-next.bs-dayend.bs-row-third` pasa a fondo rojo cuando faltan `01:00:00` o menos.
+
+### Changed
+- Las tablas del Duelo de Alianzas muestran el objetivo, el recurso, la fase y el evento traducidos en los 8 idiomas.
+- El aviso periódico del botón de navegación ya no desplaza las barras 1 y 2: un punto rojo recorre el contorno del botón y se apaga, en portada y subpáginas.
+- El punto que recorre el borde, el texto `UXM` y las tres barras del menú comparten color y sombra mediante la variable `--nav-uxm-shadow`, contextual: `.65` en subpáginas y `.9` en portada.
+- El título de cada panel del Duelo de Alianzas muestra la fase y el reset local `MM/DD HH:mm`; el reset de cada día parte de las `00:00:00` en UTC-2 y se convierte a la zona del navegador.
+- El párrafo `survivalMessage` de la página de Actividades Diarias se traduce mediante la clave i18n `survivalMessage`.
+
+### Fixed
+- Se corrigen las erratas del bloque japonés de `js/i18n.js`: fragmentos ajenos al japonés en `videoTutorialTip1`, `videoTutorialEvent3` y `videoTutorialEvent4`, caracteres chinos en `bsEvents` (`領土の建設`, `兵士の訓練`), y textos mal construidos en `rulesPositionR2`, `rulesPositionR4`, `rulesPositionR5`, `rulesRoleDiplomatText` y `rulesRoleGoddessText`. Se conservan los valores del juego.
+- Se corrige la mezcla `精 essence` de la actividad `RAVESS` en el bloque japonés.
+- El contrato de pruebas se actualiza a los datos vigentes (`ACTIVITY_CODE` 43, `EVENT_CODE` 8, `DAILY` 71, 9 filas con horario propio) y refleja la etiqueta `Tips` vigente.
+- Se añaden pruebas de regresión para la sombra compartida del menú y para las traducciones japonesas, incluida la comprobación de que solo `ja` y `zh` contienen caracteres CJK.
+- La documentación de `docs/core/project-rules.md` se sincroniza con el código actual, incluidos el nivel de los bonos en columna propia, los mapas de traducción y la alerta de cierre.
+
+## [261108a] - 2026-11-08
+
+### Added
+- Fuente de verdad `window.ALLIANCE_BONUSES` en `js/alliance-bonuses.js` con los datos de las filas de bonos (porcentaje, nivel y estado).
+- Columna `server_duration` en `DAILY` (formato `hh:mm:ss`, UTC-2) para las tareas con hora propia del servidor: `SCRAMBLE` 01:00:00, `ELIXIR` 00:30:00, `SHIELD` 23:00:00, `KWAR` 01:00:00 y `CUMULUS` 00:30:00.
+
+### Changed
+- La tabla de bonos se genera desde `js/alliance-bonuses.js`; `index.html` conserva solo `<tbody id="allianceBonusBody"></tbody>`.
+- El nivel numérico de cada bono ocupa su propia columna con el prefijo `Lv.`, por lo que las etiquetas i18n no incluyen el número.
+- La primera columna de las tablas del Duelo de Alianzas pasa de `Hora Inicio` a `Contador` en los 8 idiomas.
+- Solo la tabla del día actual (`ad-today`) usa `server_time` y `server_duration`: `T-HH:MM:SS` antes del inicio, `+ HH:MM:SS` durante el evento y `End` al finalizar. Las filas sin `server_time` conservan el cálculo por `codebs` y los días futuros no cambian.
+
+### Fixed
+- Se conservan los ajustes manuales de estilo: `.ad-item-title` con `font-size: 1.2rem`, `padding: 2px 10px 2px 10px` y `box-shadow: 0 3px 5px`, y enlaces del menú lateral con `border-radius: 1px`.
+- El contrato de pruebas se actualiza a los datos vigentes (`ACTIVITY_CODE` 43, `EVENT_CODE` 8, `DAILY` 71) y valida el formato `hh:mm:ss` de `server_time` y `server_duration`.
+
 ## [261105a] - 2026-11-05
 
 ### Added

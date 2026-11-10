@@ -48,6 +48,9 @@ body {
   --nav-panel-width: min(100vw, 400px);
   --nav-toggle-line-origin: 25px;
   --nav-toggle-line-end: calc(var(--nav-panel-width) - var(--nav-toggle-line-origin) - 10px);
+  /* Sombra compartida por el texto UXM, las barras del menu y el punto
+     que recorre el borde. La portada la intensifica para el video. */
+  --nav-uxm-shadow: 0 1px 3px rgba(8, 47, 58, .65);
 }
 
 .link-danger,
@@ -66,10 +69,17 @@ body {
 .in-progress::after{
   content: " (" attr(data-progress) ")";
   color: #029202;
+  font-weight: bold;
+}
+.info-data tbody td{
+  padding: 0 4px 0 4px;
 }
 .info-data tbody th,
 .info-data tbody td:nth-child(2) {
   color: #1a53a0;
+}
+.info-data tbody td:nth-child(2) {
+  text-align: right;
 }
 
 /* ---------- Botones ---------- */
@@ -113,7 +123,7 @@ button,
   font-weight: 700;
   letter-spacing: .02em;
   text-decoration: none;
-  text-shadow: 0 1px 3px rgba(8, 47, 58, .65);
+  text-shadow: var(--nav-uxm-shadow);
   padding: 4px 8px;
   border-radius: var(--button-radius);
   transition: background-color .2s var(--ease), color .2s var(--ease);
@@ -128,9 +138,11 @@ button,
 .topbar-brand:focus-visible { box-shadow: 0 0 0 2px #ffbf47; }
 
 /* En la portada la marca debe contrastar con el video de fondo */
+.home-topbar {
+  --nav-uxm-shadow: 0 1px 3px rgba(8, 47, 58, .9);
+}
 .home-topbar .topbar-brand {
   color: var(--hot);
-  text-shadow: 0 1px 3px rgba(8, 47, 58, .9);
 }
 .home-topbar .topbar-brand:hover,
 .home-topbar .topbar-brand:focus-visible {
@@ -172,7 +184,7 @@ button,
   background: #ccc;
   transform-origin: left center;
   transition: width .28s var(--ease), background-color .28s var(--ease);
-  box-shadow: 0 1px 3px rgba(8, 47, 58, .65);
+  box-shadow: var(--nav-uxm-shadow);
 }
 .home-topbar .nav-toggle-bars i {
   background: var(--hot);
@@ -184,25 +196,35 @@ button,
   width: var(--nav-toggle-line-end);
 }
 
-/* Aviso periódico: la primera línea avanza 20px y la segunda 10px */
-.nav-toggle-bars i:nth-child(1) {
-  animation: uxm-nav-line-one 30s ease-in-out infinite;
+/* Aviso periódico: un punto rojo recorre el borde del botón y se apaga.
+   El recorrido se hace con un pseudoelemento para no depender del HTML.
+   El punto comparte color y sombra con el texto UXM. */
+.nav-toggle::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--hot);
+  box-shadow: var(--nav-uxm-shadow);
+  opacity: 0;
+  pointer-events: none;
+  animation: uxm-nav-border-dot 30s ease-in-out infinite;
 }
-.nav-toggle-bars i:nth-child(2) {
-  animation: uxm-nav-line-two 30s ease-in-out infinite;
-}
-.nav-open .nav-toggle-bars i:nth-child(1),
-.nav-open .nav-toggle-bars i:nth-child(2) {
+.nav-open .nav-toggle::after {
   animation: none;
-  transform: none;
+  opacity: 0;
 }
-@keyframes uxm-nav-line-one {
-  0%, 95%, 100% { transform: translateX(0); }
-  97% { transform: translateX(20px); }
-}
-@keyframes uxm-nav-line-two {
-  0%, 95%, 100% { transform: translateX(0); }
-  97% { transform: translateX(10px); }
+@keyframes uxm-nav-border-dot {
+  0%, 88% { opacity: 0; top: -2px; left: -2px; }
+  90% { opacity: 1; top: -2px; left: -2px; }
+  94% { opacity: 1; top: -2px; left: calc(100% + 2px); }
+  96% { opacity: 1; top: calc(100% + 2px); left: calc(100% + 2px); }
+  98% { opacity: 1; top: calc(100% + 2px); left: -2px; }
+  99.5% { opacity: 0; top: -2px; left: -2px; }
+  100% { opacity: 0; top: -2px; left: -2px; }
 }
 
 /* ---------- Menú lateral propio (anclado a la izquierda) ---------- */
@@ -260,6 +282,7 @@ button,
   letter-spacing: .02em;
   text-decoration: none;
   border: 0;
+  border-radius: 1px;
   background-image: linear-gradient(var(--scarlet), var(--scarlet));
   background-repeat: no-repeat;
   background-position: left center;
@@ -275,7 +298,6 @@ button,
 .nav-list a.active {
   color: #fff;
   font-weight: 600;
-  border-radius: var(--button-radius);
 }
 .nav-list a.active:hover,
 .nav-list a.active:focus-visible {
@@ -495,6 +517,10 @@ button,
     transition: none;
     animation: none;
     transform: none;
+  }
+  .nav-toggle::after {
+    animation: none;
+    opacity: 0;
   }
   .nav-list a { transition: none; }
   .nav-panel, .nav-backdrop { transition: none; }
@@ -920,11 +946,19 @@ button,
   left: 0;
   border-bottom: 1px solid #7c7c7c;
 }
-.line-divisor-scarlet {
+.line-divisor-scarlet,
+.line-divisor-grey {
   width: 100%;
   height: 0;
-  margin: 24px auto 0;
+}
+.line-divisor-scarlet {
+  margin: 24px auto 0 auto;
   border-top: 3px solid var(--scarlet);
+}
+.line-divisor-concrete {
+  margin: 24px auto 0 auto;
+  height: 36px;
+  border-top: 3px solid #999;
 }
 
 /* ---------- Formulario de contacto ---------- */

@@ -72,32 +72,38 @@
   ];
 
   var ACTIVITY_CODE = [
-    { "code": "ANTX",    "group":"FOCUS", "objetive": "Consume 660 Antitoxins",       "resource":"Purchase Antidote Supplies", "icon":"antitoxin","point": "+2.4",  "codebs": "HEROE" },
-    { "code": "FAQS",    "group":"FOCUS", "objetive": "Complete Falcon Missions",     "resource":"Falcon Tower", "icon":"falcon-mission","point": "+29'000.0",      "codebs": "" },
+    { "code": "ANTX",    "group":"FOCUS", "objetive": "Consume Antitoxins",       "resource":"Purchase Antidote Supplies", "icon":"antitoxin","point": "+2.4",  "codebs": "HEROE" },
+    { "code": "FAQS",    "group":"FOCUS", "objetive": "Complete Falcon Missions", "resource":"Falcon Tower", "icon":"falcon-mission","point": "+29'000.0",      "codebs": "" },
 
-    { "code": "EPIUR",   "group":"RAVEN", "objetive": "Get 1 UR Epigraph Shard",      "resource":"Open Epigraph Chest", "icon":"epigraf-chest","point": "+2'700.0", "codebs": "" },
-    { "code": "HERBS",   "group":"FARM",  "objetive": "Gather 60 Herbs",              "resource":"Herb Garden Lv.10 > 8H", "icon":"garden","point": "+12.0",        "codebs": "" },
-    { "code": "GRAIN",   "group":"FARM",  "objetive": "Gather 100 Grain/100 Timber",  "resource":"Herb Garden Lv.10 > 8H", "icon":"farm","point": "+12.0",          "codebs": "" },
-    { "code": "RAVESS",  "group":"RAVEN", "objetive": "Consume 1 Raven Essence",      "resource":"", "icon":"raven-essence","point": "+6'000.0",                    "codebs": "" },
-    { "code": "RAVFRT",  "group":"RAVEN", "objetive": "Consume 1 Raven Fruit",        "resource":"", "icon":"raven-fruit","point": "+7.2",                          "codebs": "RAVEN" },
-    { "code": "STMN",    "group":"FOCUS", "objetive": "Consume 1 Stamina",            "resource":"Use Stamina Bottles", "icon":"stamina-bottle","point": "+360.0",  "codebs": "RAVEN" },
+    { "code": "EPIUR",   "group":"RAVEN", "objetive": "Get UR Epigraph Shards",   "resource":"Open Epigraph Chests", "icon":"epigraf-chest","point": "+2'700.0", "codebs": "" },
+    { "code": "HERBS",   "group":"FARM",  "objetive": "Gather Herbs, all day",    "resource":"Herb Garden Lv.10, 8H, 1.1M", "icon":"garden","point": "+12.0",        "codebs": "" },
+    { "code": "GRAIN",   "group":"FARM",  "objetive": "Gather 100 Grain/100 Timber", "resource":"Farm Lv.10, 6.5H, 2.2M", "icon":"farm","point": "+12.0",          "codebs": "" },
+    { "code": "RAVESS",  "group":"RAVEN", "objetive": "Consume Raven Essence",    "resource":"", "icon":"raven-essence","point": "+6'000.0",                    "codebs": "" },
+    { "code": "RAVFRT",  "group":"RAVEN", "objetive": "Consume Raven Fruit",      "resource":"", "icon":"raven-fruit","point": "+7.2",                          "codebs": "RAVEN" },
+    { "code": "STMN",    "group":"FOCUS", "objetive": "Consume Stamina",          "resource":"Use Stamina Bottles", "icon":"stamina-bottle","point": "+360.0",  "codebs": "RAVEN" },
     
     { "code": "CON1SP",  "group":"BUILD", "objetive": "Use 1min Construction Speedup","resource":"", "icon":"speedup-build","point": "+147.5",      "codebs": "BUILD" },
     { "code": "CONMGH",  "group":"BUILD", "objetive": "Increase 1 Building Might",   "resource":"", "icon":"might-building","point": "+27.5",       "codebs": "BUILD" },
     { "code": "CRVNUR",  "group":"OPER",  "objetive": "Dispatch 1 UR Caravan",       "resource":"", "icon":"caravan","point": "+290'000.0",         "codebs": "" },
     { "code": "OPENUR",  "group":"OPER",  "objetive": "Execute 1 UR Covert Operation","resource":"", "icon":"black-ops-swag","point": "+217'500.0", "codebs": "" },
-    { "code": "TCKSUR",  "group":"TAVERN","objetive": "Recruit Survivor once",      "resource":"Ticket Survivor", "icon":"ticket-survivor","point": "+4'350.0", "codebs": "" },
+
+    { "code": "TCKSUR",  "group":"TAVERN","objetive": "Recruit Survivor once",      "resource":"ALL Ticket Survivor", "icon":"ticket-survivor","point": "+4'350.0", "codebs": "" },
+    { "code": "SAVETS",  "group":"TAVERN","objetive": "SAVE ALL Ticket Survivor",   "resource":"Ticket Survivor", "icon":"ticket-survivor","point": "", "codebs": "" },
+    { "code": "FREETS",  "group":"TAVERN","objetive": "Use ONLY FREE Ticket Survivor", "resource":"Ticket Survivor", "icon":"ticket-survivor","point": "", "codebs": "" },
 
     { "code": "RAVCH1",  "group":"RAVEN","objetive": "Raven Gear Chest opened",   "resource":"", "icon":"raven-chest","point": "+2'585.0",        "codebs": "" },
     { "code": "STDSCR",  "group":"TECH", "objetive": "Consume 1 Study Scroll",    "resource":"Alliance Duel Reward", "icon":"study-scroll","point": "+705.0", "codebs": "" },
     { "code": "TCH1SP",  "group":"TECH", "objetive": "Use 1min Research Speedup", "resource":"", "icon":"speedup-tech","point": "+145.0",         "codebs": "TECH" },
     { "code": "TCHMGH",  "group":"TECH", "objetive": "Increase 1 Tech Might",     "resource":"", "icon":"might-research","point": "+27.0",        "codebs": "TECH" },
 
-    { "code": "SHRDSR",  "group":"HERO", "objetive": "Consume 1 SR Hero Shard",           "resource":"", "icon":"shard-sr","point": "+2'350.0",   "codebs": "" },
-    { "code": "SHRDSS",  "group":"HERO", "objetive": "Consume 1 SSR Hero Shard",          "resource":"", "icon":"shard-ssr","point": "+8'225.0",  "codebs": "" },
-    { "code": "SHRDUR",  "group":"HERO", "objetive": "Consume 1 UR Hero Shard",           "resource":"", "icon":"shard-ur","point": "+23'500.0",  "codebs": "" },
-    { "code": "SKILLB",  "group":"HERO", "objetive": "Use 1 Skill Badge",             "resource":"", "icon":"skill-badge","point": "+23.5",       "codebs": "" },
-    { "code": "TCKHER",  "group":"TAVERN","objetive": "Recruit Heroes once",    "resource":"Ticket Heroe", "icon":"ticket-hero","point": "+4'275.0", "codebs": "HEROE" },
+    { "code": "SHRDSR",  "group":"HERO", "objetive": "Consume 1 SR Hero Shard",  "resource":"", "icon":"shard-sr","point": "+2'350.0",   "codebs": "" },
+    { "code": "SHRDSS",  "group":"HERO", "objetive": "Consume 1 SSR Hero Shard", "resource":"", "icon":"shard-ssr","point": "+8'225.0",  "codebs": "" },
+    { "code": "SHRDUR",  "group":"HERO", "objetive": "Consume 1 UR Hero Shard",  "resource":"", "icon":"shard-ur","point": "+23'500.0",  "codebs": "" },
+    { "code": "SKILLB",  "group":"HERO", "objetive": "Use 1 Skill Badge",        "resource":"", "icon":"skill-badge","point": "+23.5",       "codebs": "" },
+
+    { "code": "TCKHER",  "group":"TAVERN","objetive": "Recruit Heroes once",     "resource":"ALL Ticket Heroe", "icon":"ticket-hero","point": "+4'275.0", "codebs": "HEROE" },
+    { "code": "SAVETH",  "group":"TAVERN","objetive": "SAVE ALL Ticket Heroe",     "resource":"Ticket Heroe", "icon":"ticket-hero","point": "", "codebs": "" },
+    { "code": "FREETH",  "group":"TAVERN","objetive": "Use ONLY FREE Ticket Heroe", "resource":"Ticket Heroe", "icon":"ticket-hero","point": "", "codebs": "" },
 
     { "code": "SOLD1TRN","group":"SOLDIER", "objetive": "Use 1min Training Boost",  "resource":"", "icon":"boost-training","point": "+145.0",              "codebs": "SOLDIER" },
     { "code": "SOLDT10", "group":"SOLDIER", "objetive": "Train 1 Soldier",          "resource":"Promote Soldiers +150%", "icon":"soldier-t7","point": "+297.0",  "codebs": "SOLDIER" },
@@ -107,27 +113,33 @@
     { "code": "SOLDMTC", "group":"SOLDIER", "objetive": "Soldier defeated specific match, ALL DAY", "resource":"", "icon":"soldier-attack","point": "+117.0",       "codebs": "" },
 
     { "code": "DYFALCON", "group":"FOCUS", "objetive": "Undertake but Do Not Complete Falcon Missions for the next day", "resource":"Save 35 missions", "icon":"falcon","point": "", "codebs": "" },
-    { "code": "DYELITE", "group":"MONSTER","objetive": "Monsters Elite Blight, get Hero Ticket & Antitoxin", "resource":"", "icon":"elite-blight","point": "",       "codebs": "" },
-    { "code": "DYBOTT",  "group":"FOCUS",  "objetive": "Save Stamina",          "resource":"Bottle Stamina", "icon":"stamina","point": "",           "codebs": "" },
+    { "code": "DYELITE", "group":"MONSTER","objetive": "Monsters Elite Blight, get Hero Ticket & Antitoxin", "resource":"", "icon":"elite-blight","point": "", "codebs": "" },
+    { "code": "DYBOTT",  "group":"FOCUS",  "objetive": "Save Stamina", "resource":"Bottle Stamina", "icon":"stamina","point": "", "codebs": "" },
+    { "code": "DYHERBS", "group":"FOCUS",  "objetive": "Start Gathering Herbs", "resource":"Herb Garden Lv.10 > 8H", "icon":"garden","point": "", "codebs": "" },
 
-    { "code": "EQGEAR",  "group":"GEAR", "objetive": "Use Gearstone, at UR Equipment", "resource":"Upgrade Equipment", "icon":"gearstone","point": "",         "codebs": "" },
+    { "code": "EQGEAR",  "group":"GEAR", "objetive": "Use Gearstone, at UR Equipment", "resource":"Upgrade Equipment", "icon":"gearstone","point": "", "codebs": "" },
     { "code": "EQBPRN",  "group":"GEAR", "objetive": "Use Gear Blueprint, Promote Additional Stats UR", "resource":"Promote Equipment", "icon":"gear-blueprint-ur","point": "", "codebs": "" },
 
     { "code": "ELIXIR",  "group":"FOCUS", "objetive": "Capture Buildings, Gain Points", "resource":"", "icon":"","point": "", "codebs": "" },
-    { "code": "SCRAMBLE",  "group":"FOCUS", "objetive": "Capture/Defense Farm, 100K Point Honor", "resource":"Farm Royal City in Mud", "icon":"","point": "", "codebs": "" },
-    { "code": "KWAR",  "group":"FOCUS", "objetive": "Kill/Defeat Soldiers, 1.5M Point Honor", "resource":"Kingdom War", "icon":"","point": "", "codebs": "" },
-    { "code": "CUMULUS",  "group":"FOCUS", "objetive": "Gather Cristal, from Cumulus", "resource":"Event Culumus Valley", "icon":"cumulus-cristal","point": "", "codebs": "" }
+    { "code": "SCRAMBLE","group":"FOCUS", "objetive": "Capture/Defense Farm, 100K Point Honor", "resource":"Farm Royal City in Mud", "icon":"","point": "", "codebs": "" },
+
+    { "code": "KWAR",    "group":"FOCUS", "objetive": "Kill/Defeat Soldiers, 1.5M Point Honor", "resource":"Kingdom War", "icon":"","point": "", "codebs": "" },
+    { "code": "SHIELD",  "group":"FOCUS", "objetive": "Active Shields 24H, Free Shield 8H", "resource":"Alliance Shop", "icon":"","point": "", "codebs": "" },
+
+    { "code": "CUMULUS", "group":"FOCUS", "objetive": "30min Gather Cristal, from Cumulus", "resource":"Event Culumus Valley", "icon":"cumulus-cristal","point": "", "codebs": "" }
   ];
 
   var EVENT_CODE = [
-    { "event": "AD",  "es": "Duelo de Alianza",         "en": "Alliance Duel" },
     { "event": "DY",  "es": "Consejo Diario",           "en": "Tips Daily" },
+
+    { "event": "AD",  "es": "Duelo de Alianza",         "en": "Alliance Duel" },
     { "event": "KVK", "es": "Guerra de Reinos",         "en": "Kingdoms War" },
     { "event": "ROY", "es": "Alboroto Ciudad Real",     "en": "Scramble Royal City" },
     { "event": "BS",  "es": "Batalla Supervivencia",    "en": "Battle Survival" },
-    { "event": "EQ",  "es": "Mejora de Equipo",         "en": "Equipment Upgrade" },
-    { "event": "BEX", "es": "Batalla del Elixir",       "en": "Battle Elixir" },
-    { "event": "CUM", "es": "Valle Cúmulos de Cristal", "en": "Cumulus Cristal Valley" }
+
+    { "event": "EQ",  "es": "Mejora de Equipo",         "en": "Gear Upgrade" },
+    { "event": "BEX", "es": "Batalla del Elixir",       "en": "Elixir Scramble" },
+    { "event": "CUM", "es": "Valle Cúmulos de Cristal", "en": "Cristal Cruster Valley" }
   ];
 
   var PHASES = [
@@ -141,72 +153,91 @@
   ];
 
   var DAILY = [
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "ANTX" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "FAQS" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVESS" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVFRT" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "STMN" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "EPIUR" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "HERBS" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "FAQS" },
-    
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "TCKSUR" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CON1SP" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CONMGH" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CRVNUR" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "OPENUR" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "ANTX",   "server_time":"" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "FAQS",   "server_time":"" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVESS", "server_time":"" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVFRT", "server_time":"" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "STMN",   "server_time":"" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "EPIUR",  "server_time":"" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "HERBS",  "server_time":"" },
 
-    { "noday": 2, "day": "Tue", "event": "DY", "phase": "",     "code_task": "DYFALCON" },
-    { "noday": 2, "day": "Tue", "event": "DY", "phase": "",     "code_task": "DYELITE" },
+    { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "FREETH", "server_time":"" },
+    { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "SAVETS", "server_time":"" },
     
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "RAVCH1" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "STDSCR" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCH1SP" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCHMGH" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "FAQS" },
-    
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "TCKHER" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "ANTX" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDSR" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDSS" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDUR" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SKILLB" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "TCKSUR", "server_time":"" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CON1SP", "server_time":"" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CONMGH", "server_time":"" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CRVNUR", "server_time":"" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "OPENUR", "server_time":"" },
 
-    { "noday": 4, "day": "Thu", "event": "DY", "phase": "",     "code_task": "DYFALCON" },
-    { "noday": 4, "day": "Thu", "event": "DY", "phase": "",     "code_task": "DYELITE" },
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYFALCON", "server_time":"" },
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYELITE",  "server_time":"" },
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "FREETH",   "server_time":"" },
     
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLDT10" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLD1TRN" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "FAQS" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CON1SP" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CONMGH" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCH1SP" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCHMGH" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "RAVCH1", "server_time":"" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "STDSCR", "server_time":"" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCH1SP", "server_time":"" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCHMGH", "server_time":"" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "FAQS",   "server_time":"" },
 
-    { "noday": 5, "day": "Fri", "event": "ROY", "phase": "",    "code_task": "SCRAMBLE" },
-    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "",    "code_task": "ELIXIR" },
+    { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "SAVETH", "server_time":"" },
+    { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "FREETS", "server_time":"" },
     
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CON1SP" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "TCH1SP" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLD1TRN" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "HEA1SP" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDDFT" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDLST" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDMTC" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CRVNUR" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "OPENUR" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "TCKHER", "server_time":"" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "ANTX",   "server_time":"" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDSR", "server_time":"" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDSS", "server_time":"" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDUR", "server_time":"" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SKILLB", "server_time":"" },
 
-    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "",     "code_task": "EQGEAR" },
-    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "",     "code_task": "EQBPRN" },
-    { "noday": 6, "day": "Sat", "event": "KVK", "phase": "",    "code_task": "KWAR" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYFALCON", "server_time":"" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYELITE",  "server_time":"" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "FREETS",   "server_time":"" },
     
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYFALCON" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYELITE" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYBOTT" },
-    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQGEAR" },
-    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQBPRN" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLDT10",  "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLD1TRN", "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "FAQS",     "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CON1SP",   "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CONMGH",   "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCH1SP",   "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCHMGH",   "server_time":"" },
 
-    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS" }
+    { "noday": 5, "day": "Fri", "event": "ROY", "phase": "PH05", "code_task": "SCRAMBLE", "server_time":"11:00:00", "server_duration":"01:00:00" },
+    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"22:00:00", "server_duration":"00:30:00" },
+    { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "FREETH",    "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "FREETS",    "server_time":"" },
+    
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CON1SP",   "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "TCH1SP",   "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLD1TRN", "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "HEA1SP",   "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDDFT",  "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDLST",  "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDMTC",  "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CRVNUR",   "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "OPENUR",   "server_time":"" },
+
+    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "PH06", "code_task": "EQGEAR", "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "PH06", "code_task": "EQBPRN", "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETH", "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETS", "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "SHIELD", "server_time":"00:00:00", "server_duration":"23:00:00" },
+    { "noday": 6, "day": "Sat", "event": "KVK", "phase": "PH06", "code_task": "KWAR",  "server_time":"12:00:00", "server_duration":"01:00:00" },
+    
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYFALCON", "server_time":"" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYELITE",  "server_time":"" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYBOTT",   "server_time":"" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYHERBS",  "server_time":"16:30:00", "server_duration":"08:00:00" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "FREETH",   "server_time":"" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "SAVETS",   "server_time":"" },
+
+    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQGEAR", "server_time":"" },
+    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQBPRN", "server_time":"" },
+
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"02:00:00", "server_duration":"00:30:00" },
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"09:00:00", "server_duration":"00:30:00" },
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"18:00:00", "server_duration":"00:30:00" },
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"23:00:00", "server_duration":"00:30:00" },
   ];
 
   /* ---------- Utilidades compartidas ---------- */
@@ -215,6 +246,8 @@
   var FALLBACK_LANG = "en";
   var WEEK_SECONDS = 604800;
   var DAY_ABBR = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  /* Ventana de aviso del cierre del proximo dia: 1 hora. */
+  var ALERT_WINDOW_SEC = 3600;
 
   /* El idioma lo resuelve js/app.js y lo publica en <html data-lang>. */
   function resolveLang() {
@@ -227,6 +260,7 @@
 
   var LANG = resolveLang();
   var T = window.I18N[LANG] || window.I18N[FALLBACK_LANG];
+  var T_EN = window.I18N[FALLBACK_LANG] || T;
 
   function byId(id) { return document.getElementById(id); }
 
@@ -299,7 +333,7 @@
         act2: actMap[c.codebs].activity_1,
         /* Los resaltados dependen del codigo, no del texto traducido. */
         hlSpecial: c.codebs === "SOLDIER",
-        hlTrack: c.codebs === "RAVEN" || c.codebs === "HEROE"
+        hlTrack: c.codebs === "RAVEN" || c.codebs === "HEROE" || c.codebs === "SOLDIER"
       };
     });
     slots.sort(function (a, b) { return a.sec - b.sec; });
@@ -334,9 +368,9 @@
 
     function appendActivitiesCell(tr, act1, act2, hlTrack) {
       var td = document.createElement("td");
-      td.className = "bs-activities" + (hlTrack ? " bs-hl-track" : "");
+      td.className = "bs-activities";
       var d1 = document.createElement("span");
-      d1.className = "bs-act-line bs-act1";
+      d1.className = "bs-act-line bs-act1" + (hlTrack ? " bs-hl-track" : "");
       d1.textContent = act1;
       var d2 = document.createElement("span");
       d2.className = "bs-act-line bs-act2";
@@ -352,6 +386,7 @@
       tbody.innerHTML = "";
       var n = slots.length;
       var weekStart = weekStartMs();
+
       for (var rel = -1; rel <= 7; rel++) {
         var u = idx + rel;
         var slot = slots[((u % n) + n) % n];
@@ -359,9 +394,14 @@
         var loc = new Date(weekStart + uSec * 1000);
         var tr = document.createElement("tr");
         tr.className = (rel === -1 ? "bs-past" : rel === 0 ? "bs-current" : "bs-next") + (slot.dayEnd ? " bs-dayend" : "") + (rel === 1 ? " bs-row-third" : "");
-        var td = appendCell(tr, rel === -1 ? "—" : "", "bs-counter" + (rel > 0 && slot.hlSpecial ? " bs-hl-special" : ""));
-        if (rel === 0) counters.push({ td: td, startSec: uSec, elapsed: true, prefix: "+ " });
-        else if (rel > 0) counters.push({ td: td, targetSec: uSec, prefix: "T- " });
+        /* La proxima actividad (tercera de la tabla) siempre se resalta en su
+           contador, con independencia del evento que tenga asignado. */
+        var counterSpecial = rel === 1 || (rel > 0 && slot.hlSpecial);
+        var td = appendCell(tr, rel === -1 ? "—" : "", "bs-counter" + (counterSpecial ? " bs-hl-special" : ""));
+        if (rel === 0) counters.push({ tr: tr, td: td, startSec: uSec, elapsed: true, prefix: "+ " });
+        else if (rel > 0) {
+          counters.push({ tr: tr, td: td, targetSec: uSec, prefix: "T- ", alert: rel === 1 });
+        }
         appendCell(tr, rel === -1 ? T.bsPast : rel === 0 ? T.bsCurrent : rel === 1 ? T.bsNext : "", "bs-status" + (rel > 0 && slot.hlSpecial ? " bs-hl-special" : ""));
         appendCell(tr, slot.event, "bs-event" + (rel > 0 && slot.hlSpecial ? " bs-hl-special" : ""));
         appendActivitiesCell(tr, slot.act1, slot.act2, rel > 0 && slot.hlTrack);
@@ -379,7 +419,15 @@
       }
       for (var i = 0; i < counters.length; i++) {
         var c = counters[i];
-        c.td.textContent = c.prefix + (c.elapsed ? fmtCounter(sec - c.startSec) : fmtCounter(c.targetSec - sec));
+        if (c.elapsed) {
+          c.td.textContent = c.prefix + fmtCounter(sec - c.startSec);
+          continue;
+        }
+        var remaining = c.targetSec - sec;
+        c.td.textContent = c.prefix + fmtCounter(remaining);
+        /* Aviso visual: la proxima actividad esta por comenzar. La clase se
+           aplica a la fila para marcar Contador, Estado y Evento a la vez. */
+        c.tr.classList.toggle("bs-imminent", !!c.alert && remaining > 0 && remaining <= ALERT_WINDOW_SEC);
       }
       renderTzInfo(tzInfoEl);
     }
@@ -423,6 +471,27 @@
     var phaseMap = {};
     PHASES.forEach(function (p) { phaseMap[p.phase] = p.desc; });
 
+    /* ---------- Traducciones de actividades, fases y eventos ---------- */
+    /* Los mapas viven en js/i18n.js. El inglés y el dato original actuan
+       como respaldo cuando una traduccion no esta disponible. */
+
+    function activityText(code, field) {
+      var localized = T.adActivities && T.adActivities[code];
+      if (localized && typeof localized[field] === "string") return localized[field];
+      var fallback = T_EN.adActivities && T_EN.adActivities[code];
+      if (fallback && typeof fallback[field] === "string") return fallback[field];
+      var activity = actMap[code];
+      return activity && typeof activity[field] === "string" ? activity[field] : "";
+    }
+
+    function phaseText(phase) {
+      var localized = T.adPhases && T.adPhases[phase];
+      if (localized) return localized;
+      var fallback = T_EN.adPhases && T_EN.adPhases[phase];
+      if (fallback) return fallback;
+      return phaseMap[phase] || phase;
+    }
+
     function normPhase(p) { return p ? p.replace(/^PH/, "P") : ""; }
 
     var byDay = {};
@@ -439,12 +508,22 @@
     var lastDay = -1;
     var counters = [];
 
-    function dayTitle(noday) {
+    function phaseTitle(noday) {
       var ph = dayPhase[noday];
-      return (ph ? (phaseMap[ph] || ph) : NO_PHASE_TITLE) + " · " + DAY_ABBR[noday];
+      return ph ? phaseText(ph) : NO_PHASE_TITLE;
+    }
+
+    function resetTitle(resetMs) {
+      var reset = new Date(resetMs);
+      return "· " + pad(reset.getMonth() + 1) + "/" + pad(reset.getDate()) + " " +
+        pad(reset.getHours()) + ":" + pad(reset.getMinutes());
     }
 
     function eventLabel(r) {
+      var localized = T.adEvents && T.adEvents[r.event];
+      if (localized) return localized;
+      var fallback = T_EN.adEvents && T_EN.adEvents[r.event];
+      if (fallback) return fallback;
       var ev = evMap[r.event];
       return ev ? (ev[LANG] || ev.en || r.event) : r.event;
     }
@@ -458,6 +537,30 @@
       }).map(function (item) {
         return item.row;
       });
+    }
+
+    function parseClock(value) {
+      if (!value) return null;
+      var p = String(value).split(":");
+      if (p.length !== 3) return null;
+      var h = +p[0];
+      var m = +p[1];
+      var s = +p[2];
+      if (isNaN(h) || isNaN(m) || isNaN(s)) return null;
+      if (h < 0 || h > 23 || m < 0 || m > 59 || s < 0 || s > 59) return null;
+      return h * 3600 + m * 60 + s;
+    }
+
+    /* Estado del contador para una tarea con hora propia del servidor. */
+    function serverCounterState(serverTime, serverDuration, nowSec) {
+      var startSec = parseClock(serverTime);
+      if (startSec === null) return null;
+      var durationSec = parseClock(serverDuration);
+      if (durationSec === null) durationSec = 0;
+      var endSec = startSec + durationSec;
+      if (nowSec < startSec) return "T-" + fmtCounter(startSec - nowSec);
+      if (nowSec < endSec) return "+ " + fmtCounter(nowSec - startSec);
+      return "End";
     }
 
     function counterState(codebs, noday, nowSec) {
@@ -504,7 +607,12 @@
       var codebs = a && a.codebs;
       var timeCell = null;
 
-      if (codebs) {
+      if (offset === 0 && r.server_time) {
+        /* El dia actual usa la hora propia del servidor y su duracion. */
+        timeTxt = serverCounterState(r.server_time, r.server_duration, nowSec) || "—";
+        timeCell = appendCell(tr, timeTxt, "ad-time");
+        counters.push({ td: timeCell, serverTime: r.server_time, serverDuration: r.server_duration });
+      } else if (codebs) {
         if (offset === 0) {
           /* El dia actual muestra el contador del horario vinculado. */
           timeTxt = counterState(codebs, r.noday, nowSec);
@@ -516,20 +624,20 @@
         }
       }
 
-      /* 1. Hora Inicio */
+      /* 1. Contador */
       if (!timeCell) appendCell(tr, timeTxt, "ad-time");
 
       /* 2. Imagen de referencia de la tarea. */
       appendIconCell(tr, "ad-task-icon", r.code_task);
 
       /* 3. Tarea */
-      appendCell(tr, a ? a.objetive : r.code_task, "ad-obj");
+      appendCell(tr, a ? activityText(r.code_task, "objetive") : r.code_task, "ad-obj");
 
       /* 4. Imagen de referencia del recurso: se configura a futuro. */
       appendIconCell(tr, "ad-resource-icon", r.code_task);
 
       /* 5. Recurso */
-      appendCell(tr, a && a.resource ? a.resource : "", "ad-resource");
+      appendCell(tr, a ? activityText(r.code_task, "resource") : "", "ad-resource");
 
       /* 6. Evento */
       appendCell(tr, eventLabel(r), "ad-event");
@@ -598,10 +706,24 @@
 
         var title = document.createElement("div");
         title.className = "ad-item-title";
+
+        var phase = document.createElement("span");
+        phase.className = "ad-title-phase";
+        phase.textContent = phaseTitle(noday);
+        title.appendChild(phase);
+
+        /* Cada dia inicia a las 00:00:00 en UTC-2; se muestra ese reset
+           convertido a la zona horaria del navegador. */
+        var resetMs = startDayMs + k * 86400000 + SRC_TO_UTC_MS;
+        var reset = document.createElement("span");
+        reset.className = "ad-title-reset";
+        reset.textContent = resetTitle(resetMs);
+        title.appendChild(reset);
+
         var arrow = document.createElement("span");
         arrow.className = "ad-arrow";
         title.appendChild(arrow);
-        title.appendChild(document.createTextNode(dayTitle(noday)));
+
         item.appendChild(title);
 
         var body = document.createElement("div");
@@ -658,7 +780,11 @@
       var nowSec = origin.getUTCHours() * 3600 + origin.getUTCMinutes() * 60 + origin.getUTCSeconds();
       for (var i = 0; i < counters.length; i++) {
         var counter = counters[i];
-        counter.td.textContent = counterState(counter.codebs, counter.noday, nowSec);
+        if (counter.serverTime) {
+          counter.td.textContent = serverCounterState(counter.serverTime, counter.serverDuration, nowSec) || "—";
+        } else {
+          counter.td.textContent = counterState(counter.codebs, counter.noday, nowSec);
+        }
       }
     }
 

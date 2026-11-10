@@ -25,6 +25,7 @@ uxm-alliance/
 ├── js             # archivos javascript del sitio web
 |   ├── i18n.js    # Textos por idioma
 |   ├── app.js     # Lógica sitio web
+|   ├── alliance-bonuses.js  # Datos de los bonos de la Alianza
 |   └── activities-daily.js  # Cronogramas y datos de Actividades Diarias
 ├── media          # archivos multimedia
 |   └── video-particles-cyan.mp4  # video cover pagina de inicio
@@ -60,6 +61,7 @@ uxm-alliance/
 - Si una regla anterior contradice al código manual, prevalece el código manual y la regla obsoleta debe corregirse.
 - `db/*.json` está obsoleto: se conserva como histórico y no lo carga el sitio.
 - La fuente de verdad de los datos de actividades son las variables de `js/activities-daily.js`.
+- La fuente de verdad de los datos de los bonos de la Alianza es `window.ALLIANCE_BONUSES` en `js/alliance-bonuses.js`; sus textos traducibles siguen en `js/i18n.js`.
 
 ---
 
@@ -133,7 +135,9 @@ La fuente de verdad de los datos de actividades son las variables declaradas en 
 | `ACTIVITY_CODE` | Actividades codificadas del Duelo de Alianzas (objetive, resource, point, codebs) |
 | `EVENT_CODE` | Definición de eventos (es/en) |
 | `PHASES` | Fases del Duelo de Alianzas (P00-P06) |
-| `DAILY` | Actividades diarias del Duelo de Alianzas por día (noday) |
+| `DAILY` | Actividades diarias del Duelo de Alianzas por día (noday, server_time, server_duration) |
+
+> Los horarios `server_time` y las duraciones `server_duration` se expresan en UTC-2 y en formato `hh:mm:ss`.
 
 ### Archivos obsoletos en db/
 

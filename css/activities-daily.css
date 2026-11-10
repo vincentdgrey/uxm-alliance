@@ -39,7 +39,7 @@
   border-bottom: none;
 }
 .bs-schedule tbody tr.bs-dayend td {
-  border-bottom: 2px solid #ccc;
+  border-bottom: 3px solid #26b;
 }
 .bs-event,
 .bs-counter,
@@ -65,7 +65,7 @@ tr.bs-current td {
   color: #fff;
   font-weight: 700;
 }
-tr.bs-current td:nth-child(n+3) {
+tr.bs-current td:nth-child(n+4) {
   background: #00ff39;
   color: #00821d;
   font-weight: normal;
@@ -85,11 +85,12 @@ tr.bs-current td.bs-counter {
   color: #ebebeb;
 }
 .bs-schedule tbody td.bs-hl-special {
-  background-color: #ffee00;
-  color: #b65200;
+  background-color: #ccc;
+  color: #666;
 }
 .bs-schedule tbody tr.bs-row-third td:nth-child(1),
-.bs-schedule tbody tr.bs-row-third td:nth-child(2) {
+.bs-schedule tbody tr.bs-row-third td:nth-child(2),
+.bs-schedule tbody tr.bs-row-third td:nth-child(3) {
   background-color: #3484e6;
   color: #FFF;
 }
@@ -97,12 +98,35 @@ tr.bs-current td.bs-event::after {
   content: " \2605";
   margin-right: 4px;
 }
+/* Aviso de la proxima actividad: cuando el contador llega a una hora o menos,
+   el texto pasa a amarillo y el fondo varia suavemente entre escarlata y
+   escarlata oscuro. Afecta a Contador, Estado y Evento de esa fila.
+   No se anade texto a ninguna celda. */
+.bs-schedule tbody tr.bs-next.bs-row-third.bs-imminent > td.bs-counter,
+.bs-schedule tbody tr.bs-next.bs-row-third.bs-imminent > td.bs-status,
+.bs-schedule tbody tr.bs-next.bs-row-third.bs-imminent > td.bs-event {
+  background-color: var(--scarlet);
+  color: #ffee00;
+  font-weight: 700;
+  animation: uxm-bs-counter-alert 1.8s ease-in-out infinite;
+}
+@keyframes uxm-bs-counter-alert {
+  0%, 100% { background-color: var(--scarlet); }
+  50% { background-color: #8f1200; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bs-schedule tbody tr.bs-next.bs-row-third.bs-imminent > td.bs-counter,
+  .bs-schedule tbody tr.bs-next.bs-row-third.bs-imminent > td.bs-status,
+  .bs-schedule tbody tr.bs-next.bs-row-third.bs-imminent > td.bs-event {
+    animation: none;
+  }
+}
 #bs-tzinfo {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
   color: #aaa;
   padding: 10px 10px 0 10px;
-  text-align: left;
+  text-align: right;
 }
 
 /* ---------- Calendario de Duelo de Alianzas ---------- */
@@ -110,6 +134,9 @@ tr.bs-current td.bs-event::after {
   margin: 0 0 20px 0;
 }
 .ad-item-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-family: Roboto, Arial, Helvetica, sans-serif;
   font-size: 1.2rem;
   color: #4d7799;
@@ -119,17 +146,27 @@ tr.bs-current td.bs-event::after {
   background: #9b9b9b36;
   cursor: pointer;
   position: relative;
-  box-shadow: 0 2px 4px rgba(8, 47, 58, .9);
+  box-shadow: 0 3px 5px rgba(8, 47, 58, .9);
 }
 .ad-item.ad-today .ad-item-title {
   border: 2px solid #009922;
   background: #009922;
   color: #fff;
 }
+.ad-title-phase {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+.ad-title-reset {
+  flex: 0 0 auto;
+  margin-left: auto;
+  margin-right: 14px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
 .ad-arrow {
-  position: absolute;
-  right: 10px;
-  top: 0;
+  flex: 0 0 auto;
 }
 .ad-arrow::after {
   content: "\25BC";

@@ -65,7 +65,7 @@
 
     </section>
 
-    <section class="block-content-info center-content">
+    <section class="block-content-destacated center-content extra-top-space">
       <h2 class="sibtitle-info" id="arengaTitle">Arenga de Guerra</h2>
 
       <div class="message-arenga">
@@ -94,12 +94,18 @@
         <div class="ha-author">VincentÐGяey</div>
       </div>
 
-      <div class="line-divisor-scarlet"></div>
+      <div class="line-divisor-concrete"></div>
 
     </section>
 
-    <section class="block-content-destacated center-content extra-top-space">
+    <section class="block-content-info center-content">
       <h2 class="sibtitle-info" id="tutoTitle">Video Tutoriales</h2>
+
+      <div class="message-welcome">
+        <p id="tutorialsMessage" data-i18n-text="tutorialsMessage">
+          Videos de guia y ayuda, para los nuevos integrantes al juego, y algunas ideas que mejoraran tus heroes o golpear mas duro jajajaj.
+        </p>
+      </div>
 
       <div class="video-tutorial">
         <div class="component-video">
@@ -113,7 +119,22 @@
         <div class="component-buttons" id="videoTutorialButtons"></div>
       </div>
 
-      <div class="block-button-videos"></div>
+      <div class="line-divisor-scarlet"></div>
+
+    </section>
+
+    <section class="block-content-destacated center-content extra-top-space">
+      <h2 class="sibtitle-info" id="strategyTitle" data-i18n="strategyTitle">Biblioteca Estratégica</h2>
+
+      <div class="message-welcome">
+        <p id="strategyMessage" data-i18n-text="strategyMessage">
+          Buscaremos distintas formas de ayudar, en esta sección reuniremos las tácticas que aprendemos a diario, ordenado por temas que sean de tu necesidad.
+        </p>
+      </div>
+
+      <div class="block-booksmarks"></div>
+
+      <div class="line-divisor-concrete"></div>
 
     </section>
 
@@ -125,42 +146,13 @@
       </div>
 
       <div class="bonus-alliance left-content">
-        <p id="bonusAlliance">Bonos Tecnología de la Alianza</p>
+        <p id="bonusAlliance">Bonos Tecnología de la Alianza:</p>
         <table class="info-data">
-          <tbody>
-            <tr>
-              <th>★</th>
-              <td>+20%</td>
-              <td id="bonusFastBuild">Fast Build 8</td>
-            </tr>
-            <tr>
-              <th>★</th>
-              <td>+15%</td>
-              <td id="bonusResearchSpeedup">Research Speedup 5</td>
-            </tr>
-            <tr>
-              <th>★</th>
-              <td>+8%</td>
-              <td id="bonusCraftingSpeedup" class="in-progress" data-progress="En curso">Crafting Speedup 4</td>
-            </tr>
-            <tr>
-              <th>★</th>
-              <td>+1%</td>
-              <td id="bonusFastTraining">Fast Training 2</td>
-            </tr>
-            <tr>
-              <th>★</th>
-              <td>+2%</td>
-              <td id="bonusRallyStats">Rally HP/ATK/DEF 2</td>
-            </tr>
-            <tr>
-              <th>★</th>
-              <td></td>
-              <td id="bonusShardExchange">Shard Exchange Bank: para los tesoros que requieres en operaciones encubiertas.</td>
-            </tr>
-          </tbody>
+          <tbody id="allianceBonusBody"></tbody>
         </table>
       </div>
+
+      <div class="line-divisor-scarlet"></div>
 
     </section>
   </main>
@@ -180,6 +172,7 @@
 
   <noscript>UXM – Under Xtreme Madness Alliance · Kingdom 277</noscript>
   <script src="js/i18n.js"></script>
+  <script src="js/alliance-bonuses.js"></script>
   <script src="js/app.js"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL" crossorigin="anonymous"></script>

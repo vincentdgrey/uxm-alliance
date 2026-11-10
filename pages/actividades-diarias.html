@@ -46,6 +46,9 @@
 
     <section class="block-content-info">
       <div class="battle-content">
+
+        <p id="survivalMessage" data-i18n-text="survivalMessage">Ciclo automatico de actividades calculado según el horario del navegador web.</p>
+
         <div class="bs-wrap">
           <table class="bs-schedule">
             <thead>
@@ -58,9 +61,15 @@
               </tr>
             </thead>
             <tbody id="bs-body"></tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3"></td>
+                <td colspan="2" id="bs-tzinfo"></td>
+              </tr>
+            </tfoot>
           </table>
         </div>
-        <div id="bs-tzinfo"></div>
+
       </div>
 
     </section>

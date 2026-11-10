@@ -67,21 +67,58 @@
   setText("allianceTitle", T.allianceTitle);
   setText("allianceMessage", T.allianceMessage);
   setText("bonusAlliance", T.bonusAlliance);
-  setText("bonusFastBuild", T.bonusFastBuild);
-  setText("bonusResearchSpeedup", T.bonusResearchSpeedup);
-  setText("bonusCraftingSpeedup", T.bonusCraftingSpeedup);
-  setText("bonusFastTraining", T.bonusFastTraining);
-  setText("bonusRallyStats", T.bonusRallyStats);
-  setText("bonusShardExchange", T.bonusShardExchange);
   setText("copyright", T.copyright);
   setText("ytLabel", T.youtube);
 
   var heroScrollCue = byId("heroScrollCue");
   if (heroScrollCue) heroScrollCue.setAttribute("aria-label", T.scrollCue);
 
-  /* El estado "en curso" de la tabla de bonos se localize por atributo. */
-  var bonusInProgress = byId("bonusCraftingSpeedup");
-  if (bonusInProgress) bonusInProgress.setAttribute("data-progress", T.bonusInProgress);
+  /* ---------- Tabla de bonos de la alianza ---------- */
+  /* Las filas se generan con los datos de js/alliance-bonuses.js y los
+     textos traducidos de js/i18n.js. */
+  function buildAllianceBonuses() {
+    var body = byId("allianceBonusBody");
+    var bonuses = window.ALLIANCE_BONUSES || [];
+    if (!body) return;
+    body.innerHTML = "";
+
+    /* Las claves identifican cada fila: se descartan duplicados. */
+    var seen = {};
+    bonuses.forEach(function (bonus) {
+      if (!bonus || !bonus.key || seen[bonus.key]) return;
+      seen[bonus.key] = true;
+
+      var tr = document.createElement("tr");
+
+      var icon = document.createElement("th");
+      icon.setAttribute("scope", "row");
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = "★";
+      tr.appendChild(icon);
+
+      var value = document.createElement("td");
+      value.textContent = bonus.value || "";
+      tr.appendChild(value);
+
+      var value = document.createElement("td");
+      // value.textContent = bonus.level || "";
+      value.textContent = bonus.level === null || bonus.level === undefined
+        ? ""
+        : "Lv." + bonus.level;
+      tr.appendChild(value);
+
+      var name = document.createElement("td");
+      name.id = bonus.key;
+      name.textContent = T[bonus.key] || bonus.key;
+      if (bonus.inProgress) {
+        name.className = "in-progress";
+        name.setAttribute("data-progress", T.bonusInProgress);
+      }
+      tr.appendChild(name);
+
+      body.appendChild(tr);
+    });
+  }
 
   /* ---------- Sección informativa de bienvenida ---------- */
   function applyInfoContent() {
@@ -455,6 +492,7 @@
   }
 
   /* ---------- Init ---------- */
+  buildAllianceBonuses();
   buildNav();
   buildLangs();
   applyPageContent();
