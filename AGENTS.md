@@ -23,7 +23,8 @@ uxm-alliance/
 |   ├── style.css
 |   └── activities-daily.css  # Estilos de la subpágina Actividades Diarias
 ├── js             # archivos javascript del sitio web
-|   ├── i18n.js    # Textos por idioma
+|   ├── i18n.js    # Núcleo común de textos por idioma
+|   ├── i18n/      # Textos i18n específicos de cada página
 |   ├── app.js     # Lógica sitio web
 |   ├── alliance-bonuses.js  # Datos de los bonos de la Alianza
 |   └── activities-daily.js  # Cronogramas y datos de Actividades Diarias
@@ -56,12 +57,13 @@ uxm-alliance/
 
 ### Fuente de verdad y cambios manuales
 
-- Para el sitio web, el código manual vigente en `index.html`, `pages/*.html`, `css/style.css`, `js/app.js` y `js/i18n.js` es la fuente de verdad.
+- Para el sitio web, el código manual vigente en `index.html`, `pages/*.html`, `css/style.css`, `js/app.js`, `js/i18n.js` y `js/i18n/<página>/i18n.js` es la fuente de verdad.
 - Cuando el usuario informe que realizó cambios manuales en HTML, CSS, JavaScript o traducciones, revisar el diff, respetarlos sin revertirlos ni sobrescribirlos y actualizar `docs/core/project-rules.md` con el comportamiento resultante.
 - Si una regla anterior contradice al código manual, prevalece el código manual y la regla obsoleta debe corregirse.
 - `db/*.json` está obsoleto: se conserva como histórico y no lo carga el sitio.
 - La fuente de verdad de los datos de actividades son las variables de `js/activities-daily.js`.
-- La fuente de verdad de los datos de los bonos de la Alianza es `window.ALLIANCE_BONUSES` en `js/alliance-bonuses.js`; sus textos traducibles siguen en `js/i18n.js`.
+- La fuente de verdad de los datos de los bonos de la Alianza es `window.ALLIANCE_BONUSES` en `js/alliance-bonuses.js`; sus textos traducibles siguen en `js/i18n/index/i18n.js`.
+- La fuente de verdad de los textos i18n es el conjunto `js/i18n.js` (núcleo común) más `js/i18n/<página>/i18n.js`. Las ediciones manuales de `texts.es` se conservan y son la base para propagar cambios a los demás idiomas.
 
 ---
 

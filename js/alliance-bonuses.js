@@ -1,5 +1,5 @@
 /* Bonos de Tecnologia de la Alianza: datos fuente de verdad.
-   Los textos traducibles viven en js/i18n.js; aqui solo se declara el
+   Los textos traducibles viven en js/i18n/index/i18n.js; aqui solo se declara el
    dato de juego de cada fila (porcentaje, nivel y estado). */
 window.ALLIANCE_BONUSES = [
   { "key": "bonusFastBuild",        "value": "+20%", "level": 8,    "priority":"high", "inProgress": false },

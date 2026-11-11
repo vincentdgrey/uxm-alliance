@@ -1,5 +1,20 @@
 # Changelog
 
+## [261110c] - 2026-11-10
+
+### Added
+- El título de la fase actual del Duelo de Alianzas incluye una cuenta atrás `T-HH:MM:SS` hasta el final de la fase. Cada fase va de las `00:00:00` a las `00:00:00` UTC-2 del día siguiente; el contador se actualiza con el temporizador compartido y solo se muestra en el panel del día actual.
+- SeDividen las traducciones i18n en un núcleo común (`js/i18n.js`) y un archivo por página (`js/i18n/<página>/i18n.js`). Cada página carga únicamente su propio archivo i18n y se incorpora el latín turco.
+- El bloque informativo de la portada incorpora un tercer botón, «Actividades Diarias», que enlaza a `pages/actividades-diarias.html` conservando el idioma activo mediante `?lang=`. La etiqueta reutiliza la clave i18n `navDaily`.
+
+### Changed
+- Las ediciones manuales de `texts.es.adActivities` se conservan como fuente de verdad para las traducciones de actividades. Los registros actualizados en español se propagan a los otros ocho idiomas sin sobrescribir el texto español.
+- Se amplían las validaciones de internacionalización: UTF-8 válido, ausencia de mojibake y caracteres invisibles, CJK solo en japonés y chino, cirílico en ruso y conservación de los valores protegidos del juego.
+
+### Fixed
+- Se corrigen las mezclas de alfabeto en japonés: `ファalcon` pasa a `ファルコン` y `クリスタル堆积谷` a `クリスタル堆積の谷`.
+- Se actualizan las pruebas para la estructura i18n por página, el contador de fase y la fuente manual de traducciones en español.
+
 ## [261110b] - 2026-11-10
 
 ### Changed

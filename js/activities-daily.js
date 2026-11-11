@@ -1,8 +1,9 @@
 /* Actividades Diarias: cronogramas de Batalla de Supervivencia y Duelo de Alianzas.
    Script unico de la subpagina pages/actividades-diarias.html.
 
-   Depende de js/i18n.js (window.I18N) y del idioma que fija js/app.js
-   en <html data-lang>. No modifica el titulo ni el idioma de la pagina.
+   Depende de js/i18n.js y js/i18n/actividades-diarias/i18n.js (window.I18N)
+   y del idioma que fija js/app.js en <html data-lang>. No modifica el titulo
+   ni el idioma de la pagina.
    Los estilos viven en css/activities-daily.css. */
 (function () {
   "use strict";
@@ -72,50 +73,50 @@
   ];
 
   var ACTIVITY_CODE = [
-    { "code": "ANTX",    "group":"FOCUS", "objetive": "Consume Antitoxins",       "resource":"Purchase Antidote Supplies", "icon":"antitoxin","point": "+2.4",  "codebs": "HEROE" },
-    { "code": "FAQS",    "group":"FOCUS", "objetive": "Complete Falcon Missions", "resource":"Falcon Tower", "icon":"falcon-mission","point": "+29'000.0",      "codebs": "" },
+    { "code": "ANTX",    "group":"FOCUS", "objetive": "Consume Antitoxins",       "resource":"Purchase Antidote Supplies",  "icon":"antitoxin",      "point": "+2.4",  "codebs": "HEROE" },
+    { "code": "FAQS",    "group":"FOCUS", "objetive": "Complete Falcon Missions", "resource":"Falcon Tower",                "icon":"falcon-mission", "point": "+29'000.0",      "codebs": "" },
 
-    { "code": "EPIUR",   "group":"RAVEN", "objetive": "Get UR Epigraph Shards",   "resource":"Open Epigraph Chests", "icon":"epigraf-chest","point": "+2'700.0", "codebs": "" },
-    { "code": "HERBS",   "group":"FARM",  "objetive": "Gather Herbs, all day",    "resource":"Herb Garden Lv.10, 8H, 1.1M", "icon":"garden","point": "+12.0",        "codebs": "" },
-    { "code": "GRAIN",   "group":"FARM",  "objetive": "Gather 100 Grain/100 Timber", "resource":"Farm Lv.10, 6.5H, 2.2M", "icon":"farm","point": "+12.0",          "codebs": "" },
-    { "code": "RAVESS",  "group":"RAVEN", "objetive": "Consume Raven Essence",    "resource":"", "icon":"raven-essence","point": "+6'000.0",                    "codebs": "" },
-    { "code": "RAVFRT",  "group":"RAVEN", "objetive": "Consume Raven Fruit",      "resource":"", "icon":"raven-fruit","point": "+7.2",                          "codebs": "RAVEN" },
-    { "code": "STMN",    "group":"FOCUS", "objetive": "Consume Stamina",          "resource":"Use Stamina Bottles", "icon":"stamina-bottle","point": "+360.0",  "codebs": "RAVEN" },
+    { "code": "EPIUR",   "group":"RAVEN", "objetive": "Get UR Epigraph Shards",   "resource":"Open Epigraph Chests",        "icon":"epigraf-chest",  "point": "+2'700.0", "codebs": "" },
+    { "code": "HERBS",   "group":"FARM",  "objetive": "Gather Herbs, all day",    "resource":"Herb Garden Lv.10, 8H, 1.1M", "icon":"garden",         "point": "+12.0",        "codebs": "" },
+    { "code": "GRAIN",   "group":"FARM",  "objetive": "Gather 100 Grain/100 Timber","resource":"Farm Lv.10, 6.5H, 2.2M",    "icon":"farm",           "point": "+12.0",          "codebs": "" },
+    { "code": "RAVESS",  "group":"RAVEN", "objetive": "Consume Raven Essence",    "resource":"",                            "icon":"raven-essence",  "point": "+6'000.0",                    "codebs": "" },
+    { "code": "RAVFRT",  "group":"RAVEN", "objetive": "Consume Raven Fruit",      "resource":"",                            "icon":"raven-fruit",    "point": "+7.2",                          "codebs": "RAVEN" },
+    { "code": "STMN",    "group":"FOCUS", "objetive": "Consume Stamina",          "resource":"Use Stamina Bottles",         "icon":"stamina-bottle", "point": "+360.0",  "codebs": "RAVEN" },
     
-    { "code": "CON1SP",  "group":"BUILD", "objetive": "Use 1min Construction Speedup","resource":"", "icon":"speedup-build","point": "+147.5",      "codebs": "BUILD" },
-    { "code": "CONMGH",  "group":"BUILD", "objetive": "Increase 1 Building Might",   "resource":"", "icon":"might-building","point": "+27.5",       "codebs": "BUILD" },
-    { "code": "CRVNUR",  "group":"OPER",  "objetive": "Dispatch 1 UR Caravan",       "resource":"", "icon":"caravan","point": "+290'000.0",         "codebs": "" },
-    { "code": "OPENUR",  "group":"OPER",  "objetive": "Execute 1 UR Covert Operation","resource":"", "icon":"black-ops-swag","point": "+217'500.0", "codebs": "" },
+    { "code": "CON1SP",  "group":"BUILD", "objetive": "Use Construction Speedup", "resource":"", "icon":"speedup-build","point": "+147.5",      "codebs": "BUILD" },
+    { "code": "CONMGH",  "group":"BUILD", "objetive": "Increase Building Might",  "resource":"Prefer a shorter construction time", "icon":"might-building","point": "+27.5",       "codebs": "BUILD" },
+    { "code": "CRVNUR",  "group":"OPER",  "objetive": "Dispatch UR Caravan",      "resource":"", "icon":"caravan","point": "+290'000.0",         "codebs": "" },
+    { "code": "OPENUR",  "group":"OPER",  "objetive": "Execute UR Covert Operation","resource":"", "icon":"black-ops-swag","point": "+217'500.0", "codebs": "" },
 
     { "code": "TCKSUR",  "group":"TAVERN","objetive": "Recruit Survivor once",      "resource":"ALL Ticket Survivor", "icon":"ticket-survivor","point": "+4'350.0", "codebs": "" },
     { "code": "SAVETS",  "group":"TAVERN","objetive": "SAVE ALL Ticket Survivor",   "resource":"Ticket Survivor", "icon":"ticket-survivor","point": "", "codebs": "" },
     { "code": "FREETS",  "group":"TAVERN","objetive": "Use ONLY FREE Ticket Survivor", "resource":"Ticket Survivor", "icon":"ticket-survivor","point": "", "codebs": "" },
 
-    { "code": "RAVCH1",  "group":"RAVEN","objetive": "Raven Gear Chest opened",   "resource":"", "icon":"raven-chest","point": "+2'585.0",        "codebs": "" },
-    { "code": "STDSCR",  "group":"TECH", "objetive": "Consume 1 Study Scroll",    "resource":"Alliance Duel Reward", "icon":"study-scroll","point": "+705.0", "codebs": "" },
-    { "code": "TCH1SP",  "group":"TECH", "objetive": "Use 1min Research Speedup", "resource":"", "icon":"speedup-tech","point": "+145.0",         "codebs": "TECH" },
-    { "code": "TCHMGH",  "group":"TECH", "objetive": "Increase 1 Tech Might",     "resource":"", "icon":"might-research","point": "+27.0",        "codebs": "TECH" },
+    { "code": "RAVCH1",  "group":"RAVEN","objetive": "Open Raven Gear Chest",     "resource":"", "icon":"raven-chest","point": "+2'585.0",        "codebs": "" },
+    { "code": "STDSCR",  "group":"TECH", "objetive": "Use Study Scroll in research", "resource":"Alliance Duel Reward", "icon":"study-scroll","point": "+705.0", "codebs": "" },
+    { "code": "TCH1SP",  "group":"TECH", "objetive": "Use Research Speedup",      "resource":"", "icon":"speedup-tech","point": "+145.0",         "codebs": "TECH" },
+    { "code": "TCHMGH",  "group":"TECH", "objetive": "Increase Tech Might",       "resource":"", "icon":"might-research","point": "+27.0",        "codebs": "TECH" },
 
-    { "code": "SHRDSR",  "group":"HERO", "objetive": "Consume 1 SR Hero Shard",  "resource":"", "icon":"shard-sr","point": "+2'350.0",   "codebs": "" },
-    { "code": "SHRDSS",  "group":"HERO", "objetive": "Consume 1 SSR Hero Shard", "resource":"", "icon":"shard-ssr","point": "+8'225.0",  "codebs": "" },
-    { "code": "SHRDUR",  "group":"HERO", "objetive": "Consume 1 UR Hero Shard",  "resource":"", "icon":"shard-ur","point": "+23'500.0",  "codebs": "" },
-    { "code": "SKILLB",  "group":"HERO", "objetive": "Use 1 Skill Badge",        "resource":"", "icon":"skill-badge","point": "+23.5",       "codebs": "" },
+    { "code": "SHRDSR",  "group":"HERO", "objetive": "Consume SR Hero Shard",  "resource":"", "icon":"shard-sr","point": "+2'350.0",   "codebs": "" },
+    { "code": "SHRDSS",  "group":"HERO", "objetive": "Consume SSR Hero Shard", "resource":"", "icon":"shard-ssr","point": "+8'225.0",  "codebs": "" },
+    { "code": "SHRDUR",  "group":"HERO", "objetive": "Consume UR Hero Shard",  "resource":"", "icon":"shard-ur","point": "+23'500.0",  "codebs": "" },
+    { "code": "SKILLB",  "group":"HERO", "objetive": "Use Skill Badge",        "resource":"", "icon":"skill-badge","point": "+23.5",       "codebs": "" },
 
-    { "code": "TCKHER",  "group":"TAVERN","objetive": "Recruit Heroes once",     "resource":"ALL Ticket Heroe", "icon":"ticket-hero","point": "+4'275.0", "codebs": "HEROE" },
+    { "code": "TCKHER",  "group":"TAVERN","objetive": "Recruit Heroes using Tickets", "resource":"ALL Ticket Heroe", "icon":"ticket-hero","point": "+4'275.0", "codebs": "HEROE" },
     { "code": "SAVETH",  "group":"TAVERN","objetive": "SAVE ALL Ticket Heroe",     "resource":"Ticket Heroe", "icon":"ticket-hero","point": "", "codebs": "" },
     { "code": "FREETH",  "group":"TAVERN","objetive": "Use ONLY FREE Ticket Heroe", "resource":"Ticket Heroe", "icon":"ticket-hero","point": "", "codebs": "" },
 
-    { "code": "SOLD1TRN","group":"SOLDIER", "objetive": "Use 1min Training Boost",  "resource":"", "icon":"boost-training","point": "+145.0",              "codebs": "SOLDIER" },
-    { "code": "SOLDT10", "group":"SOLDIER", "objetive": "Train 1 Soldier",          "resource":"Promote Soldiers +150%", "icon":"soldier-t7","point": "+297.0",  "codebs": "SOLDIER" },
-    { "code": "HEA1SP",  "group":"HEAL",    "objetive": "Use 1min Healing Speedup", "resource":"Healing Buff", "icon":"speedup-healing","point": "+145.0", "codebs": "" },
-    { "code": "SOLDDFT", "group":"SOLDIER", "objetive": "For each Soldier defeated, ALL DAY","resource":"", "icon":"soldier-defeat","point": "+24.3",               "codebs": "" },
-    { "code": "SOLDLST", "group":"SOLDIER", "objetive": "For each Soldier lost, ALL DAY",    "resource":"", "icon":"soldier-lost","point": "+21.6",                 "codebs": "" },
-    { "code": "SOLDMTC", "group":"SOLDIER", "objetive": "Soldier defeated specific match, ALL DAY", "resource":"", "icon":"soldier-attack","point": "+117.0",       "codebs": "" },
+    { "code": "SOLD1TRN","group":"SOLDIER", "objetive": "Use Training Boost",  "resource":"", "icon":"boost-training","point": "+145.0",              "codebs": "SOLDIER" },
+    { "code": "SOLDT10", "group":"SOLDIER", "objetive": "Train Soldier, prefer to promote", "resource":"Promote Soldiers", "icon":"soldier-t7","point": "+297.0",  "codebs": "SOLDIER" },
+    { "code": "HEA1SP",  "group":"HEAL",    "objetive": "Use Healing Speedup", "resource":"Healing Buff +150%", "icon":"speedup-healing","point": "+145.0", "codebs": "" },
+    { "code": "SOLDDFT", "group":"SOLDIER", "objetive": "Defeating Soldiers, Alliance Duel","resource":"Attacking", "icon":"soldier-defeat","point": "+24.3",               "codebs": "" },
+    { "code": "SOLDLST", "group":"SOLDIER", "objetive": "Losing Soldiers, Alliance Duel",    "resource":"Defense", "icon":"soldier-lost","point": "+21.6",                 "codebs": "" },
+    { "code": "SOLDMTC", "group":"SOLDIER", "objetive": "Defeating Soldiers (specific match)", "resource":"T8 vs T8", "icon":"soldier-attack","point": "+117.0",       "codebs": "" },
 
-    { "code": "DYFALCON", "group":"FOCUS", "objetive": "Undertake but Do Not Complete Falcon Missions for the next day", "resource":"Save 35 missions", "icon":"falcon","point": "", "codebs": "" },
+    { "code": "DYFALCON", "group":"FOCUS", "objetive": "Run Falcon Missions, but do not complete them", "resource":"Save 35 Falcon Missions", "icon":"falcon","point": "", "codebs": "" },
     { "code": "DYELITE", "group":"MONSTER","objetive": "Monsters Elite Blight, get Hero Ticket & Antitoxin", "resource":"", "icon":"elite-blight","point": "", "codebs": "" },
     { "code": "DYBOTT",  "group":"FOCUS",  "objetive": "Save Stamina", "resource":"Bottle Stamina", "icon":"stamina","point": "", "codebs": "" },
-    { "code": "DYHERBS", "group":"FOCUS",  "objetive": "Start Gathering Herbs", "resource":"Herb Garden Lv.10 > 8H", "icon":"garden","point": "", "codebs": "" },
+    { "code": "DYHERBS", "group":"FOCUS",  "objetive": "Start Gathering Herbs", "resource":"Herb Garden Lv.10, 8H, 1.1M", "icon":"garden","point": "", "codebs": "" },
 
     { "code": "EQGEAR",  "group":"GEAR", "objetive": "Use Gearstone, at UR Equipment", "resource":"Upgrade Equipment", "icon":"gearstone","point": "", "codebs": "" },
     { "code": "EQBPRN",  "group":"GEAR", "objetive": "Use Gear Blueprint, Promote Additional Stats UR", "resource":"Promote Equipment", "icon":"gear-blueprint-ur","point": "", "codebs": "" },
@@ -472,8 +473,9 @@
     PHASES.forEach(function (p) { phaseMap[p.phase] = p.desc; });
 
     /* ---------- Traducciones de actividades, fases y eventos ---------- */
-    /* Los mapas viven en js/i18n.js. El inglés y el dato original actuan
-       como respaldo cuando una traduccion no esta disponible. */
+    /* Los mapas viven en js/i18n/actividades-diarias/i18n.js. El inglés y
+       el dato original actuan como respaldo cuando una traduccion no esta
+       disponible. */
 
     function activityText(code, field) {
       var localized = T.adActivities && T.adActivities[code];
@@ -507,10 +509,18 @@
 
     var lastDay = -1;
     var counters = [];
+    var currentPhaseEl = null;
 
     function phaseTitle(noday) {
       var ph = dayPhase[noday];
       return ph ? phaseText(ph) : NO_PHASE_TITLE;
+    }
+
+    /* Cada fase termina a las 00:00:00 UTC-2 del dia siguiente. */
+    function phaseCountdown(nowSec) {
+      var remaining = 86400 - nowSec;
+      if (remaining <= 0) remaining = 0;
+      return "T-" + fmtCounter(remaining);
     }
 
     function resetTitle(resetMs) {
@@ -694,6 +704,7 @@
       var nowSec = origin.getUTCHours() * 3600 + origin.getUTCMinutes() * 60 + origin.getUTCSeconds();
 
       counters = [];
+      currentPhaseEl = null;
       listsEl.innerHTML = "";
 
       for (var k = 0; k < 7; k++) {
@@ -709,7 +720,8 @@
 
         var phase = document.createElement("span");
         phase.className = "ad-title-phase";
-        phase.textContent = phaseTitle(noday);
+        phase.textContent = phaseTitle(noday) + (k === 0 ? " · " + phaseCountdown(nowSec) : "");
+        if (k === 0) currentPhaseEl = phase;
         title.appendChild(phase);
 
         /* Cada dia inicia a las 00:00:00 en UTC-2; se muestra ese reset
@@ -778,6 +790,9 @@
       }
 
       var nowSec = origin.getUTCHours() * 3600 + origin.getUTCMinutes() * 60 + origin.getUTCSeconds();
+      if (currentPhaseEl) {
+        currentPhaseEl.textContent = phaseTitle(lastDay) + " · " + phaseCountdown(nowSec);
+      }
       for (var i = 0; i < counters.length; i++) {
         var counter = counters[i];
         if (counter.serverTime) {

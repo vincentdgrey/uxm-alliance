@@ -11,8 +11,8 @@ UXM Alliance es un sitio web estático publicado en GitHub Pages. La portada viv
 | Ámbito | Fuente de verdad | Regla de sincronización |
 |---|---|---|
 | Datos del juego | Variables de `js/activities-daily.js` (`ACTIVITIES`, `CALENDAR`, `ACTIVITY_CODE`, `EVENT_CODE`, `PHASES`, `DAILY`) | Editar las variables del script. Los archivos `db/*.json` son obsoletos y no los carga el sitio. |
-| Datos de los bonos de la Alianza | `window.ALLIANCE_BONUSES` de `js/alliance-bonuses.js` | Editar el array de datos. Los textos traducibles permanecen en `js/i18n.js`. |
-| Sitio web | Código manual actual en `index.html`, `pages/*.html`, `css/style.css`, `css/activities-daily.css`, `js/app.js`, `js/i18n.js` y `js/activities-daily.js` | Cada cambio manual del usuario se conserva y se incorpora a estas reglas. |
+| Datos de los bonos de la Alianza | `window.ALLIANCE_BONUSES` de `js/alliance-bonuses.js` | Editar el array de datos. Los textos traducibles permanecen en `js/i18n/index/i18n.js`. |
+| Sitio web | Código manual actual en `index.html`, `pages/*.html`, `css/style.css`, `css/activities-daily.css`, `js/app.js`, `js/i18n.js`, `js/i18n/<página>/i18n.js` y `js/activities-daily.js` | Cada cambio manual del usuario se conserva y se incorpora a estas reglas. |
 
 **Regla de cambios manuales:** cuando el usuario informa que realizó cambios manuales en HTML, CSS, JavaScript o traducciones, el agente debe revisar el diff, respetarlos sin revertirlos ni sobrescribirlos y actualizar este documento para que describa el código vigente. Si una regla anterior contradice al código manual, prevalece el código manual y la regla obsoleta debe corregirse.
 
@@ -28,7 +28,13 @@ UXM Alliance es un sitio web estático publicado en GitHub Pages. La portada viv
 | `pages/contacto.html` | Contacto |
 | `css/style.css` | Estilos del sitio (se carga después de Bootstrap) |
 | `css/activities-daily.css` | Estilos propios de los cronogramas (solo en actividades diarias) |
-| `js/i18n.js` | Textos por idioma (8 idiomas) |
+| `js/i18n.js` | Núcleo común de textos por idioma (9 idiomas) |
+| `js/i18n/index/i18n.js` | Textos i18n propios de la portada |
+| `js/i18n/actividades-diarias/i18n.js` | Textos i18n propios de Actividades Diarias |
+| `js/i18n/normas-uxm/i18n.js` | Textos i18n propios de Normas UXM |
+| `js/i18n/video-tutoriales/i18n.js` | Textos i18n propios de Video Tutoriales |
+| `js/i18n/estrategia/i18n.js` | Textos i18n propios de Estrategia |
+| `js/i18n/contacto/i18n.js` | Textos i18n propios de Contacto |
 | `js/app.js` | Lógica del sitio: navegación, idiomas, contenido y video |
 | `js/alliance-bonuses.js` | Datos de los bonos de la Alianza (`window.ALLIANCE_BONUSES`) |
 | `js/activities-daily.js` | Script único de la subpágina de actividades diarias: datos, cronogramas y utilidades |
@@ -65,19 +71,23 @@ Reglas:
 
 ### Internacionalización
 
-- `js/i18n.js` define 8 idiomas: `es`, `en`, `pt`, `it`, `fr`, `ja`, `ru` y `zh`.
+- `js/i18n.js` define el núcleo común de 9 idiomas: `es`, `en`, `pt`, `it`, `fr`, `ja`, `ru`, `zh` y `tr`.
+- Cada página carga el núcleo y después su archivo `js/i18n/<página>/i18n.js`, que amplía `window.I18N` con sus textos propios. El orden es siempre núcleo i18n → i18n de página → `js/app.js` → script propio de página.
+- Las ediciones manuales de `texts.es` se conservan literalmente y constituyen la base para propagar los cambios a los demás idiomas. Una regeneración automática no debe sobrescribir esos textos.
 - El idioma se resuelve con `?lang=<código>`; si no existe, se usa `navigator.language` y, como último recurso, inglés (`DEFAULT_LANG = "en"`).
 - Cada traducción visible del sitio se controla mediante una clave de `window.I18N` y se aplica en `js/app.js` con `setText()` o una función equivalente.
 - Los identificadores HTML y las claves de traducción mantienen el mismo nombre cuando el contenido pertenece a una sección concreta: `arengaTitle`, `arengaMessage`, `tutoTitle`, `tutorialsMessage`, `strategyTitle`, `strategyMessage`, `allianceTitle`, `allianceMessage`, `bonusAlliance`, `bonusFastBuild`, `bonusResearchSpeedup`, `bonusCraftingSpeedup`, `bonusFastTraining`, `bonusRallyStats`, `bonusShardExchange` y `bonusInProgress`.
 - Las tres secciones nuevas de la portada se localizan con atributos, sin necesidad de `setText()`: `tutorialsMessage` y `strategyMessage` declaran `data-i18n-text`, y `strategyTitle` declara `data-i18n` para que reciba la inicial escarlata de `applySectionTitles()`. Sus textos españoles son los manuales vigentes de `index.html`.
 - La arenga española es el texto manual vigente de `index.html`; no se recupera de los bloques obsoletos de `src/`.
-- `allianceMessage` usa el texto manual vigente de `index.html` como fuente y se traduce a los 8 idiomas.
+- `allianceMessage` usa el texto manual vigente de `index.html` como fuente y se traduce a los 9 idiomas.
 - Las etiquetas de la tabla de bonos tienen su propia clave por fila, de modo que los porcentajes y las estrellas quedan fuera del ámbito de la traducción.
-- La clave `visitTitle` replica el encabezado de la sección de alianza y debe existir en los 8 idiomas, aunque hoy solo la consume la navegación.
-- Las introducciones de cada subpágina (`#pageLead`) se resuelven a partir de `titleKey.replace("Title", "Lead")` en `js/app.js`, de modo que cada página usa su clave `page*Lead`: `pageDailyLead`, `pageRulesLead`, `pageTutorialsLead`, `pageStrategyLead` y `pageContactLead`, presentes en los 8 idiomas.
+- La clave `visitTitle` replica el encabezado de la sección de alianza y debe existir en los 9 idiomas, aunque hoy solo la consume la navegación.
+- Las introducciones de cada subpágina (`#pageLead`) se resuelven a partir de `titleKey.replace("Title", "Lead")` en `js/app.js`, de modo que cada página usa su clave `page*Lead`: `pageDailyLead`, `pageRulesLead`, `pageTutorialsLead`, `pageStrategyLead` y `pageContactLead`, presentes en los 9 idiomas.
 - Las introducciones describen el contenido real de la página: ninguna vuelve a usar el marcador «Próximamente».
-- Solo los bloques `ja` y `zh` contienen caracteres CJK. Los otros seis idiomas no deben incluir caracteres chinos ni japoneses: el contrato de pruebas lo verifica.
+- Solo los bloques `ja` y `zh` contienen caracteres CJK. Los otros siete idiomas no deben incluir caracteres chinos ni japoneses: el contrato de pruebas lo verifica.
 - Las traducciones japonesas se corrigen sin alterar los valores del juego (`277`, `25%`, `60%`, `30M`, `150K`, `1.5M`, `225M`, `990M`, `Lv.6`, `MVP 1`, `SSR`, `UR`, `R1`, `R2`, `35`, `8H`, `24H`). Los nombres de eventos de `bsEvents` y los objetivos de `adActivities` se traducen con terminología japonesa propia, sin汉字 simplificados ni mezclas con otros idiomas.
+- Todos los archivos i18n se guardan en UTF-8 válido. No se permiten el carácter de reemplazo `�`, secuencias de mojibake, controles invisibles ni mezclas accidentales de alfabetos. Las excepciones en latín son valores técnicos justificados, como `UXM`, `YouTube`, `SSR`, `UR`, `T8`, `Lv.6` o `Rally HP/ATK/DEF`.
+- El chino debe usar caracteres Han y no puede mezclar kana japonés ni cirílico. El ruso debe usar cirílico en sus textos lingüísticos y no puede mezclar CJK. Estas reglas se verifican en `tests/i18n-unicode.test.cjs`.
 
 ### Paleta base del sitio
 
@@ -112,7 +122,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
   - `<div class="subpage">` como bloque centrado del contenido.
   - `<h1 id="heroTitle" class="subpage-title">` con el título agrupado en `.subpage-title-word`.
 - La primera letra del título vive en `<span class="subpage-title-initial subpage-title-accent">` y se pinta en rojo escarlata `var(--scarlet)` con relieve propio. El resto de la palabra va en un `<span>` contiguo.
-- `js/app.js` reconstruye el `<h1>` con `setSubpageTitle()` al aplicar el idioma, de modo que la inicial escarlata se conserva en los 8 idiomas.
+- `js/app.js` reconstruye el `<h1>` con `setSubpageTitle()` al aplicar el idioma, de modo que la inicial escarlata se conserva en los 9 idiomas.
 - En las subpáginas la inicial escarlata queda **centrada verticalmente** respecto al resto del texto: `.subpage-title-word` usa `display: inline-flex` y `align-items: center`. El hero de portada mantiene su alineación superior con `.hero-title-word { align-items: flex-start; }`.
 - El texto del título de subpágina usa el gris claro `#adadad`, tanto en `.subpage-title` como en la regla contextual `#content.subpage-content .subpage-title`.
 - La portada se extiende a todo el ancho de la ventana: `#content.subpage-content` usa `max-width: none`, `width: 100%` y `background-size: cover`.
@@ -218,9 +228,10 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - `.dinamic-welcome` enumera la palabra «Bienvenido» de todos los idiomas definidos salvo el activo, separados por ` · `. No utiliza temporizadores ni rotación.
 - `.message-welcome` y `.message-arenga` limitan el texto a `760px`, lo centran y aplican `margin: 0 auto 24px`.
 - `.message-welcome p` y `.message-arenga p` eliminan el margen superior e inferior y usan `line-height: 1.7`. La arenga usa `white-space: pre-line` para conservar sus saltos de línea.
-- `.block-buttons` distribuye sus dos enlaces con `gap: 10%`:
+- `.block-buttons` distribuye sus tres enlaces con `gap: 10%`:
   - YouTube: borde y texto `var(--scarlet)`, icono SVG y relleno animado; abre en pestaña nueva con `rel="noopener noreferrer"`.
   - Normas UXM: borde y texto `var(--primary-btn)`, relleno animado del mismo color y ruta relativa `pages/normas-uxm.html` con `?lang=`. Nunca usar `127.0.0.1`.
+  - Actividades Diarias: borde y texto `var(--primary-btn)`, relleno animado del mismo color y ruta relativa `pages/actividades-diarias.html` con `?lang=`. Su etiqueta usa la clave i18n `navDaily`, traducida en los nueve idiomas.
 - `.component-buttons` genera tres enlaces `btn-outline btn-info-rules` hacia `#learningPriority`, `#tips` y `#events` de `pages/video-tutoriales.html`, conservando `?lang=`.
 - `.ha-author` se muestra en cursiva, color `#7c7c7c`, alineado a la derecha y con `padding-bottom: 2px`. Su pseudoelemento `::after` dibuja el subrayado gris.
 - `.line-divisor-scarlet` dibuja una línea `3px` de rojo escarlata, `width: 100%`, centrada y con `margin: 24px auto 0`.
@@ -233,7 +244,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 ### Script único de Actividades Diarias
 
-- La subpágina `pages/actividades-diarias.html` carga un **único script propio**: `js/activities-daily.js`, al final de `<body>`, después de `js/i18n.js` y `js/app.js`.
+- La subpágina `pages/actividades-diarias.html` carga el núcleo `js/i18n.js`, el archivo `js/i18n/actividades-diarias/i18n.js`, `js/app.js` y un **único script propio**: `js/activities-daily.js`, al final de `<body>`.
 - Este script sustituye a los anteriores `js/battle-survival-schedule.js` y `js/alliance-duel-schedule.js`, que fueron eliminados.
 - Su estructura interna es:
   1. **Datos fuente de verdad**: `ACTIVITIES`, `CALENDAR`, `ACTIVITY_CODE`, `EVENT_CODE`, `PHASES` y `DAILY`, declaradas una sola vez cada una y con los horarios en UTC-2.
@@ -261,15 +272,16 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Los archivos `db/*.json` son **obsoletos**: se conservan como histórico, no los carga el sitio y no deben editarse ni usarse como referencia.
 - La estructura `src/` también es obsoleta y no se enlaza.
 - Al modificar datos deben respetarse las referencias: todo `CALENDAR.codebs` existe en `ACTIVITIES`, todo `ACTIVITY_CODE.codebs` vacío o existente en `ACTIVITIES`, todo `DAILY.code_task` en `ACTIVITY_CODE`, todo `DAILY.event` en `EVENT_CODE` y toda fase usada en `PHASES`.
-- Al añadir o modificar una entrada de `ACTIVITY_CODE`, `PHASES` o `EVENT_CODE` deben añadirse también sus traducciones en los 8 idiomas: una entrada sin traducir cae al inglés y, en el último caso, al dato original. Cada `code` de `ACTIVITY_CODE` debe estar en `adActivities` con `objetive` y `resource`, cada fase normalizada en `adPhases` y cada `event` en `adEvents`.
+- Al añadir o modificar una entrada de `ACTIVITY_CODE`, `PHASES` o `EVENT_CODE` deben añadirse también sus traducciones en los 9 idiomas: una entrada sin traducir cae al inglés y, en el último caso, al dato original. Cada `code` de `ACTIVITY_CODE` debe estar en `adActivities` con `objetive` y `resource`, cada fase normalizada en `adPhases` y cada `event` en `adEvents`.
+- Los textos de `adActivities` admiten dos fuentes de verdad: `ACTIVITY_CODE` para el contenido original en inglés y los datos estables del juego, y `texts.es.adActivities` de `js/i18n/actividades-diarias/i18n.js` para las ediciones manuales en español. Cuando el usuario modifique `texts.es`, sus valores prevalecen y se traducen a los otros ocho idiomas sin sobrescribir el español.
 - Los horarios `DAILY.server_time` y las duraciones `DAILY.server_duration` se expresan en UTC-2 y en formato `hh:mm:ss`. Toda fila con `server_time` debe declarar también `server_duration`. Las duraciones se validan con el mismo reloj (`hh:mm:ss`, hasta `23:59:59`), por lo que una duración de 24 h se expresa con `server_time` y un final de día distinto.
 
 ### Cronograma de Batalla de Supervivencia
 
 - La subpágina de actividades diarias incluye el calendario de Batalla de Supervivencia dentro de `<div class="battle-content">`, en la sección `#textBS`.
 - La lógica vive en `initBattleSurvival()` de `js/activities-daily.js`.
-- Las traducciones del calendario viven exclusivamente en `js/i18n.js`: `bsHeaders` (cinco encabezados), `bsPast`, `bsCurrent` y `bsNext`, presentes en los 8 idiomas. El calendario no mantiene una tabla de traducciones propia.
-- Los nombres de los eventos de la columna Evento se traducen con la clave `bsEvents`, indexada por `codebs` (`BUILD`, `HEROE`, `RAVEN`, `SOLDIER`, `TECH`, `STANDBY`) y presente en los 8 idiomas. El valor inglés de `ACTIVITIES.event` queda como respaldo.
+- Las traducciones del calendario viven exclusivamente en `js/i18n/actividades-diarias/i18n.js`: `bsHeaders` (cinco encabezados), `bsPast`, `bsCurrent` y `bsNext`, presentes en los 9 idiomas. El calendario no mantiene una tabla de traducciones propia.
+- Los nombres de los eventos de la columna Evento se traducen con la clave `bsEvents`, indexada por `codebs` (`BUILD`, `HEROE`, `RAVEN`, `SOLDIER`, `TECH`, `STANDBY`) y presente en los 9 idiomas. El valor inglés de `ACTIVITIES.event` queda como respaldo.
 - Los resaltados de la tabla no dependen del texto traducido: `bs-hl-track` se aplica a `RAVEN` y `HEROE`. `bs-hl-special` se aplica al código `SOLDIER` en las filas futuras y, además, al contador de la próxima actividad, para que el aviso de proximidad sea aplicable con independencia del evento.
 - La tabla conserva el comportamiento responsivo original: `.bs-schedule` usa `min-width: 640px` y `max-width: 900px`, y `.bs-wrap` aplica `overflow-x: auto` para el desplazamiento horizontal en pantallas pequeñas. La tabla no se estira al ancho de la página.
 - El calendario actualiza los contadores con un ciclo de `1 s`.
@@ -279,13 +291,13 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 - La subpágina de actividades diarias incluye el calendario de Duelo de Alianzas dentro de `<div class="duel-alliance-content">`, en la sección `#textAD`.
 - La lógica vive en `initAllianceDuel()` de `js/activities-daily.js`.
-- Las traducciones del calendario viven exclusivamente en `js/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (seis encabezados de tabla), presentes en los 8 idiomas. El calendario no mantiene una tabla de traducciones propia.
-- Los textos de las actividades, las fases y los eventos también se localizan en `js/i18n.js`, mediante tres mapas por idioma:
+- Las traducciones del calendario viven exclusivamente en `js/i18n/actividades-diarias/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (seis encabezados de tabla), presentes en los 9 idiomas. El calendario no mantiene una tabla de traducciones propia.
+- Los textos de las actividades, las fases y los eventos también se localizan en `js/i18n/actividades-diarias/i18n.js`, mediante tres mapas por idioma:
   - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (43 registros), con los campos `objetive` y `resource`.
   - `adPhases`: indexado por la fase normalizada (`P00`-`P06`).
   - `adEvents`: indexado por el `event` de `EVENT_CODE` (`DY`, `AD`, `KVK`, `ROY`, `BS`, `EQ`, `BEX`, `CUM`).
 - La resolución de cada texto sigue el orden **idioma activo → inglés → dato original**. `js/activities-daily.js` lo aplica con `activityText(code, field)`, `phaseText(phase)` y `eventLabel(r)`. El inglés se toma de `window.I18N.en` mediante la constante `T_EN`.
-- Los códigos, `codebs`, `icon` y `point` **no se traducen**: son identificadores estables del juego. Los `resource` que están vacíos en el dato original permanecen vacíos en los 8 idiomas.
+- Los códigos, `codebs`, `icon` y `point` **no se traducen**: son identificadores estables del juego. Los `resource` que están vacíos en el dato original permanecen vacíos en los 9 idiomas.
 - La tabla de cada día tiene **seis columnas** en este orden:
   1. `Contador`.
   2. Columna de imagen de la tarea, cargada desde `media/glyph/<icon>.png` según el valor `icon` de `ACTIVITY_CODE`.
@@ -308,9 +320,10 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Todas las tablas comparten el mismo `<colgroup>` (`AD_COLUMNS`) para conservar ancho y alineación entre días: `.ad-schedule` usa `table-layout: fixed`, `width: 100%` y `min-width: 760px`, con `.ad-col-time` (84 px), `.ad-col-icon` (32 px), `.ad-col-task` (automático), `.ad-col-resource` (20 %) y `.ad-col-event` (170 px). En pantallas estrechas la tabla se desplaza horizontalmente dentro de `.ad-wrap`.
 - Los estilos de `.ad-item-title` son ajustes manuales del usuario y no deben alterarse: color `#4d7799`, borde `2px solid #4d7799`, `border-radius: 3px`, fondo `#9b9b9b36`, `font-size: 1.2rem`, `padding: 2px 10px 2px 10px` y `box-shadow: 0 3px 5px rgba(8, 47, 58, .9)`. El día actual mantiene el verde `#009922`.
 - El título de cada panel del Duelo de Alianzas se compone de la fase y el reset del día. La fase se alinea a la izquierda mediante `.ad-title-phase` y el reset a la derecha mediante `.ad-title-reset`, con `font-size: 10px` y sin salto de línea; la flecha del acordeón permanece al extremo derecho.
+- El panel de la fase actual añade al texto de `.ad-title-phase` una cuenta atrás con el formato `T-HH:MM:SS`. Cada fase empieza a las `00:00:00` UTC-2 y termina a las `00:00:00` UTC-2 del día siguiente: al iniciar muestra `T-24:00:00` y en el último segundo `T-00:00:01`. Los seis paneles futuros no muestran contador. El valor se actualiza con el `setInterval` compartido de un segundo y, al cruzar el reset, el calendario se reconstruye con la fase nueva.
 - El reset del día se muestra en formato `MM/DD HH:mm`. Cada día comienza a las `00:00:00` en UTC-2 y ese instante se convierte a la zona horaria detectada en el navegador, por lo que la fecha puede mostrar el día anterior. El título conserva el nombre de la fase y ya no incluye la abreviatura del día.
 - El calendario presenta los siete días desde el día actual en UTC-2, con el día actual destacado, los dos primeros paneles abiertos y conversión de horarios a la zona local del visitante.
-- El párrafo `survivalMessage` de la página de Actividades Diarias declara `data-i18n-text="survivalMessage"` y su texto se traduce en los 8 idiomas mediante la clave i18n `survivalMessage`.
+- El párrafo `survivalMessage` de la página de Actividades Diarias declara `data-i18n-text="survivalMessage"` y su texto se traduce en los 9 idiomas mediante la clave i18n `survivalMessage`.
 - El subtítulo propio `ad-subtitle` se eliminó: el encabezado de la sección es el que identifica el cronograma.
 
 ### Aviso de la próxima actividad
@@ -329,9 +342,9 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Los subtítulos de sección que deben traducirse declaran el atributo `data-i18n="<clave>"`.
 - `js/app.js` los reconstruye con `applySectionTitles()`, que invoca `setSectionTitle()` y aplica la inicial escarlata mediante `<span class="info-initial">`, igual que el resto de subtítulos.
 - `applySectionTitles()` se ejecuta antes de `applyInfoContent()`, que detecta la inicial ya presente y no la duplica.
-- La clave i18n `scheduleBattleSurvival` traduce el encabezado «Cronograma Batalla Supervivencia» en los 8 idiomas.
-- La clave i18n `scheduleAllianceDuel` traduce el encabezado «Duelo de Alianzas» en los 8 idiomas.
-- Los encabezados de la subpágina de tutoriales usan claves propias: `tutorialLearningPriorityTitle` («Aprendizaje Prioritario»), `tutorialTipsTitle` («Dato Práctico») y `tutorialEventsTitle` («Eventos»), presentes en los 8 idiomas.
+- La clave i18n `scheduleBattleSurvival` traduce el encabezado «Cronograma Batalla Supervivencia» en los 9 idiomas.
+- La clave i18n `scheduleAllianceDuel` traduce el encabezado «Duelo de Alianzas» en los 9 idiomas.
+- Los encabezados de la subpágina de tutoriales usan claves propias: `tutorialLearningPriorityTitle` («Aprendizaje Prioritario»), `tutorialTipsTitle` («Dato Práctico») y `tutorialEventsTitle` («Eventos»), presentes en los 9 idiomas.
 - Las claves `learningPriority`, `tips` y `events` se reservan para los botones de la portada y no deben reutilizarse para los encabezados: sus textos difieren.
 
 ### Textos traducidos con data-i18n-text
@@ -339,7 +352,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Los textos simples que deben traducirse, como las descripciones de las tarjetas de video, declaran el atributo `data-i18n-text="<clave>"`.
 - `js/app.js` los aplica con `applyTexts()`, que sustituye el `textContent` del nodo. No se inserta ninguna inicial escarlata ni se modifica la estructura del párrafo.
 - `data-i18n` queda reservado para encabezados con inicial escarlata y `data-i18n-text` para párrafos y textos simples.
-- Las descripciones de las tarjetas de video usan `videoTutorialPriority1..3`, `videoTutorialTip1..3` y `videoTutorialEvent1..4`, presentes en los 8 idiomas. El texto español conserva la redacción manual del usuario, incluidos sus términos, cifras y mayúsculas.
+- Las descripciones de las tarjetas de video usan `videoTutorialPriority1..3`, `videoTutorialTip1..3` y `videoTutorialEvent1..4`, presentes en los 9 idiomas. El texto español conserva la redacción manual del usuario, incluidos sus términos, cifras y mayúsculas.
 - Las descripciones detallan los objetivos, metas y condiciones de cada tutorial y evento. Al traducirlas, deben conservarse los valores del juego: `24H`, `8H`, `25%` a `60%`, `SSR`, `UR`, `Lv.6`, `225M`, `990M`, `150K`, `1.5M`, `MVP 1` y el reino `277`.
 - `videoTutorialPriority1` indica **no perder soldados y evitar dar puntos al enemigo**. Cualquier traducción debe conservar esa negación: es el sentido contrario al de una lectura literal de «perder soldados».
 
@@ -347,7 +360,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 - Los párrafos que contienen marcado en línea, como las reglas con enlaces, declaran el atributo `data-i18n-html="<clave>"`.
 - `js/app.js` los aplica con `applyRichTexts()`, que sustituye el `innerHTML` del nodo.
-- Las traducciones de este tipo son **textos locales y controlados**, escritos dentro de `js/i18n.js`; no provienen de ninguna fuente externa. Por eso el uso de `innerHTML` queda acotado a estas claves de contenido estático del sitio.
+- Las traducciones de este tipo son **textos locales y controlados**, escritos dentro de los archivos i18n de la página correspondiente; no provienen de ninguna fuente externa. Por eso el uso de `innerHTML` queda acotado a estas claves de contenido estático del sitio.
 - El marcado de la traducción conserva la estructura del original: mismas URL de destino y misma clase `link-info` en los enlaces.
 - `data-i18n-html` queda reservado a este contenido con enlaces. Para texto plano debe usarse `data-i18n-text`, que no admite marcado.
 
@@ -355,12 +368,12 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 - Los elementos que necesitan un texto accesible en un atributo declaran `data-i18n-title="<clave>"`.
 - `js/app.js` los aplica con `applyTitles()`, que escribe el atributo `title` del nodo.
-- Se usa en el `iframe` del formulario de contacto con la clave `contactFormFrameTitle`, presente en los 8 idiomas.
+- Se usa en el `iframe` del formulario de contacto con la clave `contactFormFrameTitle`, presente en los 9 idiomas.
 
 ### Subpágina de Normas UXM
 
 - La subpágina `pages/normas-uxm.html` contiene tres bloques localizables: `.kingdom-content`, `.alliance-content` y `.positions-content`.
-- Los encabezados `#rulesKingdom`, `#rulesAlliance` y `#accendingAlliance` declaran `data-i18n` con las claves `rulesKingdomTitle`, `rulesAllianceTitle` y `rulesPositionsTitle`, presentes en los 8 idiomas.
+- Los encabezados `#rulesKingdom`, `#rulesAlliance` y `#accendingAlliance` declaran `data-i18n` con las claves `rulesKingdomTitle`, `rulesAllianceTitle` y `rulesPositionsTitle`, presentes en los 9 idiomas.
 - El contenido se localiza con claves propias:
   - Reino: `rulesKingdomK1` y `rulesKingdomK2`.
   - Alianza: `rulesAllianceA1` a `rulesAllianceA11`, más `rulesAllianceHelp` para el mensaje de ayuda final.
@@ -383,8 +396,8 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - La tabla de bonos vive en `<div class="bonus-alliance left-content">` y usa `.left-content` (`text-align: left`) para alinear el contenido a la izquierda dentro de la sección centrada.
 - El encabezado usa `#bonusAlliance`. La tabla `.info-data` conserva sus estrellas, porcentajes y clases, pero sus filas ya no se escriben en `index.html`: el HTML solo declara `<tbody id="allianceBonusBody"></tbody>`.
 - La fuente de verdad de los datos es `window.ALLIANCE_BONUSES` en `js/alliance-bonuses.js`. Cada registro declara `key` (clave i18n), `value` (porcentaje), `level` (nivel numérico o `null`) e `inProgress`. `index.html` carga `js/alliance-bonuses.js` antes de `js/app.js`.
-- `js/app.js` genera las filas con `buildAllianceBonuses()`: la estrella `★` en la primera celda (`<th scope="row" aria-hidden="true">`), el porcentaje en la segunda, el nivel en la tercera (con el prefijo `Lv.`, o cadena vacía cuando `level` es `null`) y la etiqueta traducida en la cuarta. El nivel ocupa su propia columna y no se concatena a la traducción, de modo que los datos numéricos no se duplican en los ocho idiomas. Las claves repetidas se descartan para no generar identificadores duplicados.
-- Las etiquetas de cada bono se localizan con `bonusFastBuild`, `bonusResearchSpeedup`, `bonusCraftingSpeedup`, `bonusFastTraining`, `bonusRallyStats` y `bonusShardExchange`; en `js/i18n.js` estas claves no incluyen el nivel numérico.
+- `js/app.js` genera las filas con `buildAllianceBonuses()`: la estrella `★` en la primera celda (`<th scope="row" aria-hidden="true">`), el porcentaje en la segunda, el nivel en la tercera (con el prefijo `Lv.`, o cadena vacía cuando `level` es `null`) y la etiqueta traducida en la cuarta. El nivel ocupa su propia columna y no se concatena a la traducción, de modo que los datos numéricos no se duplican en los nueve idiomas. Las claves repetidas se descartan para no generar identificadores duplicados.
+- Las etiquetas de cada bono se localizan con `bonusFastBuild`, `bonusResearchSpeedup`, `bonusCraftingSpeedup`, `bonusFastTraining`, `bonusRallyStats` y `bonusShardExchange`; en `js/i18n/index/i18n.js` estas claves no incluyen el nivel numérico.
 - La celda en curso (`#bonusCraftingSpeedup`) conserva la clase `.in-progress`, cuyo pseudoelemento `::after` muestra el estado localizado mediante `attr(data-progress)`. El valor se asigna en `js/app.js` con la clave `bonusInProgress`.
 - Los porcentajes y las estrellas no se traducen: son valores numéricos del juego.
 - Como las filas se generan con JavaScript, la tabla de bonos queda vacía si el navegador no ejecuta scripts; el resto del sitio aplica el mismo criterio.
@@ -400,5 +413,5 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - El copyright corporativo es fijo en todos los idiomas: `© 2026 UXM – Under Xtreme Madness Alliance`.
 - El selector de idioma (`#langs`) es un Menu desplegable de Bootstrap (`data-bs-toggle="menu"`, `data-bs-placement="top-end"`): se abre hacia arriba y alineado a la derecha.
 - Junto al disparador se muestra la etiqueta visible «Lenguaje» (`.lang-label`, clave `language`), asociada al botón mediante `aria-labelledby="langLabel langToggle"`.
-- Cada idioma se muestra en su propio idioma (`Español`, `English`, `Português`, `Italiano`, `Français`, `日本語`, `Русский`, `中文`), con atributo `lang` y el activo marcado con `.selected` y `aria-current="true"`.
+- Cada idioma se muestra en su propio idioma (`Español`, `English`, `Português`, `Italiano`, `Français`, `日本語`, `Русский`, `中文`, `Türkçe`), con atributo `lang` y el activo marcado con `.selected` y `aria-current="true"`.
 - El cambio de idioma conserva la página actual y añade `?lang=`.

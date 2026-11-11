@@ -75,7 +75,7 @@
 
   /* ---------- Tabla de bonos de la alianza ---------- */
   /* Las filas se generan con los datos de js/alliance-bonuses.js y los
-     textos traducidos de js/i18n.js. */
+     textos traducidos de js/i18n/index/i18n.js. */
   function buildAllianceBonuses() {
     var body = byId("allianceBonusBody");
     var bonuses = window.ALLIANCE_BONUSES || [];
@@ -190,6 +190,12 @@
     rulesButton.href = withLang(pageUrl("normas-uxm.html"), LANG);
     rulesButton.textContent = T.rulesLabel;
     container.appendChild(rulesButton);
+
+    var dailyButton = document.createElement("a");
+    dailyButton.className = "btn-outline btn-info-rules";
+    dailyButton.href = withLang(pageUrl("actividades-diarias.html"), LANG);
+    dailyButton.textContent = T.navDaily;
+    container.appendChild(dailyButton);
   }
 
   /* ---------- Botones del bloque de video tutorial ---------- */
