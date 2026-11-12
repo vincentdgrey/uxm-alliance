@@ -85,8 +85,8 @@
     
     { "code": "CON1SP",  "group":"BUILD", "objetive": "Use Construction Speedup", "resource":"", "icon":"speedup-build","point": "+147.5",      "codebs": "BUILD" },
     { "code": "CONMGH",  "group":"BUILD", "objetive": "Increase Building Might",  "resource":"Prefer a shorter construction time", "icon":"might-building","point": "+27.5",       "codebs": "BUILD" },
-    { "code": "CRVNUR",  "group":"OPER",  "objetive": "Dispatch UR Caravan",      "resource":"", "icon":"caravan","point": "+290'000.0",         "codebs": "" },
-    { "code": "OPENUR",  "group":"OPER",  "objetive": "Execute UR Covert Operation","resource":"", "icon":"black-ops-swag","point": "+217'500.0", "codebs": "" },
+    { "code": "CRVNUR",  "group":"OPER",  "objetive": "Dispatch UR Caravans",      "resource":"4 Caravan", "icon":"caravan","point": "+290'000.0",         "codebs": "" },
+    { "code": "OPENUR",  "group":"OPER",  "objetive": "Execute UR Covert Operations","resource":"7 Black Ops", "icon":"black-ops-swag","point": "+217'500.0", "codebs": "" },
 
     { "code": "TCKSUR",  "group":"TAVERN","objetive": "Recruit Survivor once",      "resource":"ALL Ticket Survivor", "icon":"ticket-survivor","point": "+4'350.0", "codebs": "" },
     { "code": "SAVETS",  "group":"TAVERN","objetive": "SAVE ALL Ticket Survivor",   "resource":"Ticket Survivor", "icon":"ticket-survivor","point": "", "codebs": "" },
@@ -113,7 +113,7 @@
     { "code": "SOLDLST", "group":"SOLDIER", "objetive": "Losing Soldiers, Alliance Duel",    "resource":"Defense", "icon":"soldier-lost","point": "+21.6",                 "codebs": "" },
     { "code": "SOLDMTC", "group":"SOLDIER", "objetive": "Defeating Soldiers (specific match)", "resource":"T8 vs T8", "icon":"soldier-attack","point": "+117.0",       "codebs": "" },
 
-    { "code": "DYFALCON", "group":"FOCUS", "objetive": "Run Falcon Missions, but do not complete them", "resource":"Save 35 Falcon Missions", "icon":"falcon","point": "", "codebs": "" },
+    { "code": "DYFALCON", "group":"FOCUS", "objetive": "Run Falcon Missions, but do not complete them", "resource":"Save 35 Falcon Missions", "icon":"falcon-mission-lock","point": "", "codebs": "" },
     { "code": "DYELITE", "group":"MONSTER","objetive": "Monsters Elite Blight, get Hero Ticket & Antitoxin", "resource":"", "icon":"elite-blight","point": "", "codebs": "" },
     { "code": "DYBOTT",  "group":"FOCUS",  "objetive": "Save Stamina", "resource":"Bottle Stamina", "icon":"stamina","point": "", "codebs": "" },
     { "code": "DYHERBS", "group":"FOCUS",  "objetive": "Start Gathering Herbs", "resource":"Herb Garden Lv.10, 8H, 1.1M", "icon":"garden","point": "", "codebs": "" },
@@ -304,7 +304,7 @@
   /* Muestra la hora local y la zona horaria del visitante. */
   function renderTzInfo(el) {
     var d = new Date(Date.now());
-    var txt = pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds()) + " [" + tzLabel();
+    var txt = "Local Time " + pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds()) + " [" + tzLabel();
     if (TZ_NAME) txt += " · " + TZ_NAME;
     el.textContent = txt + "]";
   }
@@ -525,7 +525,7 @@
 
     function resetTitle(resetMs) {
       var reset = new Date(resetMs);
-      return "· " + pad(reset.getMonth() + 1) + "/" + pad(reset.getDate()) + " " +
+      return pad(reset.getUTCFullYear()) + "." + pad(reset.getMonth() + 1) + "." + pad(reset.getDate()) + " " +
         pad(reset.getHours()) + ":" + pad(reset.getMinutes());
     }
 
@@ -643,19 +643,16 @@
       /* 3. Tarea */
       appendCell(tr, a ? activityText(r.code_task, "objetive") : r.code_task, "ad-obj");
 
-      /* 4. Imagen de referencia del recurso: se configura a futuro. */
-      appendIconCell(tr, "ad-resource-icon", r.code_task);
-
-      /* 5. Recurso */
+      /* 4. Recurso */
       appendCell(tr, a ? activityText(r.code_task, "resource") : "", "ad-resource");
 
-      /* 6. Evento */
+      /* 5. Evento */
       appendCell(tr, eventLabel(r), "ad-event");
 
       return tr;
     }
 
-    /* Celdas reservadas para las imágenes de tarea y recurso. */
+    /* Celda reservada para la imagen de la tarea. */
     function appendIconCell(tr, cls, code) {
       var td = document.createElement("td");
       td.className = "ad-icon " + cls;
@@ -681,7 +678,6 @@
       "ad-col-time",
       "ad-col-icon",
       "ad-col-task",
-      "ad-col-icon",
       "ad-col-resource",
       "ad-col-event"
     ];
@@ -720,8 +716,17 @@
 
         var phase = document.createElement("span");
         phase.className = "ad-title-phase";
-        phase.textContent = phaseTitle(noday) + (k === 0 ? " · " + phaseCountdown(nowSec) : "");
-        if (k === 0) currentPhaseEl = phase;
+        phase.textContent = phaseTitle(noday) + (k === 0 ? " .. " : "");
+        if (k === 0) {
+          /* El contador vive en su propio nodo para poder colorearlo
+             por separado del resto del titulo y actualizarlo sin
+             reconstruir el texto completo. */
+          var phaseCounter = document.createElement("span");
+          phaseCounter.className = "ad-countdown";
+          phaseCounter.textContent = phaseCountdown(nowSec);
+          phase.appendChild(phaseCounter);
+          currentPhaseEl = phaseCounter;
+        }
         title.appendChild(phase);
 
         /* Cada dia inicia a las 00:00:00 en UTC-2; se muestra ese reset
@@ -791,7 +796,7 @@
 
       var nowSec = origin.getUTCHours() * 3600 + origin.getUTCMinutes() * 60 + origin.getUTCSeconds();
       if (currentPhaseEl) {
-        currentPhaseEl.textContent = phaseTitle(lastDay) + " · " + phaseCountdown(nowSec);
+        currentPhaseEl.textContent = phaseCountdown(nowSec);
       }
       for (var i = 0; i < counters.length; i++) {
         var counter = counters[i];

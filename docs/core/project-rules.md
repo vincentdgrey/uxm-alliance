@@ -284,6 +284,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Los nombres de los eventos de la columna Evento se traducen con la clave `bsEvents`, indexada por `codebs` (`BUILD`, `HEROE`, `RAVEN`, `SOLDIER`, `TECH`, `STANDBY`) y presente en los 9 idiomas. El valor inglés de `ACTIVITIES.event` queda como respaldo.
 - Los resaltados de la tabla no dependen del texto traducido: `bs-hl-track` se aplica a `RAVEN` y `HEROE`. `bs-hl-special` se aplica al código `SOLDIER` en las filas futuras y, además, al contador de la próxima actividad, para que el aviso de proximidad sea aplicable con independencia del evento.
 - La tabla conserva el comportamiento responsivo original: `.bs-schedule` usa `min-width: 640px` y `max-width: 900px`, y `.bs-wrap` aplica `overflow-x: auto` para el desplazamiento horizontal en pantallas pequeñas. La tabla no se estira al ancho de la página.
+- Las dos tablas de los cronogramas (`.bs-schedule` y `.ad-schedule`) usan la fuente **Inter** con peso base `100`, declarada mediante `@font-face` en `css/activities-daily.css` con el archivo local `media/fonts/inter-100.woff2` (Inter Thin, SIL Open Font License 1.1; la licencia se conserva en `docs/core/inter-font-license.txt`). No hay dependencia de red para la fuente. Las negritas existentes de encabezados, eventos y filas destacadas se conservan con sus pesos `700` y `normal` originales.
 - El calendario actualiza los contadores con un ciclo de `1 s`.
 - El subtítulo propio `bs-subtitle` se eliminó: el encabezado de la sección es el que identifica el cronograma.
 
@@ -291,20 +292,21 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 - La subpágina de actividades diarias incluye el calendario de Duelo de Alianzas dentro de `<div class="duel-alliance-content">`, en la sección `#textAD`.
 - La lógica vive en `initAllianceDuel()` de `js/activities-daily.js`.
-- Las traducciones del calendario viven exclusivamente en `js/i18n/actividades-diarias/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (seis encabezados de tabla), presentes en los 9 idiomas. El calendario no mantiene una tabla de traducciones propia.
+- Las traducciones del calendario viven exclusivamente en `js/i18n/actividades-diarias/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (cinco encabezados de tabla), presentes en los 9 idiomas. El calendario no mantiene una tabla de traducciones propia.
 - Los textos de las actividades, las fases y los eventos también se localizan en `js/i18n/actividades-diarias/i18n.js`, mediante tres mapas por idioma:
   - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (43 registros), con los campos `objetive` y `resource`.
   - `adPhases`: indexado por la fase normalizada (`P00`-`P06`).
   - `adEvents`: indexado por el `event` de `EVENT_CODE` (`DY`, `AD`, `KVK`, `ROY`, `BS`, `EQ`, `BEX`, `CUM`).
 - La resolución de cada texto sigue el orden **idioma activo → inglés → dato original**. `js/activities-daily.js` lo aplica con `activityText(code, field)`, `phaseText(phase)` y `eventLabel(r)`. El inglés se toma de `window.I18N.en` mediante la constante `T_EN`.
 - Los códigos, `codebs`, `icon` y `point` **no se traducen**: son identificadores estables del juego. Los `resource` que están vacíos en el dato original permanecen vacíos en los 9 idiomas.
-- La tabla de cada día tiene **seis columnas** en este orden:
+- Las definiciones vigentes de `ACTIVITY_CODE` para las operaciones UR son: `CRVNUR` → `Dispatch UR Caravans` con recurso `4 Caravan`; `OPENUR` → `Execute UR Covert Operations` con recurso `7 Black Ops`. Las traducciones de `adActivities` en los 9 idiomas se ajustan a esas definiciones, con el español como fuente.
+- La tabla de cada día tiene **cinco columnas** en este orden:
   1. `Contador`.
   2. Columna de imagen de la tarea, cargada desde `media/glyph/<icon>.png` según el valor `icon` de `ACTIVITY_CODE`.
   3. `Tarea`, con la traducción de `objetive`.
-  4. Columna de imagen del recurso, visualmente vacía y reservada a futuro.
-  5. `Recurso`, con la traducción de `resource`.
-  6. `Evento`, con la traducción del evento.
+  4. `Recurso`, con la traducción de `resource`.
+  5. `Evento`, con la traducción del evento.
+- La columna de imagen del recurso se retiró por obsoleta: ya no se genera la celda `<td class="ad-icon ad-resource-icon" data-code=""></td>` ni su columna equivalente en `AD_COLUMNS`.
 - La columna `Fase` se retiró de la tabla: la fase solo se muestra en el título del día.
 - La columna `Contador` muestra tres estados posibles, solo en la tabla del día actual (`ad-today`):
   1. `T-HH:MM:SS` antes del inicio, cuando la fila declara `DAILY.server_time`.
@@ -314,13 +316,14 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Cuando la fila del día actual **no** declara `server_time`, el contador usa la vinculación `ACTIVITY_CODE.codebs → ACTIVITIES.codebs → CALENDAR.codebs`: `+ HH:MM:SS` mientras el horario está en curso, `T-HH:MM:SS` para el próximo horario y `End` cuando ya no queda ninguno. Cada horario de Battle Survival permanece en curso hasta que empieza el siguiente horario del día, aunque este tenga otro código; si un código tiene dos horarios en el mismo día, el contador pasa al segundo cuando termina el primero.
 - Las tablas de días futuros muestran la fecha `MM/DD` de la tabla para las tareas vinculadas. Las tareas sin `codebs` muestran `—` en la columna `Contador`; `server_time` y `server_duration` no se utilizan en los días futuros. El valor `DAILY.time_init` ya no se utiliza para este renderizado.
 - El Duelo de Alianzas no muestra un reloj de zona horaria: se eliminaron `#ad-tzinfo`, su regla CSS y sus referencias en JavaScript.
-- Las celdas de imagen usan las clases `.ad-icon`, `.ad-task-icon` y `.ad-resource-icon`; la columna conserva `32 px` de ancho y la imagen admite hasta `64 px`. La segunda columna muestra el PNG indicado por `ACTIVITY_CODE.icon`; si el archivo no existe, la imagen se oculta y la celda queda vacía. La cuarta columna continúa reservada para futuros iconos de recurso. El atributo `data-code` guarda el código de la tarea.
+- Las celdas de imagen usan las clases `.ad-icon` y `.ad-task-icon`; la columna conserva `35 px` de ancho y la imagen admite hasta `64 px`. La segunda columna muestra el PNG indicado por `ACTIVITY_CODE.icon`; si el archivo no existe, la imagen se oculta y la celda queda vacía. El atributo `data-code` guarda el código de la tarea.
 - El valor `resource` se toma de la traducción de `adActivities`; si la traducción y el dato original están vacíos, la celda queda vacía.
 - Las filas de cada día se ordenan alfabéticamente por el nombre visible del evento, manteniendo el orden original dentro de cada grupo. Los grupos se separan con `border-bottom: 2px solid #4d7799`.
-- Todas las tablas comparten el mismo `<colgroup>` (`AD_COLUMNS`) para conservar ancho y alineación entre días: `.ad-schedule` usa `table-layout: fixed`, `width: 100%` y `min-width: 760px`, con `.ad-col-time` (84 px), `.ad-col-icon` (32 px), `.ad-col-task` (automático), `.ad-col-resource` (20 %) y `.ad-col-event` (170 px). En pantallas estrechas la tabla se desplaza horizontalmente dentro de `.ad-wrap`.
+- Todas las tablas comparten el mismo `<colgroup>` (`AD_COLUMNS`) para conservar ancho y alineación entre días: `.ad-schedule` usa `table-layout: fixed`, `width: 100%` y `min-width: 760px`, con `.ad-col-time` (84 px), `.ad-col-icon` (35 px), `.ad-col-task` (automático), `.ad-col-resource` (20 %) y `.ad-col-event` (170 px). En pantallas estrechas la tabla se desplaza horizontalmente dentro de `.ad-wrap`.
 - Los estilos de `.ad-item-title` son ajustes manuales del usuario y no deben alterarse: color `#4d7799`, borde `2px solid #4d7799`, `border-radius: 3px`, fondo `#9b9b9b36`, `font-size: 1.2rem`, `padding: 2px 10px 2px 10px` y `box-shadow: 0 3px 5px rgba(8, 47, 58, .9)`. El día actual mantiene el verde `#009922`.
 - El título de cada panel del Duelo de Alianzas se compone de la fase y el reset del día. La fase se alinea a la izquierda mediante `.ad-title-phase` y el reset a la derecha mediante `.ad-title-reset`, con `font-size: 10px` y sin salto de línea; la flecha del acordeón permanece al extremo derecho.
-- El panel de la fase actual añade al texto de `.ad-title-phase` una cuenta atrás con el formato `T-HH:MM:SS`. Cada fase empieza a las `00:00:00` UTC-2 y termina a las `00:00:00` UTC-2 del día siguiente: al iniciar muestra `T-24:00:00` y en el último segundo `T-00:00:01`. Los seis paneles futuros no muestran contador. El valor se actualiza con el `setInterval` compartido de un segundo y, al cruzar el reset, el calendario se reconstruye con la fase nueva.
+- El panel de la fase actual añade al texto de `.ad-title-phase` una cuenta atrás con el formato `T- HH:MM:SS` (separador con espacio). Cada fase empieza a las `00:00:00` UTC-2 y termina a las `00:00:00` UTC-2 del día siguiente: al iniciar muestra `T- 24:00:00` y en el último segundo `T- 00:00:01`. Los seis paneles futuros no muestran contador. El valor se actualiza con el `setInterval` compartido de un segundo y, al cruzar el reset, el calendario se reconstruye con la fase nueva.
+- La cuenta atrás de fase se monta en un nodo propio, `<span class="ad-countdown">`, dentro de `.ad-title-phase`. De ese modo el contador se actualiza cada segundo sin reconstruir el texto del título y puede tener un color propio: `.ad-title-phase` usa el gris claro `#eee` para la fase y el separador `·`, y solo `.ad-countdown` usa el verde claro `#89ff90`.
 - El reset del día se muestra en formato `MM/DD HH:mm`. Cada día comienza a las `00:00:00` en UTC-2 y ese instante se convierte a la zona horaria detectada en el navegador, por lo que la fecha puede mostrar el día anterior. El título conserva el nombre de la fase y ya no incluye la abreviatura del día.
 - El calendario presenta los siete días desde el día actual en UTC-2, con el día actual destacado, los dos primeros paneles abiertos y conversión de horarios a la zona local del visitante.
 - El párrafo `survivalMessage` de la página de Actividades Diarias declara `data-i18n-text="survivalMessage"` y su texto se traduce en los 9 idiomas mediante la clave i18n `survivalMessage`.

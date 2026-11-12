@@ -1,5 +1,29 @@
 # Changelog
 
+## [261112a] - 2026-11-12
+
+### Changed
+- Las definiciones de `ACTIVITY_CODE` para las operaciones UR pasan a plural y con recurso: `CRVNUR` → `Dispatch UR Caravans` con `4 Caravan` y `OPENUR` → `Execute UR Covert Operations` con `7 Black Ops`. Las traducciones de `adActivities` en los 9 idiomas se ajustan a esas definiciones, con el español como fuente.
+- La tabla del Duelo de Alianzas pasa de seis a cinco columnas: se retira la columna reservada para los iconos de recurso, que solo generaba una celda vacía. El orden final es contador, imagen de la tarea, tarea, recurso y evento.
+- `adHeaders` queda con cinco entradas en los 9 idiomas, ya sin el hueco de la columna de icono de recurso.
+
+### Fixed
+- Se actualizan las pruebas del contrato de interfaz para las cinco columnas, la ausencia de `ad-resource-icon` y el ancho manual de `.ad-col-icon` (35 px). Los anchos de `.ad-schedule` (`width: 100%`, `min-width: 760px`, `table-layout: fixed`) se conservan.
+
+## [261111a] - 2026-11-11
+
+### Added
+- La fuente Inter se sirve de forma local para los cronogramas: `media/fonts/inter-100.woff2` (Inter Thin, peso 100) se declara con `@font-face` en `css/activities-daily.css`, sin dependencia de red. La licencia SIL Open Font License 1.1 se conserva en `docs/core/inter-font-license.txt`.
+- La cuenta atrás de fase de los títulos del Duelo de Alianzas se monta en un nodo propio, `<span class="ad-countdown">`, con el verde claro `#89ff90`. El resto del título mantiene el gris claro `#eee` mediante `.ad-title-phase`.
+
+### Changed
+- Las tablas `.bs-schedule` y `.ad-schedule` usan Inter con peso base `100` en lugar de Roboto. Se conservan las negritas existentes de encabezados, eventos y filas destacadas.
+- El contador de fase ya no reconstruye el texto completo del título en cada segundo: se actualiza únicamente su nodo, con lo que el nombre de la fase y el separador `·` permanecen estables.
+- El formato del contador de fase pasa a `T- HH:MM:SS`, con espacio tras el guion.
+
+### Fixed
+- Se actualizan las pruebas del contador de fase para el formato con espacio y el nodo propio, y se añaden validaciones de contrato para la fuente Inter y los colores del título de fase.
+
 ## [261110c] - 2026-11-10
 
 ### Added

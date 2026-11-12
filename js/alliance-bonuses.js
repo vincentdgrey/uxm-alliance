@@ -2,9 +2,9 @@
    Los textos traducibles viven en js/i18n/index/i18n.js; aqui solo se declara el
    dato de juego de cada fila (porcentaje, nivel y estado). */
 window.ALLIANCE_BONUSES = [
-  { "key": "bonusFastBuild",        "value": "+20%", "level": 8,    "priority":"high", "inProgress": false },
+  { "key": "bonusFastBuild",        "value": "+20%", "level": 8,    "priority":"high", "inProgress": true },
   { "key": "bonusResearchSpeedup",  "value": "+15%", "level": 6,    "priority":"high", "inProgress": false },
-  { "key": "bonusCraftingSpeedup",  "value": "+8%",  "level": 4,    "priority":"high", "inProgress": true  },
+  { "key": "bonusCraftingSpeedup",  "value": "+10%", "level": 5,    "priority":"high", "inProgress": false  },
   { "key": "bonusFastTraining",     "value": "+1%",  "level": 2,    "priority":"", "inProgress": false },
   { "key": "bonusRallyStats",       "value": "+2%",  "level": 2,    "priority":"", "inProgress": false },
   { "key": "bonusShardExchange",    "value": "",     "level": null, "priority":"", "inProgress": false }

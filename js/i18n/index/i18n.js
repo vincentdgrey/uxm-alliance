@@ -25,7 +25,7 @@ arengaMessage:"Bajo las llamas más aplastantes,\nque oscurecen nuestra noche y 
         bonusFastTraining:"Entrenamiento rápido",
         bonusRallyStats:"Rally HP/ATK/DEF",
         bonusShardExchange:"Banco de intercambio de fragmentos: para los tesoros que requieres en operaciones encubiertas.",
-        bonusInProgress:"En curso",
+        bonusInProgress:"Donación En curso",
         learningPriority:"Prioritario",
 tips:"Tips",
 events:"Eventos",

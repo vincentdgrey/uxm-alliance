@@ -90,7 +90,9 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
     SKILLB: { objetive: "Usa Insignia de Habilidad", resource: "Aumenta Habilidad Heroe UR" },
     SOLD1TRN: { objetive: "Usa Aceleración de Entrenamiento", resource: "Activa Ministro de Guerra" },
     SOLDT10: { objetive: "Entrena Soldado, prefieres promoverlos", resource: "Promociona Soldados" },
-    ELIXIR: { objetive: "Puntos por Captura de Edificios", resource: "Castillo del Elixir" }
+    ELIXIR: { objetive: "Puntos por Captura de Edificios", resource: "Castillo del Elixir" },
+    CRVNUR: { objetive: "Envía Caravanas UR", resource: "4 Caravanas" },
+    OPENUR: { objetive: "Ejecuta Operaciones Encubiertas UR", resource: "7 Operaciones Encubiertas" }
   };
 
   for (const [code, values] of Object.entries(expected)) {

@@ -440,6 +440,9 @@ test("los titulos del duelo de alianzas muestran el reset local en formato MM/DD
   assert.match(js, /var resetMs = startDayMs \+ k \* 86400000 \+ SRC_TO_UTC_MS/);
   assert.match(js, /phase\.className = "ad-title-phase"/);
   assert.match(js, /phase\.textContent = phaseTitle\(noday\)/);
+  assert.match(js, /phaseCounter\.className = "ad-countdown"/);
+  assert.match(js, /phaseCounter\.textContent = phaseCountdown\(nowSec\)/);
+  assert.match(js, /currentPhaseEl = phaseCounter/);
   assert.match(js, /reset\.className = "ad-title-reset"/);
   assert.match(js, /reset\.textContent = resetTitle\(resetMs\)/);
   assert.doesNotMatch(js, /dayTitle\(noday\) \+ " · " \+ DAY_ABBR\[noday\]/);
@@ -455,6 +458,40 @@ test("el titulo del duelo de alianzas alinea la fase a la izquierda y el reset a
   assert.match(css, /\.ad-title-reset \{[^}]*font-size:\s*0\.75rem/s);
   assert.match(css, /\.ad-title-reset \{[^}]*white-space:\s*nowrap/s);
   assert.match(css, /\.ad-arrow \{[^}]*flex:\s*0 0 auto/s);
+});
+
+test("solo el contador de fase usa el verde claro y el titulo mantiene el gris claro", () => {
+  const css = read("css/activities-daily.css");
+  const js = read("js/activities-daily.js");
+
+  assert.match(css, /\.ad-title-phase \{[^}]*color:\s*#eee/s);
+  assert.match(css, /\.ad-countdown \{[^}]*color:\s*#89ff90/s);
+  assert.doesNotMatch(css, /\.ad-countdown \{[^}]*color:\s*#89ff90[^}]*#89ff90/s);
+
+  /* El contador se monta en su propio nodo y se actualiza sin rehacer el titulo. */
+  assert.match(js, /phaseCounter\.className = "ad-countdown"/);
+  assert.match(js, /currentPhaseEl\.textContent = phaseCountdown\(nowSec\)/);
+  assert.doesNotMatch(js, /currentPhaseEl\.textContent = phaseTitle\(lastDay\)/);
+});
+
+test("las dos tablas usan Inter con peso base 100 y conservan las negritas", () => {
+  const css = read("css/activities-daily.css");
+
+  /* La fuente se sirve de forma local, sin depender de la red. */
+  assert.match(css, /@font-face \{[^}]*font-family:\s*"Inter"/s);
+  assert.match(css, /@font-face \{[^}]*font-weight:\s*100/s);
+  assert.match(css, /@font-face \{[^}]*src:\s*url\("\.\.\/media\/fonts\/inter-100\.woff2"\) format\("woff2"\)/s);
+
+  assert.match(css, /\.bs-schedule \{[^}]*font:\s*100 13px\/1\.45 "Inter", Arial, Helvetica, sans-serif/s);
+  assert.match(css, /\.ad-schedule \{[^}]*font:\s*100 13px\/1\.45 "Inter", Arial, Helvetica, sans-serif/s);
+  assert.doesNotMatch(css, /\.bs-schedule \{[^}]*Roboto/s);
+  assert.doesNotMatch(css, /\.ad-schedule \{[^}]*Roboto/s);
+
+  /* Las negritas existentes se mantienen. */
+  assert.match(css, /\.bs-schedule th \{[^}]*font-weight:\s*700/s);
+  assert.match(css, /\.ad-schedule th \{[^}]*font-weight:\s*700/s);
+  assert.match(css, /\.bs-event \{[^}]*font-weight:\s*700/s);
+  assert.match(css, /\.ad-event \{[^}]*font-weight:\s*700/s);
 });
 
 test("la tabla del calendario conserva el comportamiento responsivo original", () => {
@@ -665,50 +702,51 @@ test("el encabezado y las tablas del duelo de alianzas se traducen en todos los 
     const texts = i18n[language];
     assert.equal(typeof texts.scheduleAllianceDuel, "string", language);
     assert.ok(Array.isArray(texts.adHeaders), language + " debe declarar adHeaders como array");
-    assert.equal(texts.adHeaders.length, 6, language);
-    assert.ok(texts.adHeaders[0] && texts.adHeaders[2] && texts.adHeaders[4] && texts.adHeaders[5], language);
+    assert.equal(texts.adHeaders.length, 5, language);
+    assert.ok(texts.adHeaders[0] && texts.adHeaders[2] && texts.adHeaders[3] && texts.adHeaders[4], language);
     assert.equal(texts.adHeaders[1], "", language);
-    assert.equal(texts.adHeaders[3], "", language);
   }
   assert.equal(i18n.es.scheduleAllianceDuel, "Duelo de Alianzas");
-  assert.deepEqual([...i18n.es.adHeaders], ["Contador", "", "Tarea", "", "Recurso", "Evento"]);
+  assert.deepEqual([...i18n.es.adHeaders], ["Contador", "", "Tarea", "Recurso", "Evento"]);
 
   /* La columna de fase se retiro de la tabla. */
   for (const language of languages) assert.ok(!i18n[language].adHeaders.includes("Fase"), language);
 });
 
-test("los encabezados del duelo de alianzas tienen seis columnas en los 9 idiomas", () => {
+test("los encabezados del duelo de alianzas tienen cinco columnas en los 9 idiomas", () => {
   const i18n = loadI18n("js/i18n.js", pageI18n.daily);
   const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
 
   for (const language of languages) {
     const values = i18n[language].adHeaders;
     assert.ok(Array.isArray(values), language + " debe declarar adHeaders");
-    assert.equal(values.length, 6, language + ": adHeaders debe tener seis columnas");
+    assert.equal(values.length, 5, language + ": adHeaders debe tener cinco columnas");
 
-    /* Contador, Tarea, Recurso y Evento llevan texto; las de imagen van vacias. */
+    /* Contador, Tarea, Recurso y Evento llevan texto; la de imagen va vacia. */
     assert.notEqual(values[0], "");
     assert.equal(values[1], "");
     assert.notEqual(values[2], "");
-    assert.equal(values[3], "");
+    assert.notEqual(values[3], "");
     assert.notEqual(values[4], "");
-    assert.notEqual(values[5], "");
   }
 });
 
-test("la tabla del duelo de alianzas usa seis columnas con iconos reservados", () => {
+test("la tabla del duelo de alianzas usa cinco columnas con la imagen de la tarea", () => {
   const js = read("js/activities-daily.js");
   const css = read("css/activities-daily.css");
 
-  /* Orden de las columnas: hora, icono, tarea, icono, recurso, evento. */
+  /* Orden de las columnas: hora, icono, tarea, recurso, evento. */
   assert.match(js, /appendCell\(tr, timeTxt, "ad-time"\)/);
   assert.match(js, /appendIconCell\(tr, "ad-task-icon", r\.code_task\)/);
   assert.match(js, /appendCell\(tr, a \? activityText\(r\.code_task, "objetive"\) : r\.code_task, "ad-obj"\)/);
-  assert.match(js, /appendIconCell\(tr, "ad-resource-icon", r\.code_task\)/);
   assert.match(js, /appendCell\(tr, a \? activityText\(r\.code_task, "resource"\) : "", "ad-resource"\)/);
   assert.match(js, /appendCell\(tr, eventLabel\(r\), "ad-event"\)/);
 
-  /* La columna de fase ya no se renderiza. */
+  /* La columna reservada para los iconos de recurso ya no se renderiza. */
+  assert.doesNotMatch(js, /ad-resource-icon/);
+  assert.doesNotMatch(css, /\.ad-resource-icon/);
+
+  /* La fase ya no se renderiza. */
   assert.doesNotMatch(js, /ad-phase/);
   assert.doesNotMatch(css, /\.ad-phase/);
 
@@ -725,12 +763,24 @@ test("las tablas del duelo de alianzas comparten ancho y anchos de columna", () 
   assert.match(js, /function buildColGroup\(\)/);
   assert.match(js, /table\.appendChild\(buildColGroup\(\)\)/);
 
+  /* El colgroup declara una columna por cada celda de la fila. */
+  const columns = js.match(/var AD_COLUMNS = \[([\s\S]*?)\];/);
+  assert.ok(columns, "debe existir AD_COLUMNS");
+  const columnClasses = columns[1].match(/"([^"]+)"/g).map((value) => value.replace(/"/g, ""));
+  assert.deepEqual(columnClasses, [
+    "ad-col-time",
+    "ad-col-icon",
+    "ad-col-task",
+    "ad-col-resource",
+    "ad-col-event"
+  ]);
+
   /* Anchos compartidos y ancho minimo comun. */
   assert.match(css, /\.ad-schedule \{[^}]*min-width:\s*760px/s);
   assert.match(css, /\.ad-schedule \{[^}]*table-layout:\s*fixed/s);
   assert.match(css, /\.ad-schedule \{[^}]*width:\s*100%/s);
   assert.match(css, /\.ad-col-time \{[^}]*width:\s*84px/s);
-  assert.match(css, /\.ad-col-icon \{[^}]*width:\s*32px/s);
+  assert.match(css, /\.ad-col-icon \{[^}]*width:\s*35px/s);
   assert.match(css, /\.ad-col-resource \{[^}]*width:\s*20%/s);
   assert.match(css, /\.ad-col-event \{[^}]*width:\s*170px/s);
 
