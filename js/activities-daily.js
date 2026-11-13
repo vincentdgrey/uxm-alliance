@@ -115,8 +115,8 @@
 
     { "code": "DYFALCON", "group":"FOCUS", "objetive": "Run Falcon Missions, but do not complete them", "resource":"Save 35 Falcon Missions", "icon":"falcon-mission-lock","point": "", "codebs": "" },
     { "code": "DYELITE", "group":"MONSTER","objetive": "Monsters Elite Blight, get Hero Ticket & Antitoxin", "resource":"", "icon":"elite-blight","point": "", "codebs": "" },
-    { "code": "DYBOTT",  "group":"FOCUS",  "objetive": "Save Stamina Next Phase of Raven", "resource":"Bottle Stamina", "icon":"stamina","point": "", "codebs": "" },
-    { "code": "DYBOTWAR", "group":"FOCUS",  "objetive": "Save Stamina for Phase War", "resource":"Bottle Stamina", "icon":"stamina","point": "", "codebs": "" },
+    { "code": "DYBOTT",  "group":"FOCUS",  "objetive": "Save Stamina Next Phase of Raven", "resource":"Bottle Stamina", "icon":"stamina-bottle","point": "", "codebs": "" },
+    { "code": "DYBOTWAR", "group":"FOCUS",  "objetive": "Save Stamina for Phase War", "resource":"Bottle Stamina", "icon":"stamina-bottle","point": "", "codebs": "" },
     { "code": "DYHERBS", "group":"FOCUS",  "objetive": "Start Gathering Herbs", "resource":"Herb Garden Lv.10, 8H, 1.1M", "icon":"garden","point": "", "codebs": "" },
     { "code": "DYSOLDIER", "group":"FOCUS",  "objetive": "Train T6 or T7 soldiers; promote them on War Preparation Day.", "resource":"Soldier T7", "icon":"soldier-t7","point": "", "codebs": "" },
 
@@ -210,7 +210,8 @@
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCH1SP",   "server_time":"" },
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCHMGH",   "server_time":"" },
 
-    { "noday": 5, "day": "Fri", "event": "ROY", "phase": "PH05", "code_task": "SCRAMBLE", "server_time":"11:00:00", "server_duration":"01:00:00" },
+    { "noday": 5, "day": "Fri", "event": "ROY", "phase": "PH05", "code_task": "SCRAMBLE", "server_time":"12:00:00", "server_duration":"01:00:00" },
+    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"09:00:00", "server_duration":"00:30:00" },
     { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"22:00:00", "server_duration":"00:30:00" },
     { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "FREETH",    "server_time":"" },
     { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "FREETS",    "server_time":"" },
@@ -547,12 +548,17 @@
       return ev ? (ev[LANG] || ev.en || r.event) : r.event;
     }
 
+    var EVENT_ORDER = ["ROY", "KVK", "BEX", "EQ", "CUM", "DY", "AD"];
+
     function sortRowsByEvent(rows) {
       return rows.map(function (r, index) {
         return { row: r, index: index };
       }).sort(function (a, b) {
-        var cmp = eventLabel(a.row).localeCompare(eventLabel(b.row), LANG);
-        return cmp !== 0 ? cmp : a.index - b.index;
+        var eventOrder = EVENT_ORDER.indexOf(a.row.event);
+        var eventOrderB = EVENT_ORDER.indexOf(b.row.event);
+        if (eventOrder === -1) eventOrder = EVENT_ORDER.length;
+        if (eventOrderB === -1) eventOrderB = EVENT_ORDER.length;
+        return eventOrder !== eventOrderB ? eventOrder - eventOrderB : a.index - b.index;
       }).map(function (item) {
         return item.row;
       });

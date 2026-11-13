@@ -797,10 +797,12 @@ test("el duelo de alianzas ordena por evento y muestra iconos de tarea", () => {
   const js = read("js/activities-daily.js");
   const css = read("css/activities-daily.css");
 
-  /* Orden alfabetico por el evento visible, estable dentro de cada grupo. */
+  /* Orden fijo por grupos y eventos, estable dentro de cada grupo. */
+  assert.match(js, /var EVENT_ORDER = \["ROY", "KVK", "BEX", "EQ", "CUM", "DY", "AD"\]/);
   assert.match(js, /function sortRowsByEvent\(rows\)/);
-  assert.match(js, /eventLabel\(a\.row\)\.localeCompare\(eventLabel\(b\.row\), LANG\)/);
-  assert.match(js, /return cmp !== 0 \? cmp : a\.index - b\.index/);
+  assert.match(js, /var eventOrder = EVENT_ORDER\.indexOf\(a\.row\.event\)/);
+  assert.match(js, /var eventOrderB = EVENT_ORDER\.indexOf\(b\.row\.event\)/);
+  assert.match(js, /return eventOrder !== eventOrderB \? eventOrder - eventOrderB : a\.index - b\.index/);
   assert.match(js, /var rows = sortRowsByEvent\(byDay\[noday\] \|\| \[\]\)/);
 
   /* Separador de 2 px unicamente entre grupos de eventos. */

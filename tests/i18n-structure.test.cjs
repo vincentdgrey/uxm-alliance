@@ -92,7 +92,9 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
     SOLDT10: { objetive: "Entrena Soldado, Prioridad Promoverlos", resource: "Soldados T6 > T7 > T8" },
     ELIXIR: { objetive: "Puntos por Captura de Edificios", resource: "Castillo del Elixir" },
     CRVNUR: { objetive: "Envía Caravanas UR", resource: "4 Caravanas" },
-    OPENUR: { objetive: "Ejecuta Operaciones Encubiertas UR", resource: "7 Operaciones Encubiertas" }
+    OPENUR: { objetive: "Ejecuta Operaciones Encubiertas UR", resource: "7 Operaciones Encubiertas" },
+    SCRAMBLE: { objetive: "100K Puntos de Honor, Captura/Defiende una Granja en el lodo", resource: "Granjas de la Ciudad Real en el Lodo" },
+    KWAR: { objetive: "1.5M Puntos de Honor, Derrota/Pierde/Sana Soldados", resource: "Guerra de Reinos" }
   };
 
   for (const [code, values] of Object.entries(expected)) {

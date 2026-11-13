@@ -58,8 +58,8 @@
           EQGEAR:{objetive:"Usa Piedra de Equipo, en Equipo UR",resource:"Mejora el Equipo"},
           EQBPRN:{objetive:"Usa Plano de Equipo, promueve Estadísticas Adicionales UR",resource:"Promociona el Equipo"},
           ELIXIR:{objetive:"Puntos por Captura de Edificios",resource:"Castillo del Elixir"},
-          SCRAMBLE:{objetive:"Captura/Defiende la Granja, 100K Puntos de Honor",resource:"Granja de la Ciudad Real en el Lodo"},
-          KWAR:{objetive:"Mata/derrota Soldados, 1.5M Puntos de Honor",resource:"Guerra de Reinos"},
+          SCRAMBLE:{objetive:"100K Puntos de Honor, Captura/Defiende una Granja en el lodo",resource:"Granjas de la Ciudad Real en el Lodo"},
+          KWAR:{objetive:"1.5M Puntos de Honor, Derrota/Pierde/Sana Soldados",resource:"Guerra de Reinos"},
           SHIELD:{objetive:"Activa Escudos 24H, Escudo Gratis 8H",resource:"Tienda de la Alianza"},
           CUMULUS:{objetive:"Recolecta Cristal 30min, desde Cúmulos",resource:"Evento Valle Cúmulos de Cristal"}
         },
@@ -121,8 +121,8 @@ pageDailyLead:"Details of the daily activities that will help you improve every 
           EQGEAR:{objetive:"Use Gearstone, at UR Equipment",resource:"Upgrade Equipment"},
           EQBPRN:{objetive:"Use Gear Blueprint, Promote Additional Stats UR",resource:"Promote Equipment"},
           ELIXIR:{objetive:"Points for Capturing Buildings", resource:"Elixir Castle"},
-          SCRAMBLE:{objetive:"Capture/Defense Farm, 100K Point Honor",resource:"Farm Royal City in Mud"},
-          KWAR:{objetive:"Kill/Defeat Soldiers, 1.5M Point Honor",resource:"Kingdom War"},
+          SCRAMBLE:{objetive:"100K Honor Points, Capture/Defend a Farm in the mud",resource:"Royal City Farms in the Mud"},
+          KWAR:{objetive:"1.5M Honor Points, Defeat/Lose/Heal Soldiers",resource:"Kingdom War"},
           SHIELD:{objetive:"Active Shields 24H, Free Shield 8H",resource:"Alliance Shop"},
           CUMULUS:{objetive:"30min Gather Cristal, from Cumulus",resource:"Event Culumus Valley"}
         },
@@ -184,8 +184,8 @@ pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos
           EQGEAR:{objetive:"Use Pedra de Equipamento, em Equipamento UR",resource:"Melhore o Equipamento"},
           EQBPRN:{objetive:"Use Planta de Equipamento, promova Estatísticas Adicionais UR",resource:"Promova o Equipamento"},
           ELIXIR:{objetive:"Pontos por Capturar Edifícios", resource:"Castelo do Elixir"},
-          SCRAMBLE:{objetive:"Capture/Defenda a Fazenda, 100K Pontos de Honra",resource:"Fazenda da Cidade Real na Lama"},
-          KWAR:{objetive:"Mate/derrote Soldados, 1.5M Pontos de Honra",resource:"Guerra de Reinos"},
+          SCRAMBLE:{objetive:"100K Pontos de Honra, Capture/Defenda uma Fazenda na Lama",resource:"Fazendas da Cidade Real na Lama"},
+          KWAR:{objetive:"1.5M Pontos de Honra, Derrote/Perca/Cure Soldados",resource:"Guerra de Reinos"},
           SHIELD:{objetive:"Ative Escudos 24H, Escudo Grátis 8H",resource:"Loja da Aliança"},
           CUMULUS:{objetive:"Colete Cristal 30min, dos Cumulos",resource:"Evento Vale dos Cumulos de Cristal"}
         },
@@ -247,8 +247,8 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           EQGEAR:{objetive:"Usa Pietra dell'Equipaggiamento, su Equipaggiamento UR",resource:"Migliora l'Equipaggiamento"},
           EQBPRN:{objetive:"Usa Piano dell'Equipaggiamento, promuovi Statistiche Aggiuntive UR",resource:"Promuovi l'Equipaggiamento"},
           ELIXIR:{objetive:"Punti per Catturare Edifici", resource:"Castello dell'Elisir"},
-          SCRAMBLE:{objetive:"Cattura/Defendi la Fattoria, 100K Punti di Onore",resource:"Fattoria della Città Reale nel Fango"},
-          KWAR:{objetive:"Uccidi/sconfiggi Soldati, 1.5M Punti di Onore",resource:"Guerra dei Regni"},
+          SCRAMBLE:{objetive:"100K Punti di Onore, Cattura/Defendi una Fattoria nel Fango",resource:"Fattorie della Città Reale nel Fango"},
+          KWAR:{objetive:"1.5M Punti di Onore, Sconfiggi/Perdi/Cura Soldati",resource:"Guerra dei Regni"},
           SHIELD:{objetive:"Attiva Scudi 24H, Scudo Gratuito 8H",resource:"Negozio dell'Alleanza"},
           CUMULUS:{objetive:"Raccogli Cristallo 30min, dai Cumuli",resource:"Evento Valle dei Cumuli di Cristallo"}
         },
@@ -310,8 +310,8 @@ pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous am
           EQGEAR:{objetive:"Utilisez une Pierre d'Équipement, sur l'Équipement UR",resource:"Améliorez l'Équipement"},
           EQBPRN:{objetive:"Utilisez un Plan d'Équipement, promouvez les Statistiques Additionnelles UR",resource:"Promouvez l'Équipement"},
           ELIXIR:{objetive:"Points pour Capturer des Bâtiments", resource:"Château de l'Élixir"},
-          SCRAMBLE:{objetive:"Capturez/Défendez la Ferme, 100K Points d'Honneur",resource:"Ferme de la Cité Royale dans la Boue"},
-          KWAR:{objetive:"Tuez/Vaincre des Soldats, 1.5M Points d'Honneur",resource:"Guerre des Royaumes"},
+          SCRAMBLE:{objetive:"100K Points d'Honneur, Capturez/Défendez une Ferme dans la Boue",resource:"Fermes de la Cité Royale dans la Boue"},
+          KWAR:{objetive:"1.5M Points d'Honneur, Vaincre/Perdre/Soigner des Soldats",resource:"Guerre des Royaumes"},
           SHIELD:{objetive:"Activez les Boucliers 24H, Bouclier Gratuit 8H",resource:"Boutique de l'Alliance"},
           CUMULUS:{objetive:"Récoltez du Cristal 30min, depuis les Cumuls",resource:"Événement Vallée des Cumuls de Cristal"}
         },
@@ -373,8 +373,8 @@ pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
           EQGEAR:{objetive:"UR装備で装備石を使う",resource:"装備を強化"},
           EQBPRN:{objetive:"装備設計図を使い、URの追加ステータスを昇格",resource:"装備を昇格"},
           ELIXIR:{objetive:"建物を占領してポイントを獲得", resource:"エリキールの城"},
-          SCRAMBLE:{objetive:"農園を占領/防衛、100K Honorポイント",resource:"泥の王都農園"},
-          KWAR:{objetive:"兵士を殺害/撃破、1.5M Honorポイント",resource:"王国戦争"},
+          SCRAMBLE:{objetive:"100K Honorポイント、泥の農園を占領/防衛",resource:"泥の王都農園"},
+          KWAR:{objetive:"1.5M Honorポイント、兵士を撃破/失う/回復",resource:"王国戦争"},
           SHIELD:{objetive:"24Hシールドと無料8Hシールドを有効化",resource:"同盟ショップ"},
           CUMULUS:{objetive:"30分間クリスタルを採取、クリスタルの山から",resource:"イベント クリスタル堆積の谷"}
         },
@@ -436,8 +436,8 @@ pageDailyLead:"Подробности ежедневных активносте�
           EQGEAR:{objetive:"Использовать Камень Снаряжения на Снаряжении UR",resource:"Улучшить Снаряжение"},
           EQBPRN:{objetive:"Использовать Чертёж Снаряжения, повысить Доп. характеристики UR",resource:"Повысить Снаряжение"},
           ELIXIR:{objetive:"Захватить Здания, получить Очки", resource:"Замок Эликсира"},
-          SCRAMBLE:{objetive:"Захватить/Защитить Ферму, 100K Очков Чести",resource:"Ферма Королевской Города в Грязи"},
-          KWAR:{objetive:"Убить/Победить Солдат, 1.5M Очков Чести",resource:"Война Королевств"},
+          SCRAMBLE:{objetive:"100K Очков Чести, Захватить/Защитить Ферму в Грязи",resource:"Фермы Королевской Города в Грязи"},
+          KWAR:{objetive:"1.5M Очков Чести, Победить/Потерять/Вылечить Солдат",resource:"Война Королевств"},
           SHIELD:{objetive:"Активировать Щиты 24H, Бесплатный Щит 8H",resource:"Магазин Альянса"},
           CUMULUS:{objetive:"Собирать Кристалл 30мин, из Кристальных Холмов",resource:"Событие Долина Кристальных Холмов"}
         },
@@ -499,8 +499,8 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           EQGEAR:{objetive:"在UR装备上使用装备石",resource:"升级装备"},
           EQBPRN:{objetive:"使用装备图纸，晋升UR附加属性",resource:"晋升装备"},
           ELIXIR:{objetive:"占领建筑，获得点数", resource:"魔力城堡"},
-          SCRAMBLE:{objetive:"占领/防守农场，100K 荣誉点数",resource:"泥泞中的王都农场"},
-          KWAR:{objetive:"击杀/击败士兵，1.5M 荣誉点数",resource:"王国战争"},
+          SCRAMBLE:{objetive:"100K 荣誉点数，占领/防守泥泞中的农场",resource:"泥泞中的王都农场"},
+          KWAR:{objetive:"1.5M 荣誉点数，击败/失去/治疗士兵",resource:"王国战争"},
           SHIELD:{objetive:"启用 24H 护盾与免费 8H 护盾",resource:"联盟商店"},
           CUMULUS:{objetive:"从水晶堆中采集 30 分钟水晶",resource:"活动 水晶堆谷"}
         },
@@ -702,11 +702,11 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
             objetive:"Binaları Yakala, Puan Kazan", resource:"Elixir Kalesi"
           },
           SCRAMBLE:{
-            objetive:"Çiftliği Yakala/Koru, 100K Onur Puanı",
-            resource:"Çamurda Kral Şehri Çiftliği"
+            objetive:"100K Onur Puanı, Çamurdaki Çiftliği Yakala/Koru",
+            resource:"Çamurda Kral Şehri Çiftlikleri"
           },
           KWAR:{
-            objetive:"Askerleri Öldür/Yen, 1.5M Onur Puanı",
+            objetive:"1.5M Onur Puanı, Askerleri Yen/Kaybet/İyileştir",
             resource:"Krallar Savaşı"
           },
           SHIELD:{

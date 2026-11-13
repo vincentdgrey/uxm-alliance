@@ -9,6 +9,8 @@
 ### Changed
 - `ACTIVITY_CODE` pasa de 43 a 45 registros y `DAILY` de 71 a 78 filas. Se sincronizan las traducciones de `SOLDT10` y `DYBOTT` con la redacción manual vigente.
 - El texto `survivalMessage` se amplía en los 9 idiomas para indicar el tiempo transcurrido del evento actual y el tiempo restante.
+- Las filas del Duelo de Alianzas se ordenan por un orden fijo e independiente del idioma: Guerras, Desafíos, Daily y Alianza. Dentro de cada evento se conserva el orden original de las actividades.
+- Se propagan a los nueve idiomas las redacciones manuales de `SCRAMBLE` y `KWAR`, con el español como fuente.
 
 ## [261112a] - 2026-11-12
 
