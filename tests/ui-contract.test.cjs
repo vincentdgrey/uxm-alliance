@@ -419,14 +419,18 @@ test("las traducciones del calendario viven en el archivo i18n de actividades", 
   }
 });
 
-test("el mensaje de supervivencia se traduce en todos los idiomas", () => {
+test("los mensajes de supervivencia y de duelo de alianzas se traducen en todos los idiomas", () => {
   const html = read("pages/actividades-diarias.html");
   const i18n = readI18n(pageI18n.daily);
 
   assert.match(html, /id="survivalMessage" data-i18n-text="survivalMessage"/);
-  const matches = i18n.match(/survivalMessage:"[^"]+"/g) || [];
-  assert.equal(matches.length, 9);
-  assert.match(i18n, /survivalMessage:"Ciclo automatico de actividades calculado según el horario del navegador web\."/);
+  assert.match(html, /id="allianceMessage" data-i18n-text="allianceMessage"/);
+  for (const key of ["survivalMessage", "allianceMessage"]) {
+    const matches = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
+    assert.equal(matches.length, 9, key + " debe existir en los 9 idiomas");
+  }
+  assert.match(i18n, /survivalMessage:"Ciclo automático de actividades, calculado según el horario del navegador web, indicando el tiempo transcurrido del evento actual y cuanto falta para terminar\."/);
+  assert.match(i18n, /allianceMessage:"Listado de actividades basadas en el Duelo de Alianzas, te permitirá realizar las actividades del dia actual y futuro/);
 });
 
 test("los titulos del duelo de alianzas muestran el reset local en formato MM/DD HH:mm", () => {
@@ -604,10 +608,10 @@ test("las variables de datos son la fuente de verdad y estan completas", () => {
 
   assert.equal(activities.length, 6);
   assert.equal(calendar.length, 42);
-  assert.equal(activityCode.length, 43);
+  assert.equal(activityCode.length, 45);
   assert.equal(eventCode.length, 8);
   assert.equal(phases.length, 7);
-  assert.equal(daily.length, 71);
+  assert.equal(daily.length, 78);
 
   /* Cada variable se declara una sola vez. */
   for (const name of ["ACTIVITIES", "CALENDAR", "ACTIVITY_CODE", "EVENT_CODE", "PHASES", "DAILY"]) {
@@ -1379,7 +1383,7 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
 
   /* El codigo de cada actividad debe estar en el mapa de los 9 idiomas. */
   const activityCode = [...js.matchAll(/"code": "([A-Z0-9]+)"/g)].map((m) => m[1]);
-  assert.equal(activityCode.length, 43);
+  assert.equal(activityCode.length, 45);
 
   for (const language of languages) {
     const texts = i18n[language];

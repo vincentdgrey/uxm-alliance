@@ -43,8 +43,7 @@
   letter-spacing: 0.03em;
 }
 .bs-schedule th {
-  padding: 3px 10px;
-  text-align: left;
+  padding: 2px 2px;
   font-size: 0.75rem;
   font-weight: 700;
   color: #fff;
@@ -56,9 +55,6 @@
 }
 .bs-schedule td {
   border-bottom: 1px solid #ddd;
-}
-.bs-schedule tbody tr:last-child td {
-  border-bottom: none;
 }
 .bs-schedule tbody tr.bs-dayend td {
   border-bottom: 3px solid #26b;
@@ -75,7 +71,7 @@
   text-align: right;
 }
 #bs-th-counter {
-  text-align: right;
+  /* text-align: right; */
 }
 .bs-event {
   font-weight: 700;

@@ -1,5 +1,15 @@
 # Changelog
 
+## [261113a] - 2026-11-13
+
+### Added
+- La clave `allianceMessage` de la subpágina de Actividades Diarias se incorpora en los 9 idiomas. El texto español manual de `pages/actividades-diarias.html` es la fuente y no modifica el mensaje homónimo de la portada.
+- Se añaden a `adActivities` las actividades `DYBOTWAR` y `DYSOLDIER`, presentes en `ACTIVITY_CODE` y en el calendario `DAILY`.
+
+### Changed
+- `ACTIVITY_CODE` pasa de 43 a 45 registros y `DAILY` de 71 a 78 filas. Se sincronizan las traducciones de `SOLDT10` y `DYBOTT` con la redacción manual vigente.
+- El texto `survivalMessage` se amplía en los 9 idiomas para indicar el tiempo transcurrido del evento actual y el tiempo restante.
+
 ## [261112a] - 2026-11-12
 
 ### Changed

@@ -69,7 +69,7 @@ test("los codigos de actividades coinciden con ACTIVITY_CODE", () => {
   vm.createContext(context);
   vm.runInContext("var ACTIVITY_CODE = " + match[1], context);
   const rows = context.ACTIVITY_CODE;
-  assert.equal(rows.length, 43);
+  assert.equal(rows.length, 45);
 
   const i18n = loadI18n("actividades-diarias");
   const expectedCodes = rows.map((row) => row.code);
@@ -89,7 +89,7 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
     SHRDUR: { objetive: "Consume Fragmento de Héroe UR", resource: "Tienda Santuario" },
     SKILLB: { objetive: "Usa Insignia de Habilidad", resource: "Aumenta Habilidad Heroe UR" },
     SOLD1TRN: { objetive: "Usa Aceleración de Entrenamiento", resource: "Activa Ministro de Guerra" },
-    SOLDT10: { objetive: "Entrena Soldado, prefieres promoverlos", resource: "Promociona Soldados" },
+    SOLDT10: { objetive: "Entrena Soldado, Prioridad Promoverlos", resource: "Soldados T6 > T7 > T8" },
     ELIXIR: { objetive: "Puntos por Captura de Edificios", resource: "Castillo del Elixir" },
     CRVNUR: { objetive: "Envía Caravanas UR", resource: "4 Caravanas" },
     OPENUR: { objetive: "Ejecuta Operaciones Encubiertas UR", resource: "7 Operaciones Encubiertas" }
@@ -100,11 +100,11 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
   }
 });
 
-test("todas las traducciones de actividades cubren los 43 codigos", () => {
+test("todas las traducciones de actividades cubren los 45 codigos", () => {
   const i18n = loadI18n("actividades-diarias");
   for (const lang of languages) {
     const activities = i18n[lang].adActivities;
-    assert.equal(Object.keys(activities).length, 43, lang);
+    assert.equal(Object.keys(activities).length, 45, lang);
     for (const code of Object.keys(activities)) {
       assert.equal(typeof activities[code].objetive, "string", `${lang}/${code}`);
       assert.equal(typeof activities[code].resource, "string", `${lang}/${code}`);

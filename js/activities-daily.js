@@ -107,7 +107,7 @@
     { "code": "FREETH",  "group":"TAVERN","objetive": "Use ONLY FREE Ticket Heroe", "resource":"Ticket Heroe", "icon":"ticket-hero","point": "", "codebs": "" },
 
     { "code": "SOLD1TRN","group":"SOLDIER", "objetive": "Use Training Boost",  "resource":"", "icon":"boost-training","point": "+145.0",              "codebs": "SOLDIER" },
-    { "code": "SOLDT10", "group":"SOLDIER", "objetive": "Train Soldier, prefer to promote", "resource":"Promote Soldiers", "icon":"soldier-t7","point": "+297.0",  "codebs": "SOLDIER" },
+    { "code": "SOLDT10", "group":"SOLDIER", "objetive": "Train Soldier, prefer to promote", "resource":"Promote Soldiers", "icon":"soldier-t8","point": "+297.0",  "codebs": "SOLDIER" },
     { "code": "HEA1SP",  "group":"HEAL",    "objetive": "Use Healing Speedup", "resource":"Healing Buff +150%", "icon":"speedup-healing","point": "+145.0", "codebs": "" },
     { "code": "SOLDDFT", "group":"SOLDIER", "objetive": "Defeating Soldiers, Alliance Duel","resource":"Attacking", "icon":"soldier-defeat","point": "+24.3",               "codebs": "" },
     { "code": "SOLDLST", "group":"SOLDIER", "objetive": "Losing Soldiers, Alliance Duel",    "resource":"Defense", "icon":"soldier-lost","point": "+21.6",                 "codebs": "" },
@@ -115,8 +115,10 @@
 
     { "code": "DYFALCON", "group":"FOCUS", "objetive": "Run Falcon Missions, but do not complete them", "resource":"Save 35 Falcon Missions", "icon":"falcon-mission-lock","point": "", "codebs": "" },
     { "code": "DYELITE", "group":"MONSTER","objetive": "Monsters Elite Blight, get Hero Ticket & Antitoxin", "resource":"", "icon":"elite-blight","point": "", "codebs": "" },
-    { "code": "DYBOTT",  "group":"FOCUS",  "objetive": "Save Stamina", "resource":"Bottle Stamina", "icon":"stamina","point": "", "codebs": "" },
+    { "code": "DYBOTT",  "group":"FOCUS",  "objetive": "Save Stamina Next Phase of Raven", "resource":"Bottle Stamina", "icon":"stamina","point": "", "codebs": "" },
+    { "code": "DYBOTWAR", "group":"FOCUS",  "objetive": "Save Stamina for Phase War", "resource":"Bottle Stamina", "icon":"stamina","point": "", "codebs": "" },
     { "code": "DYHERBS", "group":"FOCUS",  "objetive": "Start Gathering Herbs", "resource":"Herb Garden Lv.10, 8H, 1.1M", "icon":"garden","point": "", "codebs": "" },
+    { "code": "DYSOLDIER", "group":"FOCUS",  "objetive": "Train T6 or T7 soldiers; promote them on War Preparation Day.", "resource":"Soldier T7", "icon":"soldier-t7","point": "", "codebs": "" },
 
     { "code": "EQGEAR",  "group":"GEAR", "objetive": "Use Gearstone, at UR Equipment", "resource":"Upgrade Equipment", "icon":"gearstone","point": "", "codebs": "" },
     { "code": "EQBPRN",  "group":"GEAR", "objetive": "Use Gear Blueprint, Promote Additional Stats UR", "resource":"Promote Equipment", "icon":"gear-blueprint-ur","point": "", "codebs": "" },
@@ -164,6 +166,7 @@
 
     { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "FREETH", "server_time":"" },
     { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "SAVETS", "server_time":"" },
+    { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "DYSOLDIER", "server_time":"" },
     
     { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "TCKSUR", "server_time":"" },
     { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CON1SP", "server_time":"" },
@@ -174,6 +177,7 @@
     { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYFALCON", "server_time":"" },
     { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYELITE",  "server_time":"" },
     { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "FREETH",   "server_time":"" },
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYSOLDIER", "server_time":"" },
     
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "RAVCH1", "server_time":"" },
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "STDSCR", "server_time":"" },
@@ -183,6 +187,7 @@
 
     { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "SAVETH", "server_time":"" },
     { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "FREETS", "server_time":"" },
+    { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "DYSOLDIER", "server_time":"" },
     
     { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "TCKHER", "server_time":"" },
     { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "ANTX",   "server_time":"" },
@@ -194,6 +199,8 @@
     { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYFALCON", "server_time":"" },
     { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYELITE",  "server_time":"" },
     { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "FREETS",   "server_time":"" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYBOTWAR",   "server_time":"" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYSOLDIER", "server_time":"" },
     
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLDT10",  "server_time":"" },
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLD1TRN", "server_time":"" },
@@ -207,6 +214,7 @@
     { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"22:00:00", "server_duration":"00:30:00" },
     { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "FREETH",    "server_time":"" },
     { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "FREETS",    "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "DYBOTWAR",   "server_time":"" },
     
     { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CON1SP",   "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "TCH1SP",   "server_time":"" },
@@ -223,7 +231,7 @@
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETH", "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETS", "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "SHIELD", "server_time":"00:00:00", "server_duration":"23:00:00" },
-    { "noday": 6, "day": "Sat", "event": "KVK", "phase": "PH06", "code_task": "KWAR",  "server_time":"12:00:00", "server_duration":"01:00:00" },
+    { "noday": 6, "day": "Sat", "event": "KVK","phase": "PH06", "code_task": "KWAR",  "server_time":"12:00:00", "server_duration":"01:00:00" },
     
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYFALCON", "server_time":"" },
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYELITE",  "server_time":"" },
@@ -231,6 +239,7 @@
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYHERBS",  "server_time":"16:30:00", "server_duration":"08:00:00" },
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "FREETH",   "server_time":"" },
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "SAVETS",   "server_time":"" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYSOLDIER", "server_time":"" },
 
     { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQGEAR", "server_time":"" },
     { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQBPRN", "server_time":"" },

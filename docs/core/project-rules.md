@@ -79,7 +79,7 @@ Reglas:
 - Los identificadores HTML y las claves de traducción mantienen el mismo nombre cuando el contenido pertenece a una sección concreta: `arengaTitle`, `arengaMessage`, `tutoTitle`, `tutorialsMessage`, `strategyTitle`, `strategyMessage`, `allianceTitle`, `allianceMessage`, `bonusAlliance`, `bonusFastBuild`, `bonusResearchSpeedup`, `bonusCraftingSpeedup`, `bonusFastTraining`, `bonusRallyStats`, `bonusShardExchange` y `bonusInProgress`.
 - Las tres secciones nuevas de la portada se localizan con atributos, sin necesidad de `setText()`: `tutorialsMessage` y `strategyMessage` declaran `data-i18n-text`, y `strategyTitle` declara `data-i18n` para que reciba la inicial escarlata de `applySectionTitles()`. Sus textos españoles son los manuales vigentes de `index.html`.
 - La arenga española es el texto manual vigente de `index.html`; no se recupera de los bloques obsoletos de `src/`.
-- `allianceMessage` usa el texto manual vigente de `index.html` como fuente y se traduce a los 9 idiomas.
+- `allianceMessage` de la portada usa el texto manual vigente de `index.html` como fuente y se traduce a los 9 idiomas. La subpágina de Actividades Diarias define una clave `allianceMessage` propia en su archivo i18n.
 - Las etiquetas de la tabla de bonos tienen su propia clave por fila, de modo que los porcentajes y las estrellas quedan fuera del ámbito de la traducción.
 - La clave `visitTitle` replica el encabezado de la sección de alianza y debe existir en los 9 idiomas, aunque hoy solo la consume la navegación.
 - Las introducciones de cada subpágina (`#pageLead`) se resuelven a partir de `titleKey.replace("Title", "Lead")` en `js/app.js`, de modo que cada página usa su clave `page*Lead`: `pageDailyLead`, `pageRulesLead`, `pageTutorialsLead`, `pageStrategyLead` y `pageContactLead`, presentes en los 9 idiomas.
@@ -264,10 +264,10 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 |---|---|---|
 | `ACTIVITIES` | 6 | Actividades y objetivos de Battle Survival |
 | `CALENDAR` | 42 | Calendario semanal de Battle Survival, 6 slots por día |
-| `ACTIVITY_CODE` | 43 | Actividades codificadas (objetive, resource, point, codebs) |
+| `ACTIVITY_CODE` | 45 | Actividades codificadas (objetive, resource, point, codebs) |
 | `EVENT_CODE` | 8 | Definición de eventos (es/en) |
 | `PHASES` | 7 | Fases del Duelo de Alianzas (P00-P06) |
-| `DAILY` | 71 | Actividades diarias del Duelo de Alianzas por día (noday, server_time, server_duration) |
+| `DAILY` | 78 | Actividades diarias del Duelo de Alianzas por día (noday, server_time, server_duration) |
 
 - Los archivos `db/*.json` son **obsoletos**: se conservan como histórico, no los carga el sitio y no deben editarse ni usarse como referencia.
 - La estructura `src/` también es obsoleta y no se enlaza.
@@ -294,7 +294,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - La lógica vive en `initAllianceDuel()` de `js/activities-daily.js`.
 - Las traducciones del calendario viven exclusivamente en `js/i18n/actividades-diarias/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (cinco encabezados de tabla), presentes en los 9 idiomas. El calendario no mantiene una tabla de traducciones propia.
 - Los textos de las actividades, las fases y los eventos también se localizan en `js/i18n/actividades-diarias/i18n.js`, mediante tres mapas por idioma:
-  - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (43 registros), con los campos `objetive` y `resource`.
+  - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (45 registros), con los campos `objetive` y `resource`.
   - `adPhases`: indexado por la fase normalizada (`P00`-`P06`).
   - `adEvents`: indexado por el `event` de `EVENT_CODE` (`DY`, `AD`, `KVK`, `ROY`, `BS`, `EQ`, `BEX`, `CUM`).
 - La resolución de cada texto sigue el orden **idioma activo → inglés → dato original**. `js/activities-daily.js` lo aplica con `activityText(code, field)`, `phaseText(phase)` y `eventLabel(r)`. El inglés se toma de `window.I18N.en` mediante la constante `T_EN`.
@@ -327,6 +327,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - El reset del día se muestra en formato `MM/DD HH:mm`. Cada día comienza a las `00:00:00` en UTC-2 y ese instante se convierte a la zona horaria detectada en el navegador, por lo que la fecha puede mostrar el día anterior. El título conserva el nombre de la fase y ya no incluye la abreviatura del día.
 - El calendario presenta los siete días desde el día actual en UTC-2, con el día actual destacado, los dos primeros paneles abiertos y conversión de horarios a la zona local del visitante.
 - El párrafo `survivalMessage` de la página de Actividades Diarias declara `data-i18n-text="survivalMessage"` y su texto se traduce en los 9 idiomas mediante la clave i18n `survivalMessage`.
+- El párrafo `allianceMessage` de la página de Actividades Diarias declara `data-i18n-text="allianceMessage"`. Su redacción española manual es la fuente y se traduce en los 9 idiomas. Esta clave es propia de la subpágina y no modifica el mensaje homónimo de la portada.
 - El subtítulo propio `ad-subtitle` se eliminó: el encabezado de la sección es el que identifica el cronograma.
 
 ### Aviso de la próxima actividad

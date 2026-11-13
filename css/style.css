@@ -53,6 +53,10 @@ body {
   --nav-uxm-shadow: 0 1px 3px rgba(8, 47, 58, .65);
 }
 
+p.message-info {
+  color: #666;
+}
+
 .link-danger,
 .link-info {
   text-decoration: none;
