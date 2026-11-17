@@ -12,27 +12,9 @@
     "zh": "王国战争",
     "tr": "Krallık Savaşı"
   },
-  "summary": {
-    "es": "",
-    "en": "",
-    "pt": "",
-    "it": "",
-    "fr": "",
-    "ja": "",
-    "ru": "",
-    "zh": "",
-    "tr": ""
-  },
-  "keywords": {
-    "es": [],
-    "en": [],
-    "pt": [],
-    "it": [],
-    "fr": [],
-    "ja": [],
-    "ru": [],
-    "zh": [],
-    "tr": []
-  },
-  "sections": []
+  "topics": [
+    "kingdom-war/shields.json",
+    "kingdom-war/kingdom-attacks.json",
+    "kingdom-war/kingdom-defense.json"
+  ]
 }

@@ -2,37 +2,20 @@
   "id": "hero",
   "order": 10,
   "title": {
-    "es": "Héroes",
-    "en": "Heroes",
-    "pt": "Heróis",
-    "it": "Eroi",
+    "es": "Hero",
+    "en": "Hero",
+    "pt": "Herói",
+    "it": "Eroe",
     "fr": "Héros",
     "ja": "ヒーロー",
-    "ru": "Герои",
+    "ru": "Герой",
     "zh": "英雄",
-    "tr": "Kahramanlar"
+    "tr": "Kahraman"
   },
-  "summary": {
-    "es": "",
-    "en": "",
-    "pt": "",
-    "it": "",
-    "fr": "",
-    "ja": "",
-    "ru": "",
-    "zh": "",
-    "tr": ""
-  },
-  "keywords": {
-    "es": [],
-    "en": [],
-    "pt": [],
-    "it": [],
-    "fr": [],
-    "ja": [],
-    "ru": [],
-    "zh": [],
-    "tr": []
-  },
-  "sections": []
+  "topics": [
+    "hero/factions.json",
+    "hero/equipment.json",
+    "hero/skills.json",
+    "hero/classes.json"
+  ]
 }

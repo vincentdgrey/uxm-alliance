@@ -485,11 +485,11 @@ button,
   align-items: flex-start;
   white-space: nowrap;
 }
-/* En las subpaginas la inicial escarlata se centra verticalmente con el resto del texto */
+/* En las subpaginas la inicial escarlata forma parte del flujo del texto */
 .subpage-title-word {
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
+  display: inline;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .hero-title-initial,
 .subpage-title-initial {
@@ -954,6 +954,7 @@ button,
 .line-divisor-grey {
   width: 100%;
   height: 0;
+  border-radius: 4px;
 }
 .line-divisor-scarlet {
   margin: 24px auto 0 auto;
@@ -963,177 +964,6 @@ button,
   margin: 24px auto 0 auto;
   height: 36px;
   border-top: 3px solid #999;
-}
-
-/* ---------- Biblioteca estrategica ---------- */
-.searchEngine-elements {
-  margin-top: 8px;
-}
-.searchEngine-panel {
-  padding: 16px;
-  background-color: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--button-radius);
-  box-shadow: 0 2px 8px rgba(33, 33, 41, .08);
-}
-.searchEngine-form .form-label {
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: var(--text);
-}
-.searchEngine-form .form-control {
-  border-radius: var(--button-radius) 0 0 var(--button-radius);
-}
-.searchEngine-form .input-group .btn {
-  border-radius: 0 var(--button-radius) var(--button-radius) 0;
-}
-.searchEngine-status {
-  min-height: 1.2em;
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-size: 13px;
-}
-.searchEngine-tree-title {
-  margin: 0 0 10px;
-  font-family: "Cinzel", Georgia, "Times New Roman", serif;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-  color: var(--concrete);
-}
-.searchEngine-tree-list,
-.searchEngine-tree-sublist {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.searchEngine-tree-sublist {
-  margin-left: 18px;
-  padding-left: 10px;
-  border-left: 2px solid var(--line);
-}
-.searchEngine-tree-link,
-.searchEngine-tree-sublink {
-  display: block;
-  width: 100%;
-  padding: 5px 8px;
-  margin-bottom: 2px;
-  color: var(--text);
-  font-size: 14px;
-  text-align: left;
-  background: none;
-  border: 0;
-  border-radius: var(--button-radius);
-  transition: background-color .2s var(--ease), color .2s var(--ease);
-}
-.searchEngine-tree-sublink {
-  color: var(--muted);
-  font-size: 13px;
-}
-.searchEngine-tree-link:hover,
-.searchEngine-tree-link:focus-visible,
-.searchEngine-tree-sublink:hover,
-.searchEngine-tree-sublink:focus-visible {
-  color: #fff;
-  background-color: #26b;
-  outline: none;
-}
-.searchEngine-tree-link:focus-visible,
-.searchEngine-tree-sublink:focus-visible {
-  box-shadow: 0 0 0 2px #ffbf47;
-}
-.searchEngine-tree-link.active,
-.searchEngine-tree-sublink.active {
-  color: #fff;
-  background-color: var(--hot);
-}
-.searchEngine-topics-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.searchEngine-topic {
-  border-width: 1px;
-  border-style: solid;
-  font-weight: 600;
-}
-.searchEngine-topic:hover,
-.searchEngine-topic:focus-visible,
-.searchEngine-topic.active {
-  color: #fff;
-  background-color: var(--primary-btn);
-  border-color: var(--primary-btn);
-}
-.searchEngine-topic:focus-visible {
-  box-shadow: 0 0 0 2px #ffbf47;
-}
-.searchEngine-contents {
-  min-height: 120px;
-}
-.searchEngine-placeholder,
-.searchEngine-empty {
-  margin: 0;
-  color: var(--muted);
-  font-style: italic;
-}
-.searchEngine-article {
-  margin-bottom: 28px;
-  padding: 18px;
-  background-color: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--button-radius);
-  box-shadow: 0 2px 8px rgba(33, 33, 41, .08);
-}
-.searchEngine-topic-title {
-  margin: 0 0 6px;
-  font-family: "Cinzel", Georgia, "Times New Roman", serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-  color: var(--concrete);
-}
-.searchEngine-topic-summary {
-  margin: 0 0 12px;
-  color: var(--muted);
-  line-height: 1.7;
-}
-.searchEngine-section {
-  margin-top: 18px;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
-}
-.searchEngine-section-title {
-  margin: 0 0 10px;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text);
-}
-.searchEngine-paragraph {
-  margin: 0;
-  line-height: 1.7;
-}
-.searchEngine-list {
-  margin: 10px 0 0;
-  padding-left: 20px;
-  line-height: 1.7;
-}
-.searchEngine-figure {
-  margin: 0;
-}
-.searchEngine-image {
-  width: 100%;
-  border-radius: var(--button-radius);
-}
-.searchEngine-caption {
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 12px;
-  text-align: center;
-}
-@media (max-width: 768px) {
-  .searchEngine-section-media {
-    margin-bottom: 12px;
-  }
 }
 
 /* ---------- Formulario de contacto ---------- */

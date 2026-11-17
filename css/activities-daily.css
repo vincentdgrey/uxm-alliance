@@ -284,31 +284,6 @@ tr.bs-current td.bs-event::after {
   color: #fffb00;
   animation: uxm-ad-flag-1-progress 1.8s ease-in-out infinite;
 }
-.ad-schedule tbody tr.ad-flag-2.ad-state-countdown > td.ad-time {
-  background-color: #00ccff65;
-}
-.ad-schedule tbody tr.ad-flag-2.ad-state-progress > td.ad-time {
-  background-color: #00578a;
-  color: #00415f;
-  animation: uxm-ad-flag-2-progress 1.8s ease-in-out infinite;
-}
-.ad-schedule tbody tr.ad-flag-3.ad-state-countdown > td.ad-time {
-  background-color: #ffee00;
-}
-.ad-schedule tbody tr.ad-flag-3.ad-state-progress > td.ad-time {
-  background-color: #006ec9;
-  color: #fff;
-  animation: uxm-ad-flag-3-progress 1.8s ease-in-out infinite;
-}
-.ad-schedule tbody tr.ad-flag-4.ad-state-normal > td.ad-obj {
-  background-color: #004e8d65;
-  color: #003d6e;
-}
-.ad-schedule tbody tr.ad-flag-5.ad-state-normal > td.ad-obj {
-  background-color: #80808049;
-  color: #115a96;
-  border-radius: 4px;
-}
 @keyframes uxm-ad-flag-1-countdown {
   0%, 100% {
     background-color: #ffee00;
@@ -327,6 +302,15 @@ tr.bs-current td.bs-event::after {
     background-color: #ff0000;
   }
 }
+
+.ad-schedule tbody tr.ad-flag-2.ad-state-countdown > td.ad-time {
+  background-color: #00ccff65;
+}
+.ad-schedule tbody tr.ad-flag-2.ad-state-progress > td.ad-time {
+  background-color: #00578a;
+  color: #00415f;
+  animation: uxm-ad-flag-2-progress 1.8s ease-in-out infinite;
+}
 @keyframes uxm-ad-flag-2-progress {
   0%, 100% {
     background-color: #00578a;
@@ -335,6 +319,15 @@ tr.bs-current td.bs-event::after {
     background-color: #00aeff;
   }
 }
+
+.ad-schedule tbody tr.ad-flag-3.ad-state-countdown > td.ad-time {
+  background-color: #ffee00;
+}
+.ad-schedule tbody tr.ad-flag-3.ad-state-progress > td.ad-time {
+  background-color: #006ec9;
+  color: #fff;
+  animation: uxm-ad-flag-3-progress 1.8s ease-in-out infinite;
+}
 @keyframes uxm-ad-flag-3-progress {
   0%, 100% {
     background-color: #006fc96c;
@@ -342,6 +335,18 @@ tr.bs-current td.bs-event::after {
   50% {
     background-color: #006ec9;
   }
+}
+
+.ad-schedule tbody tr.ad-flag-4.ad-state-normal > td.ad-obj {
+  background-color: #ffee0050;
+  color: #115a96;
+  border-radius: 4px;
+}
+
+.ad-schedule tbody tr.ad-flag-5.ad-state-normal > td.ad-obj {
+  background-color: #80808050;
+  color: #115a96;
+  border-radius: 4px;
 }
 @media (prefers-reduced-motion: reduce) {
   .ad-schedule tbody tr.ad-flag-1.ad-state-countdown > td.ad-time,

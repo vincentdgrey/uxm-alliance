@@ -1,0 +1,38 @@
+{
+  "id": "war-preparation",
+  "order": 60,
+  "title": {
+    "es": "Preparación para la Guerra",
+    "en": "War Preparation",
+    "pt": "Preparação para a Guerra",
+    "it": "Preparazione alla Guerra",
+    "fr": "Préparation à la Guerre",
+    "ja": "戦争準備",
+    "ru": "Подготовка к войне",
+    "zh": "战争准备",
+    "tr": "Savaşa Hazırlık"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

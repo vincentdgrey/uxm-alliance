@@ -148,7 +148,7 @@ test("los flags 4 y 5 aplican los colores solicitados en la columna Tarea", () =
   const css = read("css/activities-daily.css");
 
   assert.match(css, /ad-flag-4\.ad-state-normal > td\.ad-obj\s*\{[^}]*background-color:\s*#004e8d65[^}]*color:\s*#003d6e/s);
-  assert.match(css, /ad-flag-5\.ad-state-normal > td\.ad-obj\s*\{[^}]*background-color:\s*#80808049[^}]*color:\s*#006ec9/s);
+  assert.match(css, /ad-flag-5\.ad-state-normal > td\.ad-obj\s*\{[^}]*background-color:\s*#80808049[^}]*color:\s*#115a96/s);
 });
 
 test("las animaciones de los flags recorren los colores indicados y respetan movimiento reducido", () => {

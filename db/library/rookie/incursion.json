@@ -1,0 +1,38 @@
+{
+  "id": "incursion",
+  "order": 30,
+  "title": {
+    "es": "Incursión",
+    "en": "Incursion",
+    "pt": "Incursão",
+    "it": "Incursione",
+    "fr": "Incursion",
+    "ja": "インカージョン",
+    "ru": "Вторжение",
+    "zh": "突袭",
+    "tr": "Aksiyon"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

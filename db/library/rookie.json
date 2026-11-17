@@ -12,27 +12,11 @@
     "zh": "新手",
     "tr": "Yeni Başlayanlar"
   },
-  "summary": {
-    "es": "",
-    "en": "",
-    "pt": "",
-    "it": "",
-    "fr": "",
-    "ja": "",
-    "ru": "",
-    "zh": "",
-    "tr": ""
-  },
-  "keywords": {
-    "es": [],
-    "en": [],
-    "pt": [],
-    "it": [],
-    "fr": [],
-    "ja": [],
-    "ru": [],
-    "zh": [],
-    "tr": []
-  },
-  "sections": []
+  "topics": [
+    "rookie/rules.json",
+    "rookie/caravan.json",
+    "rookie/incursion.json",
+    "rookie/donate.json",
+    "rookie/rallies.json"
+  ]
 }

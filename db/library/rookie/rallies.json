@@ -1,0 +1,38 @@
+{
+  "id": "rallies",
+  "order": 50,
+  "title": {
+    "es": "Rallys",
+    "en": "Rallies",
+    "pt": "Rallies",
+    "it": "Rally",
+    "fr": "Rallies",
+    "ja": "ラリーズ",
+    "ru": "Ралли",
+    "zh": "集会",
+    "tr": "Ralliler"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

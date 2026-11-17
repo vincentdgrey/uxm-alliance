@@ -1,0 +1,38 @@
+{
+  "id": "reserve",
+  "order": 10,
+  "title": {
+    "es": "Reserva",
+    "en": "Reserve",
+    "pt": "Reserva",
+    "it": "Riserva",
+    "fr": "Réserve",
+    "ja": "予備",
+    "ru": "Резерв",
+    "zh": "预备队",
+    "tr": "Rezerv"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

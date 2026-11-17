@@ -1,5 +1,5 @@
-/* Biblioteca estrategica: carga del indice, busqueda y renderizado de temas.
-   Los datos viven en db/library/*.json y se listan en db/library/index.json. */
+/* Biblioteca estrategica: carga jerarquica, busqueda y renderizado de temas.
+   Los grupos viven en db/library/*.json y cada tema en su propia subcarpeta. */
 (function () {
   "use strict";
 
@@ -23,9 +23,7 @@
     return (window.I18N && window.I18N[lang]) || {};
   }
 
-  /* Resuelve el texto de un campo multilingue: idioma activo, ingles y español.
-     Un mapa puede guardar cadenas o listas; en el caso de las listas se
-     devuelve el texto unido. */
+  /* Resuelve un campo multilingue: idioma activo, ingles y español. */
   function localize(field) {
     if (field === null || field === undefined) return "";
     if (typeof field === "string") return field;
@@ -45,8 +43,7 @@
     return "";
   }
 
-  /* Devuelve el valor del idioma activo como lista de textos.
-     Acepta un mapa por idioma, una lista simple o una cadena suelta. */
+  /* Devuelve el valor del idioma activo como lista de textos. */
   function localizeList(field) {
     if (field === null || field === undefined) return [];
 
@@ -79,9 +76,7 @@
       .replace(/[\u0300-\u036f]/g, "");
   }
 
-  /* Une los valores de un campo multilingue en un solo texto plano.
-     Los mapas por idioma se recorren en todos los idiomas para que la
-     busqueda encuentre el contenido tambien escrito en otra lengua. */
+  /* Une los valores de un campo multilingue en un solo texto plano. */
   function flatten(field) {
     if (field === null || field === undefined) return "";
     if (typeof field === "string") return field;
@@ -104,6 +99,10 @@
       if (value) out.push(value);
     }
     return out;
+  }
+
+  function groupTitle(group) {
+    return localize(group.title) || group.id;
   }
 
   function topicTitle(topic) {
@@ -201,26 +200,66 @@
   function loadLibrary() {
     return fetchJson(INDEX_FILE).then(function (index) {
       var files = Array.isArray(index && index.files) ? index.files : [];
-      var requests = files.map(function (file) {
+      var groupRequests = files.map(function (file) {
         return fetchJson(LIBRARY_BASE + file).then(
-          function (topic) { return { topic: topic, error: null }; },
-          function () { return { topic: null, error: file }; }
+          function (group) { return { group: group, error: null }; },
+          function () { return { group: null, error: file }; }
         );
       });
-      return Promise.all(requests).then(function (results) {
-        var topics = [];
+
+      return Promise.all(groupRequests).then(function (groupResults) {
+        var groups = [];
         var errors = [];
-        results.forEach(function (result) {
-          if (result.topic) topics.push(result.topic);
-          else errors.push(result.error);
+        var topicRequests = [];
+
+        groupResults.forEach(function (result) {
+          if (!result.group) {
+            errors.push(result.error);
+            return;
+          }
+
+          var group = result.group;
+          var topicFiles = Array.isArray(group.topics) ? group.topics : [];
+          var topics = [];
+
+          group.order = typeof group.order === "number" ? group.order : 999;
+          group.topicFiles = topicFiles.slice();
+          group.topics = [];
+          groups.push(group);
+
+          group.topicFiles.forEach(function (file) {
+            topicRequests.push(fetchJson(LIBRARY_BASE + file).then(
+              function (topic) {
+                topic.group = group;
+                topic.order = typeof topic.order === "number" ? topic.order : 999;
+                topics.push(topic);
+                group.topics.push(topic);
+              },
+              function () { errors.push(file); }
+            ));
+          });
         });
-        topics.sort(function (a, b) {
-          var orderA = typeof a.order === "number" ? a.order : 999;
-          var orderB = typeof b.order === "number" ? b.order : 999;
-          if (orderA !== orderB) return orderA - orderB;
-          return topicTitle(a).localeCompare(topicTitle(b), currentLang());
+
+        return Promise.all(topicRequests).then(function () {
+          groups.sort(function (a, b) {
+            if (a.order !== b.order) return a.order - b.order;
+            return groupTitle(a).localeCompare(groupTitle(b), currentLang());
+          });
+
+          groups.forEach(function (group) {
+            group.topics.sort(function (a, b) {
+              if (a.order !== b.order) return a.order - b.order;
+              return topicTitle(a).localeCompare(topicTitle(b), currentLang());
+            });
+          });
+
+          var topics = [];
+          groups.forEach(function (group) {
+            group.topics.forEach(function (topic) { topics.push(topic); });
+          });
+
+          return { groups: groups, topics: topics, errors: errors };
         });
-        return { topics: topics, errors: errors };
       });
     });
   }
@@ -245,7 +284,7 @@
     list.setAttribute("role", "group");
 
     topics.forEach(function (topic) {
-      var button = element("button", "btn btn-outline-primary searchEngine-topic", topicTitle(topic));
+      var button = element("button", "searchEngine-topic", topicTitle(topic));
       button.type = "button";
       button.setAttribute("data-topic", topic.id);
       button.addEventListener("click", function () { onSelect(topic.id); });
@@ -255,37 +294,55 @@
     container.appendChild(list);
   }
 
-  function renderTree(container, topics, onSelect) {
+  function renderTree(container, groups, onSelect) {
     clear(container);
     if (!container) return;
 
     var root = element("ul", "searchEngine-tree-list");
     root.setAttribute("role", "list");
 
-    topics.forEach(function (topic) {
-      var item = element("li", "searchEngine-tree-item");
-      var link = element("button", "searchEngine-tree-link", topicTitle(topic));
-      link.type = "button";
-      link.setAttribute("data-tree-topic", topic.id);
-      link.addEventListener("click", function () { onSelect(topic.id); });
-      item.appendChild(link);
+    groups.forEach(function (group) {
+      var item = element("li", "searchEngine-tree-item searchEngine-tree-group");
+      var groupButton = element("button", "searchEngine-tree-group-button", groupTitle(group));
+      var subList = element("ul", "searchEngine-tree-sublist");
+      var subListId = "searchEngine-group-" + group.id;
+      var expanded = false;
 
-      var sections = Array.isArray(topic.sections) ? topic.sections : [];
-      if (sections.length) {
-        var subList = element("ul", "searchEngine-tree-sublist");
-        subList.setAttribute("role", "list");
-        sections.forEach(function (section, position) {
-          var subItem = element("li", "searchEngine-tree-subitem");
-          var subButton = element("button", "searchEngine-tree-sublink", localize(section.title));
-          subButton.type = "button";
-          subButton.setAttribute("data-tree-section", topic.id + ":" + position);
-          subButton.addEventListener("click", function () { onSelect(topic.id, position); });
-          subItem.appendChild(subButton);
-          subList.appendChild(subItem);
-        });
-        item.appendChild(subList);
-      }
+      groupButton.type = "button";
+      groupButton.setAttribute("data-tree-group", group.id);
+      groupButton.setAttribute("aria-expanded", String(expanded));
+      groupButton.setAttribute("aria-controls", subListId);
 
+      subList.id = subListId;
+      subList.setAttribute("role", "list");
+      subList.hidden = !expanded;
+
+      group.topics.forEach(function (topic) {
+        var subItem = element("li", "searchEngine-tree-subitem");
+        var subButton = element("button", "searchEngine-tree-sublink searchEngine-tree-topic", topicTitle(topic));
+        subButton.type = "button";
+        subButton.setAttribute("data-tree-topic", topic.id);
+        subButton.addEventListener("click", function () { onSelect(topic.id); });
+        subItem.appendChild(subButton);
+        subList.appendChild(subItem);
+      });
+
+      groupButton.addEventListener("click", function () {
+        expanded = !expanded;
+        groupButton.setAttribute("aria-expanded", String(expanded));
+        subList.hidden = !expanded;
+      });
+
+      group.button = groupButton;
+      group.subList = subList;
+      group.setExpanded = function (value) {
+        expanded = value;
+        groupButton.setAttribute("aria-expanded", String(expanded));
+        subList.hidden = !expanded;
+      };
+
+      item.appendChild(groupButton);
+      item.appendChild(subList);
       root.appendChild(item);
     });
 
@@ -360,6 +417,10 @@
     article.setAttribute("data-topic", topic.id);
     article.appendChild(element("h2", "searchEngine-topic-title", topicTitle(topic)));
 
+    if (topic.group) {
+      article.appendChild(element("p", "searchEngine-topic-group", groupTitle(topic.group)));
+    }
+
     var summary = topicSummary(topic);
     if (summary) article.appendChild(element("p", "searchEngine-topic-summary", summary));
 
@@ -393,20 +454,21 @@
       article.setAttribute("data-topic", entry.topic.id);
       article.appendChild(element("h2", "searchEngine-topic-title", topicTitle(entry.topic)));
 
+      if (entry.topic.group) {
+        article.appendChild(element("p", "searchEngine-topic-group", groupTitle(entry.topic.group)));
+      }
+
       var summary = topicSummary(entry.topic);
       if (summary) article.appendChild(element("p", "searchEngine-topic-summary", summary));
 
       var sections = Array.isArray(entry.topic.sections) ? entry.topic.sections : [];
 
-      /* Un tema sin secciones se anuncia como vacio, no como sin resultados. */
       if (!sections.length) {
         article.appendChild(element("p", "searchEngine-empty", t.searchEngineTopicEmpty || ""));
         container.appendChild(article);
         return;
       }
 
-      /* Se muestran las secciones que coinciden y las que contienen la
-         coincidencia en su titulo o en su imagen. */
       var shown = 0;
       sections.forEach(function (section, position) {
         var record = entry.sections[position];
@@ -452,7 +514,16 @@
     }
   }
 
-  function selectTopic(id, sectionPosition) {
+  function expandTopicGroup(id) {
+    for (var i = 0; i < topics.length; i++) {
+      var topic = topics[i];
+      if (topic.id !== id || !topic.group || typeof topic.group.setExpanded !== "function") continue;
+      topic.group.setExpanded(true);
+      return;
+    }
+  }
+
+  function selectTopic(id) {
     var topic = null;
     for (var i = 0; i < topics.length; i++) {
       if (topics[i].id === id) { topic = topics[i]; break; }
@@ -460,15 +531,8 @@
     if (!topic) return;
 
     setActiveTopic(id);
+    expandTopicGroup(id);
     renderTopic(byId("searchEngineContents"), topic);
-
-    if (typeof sectionPosition === "number") {
-      var article = byId("searchEngineContents");
-      var block = article ? article.querySelectorAll(".searchEngine-section")[sectionPosition] : null;
-      if (block && block.scrollIntoView) {
-        block.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
   }
 
   function runSearch(query) {
@@ -514,10 +578,10 @@
         selectTopic(id);
       });
 
-      renderTree(byId("searchEngineTree"), topics, function (id, position) {
+      renderTree(byId("searchEngineTree"), result.groups, function (id) {
         if (input) input.value = "";
         currentNeedle = "";
-        selectTopic(id, position);
+        selectTopic(id);
       });
 
       var container = byId("searchEngineContents");

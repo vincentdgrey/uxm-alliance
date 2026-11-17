@@ -1,0 +1,38 @@
+{
+  "id": "raven-upgrade",
+  "order": 20,
+  "title": {
+    "es": "Mejorar del Cuervo",
+    "en": "Raven Upgrade",
+    "pt": "Melhoria do Corvo",
+    "it": "Miglioramento del Corvo",
+    "fr": "Amélioration du Corbeau",
+    "ja": "カラベンの強化",
+    "ru": "Улучшение Вороны",
+    "zh": "乌鸦升级",
+    "tr": "Karga Yukseltme"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

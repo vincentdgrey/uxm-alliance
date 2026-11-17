@@ -1,0 +1,38 @@
+{
+  "id": "hero-growth",
+  "order": 50,
+  "title": {
+    "es": "Crecimiento de Héroes",
+    "en": "Hero Growth",
+    "pt": "Crescimento de Heróis",
+    "it": "Crescita degli Eroi",
+    "fr": "Croissance des Héros",
+    "ja": "英雄の成長",
+    "ru": "Рост героев",
+    "zh": "英雄成长",
+    "tr": "Kahraman Gelişimi"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

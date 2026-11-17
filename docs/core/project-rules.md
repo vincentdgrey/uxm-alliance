@@ -28,6 +28,7 @@ UXM Alliance es un sitio web estático publicado en GitHub Pages. La portada viv
 | `pages/contacto.html` | Contacto |
 | `css/style.css` | Estilos del sitio (se carga después de Bootstrap) |
 | `css/activities-daily.css` | Estilos propios de los cronogramas (solo en actividades diarias) |
+| `css/estrategia.css` | Estilos propios de la Biblioteca Estratégica (solo en Estrategia) |
 | `js/i18n.js` | Núcleo común de textos por idioma (9 idiomas) |
 | `js/i18n/index/i18n.js` | Textos i18n propios de la portada |
 | `js/i18n/actividades-diarias/i18n.js` | Textos i18n propios de Actividades Diarias |
@@ -125,7 +126,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
   - `<h1 id="heroTitle" class="subpage-title">` con el título agrupado en `.subpage-title-word`.
 - La primera letra del título vive en `<span class="subpage-title-initial subpage-title-accent">` y se pinta en rojo escarlata `var(--scarlet)` con relieve propio. El resto de la palabra va en un `<span>` contiguo.
 - `js/app.js` reconstruye el `<h1>` con `setSubpageTitle()` al aplicar el idioma, de modo que la inicial escarlata se conserva en los 9 idiomas.
-- En las subpáginas la inicial escarlata queda **centrada verticalmente** respecto al resto del texto: `.subpage-title-word` usa `display: inline-flex` y `align-items: center`. El hero de portada mantiene su alineación superior con `.hero-title-word { align-items: flex-start; }`.
+- En las subpáginas la inicial escarlata forma parte del flujo normal del texto: `.subpage-title-word` usa `display: inline`. El título puede ajustar sus líneas con `white-space: normal` y `overflow-wrap: anywhere` sin separar visualmente la inicial del resto del contenido. El hero de portada mantiene su alineación superior con `.hero-title-word { align-items: flex-start; }`.
 - El texto del título de subpágina usa el gris claro `#adadad`, tanto en `.subpage-title` como en la regla contextual `#content.subpage-content .subpage-title`.
 - La portada se extiende a todo el ancho de la ventana: `#content.subpage-content` usa `max-width: none`, `width: 100%` y `background-size: cover`.
 - Una capa de contraste (`#content.subpage-content::before`) garantiza la legibilidad del título, el tag y el texto introductorio sobre la ilustración.
@@ -420,33 +421,40 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 - La subpágina `pages/estrategia.html` es la **Biblioteca Estratégica**: su título manual vigente es «Biblioteca Estratégica» y su inicial escarlata es la `B`. La clave i18n `pageStrategyTitle` refleja ese texto en los nueve idiomas y `pageStrategyLead` conserva la introducción táctica vigente.
 - El contenido vive en `<section class="block-content-info">` con tres bloques:
-  - `.searchEngine-elements`: buscador (izquierda) y árbol de temas (derecha), en una rejilla `row g-4` con dos columnas `col-12 col-lg-6 searchEngine-panel`.
-  - `.searchEngine-topics`: botones de acceso rápido a cada tema.
+  - `.searchEngine-elements`: buscador (izquierda) y árbol de temas (derecha), en una rejilla `row g-4` con dos columnas `col-6 col-lg-6 searchEngine-panel`.
+  - `.searchEngine-topics`: enlaces textuales minimalistas de acceso rápido a cada tema; no usan la apariencia de botones Bootstrap.
   - `.searchEngine-contents`: resultado de la búsqueda o contenido del tema seleccionado.
 - Los separadores entre bloques son `.line-divisor-scarlet`, igual que en el resto del sitio.
-- La página carga, en este orden, `../js/i18n.js`, `../js/i18n/estrategia/i18n.js`, `../js/app.js` y `../js/strategy-library.js`. Bootstrap se sigue cargando por CDN.
+- La página carga `../css/style.css` y después `../css/estrategia.css`; los estilos específicos de la biblioteca no se duplican en la hoja compartida. Los scripts se cargan en este orden: `../js/i18n.js`, `../js/i18n/estrategia/i18n.js`, `../js/app.js` y `../js/strategy-library.js`. Bootstrap se sigue cargando por CDN.
 
 ### Datos de la biblioteca
 
-- La fuente de verdad de los temas son los archivos `db/library/<tema>.json`:
-  - `hero.json` → «Héroes».
-  - `rookie.json` → «Novatos».
-  - `kingdom-war.json` → «Guerra de Reinos».
-  - `alliance-duel.json` → «Duelo de Alianzas».
-- `db/library/index.json` es el **índice manual**: enumera en `files` los archivos que se cargan. Para publicar un tema nuevo basta crear su JSON y registrar su nombre en el índice; no hay workflow ni build automático.
-- Cada tema declara:
+- La fuente de verdad usa una jerarquía de **grupos y temas independientes**:
+  - `db/library/index.json` enumera en `files` los manifiestos de grupo.
+  - `db/library/hero.json` → «Hero» → `db/library/hero/*.json`.
+  - `db/library/rookie.json` → «Novatos» → `db/library/rookie/*.json`.
+  - `db/library/kingdom-war.json` → «Guerra de Reinos» → `db/library/kingdom-war/*.json`.
+  - `db/library/alliance-duel.json` → «Duelo de Alianza» → `db/library/alliance-duel/*.json`.
+- Cada manifiesto de grupo declara:
   - `id`: identificador estable, sin traducir.
-  - `order`: posición en los botones, en el árbol y en los resultados.
+  - `order`: posición del grupo en el árbol y los resultados.
+  - `title`: mapa por idioma (`es`, `en`, `pt`, `it`, `fr`, `ja`, `ru`, `zh`, `tr`).
+  - `topics`: lista ordenada de rutas relativas a sus archivos de tema.
+- Cada tema declara:
+  - `id`: identificador estable y único en toda la biblioteca, sin traducir.
+  - `order`: posición del tema dentro de su grupo.
   - `title`, `summary` y `keywords`: mapas por idioma (`es`, `en`, `pt`, `it`, `fr`, `ja`, `ru`, `zh`, `tr`).
   - `sections`: lista de secciones. Cada sección admite `title`, `paragraphs`, `items` e `image` (`src`, `alt`, `caption`).
-- Los temas se ordenan por `order` y, en caso de empate, por el título localizado en orden alfabético.
+- Para publicar un grupo nuevo se crea su manifiesto y su carpeta de temas, y se registra el manifiesto en `index.json`. Para publicar un tema nuevo se crea su JSON en la carpeta del grupo y se añade su ruta a `topics`. No hay workflow ni build automático.
+- Los grupos y temas se ordenan por `order` y, en caso de empate, por el título localizado en orden alfabético.
 - Un tema sin secciones muestra el mensaje traducido `searchEngineTopicEmpty`.
 
-### Carga y búsqueda
+### Carga, árbol y búsqueda
 
-- `js/strategy-library.js` carga `db/library/index.json` y después cada archivo listado mediante `fetch` de recursos del **mismo sitio**. No se usan APIs externas ni peticiones CORS a terceros.
+- `js/strategy-library.js` carga `db/library/index.json`, cada manifiesto de grupo y cada tema mediante `fetch` de recursos del **mismo sitio**. No se usan APIs externas ni peticiones CORS a terceros.
 - La carga funciona sobre HTTP/HTTPS, incluido GitHub Pages; abrir el HTML directamente como `file://` impide el `fetch` local.
 - Un archivo con error no impide la carga del resto: se informa con `searchEngineLoadError`.
+- El árbol muestra los grupos como carpetas y los temas como archivos. Las carpetas se expanden o contraen con un botón nativo que actualiza `aria-expanded` y `aria-controls`; empiezan contraídas. El árbol limita su alto a `250px` y permite desplazamiento vertical. Los temas se seleccionan desde su archivo o desde los enlaces textuales de acceso rápido, que expanden automáticamente su grupo.
 - El texto se resuelve por idioma activo → inglés → español, con la función `localize()`.
 - La búsqueda compara en minúsculas y sin diacríticos latinos (`normalize("NFD")` y el rango `\u0300-\u036f`). Indexa título, resumen, palabras clave, subtítulos, párrafos, listas y textos alternativos de imagen.
 - Al escribir, los resultados muestran solo las secciones coincidentes; al elegir un tema (botón o árbol) se muestra el tema completo.

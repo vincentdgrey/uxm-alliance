@@ -160,8 +160,8 @@
     { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "TCKSUR", "server_time":"" },
     { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CON1SP", "server_time":"" },
     { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CONMGH", "server_time":"" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CRVNUR", "server_time":"" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "OPENUR", "server_time":"" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CRVNUR", "server_time":"", "flag":"4" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "OPENUR", "server_time":"", "flag":"4" },
 
     { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYFALCON", "server_time":"", "flag":"5" },
     { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYELITE",  "server_time":"" },
@@ -214,8 +214,8 @@
     { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDDFT",  "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDLST",  "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDMTC",  "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CRVNUR",   "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "OPENUR",   "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CRVNUR",   "server_time":"", "flag":"4" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "OPENUR",   "server_time":"", "flag":"4" },
 
     { "noday": 6, "day": "Sat", "event": "EQ", "phase": "PH06", "code_task": "EQGEAR", "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "EQ", "phase": "PH06", "code_task": "EQBPRN", "server_time":"" },

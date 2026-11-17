@@ -1,0 +1,38 @@
+{
+  "id": "caravan",
+  "order": 20,
+  "title": {
+    "es": "Caravana",
+    "en": "Caravan",
+    "pt": "Caravana",
+    "it": "Carovana",
+    "fr": "Caravane",
+    "ja": "キャラバン",
+    "ru": "Караван",
+    "zh": "商队",
+    "tr": "Kervan"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

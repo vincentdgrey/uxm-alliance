@@ -8,13 +8,30 @@ const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const readJson = (file) => JSON.parse(read(file));
 
 const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
-
-const libraryFiles = fs
-  .readdirSync(path.join(root, "db/library"))
+const libraryRoot = path.join(root, "db/library");
+const groupFiles = fs
+  .readdirSync(libraryRoot)
   .filter((file) => file.endsWith(".json") && file !== "index.json")
   .sort();
 
-test("el indice de la biblioteca lista los archivos de tema existentes", () => {
+function readGroup(file) {
+  return readJson(path.join("db/library", file));
+}
+
+function readTopic(file) {
+  return readJson(path.join("db/library", file));
+}
+
+function topicFiles() {
+  const files = [];
+  for (const groupFile of groupFiles) {
+    const group = readGroup(groupFile);
+    for (const topicFile of group.topics || []) files.push(topicFile);
+  }
+  return files;
+}
+
+test("el indice de la biblioteca lista los manifiestos de grupo existentes", () => {
   const index = readJson("db/library/index.json");
 
   assert.ok(Array.isArray(index.files), "index.json necesita una lista de archivos");
@@ -22,19 +39,41 @@ test("el indice de la biblioteca lista los archivos de tema existentes", () => {
 
   for (const file of index.files) {
     assert.ok(
-      fs.existsSync(path.join(root, "db/library", file)),
+      fs.existsSync(path.join(libraryRoot, file)),
       `el indice referencia ${file} y el archivo debe existir`
     );
   }
 
-  for (const file of libraryFiles) {
+  for (const file of groupFiles) {
     assert.ok(index.files.includes(file), `${file} debe estar en el indice`);
   }
 });
 
+test("cada grupo declara su estructura y referencia temas existentes", () => {
+  for (const file of groupFiles) {
+    const group = readGroup(file);
+
+    assert.equal(typeof group.id, "string", `${file} necesita id`);
+    assert.ok(group.id.length > 0, `${file} necesita id`);
+    assert.equal(typeof group.order, "number", `${file} necesita order`);
+    assert.ok(Array.isArray(group.topics), `${file} necesita topics`);
+
+    for (const language of languages) {
+      assert.equal(typeof group.title[language], "string", `${file}/${language} necesita title`);
+    }
+
+    for (const topicFile of group.topics) {
+      assert.ok(
+        fs.existsSync(path.join(libraryRoot, topicFile)),
+        `${file} referencia ${topicFile} y el archivo debe existir`
+      );
+    }
+  }
+});
+
 test("cada tema declara la estructura minima de la biblioteca", () => {
-  for (const file of libraryFiles) {
-    const topic = readJson(path.join("db/library", file));
+  for (const file of topicFiles()) {
+    const topic = readTopic(file);
 
     assert.equal(typeof topic.id, "string", `${file} necesita id`);
     assert.ok(topic.id.length > 0, `${file} necesita id`);
@@ -51,43 +90,74 @@ test("cada tema declara la estructura minima de la biblioteca", () => {
   }
 });
 
-test("los identificadores de tema son unicos", () => {
-  const ids = libraryFiles.map((file) => readJson(path.join("db/library", file)).id);
+test("los identificadores de grupo y tema son unicos", () => {
+  const groupIds = groupFiles.map((file) => readGroup(file).id);
+  const topicIds = topicFiles().map((file) => readTopic(file).id);
 
-  assert.equal(new Set(ids).size, ids.length, "no puede haber ids repetidos");
+  assert.equal(new Set(groupIds).size, groupIds.length, "no puede haber ids de grupo repetidos");
+  assert.equal(new Set(topicIds).size, topicIds.length, "no puede haber ids de tema repetidos");
 });
 
-test("los titulos en español son los temas base de la biblioteca", () => {
-  const titles = libraryFiles
-    .map((file) => readJson(path.join("db/library", file)))
-    .sort((a, b) => a.order - b.order)
-    .map((topic) => topic.title.es);
+test("todos los archivos de tema de la biblioteca estan referenciados por un grupo", () => {
+  const referenced = new Set(topicFiles());
+  const stored = [];
+
+  for (const entry of fs.readdirSync(libraryRoot, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    for (const file of fs.readdirSync(path.join(libraryRoot, entry.name))) {
+      if (file.endsWith(".json")) stored.push(`${entry.name}/${file}`);
+    }
+  }
+
+  assert.deepEqual(stored.sort(), Array.from(referenced).sort());
+});
+
+test("los grupos y temas iniciales mantienen el orden planificado", () => {
+  const groups = groupFiles
+    .map((file) => readGroup(file))
+    .sort((a, b) => a.order - b.order);
+  const topics = groups.flatMap((group) =>
+    group.topics
+      .map((file) => readTopic(file))
+      .sort((a, b) => a.order - b.order)
+  );
 
   assert.deepEqual(
-    titles,
-    ["Héroes", "Novatos", "Guerra de Reinos", "Duelo de Alianzas"],
-    "los temas base se mantienen en el orden planificado"
+    groups.map((group) => group.title.es),
+    ["Hero", "Novatos", "Guerra de Reinos", "Duelo de Alianza"]
+  );
+
+  assert.deepEqual(
+    topics.map((topic) => topic.title.es),
+    [
+      "Facciones",
+      "Equipamiento",
+      "Habilidades",
+      "Clases",
+      "Normas",
+      "Caravana",
+      "Incursión",
+      "Donar",
+      "Rallys",
+      "Escudos",
+      "Ataque a Reinos",
+      "Defensa del Reino",
+      "Reserva",
+      "Mejorar del Cuervo",
+      "Desarrollo del Territorio",
+      "Investigación Tecnológica",
+      "Crecimiento de Héroes",
+      "Preparación para la Guerra",
+      "Asalto al Enemigo"
+    ]
   );
 });
 
-test("los temas se ordenan por order y de forma alfabetica en el desempate", () => {
-  const topics = libraryFiles.map((file) => readJson(path.join("db/library", file)));
-
-  const sorted = topics.slice().sort((a, b) => {
-    if (a.order !== b.order) return a.order - b.order;
-    return a.title.es.localeCompare(b.title.es, "es");
-  });
-
-  assert.deepEqual(
-    sorted.map((topic) => topic.id),
-    ["hero", "rookie", "kingdom-war", "alliance-duel"]
-  );
-});
-
-test("la pagina de estrategia carga su script de biblioteca", () => {
+test("la pagina de estrategia carga su script y su hoja de estilos propios", () => {
   const html = read("pages/estrategia.html");
 
   assert.match(html, /<script src="\.\.\/js\/strategy-library\.js"><\/script>/);
+  assert.match(html, /<link rel="stylesheet" href="\.\.\/css\/estrategia\.css">/);
   assert.match(html, /class="searchEngine-elements row g-4"/);
   assert.match(html, /id="searchEngineTopics"/);
   assert.match(html, /id="searchEngineTree"/);
@@ -97,8 +167,8 @@ test("la pagina de estrategia carga su script de biblioteca", () => {
 test("el buscador separa el campo de busqueda y el arbol de temas", () => {
   const html = read("pages/estrategia.html");
 
-  assert.match(html, /col-12 col-lg-6 searchEngine-panel/);
-  assert.equal((html.match(/col-12 col-lg-6 searchEngine-panel/g) || []).length, 2);
+  assert.match(html, /col-6 col-lg-6 searchEngine-panel/);
+  assert.equal((html.match(/col-6 col-lg-6 searchEngine-panel/g) || []).length, 2);
   assert.match(html, /<input type="search" class="form-control" id="searchEngineInput"/);
   assert.match(html, /role="status" aria-live="polite"/);
 });
@@ -172,13 +242,15 @@ test("los textos de la biblioteca estan traducidos en los nueve idiomas", () => 
   assert.match(i18n, /pageStrategyTitle:"Biblioteca Estratégica"/);
 });
 
-test("los estilos de la biblioteca estan definidos", () => {
-  const css = read("css/style.css");
+test("los estilos de la biblioteca estan definidos en su hoja propia", () => {
+  const css = read("css/estrategia.css");
 
   for (const selector of [
     /\.searchEngine-elements/,
     /\.searchEngine-panel/,
     /\.searchEngine-tree-list/,
+    /\.searchEngine-tree-group/,
+    /\.searchEngine-tree-topic/,
     /\.searchEngine-topics-list/,
     /\.searchEngine-contents/,
     /\.searchEngine-article/,
@@ -187,4 +259,46 @@ test("los estilos de la biblioteca estan definidos", () => {
   ]) {
     assert.match(css, selector);
   }
+});
+
+test("el arbol de grupos es accesible y permite expandir las carpetas", () => {
+  const js = read("js/strategy-library.js");
+
+  assert.match(js, /aria-expanded/);
+  assert.match(js, /aria-controls/);
+  assert.match(js, /searchEngine-tree-group/);
+  assert.match(js, /searchEngine-tree-topic/);
+  assert.match(js, /subList\.hidden\s*=\s*!expanded/);
+});
+
+test("los grupos del arbol empiezan contraidos y sus temas ocultos", () => {
+  const js = read("js/strategy-library.js");
+
+  assert.match(js, /var expanded = false/);
+  assert.match(js, /subList\.hidden\s*=\s*!expanded/);
+});
+
+test("el arbol de temas limita su alto y permite desplazamiento vertical", () => {
+  const css = read("css/estrategia.css");
+
+  assert.match(css, /#searchEngineTree\s*\{[^}]*max-height:\s*250px/s);
+  assert.match(css, /#searchEngineTree\s*\{[^}]*overflow-y:\s*auto/s);
+});
+
+test("los temas de acceso rapido se muestran como enlaces textuales sin estilo de boton", () => {
+  const js = read("js/strategy-library.js");
+  const css = read("css/estrategia.css");
+
+  assert.match(js, /element\("button", "searchEngine-topic"/);
+  assert.doesNotMatch(js, /element\("button", "btn btn-outline-primary searchEngine-topic"/);
+  assert.match(css, /\.searchEngine-topic\s*\{[^}]*border:\s*0/s);
+  assert.match(css, /\.searchEngine-topic\s*\{[^}]*background:\s*transparent/s);
+});
+
+test("al seleccionar un tema se expande su grupo para mostrarlo", () => {
+  const js = read("js/strategy-library.js");
+
+  assert.match(js, /function expandTopicGroup\(id\)/);
+  assert.match(js, /topic\.group\.setExpanded\(true\)/);
+  assert.match(js, /expandTopicGroup\(id\)/);
 });

@@ -1,0 +1,38 @@
+{
+  "id": "territory-development",
+  "order": 30,
+  "title": {
+    "es": "Desarrollo del Territorio",
+    "en": "Territory Development",
+    "pt": "Desenvolvimento do Território",
+    "it": "Sviluppo del Territorio",
+    "fr": "Développement du Territoire",
+    "ja": "領土開発",
+    "ru": "Развитие территории",
+    "zh": "领土发展",
+    "tr": "Bölge Geliştirme"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

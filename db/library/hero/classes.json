@@ -1,0 +1,38 @@
+{
+  "id": "classes",
+  "order": 40,
+  "title": {
+    "es": "Clases",
+    "en": "Classes",
+    "pt": "Classes",
+    "it": "Classi",
+    "fr": "Classes",
+    "ja": "クラス",
+    "ru": "Классы",
+    "zh": "职业",
+    "tr": "Sınıflar"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

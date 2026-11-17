@@ -1,0 +1,38 @@
+{
+  "id": "factions",
+  "order": 10,
+  "title": {
+    "es": "Facciones",
+    "en": "Factions",
+    "pt": "Facções",
+    "it": "Fazioni",
+    "fr": "Factions",
+    "ja": "勢力",
+    "ru": "Фракции",
+    "zh": "阵营",
+    "tr": "Fraksiyonlar"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

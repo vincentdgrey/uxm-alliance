@@ -1,0 +1,38 @@
+{
+  "id": "technological-research",
+  "order": 40,
+  "title": {
+    "es": "Investigación Tecnológica",
+    "en": "Technological Research",
+    "pt": "Pesquisa Tecnológica",
+    "it": "Ricerca Tecnologica",
+    "fr": "Recherche Technologique",
+    "ja": "技術研究",
+    "ru": "Технологические исследования",
+    "zh": "技术研究",
+    "tr": "Teknolojik Araştırma"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

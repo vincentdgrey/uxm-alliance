@@ -1,0 +1,38 @@
+{
+  "id": "donate",
+  "order": 40,
+  "title": {
+    "es": "Donar",
+    "en": "Donate",
+    "pt": "Doar",
+    "it": "Donare",
+    "fr": "Donner",
+    "ja": "寄付",
+    "ru": "Пожертвовать",
+    "zh": "捐赠",
+    "tr": "Bağış Yap"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

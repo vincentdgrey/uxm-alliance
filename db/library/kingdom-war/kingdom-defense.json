@@ -1,0 +1,38 @@
+{
+  "id": "kingdom-defense",
+  "order": 30,
+  "title": {
+    "es": "Defensa del Reino",
+    "en": "Kingdom Defense",
+    "pt": "Defesa do Reino",
+    "it": "Difesa del Regno",
+    "fr": "Défense du Royaume",
+    "ja": "王国防衛",
+    "ru": "Оборона королевства",
+    "zh": "王国防御",
+    "tr": "Krallık Savunması"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

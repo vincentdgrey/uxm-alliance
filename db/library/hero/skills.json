@@ -1,0 +1,38 @@
+{
+  "id": "skills",
+  "order": 30,
+  "title": {
+    "es": "Habilidades",
+    "en": "Skills",
+    "pt": "Habilidades",
+    "it": "Abilità",
+    "fr": "Compétences",
+    "ja": "スキル",
+    "ru": "Навыки",
+    "zh": "技能",
+    "tr": "Yetenekler"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

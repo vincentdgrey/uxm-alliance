@@ -239,9 +239,12 @@ test("el banner de subpágina usa un contenedor dedicado fuera del bloque inform
   assert.doesNotMatch(html, /<section class="block-content-info">\s*<h2 class="sibtitle-info banner-subpage"/);
 });
 
-test("la inicial escarlata del título de subpágina se centra verticalmente", () => {
+test("la inicial escarlata del título de subpágina forma parte del flujo del texto y permite ajustar lineas", () => {
   const css = read("css/style.css");
-  assert.match(css, /\.subpage-title-word\s*\{[^}]*align-items:\s*center/s);
+  assert.match(css, /\.subpage-title-word\s*\{[^}]*display:\s*inline/s);
+  assert.doesNotMatch(css, /\.subpage-title-word\s*\{[^}]*display:\s*inline-flex/s);
+  assert.match(css, /\.subpage-title-word\s*\{[^}]*white-space:\s*normal/s);
+  assert.match(css, /\.subpage-title-word\s*\{[^}]*overflow-wrap:\s*anywhere/s);
   assert.match(css, /\.hero-title-word\s*\{[^}]*align-items:\s*flex-start/s);
 });
 
@@ -356,6 +359,16 @@ test("la subpagina carga un unico script propio y su hoja de estilos", () => {
 
   assert.ok(fs.existsSync(path.join(root, "js/activities-daily.js")));
   assert.ok(fs.existsSync(path.join(root, "css/activities-daily.css")));
+});
+
+test("estrategia carga su hoja de estilos propia después de la compartida", () => {
+  const html = read("pages/estrategia.html");
+  const sharedPos = html.indexOf('href="../css/style.css"');
+  const strategyPos = html.indexOf('href="../css/estrategia.css"');
+
+  assert.ok(sharedPos >= 0 && strategyPos >= 0);
+  assert.ok(sharedPos < strategyPos, "estrategia.css debe cargarse después de style.css");
+  assert.ok(fs.existsSync(path.join(root, "css/estrategia.css")));
 });
 
 test("los scripts de calendario sustituidos ya no existen", () => {

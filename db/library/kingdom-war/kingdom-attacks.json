@@ -1,0 +1,38 @@
+{
+  "id": "kingdom-attacks",
+  "order": 20,
+  "title": {
+    "es": "Ataque a Reinos",
+    "en": "Kingdom Attacks",
+    "pt": "Ataque a Reinos",
+    "it": "Attacchi ai Regni",
+    "fr": "Attaques de Royaume",
+    "ja": "王国攻撃",
+    "ru": "Атака на королевства",
+    "zh": "王国攻击",
+    "tr": "Krallık Saldırıları"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}
