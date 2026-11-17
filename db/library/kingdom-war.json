@@ -1,0 +1,38 @@
+{
+  "id": "kingdom-war",
+  "order": 30,
+  "title": {
+    "es": "Guerra de Reinos",
+    "en": "Kingdom War",
+    "pt": "Guerra de Reinos",
+    "it": "Guerra dei Regni",
+    "fr": "Guerre des Royaumes",
+    "ja": "キングダムウォー",
+    "ru": "Война Королевств",
+    "zh": "王国战争",
+    "tr": "Krallık Savaşı"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

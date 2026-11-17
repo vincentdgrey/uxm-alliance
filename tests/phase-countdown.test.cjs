@@ -119,9 +119,9 @@ function phaseCounters(result) {
 
 test("la fase actual muestra el tiempo restante hasta el reset de las 00:00:00 UTC-2", () => {
   const cases = [
-    { time: "2026-11-10T12:00:00Z", expected: "T- 14:00:00" },
-    { time: "2026-11-10T12:34:56Z", expected: "T- 13:25:04" },
-    { time: "2026-11-11T01:59:59Z", expected: "T- 00:00:01" }
+    { time: "2026-11-10T12:00:00Z", expected: "T-14:00:00" },
+    { time: "2026-11-10T12:34:56Z", expected: "T-13:25:04" },
+    { time: "2026-11-11T01:59:59Z", expected: "T-00:00:01" }
   ];
 
   for (const item of cases) {
@@ -133,7 +133,7 @@ test("la fase actual muestra el tiempo restante hasta el reset de las 00:00:00 U
 
 test("la cuenta atras comienza en 24 horas al iniciar la fase", () => {
   const result = render(Date.parse("2026-11-10T02:00:00Z"));
-  assert.match(phaseTitles(result)[0], /T- 24:00:00$/);
+  assert.match(phaseTitles(result)[0], /T-24:00:00$/);
 });
 
 test("los paneles futuros no muestran contador de final de fase", () => {
@@ -142,30 +142,30 @@ test("los paneles futuros no muestran contador de final de fase", () => {
 
   assert.equal(titles.length, 7);
   for (let i = 1; i < titles.length; i++) {
-    assert.doesNotMatch(titles[i], /T- \d{2}:\d{2}:\d{2}/, "panel futuro " + i);
+    assert.doesNotMatch(titles[i], /T-\d{2}:\d{2}:\d{2}/, "panel futuro " + i);
   }
 });
 
 test("el contador de fase se actualiza cada segundo con el temporizador compartido", () => {
   let nowMs = Date.parse("2026-11-10T12:00:00Z");
   const result = render(nowMs);
-  assert.match(phaseTitles(result)[0], /T- 14:00:00$/);
+  assert.match(phaseTitles(result)[0], /T-14:00:00$/);
 
   nowMs += 1000;
   result.update(nowMs);
-  assert.match(phaseTitles(result)[0], /T- 13:59:59$/);
+  assert.match(phaseTitles(result)[0], /T-13:59:59$/);
 });
 
 test("al cruzar el reset se reconstruye el calendario con la nueva fase", () => {
   let nowMs = Date.parse("2026-11-11T01:59:59Z");
   const result = render(nowMs);
-  assert.match(phaseTitles(result)[0], /T- 00:00:01$/);
+  assert.match(phaseTitles(result)[0], /T-00:00:01$/);
 
   nowMs += 1000;
   result.update(nowMs);
   const titlesAfterReset = phaseTitles(result);
   assert.ok(titlesAfterReset.length >= 1);
-  assert.match(titlesAfterReset[0], /T- 00:00:01$/);
+  assert.match(titlesAfterReset[0], /T-00:00:01$/);
 });
 
 test("solo la fase actual monta un nodo de contador propio", () => {
@@ -173,7 +173,7 @@ test("solo la fase actual monta un nodo de contador propio", () => {
   const counters = phaseCounters(result);
 
   assert.equal(counters.length, 1);
-  assert.match(counters[0].textContent, /T- \d{2}:\d{2}:\d{2}$/);
+  assert.match(counters[0].textContent, /T-\d{2}:\d{2}:\d{2}$/);
 });
 
 test("la actualizacion del contador no reconstruye el titulo de la fase", () => {
@@ -186,5 +186,5 @@ test("la actualizacion del contador no reconstruye el titulo de la fase", () => 
 
   const counters = phaseCounters(result);
   assert.equal(counters.length, 1);
-  assert.equal(phaseTitles(result)[0].slice(0, titleBefore.length - 9), titleBefore.slice(0, titleBefore.length - 9));
+  assert.equal(phaseTitles(result)[0].slice(0, titleBefore.length - 8), titleBefore.slice(0, titleBefore.length - 8));
 });

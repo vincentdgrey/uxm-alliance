@@ -131,12 +131,13 @@ test("el ruso usa cirilico y no mezcla CJK", () => {
 
 test("las traducciones respetan los valores y codigos del juego", () => {
   const i18n = loadAllI18n();
-  const canonical = i18n.en.adActivities;
+  const canonical = i18n.es.adActivities;
   const protectedTokens = ["UR", "SSR", "SR", "T8", "150%", "24H", "1.1M", "2.2M", "100K", "1.5M", "35"];
 
   for (const language of languages) {
     const activities = i18n[language].adActivities;
     for (const code of Object.keys(canonical)) {
+      if (!activities[code]) continue;
       const sourceText = String(canonical[code].objetive + " " + canonical[code].resource);
       const translatedText = String(activities[code].objetive + " " + activities[code].resource);
       for (const token of protectedTokens) {

@@ -256,7 +256,7 @@ test("todas las subpáginas usan el estándar de portada subpage-content", () =>
     { file: "pages/actividades-diarias.html", theme: "subpage-daily", initial: "A" },
     { file: "pages/normas-uxm.html", theme: "subpage-rules", initial: "N" },
     { file: "pages/video-tutoriales.html", theme: "subpage-tutorials", initial: "V" },
-    { file: "pages/estrategia.html", theme: "subpage-strategy", initial: "E" },
+    { file: "pages/estrategia.html", theme: "subpage-strategy", initial: "B" },
     { file: "pages/contacto.html", theme: "subpage-contact", initial: "C" }
   ];
 
@@ -433,13 +433,13 @@ test("los mensajes de supervivencia y de duelo de alianzas se traducen en todos 
   assert.match(i18n, /allianceMessage:"Listado de actividades basadas en el Duelo de Alianzas, te permitirá realizar las actividades del dia actual y futuro/);
 });
 
-test("los titulos del duelo de alianzas muestran el reset local en formato MM/DD HH:mm", () => {
+test("los titulos del duelo de alianzas muestran el reset local en formato YYYY.MM.DD HH:mm", () => {
   const js = read("js/activities-daily.js");
 
   assert.match(js, /function phaseTitle\(noday\)/);
   assert.match(js, /function resetTitle\(resetMs\)/);
   assert.match(js, /var reset = new Date\(resetMs\)/);
-  assert.match(js, /return "· " \+ pad\(reset\.getMonth\(\) \+ 1\) \+ "\/" \+ pad\(reset\.getDate\(\)\) \+ " " \+/);
+  assert.match(js, /return pad\(reset\.getUTCFullYear\(\)\) \+ "\." \+ pad\(reset\.getMonth\(\) \+ 1\) \+ "\." \+ pad\(reset\.getDate\(\)\) \+ " " \+/);
   assert.match(js, /pad\(reset\.getHours\(\)\) \+ ":" \+ pad\(reset\.getMinutes\(\)\)/);
   assert.match(js, /var resetMs = startDayMs \+ k \* 86400000 \+ SRC_TO_UTC_MS/);
   assert.match(js, /phase\.className = "ad-title-phase"/);
@@ -464,13 +464,15 @@ test("el titulo del duelo de alianzas alinea la fase a la izquierda y el reset a
   assert.match(css, /\.ad-arrow \{[^}]*flex:\s*0 0 auto/s);
 });
 
-test("solo el contador de fase usa el verde claro y el titulo mantiene el gris claro", () => {
+test("solo el contador de fase usa color propio y el titulo mantiene el gris claro", () => {
   const css = read("css/activities-daily.css");
   const js = read("js/activities-daily.js");
 
-  assert.match(css, /\.ad-title-phase \{[^}]*color:\s*#eee/s);
-  assert.match(css, /\.ad-countdown \{[^}]*color:\s*#89ff90/s);
-  assert.doesNotMatch(css, /\.ad-countdown \{[^}]*color:\s*#89ff90[^}]*#89ff90/s);
+  assert.match(css, /\.ad-title-phase \{[^}]*text-align:\s*left/s);
+  assert.match(css, /\.ad-countdown \{[^}]*color:\s*#ffffffad/s);
+  assert.match(css, /\.ad-countdown \{[^}]*font-size:\s*1rem/s);
+  assert.match(css, /\.ad-countdown \{[^}]*font-family:\s*"JetBrainsMono"/s);
+  assert.doesNotMatch(css, /\.ad-countdown \{[^}]*color:\s*#ffffffad[^}]*#ffffffad/s);
 
   /* El contador se monta en su propio nodo y se actualiza sin rehacer el titulo. */
   assert.match(js, /phaseCounter\.className = "ad-countdown"/);
@@ -478,16 +480,18 @@ test("solo el contador de fase usa el verde claro y el titulo mantiene el gris c
   assert.doesNotMatch(js, /currentPhaseEl\.textContent = phaseTitle\(lastDay\)/);
 });
 
-test("las dos tablas usan Inter con peso base 100 y conservan las negritas", () => {
+test("las dos tablas usan JetBrainsMono Thin local y conservan las negritas", () => {
   const css = read("css/activities-daily.css");
 
   /* La fuente se sirve de forma local, sin depender de la red. */
-  assert.match(css, /@font-face \{[^}]*font-family:\s*"Inter"/s);
-  assert.match(css, /@font-face \{[^}]*font-weight:\s*100/s);
-  assert.match(css, /@font-face \{[^}]*src:\s*url\("\.\.\/media\/fonts\/inter-100\.woff2"\) format\("woff2"\)/s);
+  assert.match(css, /@font-face \{[^}]*font-family:\s*"JetBrainsMono"/s);
+  assert.match(css, /@font-face \{[^}]*font-style:\s*thin[^}]*font-weight:\s*100/s);
+  assert.match(css, /@font-face \{[^}]*src:\s*url\("\.\.\/media\/fonts\/JetBrainsMono-Thin\.woff2"\) format\("woff2"\)/s);
 
-  assert.match(css, /\.bs-schedule \{[^}]*font:\s*100 13px\/1\.45 "Inter", Arial, Helvetica, sans-serif/s);
-  assert.match(css, /\.ad-schedule \{[^}]*font:\s*100 13px\/1\.45 "Inter", Arial, Helvetica, sans-serif/s);
+  assert.match(css, /\.bs-schedule \{[^}]*font-family:\s*'JetBrainsMono', system-ui, -apple-system, 'Segoe UI', sans-serif/s);
+  assert.match(css, /\.ad-schedule \{[^}]*font-family:\s*'JetBrainsMono', system-ui, -apple-system, 'Segoe UI', sans-serif/s);
+  assert.match(css, /\.bs-schedule \{[^}]*font-variant-numeric:\s*tabular-nums/s);
+  assert.match(css, /\.ad-schedule \{[^}]*font-variant-numeric:\s*tabular-nums/s);
   assert.doesNotMatch(css, /\.bs-schedule \{[^}]*Roboto/s);
   assert.doesNotMatch(css, /\.ad-schedule \{[^}]*Roboto/s);
 
@@ -569,7 +573,8 @@ test("el contador del duelo de alianzas usa server_time con server_duration", ()
   assert.match(js, /serverCounterState\(r\.server_time, r\.server_duration, nowSec\) \|\| "—"/);
 
   /* El tick mantiene el mismo estado para las filas con hora propia. */
-  assert.match(js, /counter\.td\.textContent = serverCounterState\(counter\.serverTime, counter\.serverDuration, nowSec\)/);
+  assert.match(js, /text = serverCounterState\(counter\.serverTime, counter\.serverDuration, nowSec\) \|\| "—"/);
+  assert.match(js, /counter\.td\.textContent = text/);
 });
 
 test("los datos de los cronogramas viven en el script unificado y no dependen de red", () => {
@@ -608,10 +613,10 @@ test("las variables de datos son la fuente de verdad y estan completas", () => {
 
   assert.equal(activities.length, 6);
   assert.equal(calendar.length, 42);
-  assert.equal(activityCode.length, 45);
+  assert.equal(activityCode.length, 46);
   assert.equal(eventCode.length, 8);
   assert.equal(phases.length, 7);
-  assert.equal(daily.length, 78);
+  assert.equal(daily.length, 80);
 
   /* Cada variable se declara una sola vez. */
   for (const name of ["ACTIVITIES", "CALENDAR", "ACTIVITY_CODE", "EVENT_CODE", "PHASES", "DAILY"]) {
@@ -619,9 +624,9 @@ test("las variables de datos son la fuente de verdad y estan completas", () => {
     assert.equal(found.length, 1, name + " debe declararse una sola vez");
   }
 
-  /* La columna de recurso existe en ACTIVITY_CODE. */
-  assert.ok(activityCode.every((a) => "resource" in a));
-  assert.ok(activityCode.some((a) => "resource" in a));
+  /* Los textos de actividad no se duplican en ACTIVITY_CODE. */
+  assert.ok(activityCode.every((a) => !("objetive" in a)));
+  assert.ok(activityCode.every((a) => !("resource" in a)));
 });
 
 test("los datos de los cronogramas mantienen su integridad referencial", () => {
@@ -680,7 +685,7 @@ test("los datos de los cronogramas mantienen su integridad referencial", () => {
   /* Toda hora propia del servidor declara su duracion en formato hh:mm:ss. */
   const clock = /^([0-9]{2}):([0-9]{2}):([0-9]{2})$/;
   const serverRows = daily.filter((row) => row.server_time);
-  assert.equal(serverRows.length, 9);
+  assert.equal(serverRows.length, 10);
   for (const row of serverRows) {
     assert.match(row.server_time, clock, "server_time de " + row.code_task + " debe usar hh:mm:ss");
     assert.match(row.server_duration, clock, "server_duration de " + row.code_task + " debe usar hh:mm:ss");
@@ -742,7 +747,7 @@ test("la tabla del duelo de alianzas usa cinco columnas con la imagen de la tare
   /* Orden de las columnas: hora, icono, tarea, recurso, evento. */
   assert.match(js, /appendCell\(tr, timeTxt, "ad-time"\)/);
   assert.match(js, /appendIconCell\(tr, "ad-task-icon", r\.code_task\)/);
-  assert.match(js, /appendCell\(tr, a \? activityText\(r\.code_task, "objetive"\) : r\.code_task, "ad-obj"\)/);
+  assert.match(js, /appendCell\(tr, a \? \(activityText\(r\.code_task, "objetive"\) \|\| r\.code_task\) : r\.code_task, "ad-obj"\)/);
   assert.match(js, /appendCell\(tr, a \? activityText\(r\.code_task, "resource"\) : "", "ad-resource"\)/);
   assert.match(js, /appendCell\(tr, eventLabel\(r\), "ad-event"\)/);
 
@@ -754,7 +759,7 @@ test("la tabla del duelo de alianzas usa cinco columnas con la imagen de la tare
   assert.doesNotMatch(js, /ad-phase/);
   assert.doesNotMatch(css, /\.ad-phase/);
 
-  /* El recurso se toma de la traduccion con respaldo en los datos. */
+  /* El recurso se toma de la traduccion con respaldo canonico en español. */
   assert.match(js, /activityText\(r\.code_task, "resource"\)/);
 });
 
@@ -1146,7 +1151,7 @@ test("el bloque de bonos de la alianza se genera desde los datos y se localiza e
   assert.match(js, /name\.id = bonus\.key/);
 
   assert.match(i18n, /bonusAlliance:"Bonos Tecnología de la Alianza"/);
-  assert.match(i18n, /bonusInProgress:"En curso"/);
+  assert.match(i18n, /bonusInProgress:"Donación En curso"/);
   assert.equal((i18n.match(/\bbonusInProgress:"/g) || []).length, 9);
 
   /* El estado "en curso" se localiza mediante el atributo data-progress. */
@@ -1385,7 +1390,7 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
 
   /* El codigo de cada actividad debe estar en el mapa de los 9 idiomas. */
   const activityCode = [...js.matchAll(/"code": "([A-Z0-9]+)"/g)].map((m) => m[1]);
-  assert.equal(activityCode.length, 45);
+  assert.equal(activityCode.length, 46);
 
   for (const language of languages) {
     const texts = i18n[language];
@@ -1406,21 +1411,24 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
   }
 });
 
-test("el render del duelo de alianzas usa las traducciones con respaldo en los datos", () => {
+test("el render del duelo de alianzas usa las traducciones con respaldo canonico en español", () => {
   const js = read("js/activities-daily.js");
 
-  /* El ingles actua como respaldo antes de recurrir al dato original. */
+  /* El ingles actua como respaldo antes de recurrir al texto canonico. */
   assert.match(js, /var T_EN = window\.I18N\[FALLBACK_LANG\] \|\| T/);
+  assert.match(js, /var T_ES = window\.I18N\.es \|\| T/);
   assert.match(js, /function activityText\(code, field\)/);
   assert.match(js, /function phaseText\(phase\)/);
   assert.match(js, /T\.adActivities && T\.adActivities\[code\]/);
   assert.match(js, /T_EN\.adActivities && T_EN\.adActivities\[code\]/);
+  assert.match(js, /T_ES\.adActivities && T_ES\.adActivities\[code\]/);
   assert.match(js, /T\.adPhases && T\.adPhases\[phase\]/);
   assert.match(js, /T\.adEvents && T\.adEvents\[r\.event\]/);
 
-  /* Los codigos y los datos de origen no se traducen. */
+  /* Los codigos y los datos estructurales no se traducen. */
   assert.match(js, /actMap\[a\.code\] = a/);
   assert.match(js, /activity\.icon/);
+  assert.doesNotMatch(js, /activity\[field\]/);
 });
 
 test("las fases y los eventos se muestran traducidos en el duelo de alianzas", () => {

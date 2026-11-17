@@ -69,7 +69,7 @@ test("los codigos de actividades coinciden con ACTIVITY_CODE", () => {
   vm.createContext(context);
   vm.runInContext("var ACTIVITY_CODE = " + match[1], context);
   const rows = context.ACTIVITY_CODE;
-  assert.equal(rows.length, 45);
+  assert.equal(rows.length, 46);
 
   const i18n = loadI18n("actividades-diarias");
   const expectedCodes = rows.map((row) => row.code);
@@ -93,8 +93,13 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
     ELIXIR: { objetive: "Puntos por Captura de Edificios", resource: "Castillo del Elixir" },
     CRVNUR: { objetive: "Envía Caravanas UR", resource: "4 Caravanas" },
     OPENUR: { objetive: "Ejecuta Operaciones Encubiertas UR", resource: "7 Operaciones Encubiertas" },
-    SCRAMBLE: { objetive: "100K Puntos de Honor, Captura/Defiende una Granja en el lodo", resource: "Granjas de la Ciudad Real en el Lodo" },
-    KWAR: { objetive: "1.5M Puntos de Honor, Derrota/Pierde/Sana Soldados", resource: "Guerra de Reinos" }
+    ANTX: { objetive: "Consume Antitoxinas x660", resource: "Compra Suministros Antidoto" },
+    HERBS: { objetive: "Recolecta Hierbas x60, todo el día", resource: "Jardín de Hierbas Nv.10, 8H, 1.1M" },
+    GRAIN: { objetive: "Recolecta Trigo/Madera x100", resource: "Granja Nv.10, 6.5H, 2.2M" },
+    CONMGH: { objetive: "Aumenta el Poder de Un Edificio", resource: "Prefiere un tiempo de construcción más corto" },
+    SCRAMBLE: { objetive: "100K Puntos de Honor, Captura/Defiende una Granja en el lodo", resource: "Granjas de la Ciudad Real" },
+    KWAR: { objetive: "1.5M Puntos de Honor, Derrota/Pierde/Cura Soldados", resource: "Guerra de Reinos (KvK)" },
+    CUMULUS: { objetive: "Recolecta Cristal Purificado en Cúmulos, 30min", resource: "Evento Valle Cúmulos de Cristal" }
   };
 
   for (const [code, values] of Object.entries(expected)) {
@@ -102,11 +107,11 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
   }
 });
 
-test("todas las traducciones de actividades cubren los 45 codigos", () => {
+test("todas las traducciones de actividades cubren los 46 codigos", () => {
   const i18n = loadI18n("actividades-diarias");
   for (const lang of languages) {
     const activities = i18n[lang].adActivities;
-    assert.equal(Object.keys(activities).length, 45, lang);
+    assert.equal(Object.keys(activities).length, 46, lang);
     for (const code of Object.keys(activities)) {
       assert.equal(typeof activities[code].objetive, "string", `${lang}/${code}`);
       assert.equal(typeof activities[code].resource, "string", `${lang}/${code}`);

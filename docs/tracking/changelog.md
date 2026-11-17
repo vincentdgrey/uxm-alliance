@@ -1,5 +1,11 @@
 # Changelog
 
+## [261115a] - 2026-11-15
+
+### Changed
+- `ACTIVITY_CODE` conserva únicamente los datos estructurales de las actividades (`group`, `icon`, `point` y `codebs`). Los campos `objetive` y `resource` se eliminan de esta fuente de datos.
+- `texts.es.adActivities` de `js/i18n/actividades-diarias/i18n.js` pasa a ser la fuente de verdad de los textos en español. La resolución en la interfaz mantiene el orden idioma activo → inglés → español canónico.
+
 ## [261113a] - 2026-11-13
 
 ### Added

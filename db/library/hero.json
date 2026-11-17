@@ -1,0 +1,38 @@
+{
+  "id": "hero",
+  "order": 10,
+  "title": {
+    "es": "Héroes",
+    "en": "Heroes",
+    "pt": "Heróis",
+    "it": "Eroi",
+    "fr": "Héros",
+    "ja": "ヒーロー",
+    "ru": "Герои",
+    "zh": "英雄",
+    "tr": "Kahramanlar"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}

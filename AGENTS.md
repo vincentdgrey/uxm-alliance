@@ -27,7 +27,8 @@ uxm-alliance/
 |   ├── i18n/      # Textos i18n específicos de cada página
 |   ├── app.js     # Lógica sitio web
 |   ├── alliance-bonuses.js  # Datos de los bonos de la Alianza
-|   └── activities-daily.js  # Cronogramas y datos de Actividades Diarias
+|   ├── activities-daily.js  # Cronogramas y datos de Actividades Diarias
+|   └── strategy-library.js  # Buscador y árbol de la Biblioteca Estratégica
 ├── media          # archivos multimedia
 |   └── video-particles-cyan.mp4  # video cover pagina de inicio
 ├── pages/         # Subpáginas del sitio web
@@ -42,6 +43,7 @@ uxm-alliance/
 ├── AGENTS.md          # Este archivo - configuración para agentes
 ├── README.md          # Descripción breve del proyecto
 ├── db/                # Datos históricos en JSON (OBSOLETOS, no los carga el sitio)
+|   └── library/       # ACTIVO: biblioteca estratégica (temas en JSON + índice manual)
 ├── prompt/            # Instrucciones de sesión
 └── docs/              # Documentación del proyecto
     ├── architecture/  # Decisiones de diseño y patrones
@@ -60,10 +62,11 @@ uxm-alliance/
 - Para el sitio web, el código manual vigente en `index.html`, `pages/*.html`, `css/style.css`, `js/app.js`, `js/i18n.js` y `js/i18n/<página>/i18n.js` es la fuente de verdad.
 - Cuando el usuario informe que realizó cambios manuales en HTML, CSS, JavaScript o traducciones, revisar el diff, respetarlos sin revertirlos ni sobrescribirlos y actualizar `docs/core/project-rules.md` con el comportamiento resultante.
 - Si una regla anterior contradice al código manual, prevalece el código manual y la regla obsoleta debe corregirse.
-- `db/*.json` está obsoleto: se conserva como histórico y no lo carga el sitio.
+- `db/*.json` está obsoleto: se conserva como histórico y no lo carga el sitio. Excepción activa: `db/library/` alimenta la Biblioteca Estratégica (ver `docs/core/project-rules.md`).
 - La fuente de verdad de los datos de actividades son las variables de `js/activities-daily.js`.
 - La fuente de verdad de los datos de los bonos de la Alianza es `window.ALLIANCE_BONUSES` en `js/alliance-bonuses.js`; sus textos traducibles siguen en `js/i18n/index/i18n.js`.
 - La fuente de verdad de los textos i18n es el conjunto `js/i18n.js` (núcleo común) más `js/i18n/<página>/i18n.js`. Las ediciones manuales de `texts.es` se conservan y son la base para propagar cambios a los demás idiomas.
+- La fuente de verdad de los temas de la Biblioteca Estratégica son los archivos `db/library/<tema>.json`; el índice manual `db/library/index.json` los enumera.
 
 ---
 
@@ -134,7 +137,7 @@ La fuente de verdad de los datos de actividades son las variables declaradas en 
 |---|---|
 | `ACTIVITIES` | Actividades y objetivos de Battle Survival (6 registros) |
 | `CALENDAR` | Calendario semanal de Battle Survival (42 slots, 6 por día) |
-| `ACTIVITY_CODE` | Actividades codificadas del Duelo de Alianzas (objetive, resource, point, codebs) |
+| `ACTIVITY_CODE` | Datos estructurales de las actividades codificadas del Duelo de Alianzas (group, icon, point, codebs) |
 | `EVENT_CODE` | Definición de eventos (es/en) |
 | `PHASES` | Fases del Duelo de Alianzas (P00-P06) |
 | `DAILY` | Actividades diarias del Duelo de Alianzas por día (noday, server_time, server_duration) |
@@ -155,3 +158,19 @@ Los archivos `db/*.json` se conservan como histórico y **no los carga el sitio*
 | `db/alliance-duel-phase.json` | Obsoleto: equivalente a `PHASES` |
 
 > Al modificar los datos, editar las variables de `js/activities-daily.js`. El sitio es estático y no usa `fetch`, por lo que los datos no se cargan desde JSON en tiempo de ejecución.
+
+### Excepción activa: db/library/
+
+`db/library/` **sí** lo carga el sitio y es la fuente de verdad de la Biblioteca Estratégica:
+
+| Archivo | Estado |
+|---|---|
+| `db/library/index.json` | Índice manual: enumera los archivos de tema que se cargan |
+| `db/library/hero.json` | Tema «Héroes» |
+| `db/library/rookie.json` | Tema «Novatos» |
+| `db/library/kingdom-war.json` | Tema «Guerra de Reinos» |
+| `db/library/alliance-duel.json` | Tema «Duelo de Alianzas» |
+
+- Para añadir un tema: crear el JSON en `db/library/` y registrar su nombre en `db/library/index.json`.
+- Cada tema declara `id`, `order`, `title`, `summary`, `keywords` y `sections`, con los textos por idioma.
+- La carga la realiza `js/strategy-library.js` con `fetch` de archivos locales del mismo sitio (sin API externa ni CORS de terceros).

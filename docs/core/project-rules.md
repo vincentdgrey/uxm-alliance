@@ -38,8 +38,10 @@ UXM Alliance es un sitio web estático publicado en GitHub Pages. La portada viv
 | `js/app.js` | Lógica del sitio: navegación, idiomas, contenido y video |
 | `js/alliance-bonuses.js` | Datos de los bonos de la Alianza (`window.ALLIANCE_BONUSES`) |
 | `js/activities-daily.js` | Script único de la subpágina de actividades diarias: datos, cronogramas y utilidades |
+| `js/strategy-library.js` | Buscador, árbol de temas y renderizado de la Biblioteca Estratégica |
 | `js/video-cards.js` | Tarjetas de video de YouTube (solo en video tutoriales) |
 | `media/subpages/*.svg` | Fondos temáticos de las portadas de subpágina |
+| `db/library/*.json` | Temas de la Biblioteca Estratégica e índice manual |
 | `tests/ui-contract.test.cjs` | Contrato funcional y visual del sitio |
 
 **Todas las subpáginas viven en `./pages/`.** Solo `index.html` permanece en la raíz.
@@ -264,16 +266,17 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 |---|---|---|
 | `ACTIVITIES` | 6 | Actividades y objetivos de Battle Survival |
 | `CALENDAR` | 42 | Calendario semanal de Battle Survival, 6 slots por día |
-| `ACTIVITY_CODE` | 45 | Actividades codificadas (objetive, resource, point, codebs) |
+| `ACTIVITY_CODE` | 46 | Datos estructurales de las actividades codificadas (group, icon, point, codebs) |
 | `EVENT_CODE` | 8 | Definición de eventos (es/en) |
 | `PHASES` | 7 | Fases del Duelo de Alianzas (P00-P06) |
-| `DAILY` | 78 | Actividades diarias del Duelo de Alianzas por día (noday, server_time, server_duration) |
+| `DAILY` | 80 | Actividades diarias del Duelo de Alianzas por día (noday, server_time, server_duration) |
 
 - Los archivos `db/*.json` son **obsoletos**: se conservan como histórico, no los carga el sitio y no deben editarse ni usarse como referencia.
+- Excepción activa: `db/library/` sí lo carga `js/strategy-library.js` y es la fuente de verdad de los temas de la Biblioteca Estratégica.
 - La estructura `src/` también es obsoleta y no se enlaza.
 - Al modificar datos deben respetarse las referencias: todo `CALENDAR.codebs` existe en `ACTIVITIES`, todo `ACTIVITY_CODE.codebs` vacío o existente en `ACTIVITIES`, todo `DAILY.code_task` en `ACTIVITY_CODE`, todo `DAILY.event` en `EVENT_CODE` y toda fase usada en `PHASES`.
-- Al añadir o modificar una entrada de `ACTIVITY_CODE`, `PHASES` o `EVENT_CODE` deben añadirse también sus traducciones en los 9 idiomas: una entrada sin traducir cae al inglés y, en el último caso, al dato original. Cada `code` de `ACTIVITY_CODE` debe estar en `adActivities` con `objetive` y `resource`, cada fase normalizada en `adPhases` y cada `event` en `adEvents`.
-- Los textos de `adActivities` admiten dos fuentes de verdad: `ACTIVITY_CODE` para el contenido original en inglés y los datos estables del juego, y `texts.es.adActivities` de `js/i18n/actividades-diarias/i18n.js` para las ediciones manuales en español. Cuando el usuario modifique `texts.es`, sus valores prevalecen y se traducen a los otros ocho idiomas sin sobrescribir el español.
+- Al añadir o modificar una entrada de `ACTIVITY_CODE`, `PHASES` o `EVENT_CODE` deben añadirse también sus traducciones en los 9 idiomas: una entrada sin traducir cae al inglés y, en el último caso, al texto canónico en español. Cada `code` de `ACTIVITY_CODE` debe estar en `adActivities` con `objetive` y `resource`, cada fase normalizada en `adPhases` y cada `event` en `adEvents`.
+- La fuente de verdad de los textos de actividades es `texts.es.adActivities` de `js/i18n/actividades-diarias/i18n.js`. `ACTIVITY_CODE` conserva únicamente los datos estructurales (`group`, `icon`, `point` y `codebs`) y no duplica `objetive` ni `resource`. Cuando el usuario modifique `texts.es`, sus valores prevalecen y se traducen a los otros ocho idiomas sin sobrescribir el español.
 - Los horarios `DAILY.server_time` y las duraciones `DAILY.server_duration` se expresan en UTC-2 y en formato `hh:mm:ss`. Toda fila con `server_time` debe declarar también `server_duration`. Las duraciones se validan con el mismo reloj (`hh:mm:ss`, hasta `23:59:59`), por lo que una duración de 24 h se expresa con `server_time` y un final de día distinto.
 
 ### Cronograma de Batalla de Supervivencia
@@ -284,7 +287,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Los nombres de los eventos de la columna Evento se traducen con la clave `bsEvents`, indexada por `codebs` (`BUILD`, `HEROE`, `RAVEN`, `SOLDIER`, `TECH`, `STANDBY`) y presente en los 9 idiomas. El valor inglés de `ACTIVITIES.event` queda como respaldo.
 - Los resaltados de la tabla no dependen del texto traducido: `bs-hl-track` se aplica a `RAVEN` y `HEROE`. `bs-hl-special` se aplica al código `SOLDIER` en las filas futuras y, además, al contador de la próxima actividad, para que el aviso de proximidad sea aplicable con independencia del evento.
 - La tabla conserva el comportamiento responsivo original: `.bs-schedule` usa `min-width: 640px` y `max-width: 900px`, y `.bs-wrap` aplica `overflow-x: auto` para el desplazamiento horizontal en pantallas pequeñas. La tabla no se estira al ancho de la página.
-- Las dos tablas de los cronogramas (`.bs-schedule` y `.ad-schedule`) usan la fuente **Inter** con peso base `100`, declarada mediante `@font-face` en `css/activities-daily.css` con el archivo local `media/fonts/inter-100.woff2` (Inter Thin, SIL Open Font License 1.1; la licencia se conserva en `docs/core/inter-font-license.txt`). No hay dependencia de red para la fuente. Las negritas existentes de encabezados, eventos y filas destacadas se conservan con sus pesos `700` y `normal` originales.
+- Las dos tablas de los cronogramas (`.bs-schedule` y `.ad-schedule`) usan la fuente **JetBrainsMono Thin** (`font-style: thin`, `font-weight: 100`), declarada mediante `@font-face` en `css/activities-daily.css` con el archivo local `media/fonts/JetBrainsMono-Thin.woff2`. Las tablas usan cifras tabulares (`font-variant-numeric: tabular-nums`) y no dependen de la red. La declaración local de Inter se conserva disponible, pero las tablas ya no la utilizan. Las negritas existentes de encabezados, eventos y filas destacadas se conservan con sus pesos `700` y `normal` originales.
 - El calendario actualiza los contadores con un ciclo de `1 s`.
 - El subtítulo propio `bs-subtitle` se eliminó: el encabezado de la sección es el que identifica el cronograma.
 
@@ -294,12 +297,13 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - La lógica vive en `initAllianceDuel()` de `js/activities-daily.js`.
 - Las traducciones del calendario viven exclusivamente en `js/i18n/actividades-diarias/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (cinco encabezados de tabla), presentes en los 9 idiomas. El calendario no mantiene una tabla de traducciones propia.
 - Los textos de las actividades, las fases y los eventos también se localizan en `js/i18n/actividades-diarias/i18n.js`, mediante tres mapas por idioma:
-  - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (45 registros), con los campos `objetive` y `resource`.
+  - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (46 registros), con los campos `objetive` y `resource`.
   - `adPhases`: indexado por la fase normalizada (`P00`-`P06`).
   - `adEvents`: indexado por el `event` de `EVENT_CODE` (`DY`, `AD`, `KVK`, `ROY`, `BS`, `EQ`, `BEX`, `CUM`).
-- La resolución de cada texto sigue el orden **idioma activo → inglés → dato original**. `js/activities-daily.js` lo aplica con `activityText(code, field)`, `phaseText(phase)` y `eventLabel(r)`. El inglés se toma de `window.I18N.en` mediante la constante `T_EN`.
-- Los códigos, `codebs`, `icon` y `point` **no se traducen**: son identificadores estables del juego. Los `resource` que están vacíos en el dato original permanecen vacíos en los 9 idiomas.
-- Las definiciones vigentes de `ACTIVITY_CODE` para las operaciones UR son: `CRVNUR` → `Dispatch UR Caravans` con recurso `4 Caravan`; `OPENUR` → `Execute UR Covert Operations` con recurso `7 Black Ops`. Las traducciones de `adActivities` en los 9 idiomas se ajustan a esas definiciones, con el español como fuente.
+- La resolución de cada texto sigue el orden **idioma activo → inglés → texto canónico en español**. `js/activities-daily.js` lo aplica con `activityText(code, field)`, `phaseText(phase)` y `eventLabel(r)`. El inglés se toma de `window.I18N.en` mediante la constante `T_EN` y el español canónico de `window.I18N.es` mediante `T_ES`.
+- Los códigos, `codebs`, `icon` y `point` **no se traducen**: son identificadores estables del juego. Los `resource` vacíos en el texto canónico en español permanecen vacíos en los 9 idiomas.
+- Las definiciones vigentes de las operaciones UR en `texts.es.adActivities` son: `CRVNUR` → `Envía Caravanas UR` con recurso `4 Caravanas`; `OPENUR` → `Ejecuta Operaciones Encubiertas UR` con recurso `7 Operaciones Encubiertas`. Las traducciones de `adActivities` en los 9 idiomas se ajustan a esas definiciones, con el español como fuente.
+- Las últimas ediciones manuales de `texts.es.adActivities` también son la fuente de verdad para las siguientes actividades: `ANTX` → `Consume Antitoxinas x660`; `HERBS` → `Recolecta Hierbas x60, todo el día`; `GRAIN` → `Recolecta Trigo/Madera x100`; `CONMGH` → `Aumenta el Poder de Un Edificio`; `SCRAMBLE` → objetivo `100K Puntos de Honor, Captura/Defiende una Granja en el lodo` y recurso `Granjas de la Ciudad Real`; `KWAR` → objetivo `1.5M Puntos de Honor, Derrota/Pierde/Cura Soldados` y recurso `Guerra de Reinos (KvK)`; `CUMULUS` → `Recolecta Cristal Purificado en Cúmulos, 30min`. Las cifras, el identificador `KvK` y los recursos vacíos deben conservarse en las traducciones.
 - La tabla de cada día tiene **cinco columnas** en este orden:
   1. `Contador`.
   2. Columna de imagen de la tarea, cargada desde `media/glyph/<icon>.png` según el valor `icon` de `ACTIVITY_CODE`.
@@ -317,14 +321,16 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Las tablas de días futuros muestran la fecha `MM/DD` de la tabla para las tareas vinculadas. Las tareas sin `codebs` muestran `—` en la columna `Contador`; `server_time` y `server_duration` no se utilizan en los días futuros. El valor `DAILY.time_init` ya no se utiliza para este renderizado.
 - El Duelo de Alianzas no muestra un reloj de zona horaria: se eliminaron `#ad-tzinfo`, su regla CSS y sus referencias en JavaScript.
 - Las celdas de imagen usan las clases `.ad-icon` y `.ad-task-icon`; la columna conserva `35 px` de ancho y la imagen admite hasta `64 px`. La segunda columna muestra el PNG indicado por `ACTIVITY_CODE.icon`; si el archivo no existe, la imagen se oculta y la celda queda vacía. El atributo `data-code` guarda el código de la tarea.
-- El valor `resource` se toma de la traducción de `adActivities`; si la traducción y el dato original están vacíos, la celda queda vacía.
+- El valor `resource` se toma de la traducción de `adActivities`; si la traducción, el respaldo inglés y el texto canónico en español están vacíos, la celda queda vacía.
 - Las filas de cada día se ordenan mediante `EVENT_ORDER`, independientemente del idioma: Guerras (`ROY` Alboroto Ciudad Real, `KVK` Guerra de Reinos, `BEX` Batalla del Elixir), Desafíos (`EQ` Mejora de Equipo, `CUM` Valle Cúmulos de Cristal), Daily (`DY` Consejo Diario) y Alianza (`AD` Duelo de Alianza). Se mantiene el orden original de las actividades dentro de cada evento; los eventos desconocidos se colocan al final. Los grupos se separan con `border-bottom: 2px solid #4d7799`.
 - Todas las tablas comparten el mismo `<colgroup>` (`AD_COLUMNS`) para conservar ancho y alineación entre días: `.ad-schedule` usa `table-layout: fixed`, `width: 100%` y `min-width: 760px`, con `.ad-col-time` (84 px), `.ad-col-icon` (35 px), `.ad-col-task` (automático), `.ad-col-resource` (20 %) y `.ad-col-event` (170 px). En pantallas estrechas la tabla se desplaza horizontalmente dentro de `.ad-wrap`.
 - Los estilos de `.ad-item-title` son ajustes manuales del usuario y no deben alterarse: color `#4d7799`, borde `2px solid #4d7799`, `border-radius: 3px`, fondo `#9b9b9b36`, `font-size: 1.2rem`, `padding: 2px 10px 2px 10px` y `box-shadow: 0 3px 5px rgba(8, 47, 58, .9)`. El día actual mantiene el verde `#009922`.
-- El título de cada panel del Duelo de Alianzas se compone de la fase y el reset del día. La fase se alinea a la izquierda mediante `.ad-title-phase` y el reset a la derecha mediante `.ad-title-reset`, con `font-size: 10px` y sin salto de línea; la flecha del acordeón permanece al extremo derecho.
-- El panel de la fase actual añade al texto de `.ad-title-phase` una cuenta atrás con el formato `T- HH:MM:SS` (separador con espacio). Cada fase empieza a las `00:00:00` UTC-2 y termina a las `00:00:00` UTC-2 del día siguiente: al iniciar muestra `T- 24:00:00` y en el último segundo `T- 00:00:01`. Los seis paneles futuros no muestran contador. El valor se actualiza con el `setInterval` compartido de un segundo y, al cruzar el reset, el calendario se reconstruye con la fase nueva.
-- La cuenta atrás de fase se monta en un nodo propio, `<span class="ad-countdown">`, dentro de `.ad-title-phase`. De ese modo el contador se actualiza cada segundo sin reconstruir el texto del título y puede tener un color propio: `.ad-title-phase` usa el gris claro `#eee` para la fase y el separador `·`, y solo `.ad-countdown` usa el verde claro `#89ff90`.
-- El reset del día se muestra en formato `MM/DD HH:mm`. Cada día comienza a las `00:00:00` en UTC-2 y ese instante se convierte a la zona horaria detectada en el navegador, por lo que la fecha puede mostrar el día anterior. El título conserva el nombre de la fase y ya no incluye la abreviatura del día.
+- El título de cada panel del Duelo de Alianzas se compone de la fase y el reset del día. La fase se alinea a la izquierda mediante `.ad-title-phase` y el reset a la derecha mediante `.ad-title-reset`, con `font-size: 0.75rem`, `margin-right: 14px` y sin salto de línea; la flecha del acordeón permanece al extremo derecho.
+- El panel de la fase actual añade al texto de `.ad-title-phase` una cuenta atrás con el formato `T-HH:MM:SS`. Cada fase empieza a las `00:00:00` UTC-2 y termina a las `00:00:00` UTC-2 del día siguiente: al iniciar muestra `T-24:00:00` y en el último segundo `T-00:00:01`. Los seis paneles futuros no muestran contador. El valor se actualiza con el `setInterval` compartido de un segundo y, al cruzar el reset, el calendario se reconstruye con la fase nueva.
+- La cuenta atrás de fase se monta en un nodo propio, `<span class="ad-countdown">`, dentro de `.ad-title-phase`. De ese modo el contador se actualiza cada segundo sin reconstruir el texto del título y puede tener un color propio: `.ad-countdown` usa blanco semitransparente `#ffffffad`, `font-size: 1rem` y JetBrainsMono.
+- El reset del día se muestra en formato `YYYY.MM.DD HH:mm`. Cada día comienza a las `00:00:00` en UTC-2 y ese instante se convierte a la zona horaria detectada en el navegador, por lo que la fecha puede mostrar el día anterior. El título conserva el nombre de la fase y ya no incluye la abreviatura del día.
+- Los indicadores de atención de `DAILY.flag` se renderizan como clases `ad-flag-1` a `ad-flag-5` en la fila y se combinan con los estados `ad-state-countdown`, `ad-state-progress` o `ad-state-normal` del contador. `js/activities-daily.js` los actualiza en el temporizador compartido mediante `applyCounterState()`.
+- Los estilos manuales de los indicadores viven en `css/activities-daily.css` y no deben alterarse: la columna Contador usa `padding: 6px 4px`; `flag-1` alterna amarillo/rojo oscuro en cuenta atrás y rojo en curso; `flag-2` alterna azul claro y azul oscuro; `flag-3` alterna amarillo y azul en sus estados; `flag-4` y `flag-5` resaltan la columna Tarea en filas normales. Las animaciones se desactivan con `prefers-reduced-motion: reduce`.
 - El calendario presenta los siete días desde el día actual en UTC-2, con el día actual destacado, los dos primeros paneles abiertos y conversión de horarios a la zona local del visitante.
 - El párrafo `survivalMessage` de la página de Actividades Diarias declara `data-i18n-text="survivalMessage"` y su texto se traduce en los 9 idiomas mediante la clave i18n `survivalMessage`.
 - El párrafo `allianceMessage` de la página de Actividades Diarias declara `data-i18n-text="allianceMessage"`. Su redacción española manual es la fuente y se traduce en los 9 idiomas. Esta clave es propia de la subpágina y no modifica el mensaje homónimo de la portada.
@@ -334,7 +340,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 - El calendario de Batalla de Supervivencia avisa cuando la **próxima actividad** está por comenzar, sin añadir texto al contador.
 - La fila objetivo es siempre la tercera de la tabla, es decir la inmediatamente siguiente a la actual (`rel === 1`, clase `bs-row-third`). La actividad cambia cada 4 horas con independencia del evento que tenga asignado, por lo que el aviso **no** depende del código del evento ni de `bs-dayend`.
-- La condición se cumple cuando el tiempo restante es **mayor que 0** y **menor o igual a `01:00:00`** (valores como `T- 01:00:00`, `T- 00:59:59` o `T- 00:13:20`). La ventana se define con la constante `ALERT_WINDOW_SEC = 3600`.
+- La condición se cumple cuando el tiempo restante es **mayor que 0** y **menor o igual a `01:00:00`** (valores como `T-01:00:00`, `T-00:59:59` o `T-00:13:20`). La ventana se define con la constante `ALERT_WINDOW_SEC = 3600`.
 - El contador de esa fila recibe siempre `bs-hl-special` (`var counterSpecial = rel === 1 || (rel > 0 && slot.hlSpecial)`), de modo que el selector del aviso sea aplicable con independencia del evento. Las demás filas futuras conservan su resaltado anterior, ligado al código `SOLDIER`.
 - La marca se aplica sobre la **fila** mediante la clase `bs-imminent`, que `tick()` alterna en cada actualización con `classList.toggle()`. La clase desaparece en cuanto el contador sale de la ventana.
 - El aviso alcanza las tres primeras celdas de esa fila: `td.bs-counter` (Contador), `td.bs-status` (Estado) y `td.bs-event` (Evento). Las celdas `td.bs-activities` y `td.bs-server` quedan fuera del aviso y conservan su apariencia habitual.
@@ -407,6 +413,50 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Como las filas se generan con JavaScript, la tabla de bonos queda vacía si el navegador no ejecuta scripts; el resto del sitio aplica el mismo criterio.
 - La clave `bonuses` se eliminó con el bloque legado; no debe reintroducirse.
 - El contenedor legado `.home-body` y el bloque `.bonus-block` no forman parte del sitio; no deben reintroducirse sin una nueva decisión del usuario.
+
+## Biblioteca Estratégica (subpágina de Estrategia)
+
+### Estructura de la página
+
+- La subpágina `pages/estrategia.html` es la **Biblioteca Estratégica**: su título manual vigente es «Biblioteca Estratégica» y su inicial escarlata es la `B`. La clave i18n `pageStrategyTitle` refleja ese texto en los nueve idiomas y `pageStrategyLead` conserva la introducción táctica vigente.
+- El contenido vive en `<section class="block-content-info">` con tres bloques:
+  - `.searchEngine-elements`: buscador (izquierda) y árbol de temas (derecha), en una rejilla `row g-4` con dos columnas `col-12 col-lg-6 searchEngine-panel`.
+  - `.searchEngine-topics`: botones de acceso rápido a cada tema.
+  - `.searchEngine-contents`: resultado de la búsqueda o contenido del tema seleccionado.
+- Los separadores entre bloques son `.line-divisor-scarlet`, igual que en el resto del sitio.
+- La página carga, en este orden, `../js/i18n.js`, `../js/i18n/estrategia/i18n.js`, `../js/app.js` y `../js/strategy-library.js`. Bootstrap se sigue cargando por CDN.
+
+### Datos de la biblioteca
+
+- La fuente de verdad de los temas son los archivos `db/library/<tema>.json`:
+  - `hero.json` → «Héroes».
+  - `rookie.json` → «Novatos».
+  - `kingdom-war.json` → «Guerra de Reinos».
+  - `alliance-duel.json` → «Duelo de Alianzas».
+- `db/library/index.json` es el **índice manual**: enumera en `files` los archivos que se cargan. Para publicar un tema nuevo basta crear su JSON y registrar su nombre en el índice; no hay workflow ni build automático.
+- Cada tema declara:
+  - `id`: identificador estable, sin traducir.
+  - `order`: posición en los botones, en el árbol y en los resultados.
+  - `title`, `summary` y `keywords`: mapas por idioma (`es`, `en`, `pt`, `it`, `fr`, `ja`, `ru`, `zh`, `tr`).
+  - `sections`: lista de secciones. Cada sección admite `title`, `paragraphs`, `items` e `image` (`src`, `alt`, `caption`).
+- Los temas se ordenan por `order` y, en caso de empate, por el título localizado en orden alfabético.
+- Un tema sin secciones muestra el mensaje traducido `searchEngineTopicEmpty`.
+
+### Carga y búsqueda
+
+- `js/strategy-library.js` carga `db/library/index.json` y después cada archivo listado mediante `fetch` de recursos del **mismo sitio**. No se usan APIs externas ni peticiones CORS a terceros.
+- La carga funciona sobre HTTP/HTTPS, incluido GitHub Pages; abrir el HTML directamente como `file://` impide el `fetch` local.
+- Un archivo con error no impide la carga del resto: se informa con `searchEngineLoadError`.
+- El texto se resuelve por idioma activo → inglés → español, con la función `localize()`.
+- La búsqueda compara en minúsculas y sin diacríticos latinos (`normalize("NFD")` y el rango `\u0300-\u036f`). Indexa título, resumen, palabras clave, subtítulos, párrafos, listas y textos alternativos de imagen.
+- Al escribir, los resultados muestran solo las secciones coincidentes; al elegir un tema (botón o árbol) se muestra el tema completo.
+- Todo el contenido de los JSON se inserta con `textContent`: nunca se interpreta HTML procedente de los datos.
+- Las imágenes se referencian como `media/...` y se sirven con `../` desde la subpágina; se rechazan las rutas con `..` o con esquema externo.
+
+### Textos de la interfaz
+
+- Las claves i18n propias viven en `js/i18n/estrategia/i18n.js` y existen en los nueve idiomas: `searchEngineTitle`, `searchEngineTopicsLabel`, `searchEngineSearchLabel`, `searchEngineSearchPlaceholder`, `searchEngineClear`, `searchEngineTreeTitle`, `searchEngineInitial`, `searchEngineLoading`, `searchEngineLoadError`, `searchEngineNoResults`, `searchEngineResults`, `searchEngineTopicEmpty` y `searchEngineTopicAll`.
+- `searchEngineResults` usa el marcador `{count}`, que la página sustituye por el número de coincidencias.
 
 ## Footer
 

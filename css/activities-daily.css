@@ -270,6 +270,87 @@ tr.bs-current td.bs-event::after {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
+.ad-schedule td.ad-time {
+  padding: 6px 4px;
+}
+/* Estilos de atención por indicador flag y estado del contador. */
+.ad-schedule tbody tr.ad-flag-1.ad-state-countdown > td.ad-time {
+  background-color: #ffee00;
+  color: #8a0000;
+  animation: uxm-ad-flag-1-countdown 1.8s ease-in-out infinite;
+}
+.ad-schedule tbody tr.ad-flag-1.ad-state-progress > td.ad-time {
+  background-color: #8a0000;
+  color: #fffb00;
+  animation: uxm-ad-flag-1-progress 1.8s ease-in-out infinite;
+}
+.ad-schedule tbody tr.ad-flag-2.ad-state-countdown > td.ad-time {
+  background-color: #00ccff65;
+}
+.ad-schedule tbody tr.ad-flag-2.ad-state-progress > td.ad-time {
+  background-color: #00578a;
+  color: #00415f;
+  animation: uxm-ad-flag-2-progress 1.8s ease-in-out infinite;
+}
+.ad-schedule tbody tr.ad-flag-3.ad-state-countdown > td.ad-time {
+  background-color: #ffee00;
+}
+.ad-schedule tbody tr.ad-flag-3.ad-state-progress > td.ad-time {
+  background-color: #006ec9;
+  color: #fff;
+  animation: uxm-ad-flag-3-progress 1.8s ease-in-out infinite;
+}
+.ad-schedule tbody tr.ad-flag-4.ad-state-normal > td.ad-obj {
+  background-color: #004e8d65;
+  color: #003d6e;
+}
+.ad-schedule tbody tr.ad-flag-5.ad-state-normal > td.ad-obj {
+  background-color: #80808049;
+  color: #115a96;
+  border-radius: 4px;
+}
+@keyframes uxm-ad-flag-1-countdown {
+  0%, 100% {
+    background-color: #ffee00;
+    color: #9b0000;
+  }
+  50% {
+    background-color: #ffee002f;
+    color: #9b0000;
+  }
+}
+@keyframes uxm-ad-flag-1-progress {
+  0%, 100% {
+    background-color: #8a0000;
+  }
+  50% {
+    background-color: #ff0000;
+  }
+}
+@keyframes uxm-ad-flag-2-progress {
+  0%, 100% {
+    background-color: #00578a;
+  }
+  50% {
+    background-color: #00aeff;
+  }
+}
+@keyframes uxm-ad-flag-3-progress {
+  0%, 100% {
+    background-color: #006fc96c;
+  }
+  50% {
+    background-color: #006ec9;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ad-schedule tbody tr.ad-flag-1.ad-state-countdown > td.ad-time,
+  .ad-schedule tbody tr.ad-flag-1.ad-state-progress > td.ad-time,
+  .ad-schedule tbody tr.ad-flag-2.ad-state-progress > td.ad-time,
+  .ad-schedule tbody tr.ad-flag-3.ad-state-progress > td.ad-time {
+    animation: none;
+  }
+}
 .ad-event {
   font-weight: 700;
 }

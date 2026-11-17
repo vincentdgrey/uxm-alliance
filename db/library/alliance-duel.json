@@ -1,0 +1,38 @@
+{
+  "id": "alliance-duel",
+  "order": 40,
+  "title": {
+    "es": "Duelo de Alianzas",
+    "en": "Alliance Duel",
+    "pt": "Duelo de Alianças",
+    "it": "Duello tra Alleanze",
+    "fr": "Duel d'Alliances",
+    "ja": "アライアンス決闘",
+    "ru": "Дуэль Альянсов",
+    "zh": "联盟对决",
+    "tr": "İttifak Düellosu"
+  },
+  "summary": {
+    "es": "",
+    "en": "",
+    "pt": "",
+    "it": "",
+    "fr": "",
+    "ja": "",
+    "ru": "",
+    "zh": "",
+    "tr": ""
+  },
+  "keywords": {
+    "es": [],
+    "en": [],
+    "pt": [],
+    "it": [],
+    "fr": [],
+    "ja": [],
+    "ru": [],
+    "zh": [],
+    "tr": []
+  },
+  "sections": []
+}
