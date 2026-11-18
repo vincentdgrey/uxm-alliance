@@ -1,6 +1,7 @@
 {
   "id": "enemy-assault",
   "order": 70,
+  "updated": "2026-11-17",
   "title": {
     "es": "Asalto al Enemigo",
     "en": "Enemy Assault",

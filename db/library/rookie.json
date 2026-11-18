@@ -1,6 +1,7 @@
 {
   "id": "rookie",
   "order": 20,
+  "updated": "2026-11-18",
   "title": {
     "es": "Novatos",
     "en": "Rookies",
@@ -18,6 +19,8 @@
     "rookie/caravan.json",
     "rookie/incursion.json",
     "rookie/donate.json",
-    "rookie/rallies.json"
+    "rookie/rallies.json",
+    "rookie/equipment.json",
+    "rookie/treasure-hunter.json"
   ]
 }

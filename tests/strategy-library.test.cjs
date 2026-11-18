@@ -134,11 +134,14 @@ test("los grupos y temas iniciales mantienen el orden planificado", () => {
       "Equipamiento",
       "Habilidades",
       "Clases",
+      "Onboarding",
       "Normas",
-      "Caravana",
-      "Incursión",
+      "Caravanas",
+      "Incursiones",
       "Donar",
       "Rallys",
+      "Equipamiento",
+      "Buscador de Tesoros",
       "Escudos",
       "Ataque a Reinos",
       "Defensa del Reino",
@@ -151,6 +154,55 @@ test("los grupos y temas iniciales mantienen el orden planificado", () => {
       "Asalto al Enemigo"
     ]
   );
+});
+
+test("cada grupo y cada tema declaran su fecha de actualizacion", () => {
+  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+
+  for (const file of groupFiles) {
+    const group = readGroup(file);
+
+    assert.equal(typeof group.updated, "string", `${file} necesita updated`);
+    assert.match(group.updated, datePattern, `${file} necesita una fecha YYYY-MM-DD`);
+    assert.ok(!isNaN(Date.parse(group.updated)), `${file} necesita una fecha valida`);
+  }
+
+  for (const file of topicFiles()) {
+    const topic = readTopic(file);
+
+    assert.equal(typeof topic.updated, "string", `${file} necesita updated`);
+    assert.match(topic.updated, datePattern, `${file} necesita una fecha YYYY-MM-DD`);
+    assert.ok(!isNaN(Date.parse(topic.updated)), `${file} necesita una fecha valida`);
+  }
+});
+
+test("el render muestra la fecha de actualizacion como elemento time", () => {
+  const js = read("js/strategy-library.js");
+
+  assert.match(js, /function updatedDate\(source\)/);
+  assert.match(js, /function formatUpdated\(value\)/);
+  assert.match(js, /function renderUpdated\(source, className\)/);
+  assert.match(js, /element\("time", "searchEngine-updated-date"/);
+  assert.match(js, /time\.setAttribute\("datetime", value\)/);
+  /* La fecha se formatea en el idioma activo y siempre en UTC. */
+  assert.match(js, /timeZone:\s*"UTC"/);
+  assert.match(js, /renderUpdated\(topic, "searchEngine-updated searchEngine-topic-updated"\)/);
+  assert.match(js, /renderUpdated\(group, "searchEngine-updated searchEngine-tree-group-updated"\)/);
+});
+
+test("la etiqueta de la fecha de actualizacion esta traducida en los nueve idiomas", () => {
+  const i18n = read("js/i18n/estrategia/i18n.js");
+  const found = i18n.match(/searchEngineUpdated:"[^"]*"/g) || [];
+
+  assert.equal(found.length, 9, "searchEngineUpdated debe existir en los 9 idiomas");
+});
+
+test("la biblioteca strategies declara los estilos de la fecha", () => {
+  const css = read("css/estrategia.css");
+
+  assert.match(css, /\.searchEngine-updated\s*\{/);
+  assert.match(css, /\.searchEngine-updated-date\s*\{/);
+  assert.match(css, /\.searchEngine-tree-group-updated\s*\{/);
 });
 
 test("la pagina de estrategia carga su script y su hoja de estilos propios", () => {

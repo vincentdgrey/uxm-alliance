@@ -154,8 +154,11 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - El botón hamburguesa no tiene borde. Sus tres líneas son de `3px`, separadas `7px`, con `box-shadow` para mantener contraste sobre el video. En las subpáginas usan `#ccc`; en la portada usan `var(--hot)` (`#df1b1b`).
 - En la portada, la marca **UXM** y las líneas de la hamburguesa usan `var(--hot)` (`#df1b1b`).
 - Al abrir el menú, las tres líneas cambian a `var(--scarlet)` (`#ff2400`) y la tercera se alarga desde el origen hasta quedar a `10px` del borde derecho del panel.
-- El aviso periódico de navegación dura 30 segundos: un punto rojo recorre el contorno del botón y termina apagándose. Se suspende con el menú abierto y con `prefers-reduced-motion`.
-- El punto se dibuja con el pseudoelemento `.nav-toggle::after` (`border-radius: 50%`, fondo `var(--hot)`), por lo que no requiere cambios en el HTML. Las barras 1 y 2 ya no se desplazan: los keyframes `uxm-nav-line-one` y `uxm-nav-line-two` se eliminaron.
+- El fondo escarlata del botón aparece **solo con el menú cerrado**: la regla es `body:not(.nav-open) .nav-toggle:hover`. Con el menú desplegado, `.nav-open .nav-toggle` fuerza `background-color: transparent`, de modo que el botón vuelve a su color transparente aunque el puntero siga encima.
+- El aviso periódico de navegación dura 30 segundos: un **punto** rojo recorre el contorno del botón y termina apagándose. Se suspende con el menú abierto y con `prefers-reduced-motion`.
+- El punto se dibuja con el pseudoelemento `.nav-toggle::after` (`border-radius: 50%`, fondo `var(--hot)`), por lo que no requiere cambios en el HTML. No hay cola ni efecto de cometa: solo se conserva el punto que recorre.
+- La trayectoria del punto es, en este orden: borde derecho de abajo hacia arriba, borde superior de derecha a izquierda, borde izquierdo de arriba hacia abajo y descenso final por el borde izquierdo hasta el final del viewport. Se resuelve solo con CSS: no se mide la posición real del footer y no interviene JavaScript.
+- Las barras 1 y 2 ya no se desplazan: los keyframes `uxm-nav-line-one` y `uxm-nav-line-two` se eliminaron.
 - El color y la sombra son **compartidos** entre el texto `UXM`, las tres barras del botón y el punto que recorre el borde. Se centralizan en la variable `--nav-uxm-shadow`, con un valor contextual: `0 1px 3px rgba(8, 47, 58, .65)` por defecto y `0 1px 3px rgba(8, 47, 58, .9)` en la portada, declarada en `.home-topbar`. El texto `UXM` la aplica como `text-shadow` y las barras y el punto como `box-shadow`.
 - El efecto se aplica **en todo el sitio**: la regla vive en la hoja compartida `css/style.css`, de modo que la portada y las subpáginas muestran el mismo comportamiento. No debe duplicarse en hojas por página.
 - La marca usa en `hover` y `focus-visible` texto blanco y fondo `var(--hot)`, con anillo de foco `#ffbf47`.
@@ -438,16 +441,29 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Cada manifiesto de grupo declara:
   - `id`: identificador estable, sin traducir.
   - `order`: posición del grupo en el árbol y los resultados.
+  - `updated`: fecha de la última actualización del grupo, en formato `YYYY-MM-DD`.
   - `title`: mapa por idioma (`es`, `en`, `pt`, `it`, `fr`, `ja`, `ru`, `zh`, `tr`).
   - `topics`: lista ordenada de rutas relativas a sus archivos de tema.
 - Cada tema declara:
   - `id`: identificador estable y único en toda la biblioteca, sin traducir.
   - `order`: posición del tema dentro de su grupo.
+  - `updated`: fecha de la última actualización del tema, en formato `YYYY-MM-DD`.
   - `title`, `summary` y `keywords`: mapas por idioma (`es`, `en`, `pt`, `it`, `fr`, `ja`, `ru`, `zh`, `tr`).
   - `sections`: lista de secciones. Cada sección admite `title`, `paragraphs`, `items` e `image` (`src`, `alt`, `caption`).
 - Para publicar un grupo nuevo se crea su manifiesto y su carpeta de temas, y se registra el manifiesto en `index.json`. Para publicar un tema nuevo se crea su JSON en la carpeta del grupo y se añade su ruta a `topics`. No hay workflow ni build automático.
 - Los grupos y temas se ordenan por `order` y, en caso de empate, por el título localizado en orden alfabético.
 - Un tema sin secciones muestra el mensaje traducido `searchEngineTopicEmpty`.
+- El grupo «Novatos» (`db/library/rookie.json`) contiene, en este orden: `onboarding` (5), `rules` (10), `caravan` (20), `incursion` (30), `donate` (40), `rallies` (50), `rookie-equipment` (60) y `treasure-hunter` (70).
+
+#### Fecha de actualización
+
+- **Todo grupo y todo tema** declara su campo `updated` con una fecha `YYYY-MM-DD` válida.
+- La fecha se actualiza cada vez que se modifica el contenido del archivo: un texto nuevo o corregido, en especial el español, un elemento de sección, un orden, un título o el alta de un tema nuevo.
+- El español es la fuente canónica: cuando cambia un texto español, se actualiza la fecha y se propaga el cambio a los demás idiomas.
+- La fecha de un grupo se actualiza cuando cambia su título, su conjunto de temas o su orden.
+- La fecha se muestra junto al tema (en la ficha completa y en los resultados de búsqueda) y junto al grupo (en el botón del árbol).
+- El render usa un elemento semántico `<time datetime="YYYY-MM-DD">` con la fecha formateada en el idioma activo y en UTC, para que la zona horaria del visitante no cambie el día mostrado.
+- La etiqueta de la fecha usa la clave i18n `searchEngineUpdated`, presente en los nueve idiomas.
 
 ### Carga, árbol y búsqueda
 
@@ -487,7 +503,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 ### Textos de la interfaz
 
-- Las claves i18n propias viven en `js/i18n/estrategia/i18n.js` y existen en los nueve idiomas: `searchEngineTitle`, `searchEngineTopicsLabel`, `searchEngineSearchLabel`, `searchEngineSearchPlaceholder`, `searchEngineClear`, `searchEngineTreeTitle`, `searchEngineInitial`, `searchEngineLoading`, `searchEngineLoadError`, `searchEngineNoResults`, `searchEngineResults`, `searchEngineTopicEmpty` y `searchEngineTopicAll`.
+- Las claves i18n propias viven en `js/i18n/estrategia/i18n.js` y existen en los nueve idiomas: `searchEngineTitle`, `searchEngineTopicsLabel`, `searchEngineSearchLabel`, `searchEngineSearchPlaceholder`, `searchEngineClear`, `searchEngineTreeTitle`, `searchEngineInitial`, `searchEngineLoading`, `searchEngineLoadError`, `searchEngineNoResults`, `searchEngineResults`, `searchEngineTopicEmpty`, `searchEngineTopicAll` y `searchEngineUpdated`.
 - `searchEngineResults` usa el marcador `{count}`, que la página sustituye por el número de coincidencias.
 
 ## Footer

@@ -987,6 +987,42 @@ test("el borde del boton de menu lo recorre un punto escarlata que se apaga", ()
   assert.match(reducedMotion[1], /animation:\s*none/);
 });
 
+test("el boton de menu no conserva ningun efecto de cola de cometa", () => {
+  const css = read("css/style.css");
+
+  /* Solo queda el punto: no debe existir cola ni sus keyframes. */
+  assert.doesNotMatch(css, /\.nav-toggle::before\s*\{/s);
+  assert.doesNotMatch(css, /@keyframes\s+uxm-nav-border-tail/);
+  assert.doesNotMatch(css, /--nav-comet/);
+  assert.doesNotMatch(css, /linear-gradient\(to right,\s*transparent,\s*var\(--hot\)\)/);
+});
+
+test("el punto recorre el borde derecho, el superior y el izquierdo antes de descender", () => {
+  const css = read("css/style.css");
+  const keyframes = css.match(/@keyframes\s+uxm-nav-border-dot\s*\{([\s\S]*?)\n\}/);
+
+  assert.ok(keyframes, "debe existir la animacion del punto");
+
+  /* Inicia en la esquina inferior derecha y sube por el borde derecho. */
+  assert.match(keyframes[1], /0%,\s*88%\s*\{[^}]*top:\s*calc\(100% \+ 2px\)[^}]*left:\s*calc\(100% \+ 2px\)/s);
+  /* Continua por el borde superior hacia la izquierda. */
+  assert.match(keyframes[1], /92%\s*\{[^}]*top:\s*-2px[^}]*left:\s*calc\(100% \+ 2px\)/s);
+  assert.match(keyframes[1], /94%\s*\{[^}]*top:\s*-2px[^}]*left:\s*-2px/s);
+  /* Desciende por el borde izquierdo hasta el final del viewport. */
+  assert.match(keyframes[1], /96%\s*\{[^}]*top:\s*calc\(100% \+ 2px\)[^}]*left:\s*-2px/s);
+  assert.match(keyframes[1], /98\.5%\s*\{[^}]*top:\s*calc\(100vh - 40px\)[^}]*left:\s*-2px/s);
+});
+
+test("el boton de menu solo se pone escarlata al pasar el mouse con el menu cerrado", () => {
+  const css = read("css/style.css");
+
+  /* El fondo escarlata esta condicionado al estado cerrado del menu. */
+  assert.match(css, /body:not\(\.nav-open\)\s+\.nav-toggle:hover\s*\{[^}]*background-color:\s*var\(--scarlet\)/s);
+
+  /* Con el menu desplegado el boton vuelve a su fondo transparente. */
+  assert.match(css, /\.nav-open\s+\.nav-toggle\s*,[\s\S]*?\{[^}]*background-color:\s*transparent/s);
+});
+
 test("el texto UXM, las barras y el punto comparten color y sombra", () => {
   const css = read("css/style.css");
 

@@ -160,17 +160,29 @@ button,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
+  width: 41px;
   height: 38px;
   padding: 0;
-  background: transparent;
   border: 0;
   border-radius: var(--button-radius);
   cursor: pointer;
   transition: background-color .2s var(--ease);
+  /* background: transparent; */
+  background-color: #2266bb1f;
 }
-.nav-toggle:hover { background-color: rgba(34, 102, 187, .12); }
-.nav-toggle:focus-visible { outline: 2px solid #ffbf47; outline-offset: 2px; }
+/* El fondo escarlata aparece al pasar el mouse solo con el menú cerrado. */
+body:not(.nav-open) .nav-toggle:hover {
+  background-color: var(--scarlet);
+}
+/* Con el menú desplegado el botón vuelve a su fondo transparente. */
+.nav-open .nav-toggle,
+.nav-open .nav-toggle:hover,
+.nav-open .nav-toggle:focus-visible {
+  background-color: transparent;
+}
+.nav-toggle:focus-visible {
+  outline: 2px solid #ffbf47; outline-offset: 2px;
+}
 
 /* Las líneas cambian de gris a escarlata junto con la apertura */
 .nav-toggle-bars {
@@ -196,7 +208,7 @@ button,
 .nav-open .nav-toggle-bars i {
   background: var(--scarlet);
 }
-.nav-open .nav-toggle-bars i:nth-child(3) {
+.nav-open .nav-toggle-bars i:nth-child(1) {
   width: var(--nav-toggle-line-end);
 }
 
@@ -206,8 +218,8 @@ button,
 .nav-toggle::after {
   content: "";
   position: absolute;
-  top: -2px;
-  left: -2px;
+  top: 0px;
+  left: 0px;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -215,20 +227,25 @@ button,
   box-shadow: var(--nav-uxm-shadow);
   opacity: 0;
   pointer-events: none;
+  z-index: 1;
   animation: uxm-nav-border-dot 30s ease-in-out infinite;
 }
 .nav-open .nav-toggle::after {
   animation: none;
   opacity: 0;
 }
+/* Trayectoria: borde derecho de abajo hacia arriba, borde superior de
+   derecha a izquierda, borde izquierdo de arriba hacia abajo y descenso
+   final por el borde izquierdo hasta el final del viewport. */
 @keyframes uxm-nav-border-dot {
-  0%, 88% { opacity: 0; top: -2px; left: -2px; }
-  90% { opacity: 1; top: -2px; left: -2px; }
-  94% { opacity: 1; top: -2px; left: calc(100% + 2px); }
-  96% { opacity: 1; top: calc(100% + 2px); left: calc(100% + 2px); }
-  98% { opacity: 1; top: calc(100% + 2px); left: -2px; }
-  99.5% { opacity: 0; top: -2px; left: -2px; }
-  100% { opacity: 0; top: -2px; left: -2px; }
+  0%, 88% { opacity: 0; top: calc(100% + 2px); left: calc(100% + 2px); }
+  90% { opacity: 1; top: calc(100% + 2px); left: calc(100% + 2px); }
+  92% { opacity: 1; top: -2px; left: calc(100% + 2px); }
+  94% { opacity: 1; top: -2px; left: -2px; }
+  96% { opacity: 1; top: calc(100% + 2px); left: -2px; }
+  98.5% { opacity: 1; top: calc(100vh - 40px); left: -2px; }
+  99.5% { opacity: 0; top: calc(100vh - 30px); left: -2px; }
+  100% { opacity: 0; top: calc(100vh - 30px); left: -2px; }
 }
 
 /* ---------- Menú lateral propio (anclado a la izquierda) ---------- */

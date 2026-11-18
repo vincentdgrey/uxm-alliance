@@ -113,6 +113,53 @@
     return localize(topic.summary) || "";
   }
 
+  /* ---------- Fecha de actualizacion ---------- */
+  /* Valida el formato YYYY-MM-DD y devuelve la cadena o una cadena vacia. */
+  function updatedDate(source) {
+    var value = String((source && source.updated) || "").trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return "";
+
+    /* Se descarta tambien una fecha que no exista en el calendario. */
+    var date = new Date(value + "T00:00:00Z");
+    if (isNaN(date.getTime())) return "";
+    if (date.toISOString().slice(0, 10) !== value) return "";
+
+    return value;
+  }
+
+  /* Formatea la fecha en el idioma activo, siempre en UTC para no cambiar de dia. */
+  function formatUpdated(value) {
+    if (!value) return "";
+    var date = new Date(value + "T00:00:00Z");
+    if (isNaN(date.getTime())) return value;
+
+    try {
+      return new Intl.DateTimeFormat(currentLang(), {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        timeZone: "UTC"
+      }).format(date);
+    } catch (error) {
+      return value;
+    }
+  }
+
+  /* Construye el bloque de fecha de actualizacion de un tema o de un grupo. */
+  function renderUpdated(source, className) {
+    var value = updatedDate(source);
+    if (!value) return null;
+
+    var wrapper = element("p", className || "searchEngine-updated");
+    wrapper.appendChild(document.createTextNode((texts().searchEngineUpdated || "") + " "));
+
+    var time = element("time", "searchEngine-updated-date", formatUpdated(value));
+    time.setAttribute("datetime", value);
+    wrapper.appendChild(time);
+
+    return wrapper;
+  }
+
   /* ---------- Indice de texto por tema ---------- */
   function sectionText(section) {
     var parts = [];
@@ -495,10 +542,16 @@
 
     groups.forEach(function (group) {
       var item = element("li", "searchEngine-tree-item searchEngine-tree-group");
-      var groupButton = element("button", "searchEngine-tree-group-button", groupTitle(group));
+      var groupButton = element("button", "searchEngine-tree-group-button");
       var subList = element("ul", "searchEngine-tree-sublist");
       var subListId = "searchEngine-group-" + group.id;
       var expanded = false;
+
+      /* El boton del grupo lleva su nombre y la fecha de actualizacion. */
+      groupButton.appendChild(element("span", "searchEngine-tree-group-name", groupTitle(group)));
+
+      var groupUpdated = renderUpdated(group, "searchEngine-updated searchEngine-tree-group-updated");
+      if (groupUpdated) groupButton.appendChild(groupUpdated);
 
       groupButton.type = "button";
       groupButton.setAttribute("data-tree-group", group.id);
@@ -668,6 +721,9 @@
       article.appendChild(element("p", "searchEngine-topic-group", groupTitle(topic.group)));
     }
 
+    var topicUpdated = renderUpdated(topic, "searchEngine-updated searchEngine-topic-updated");
+    if (topicUpdated) article.appendChild(topicUpdated);
+
     var summary = topicSummary(topic);
     if (summary) article.appendChild(element("p", "searchEngine-topic-summary", summary));
 
@@ -704,6 +760,9 @@
       if (entry.topic.group) {
         article.appendChild(element("p", "searchEngine-topic-group", groupTitle(entry.topic.group)));
       }
+
+      var entryUpdated = renderUpdated(entry.topic, "searchEngine-updated searchEngine-topic-updated");
+      if (entryUpdated) article.appendChild(entryUpdated);
 
       var summary = topicSummary(entry.topic);
       if (summary) article.appendChild(element("p", "searchEngine-topic-summary", summary));

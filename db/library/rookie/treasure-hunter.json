@@ -1,0 +1,242 @@
+{
+  "id": "treasure-hunter",
+  "order": 70,
+  "updated": "2026-11-18",
+  "title": {
+    "es": "Buscador de Tesoros",
+    "en": "Treasure Seeker",
+    "pt": "Caçador de Tesouros",
+    "it": "Cacciatore di Tesori",
+    "fr": "Chasseur de Trésors",
+    "ja": "トレ|ISBNハンター",
+    "ru": "Искатель Сокровищ",
+    "zh": "寻宝者",
+    "tr": "Hazine Avcısı"
+  },
+  "summary": {
+    "es": "Cómo usar las Operaciones Secretas y los cofres diarios para conseguir fragmentos y recompensas de rareza UR.",
+    "en": "How to use Secret Operations and daily chests to get fragments and UR rarity rewards.",
+    "pt": "Como usar as Operações Secretas e os cofres diários para conseguir fragmentos e recompensas de raridade UR.",
+    "it": "Come usare le Operazioni Segrete e i cofri giornalieri per ottenere frammenti e ricompense di rarità UR.",
+    "fr": "Comment utiliser les Opérations Secrètes et les coffres quotidiens pour obtenir des fragments et des récompenses de rareté UR.",
+    "ja": "秘密作戦とデイチェストを使って、欠片とURレアリティの報酬を得る方法です。",
+    "ru": "Как использовать Секретные Операции и ежедневные сундуки, чтобы получить фрагменты и награды редкости UR.",
+    "zh": "如何使用秘密行动和每日宝箱获取碎片与 UR 稀有度奖励。",
+    "tr": "Gizli Operasyonlar ve günlük sandıklar ile nasıl parça ve UR nadirlik ödülleri elde edeceğiniz."
+  },
+  "keywords": {
+    "es": [
+      "buscador de tesoros",
+      "tesoros",
+      "operación secreta",
+      "operaciones secretas",
+      "cofre",
+      "cofres",
+      "fragmentos",
+      "mapa del tesoro",
+      "santuario",
+      "UR",
+      "SSR",
+      "diamantes",
+      "ShardExchangeBank"
+    ],
+    "en": [
+      "treasure seeker",
+      "treasure",
+      "secret operation",
+      "secret operations",
+      "chest",
+      "chests",
+      "fragments",
+      "treasure map",
+      "sanctuary",
+      "UR",
+      "SSR",
+      "diamonds",
+      "ShardExchangeBank"
+    ],
+    "pt": [
+      "caçador de tesouros",
+      "tesouros",
+      "operação secreta",
+      "operações secretas",
+      "cofre",
+      "cofres",
+      "fragmentos",
+      "mapa do tesouro",
+      "santuário",
+      "UR",
+      "SSR",
+      "diamantes",
+      "ShardExchangeBank"
+    ],
+    "it": [
+      "cacciatore di tesori",
+      "tesori",
+      "operazione segreta",
+      "operazioni segrete",
+      "cofro",
+      "cofri",
+      "frammenti",
+      "mappa del tesoro",
+      "santuario",
+      "UR",
+      "SSR",
+      "diamanti",
+      "ShardExchangeBank"
+    ],
+    "fr": [
+      "chasseur de trésors",
+      "trésors",
+      "opération secrète",
+      "opérations secrètes",
+      "coffre",
+      "coffres",
+      "fragments",
+      "carte du trésor",
+      "sanctuaire",
+      "UR",
+      "SSR",
+      "diamants",
+      "ShardExchangeBank"
+    ],
+    "ja": [
+      "トレリストハンター",
+      "トレスト",
+      "秘密作戦",
+      "デイチェスト",
+      "チェスト",
+      "欠片",
+      "トレストマップ",
+      "サンクトワール",
+      "UR",
+      "SSR",
+      "ダイヤ",
+      "ShardExchangeBank"
+    ],
+    "ru": [
+      "искатель сокровищ",
+      "сокровища",
+      "секретная операция",
+      "секретные операции",
+      "сундук",
+      "сундуки",
+      "фрагменты",
+      "карта сокровищ",
+      "святилище",
+      "UR",
+      "SSR",
+      "алмазы",
+      "ShardExchangeBank"
+    ],
+    "zh": [
+      "寻宝者",
+      "宝藏",
+      "秘密行动",
+      "每日宝箱",
+      "宝箱",
+      "碎片",
+      "藏宝图",
+      "圣所",
+      "UR",
+      "SSR",
+      "钻石",
+      "ShardExchangeBank"
+    ],
+    "tr": [
+      "hazine avcısı",
+      "hazine",
+      "gizli operasyon",
+      "gizli operasyonlar",
+      "sandık",
+      "sandıklar",
+      "parça",
+      "hazine haritası",
+      "kutsal alan",
+      "UR",
+      "SSR",
+      "elmas",
+      "ShardExchangeBank"
+    ]
+  },
+  "sections": [
+    {
+      "title": {
+        "es": "Operaciones Secretas y Cofres",
+        "en": "Secret Operations and Chests",
+        "pt": "Operações Secretas e Cofres",
+        "it": "Operazioni Segrete e Cofri",
+        "fr": "Opérations Secrètes et Coffres",
+        "ja": "秘密作戦とチェスト",
+        "ru": "Секретные Операции и Сундуки",
+        "zh": "秘密行动与宝箱",
+        "tr": "Gizli Operasyonlar ve Sandıklar"
+      },
+      "items": {
+        "es": [
+          "Cada vez que elijes una Misión Operación Secreta de rareza UR o SSR, te entregaran fragmentos del mapa del tesoro.",
+          "Si te esfuerzas en ejecutar 6 Operaciones Secretas UR y 1 SSR, obtendrás 2 cofres diarios con todos los fragmentos que consigas. En el caso que tu santuario sea menor a Lv.27, los superiores cuentan con 8 operaciones secretas.",
+          "Si cuentas con 7 operaciones secretas, conseguir 6 de rareza UR será más fácil que la última, la última es de gran dificultad probablemente para que gastes muchos diamantes, pero para la táctica, es mejor que la última sea de rareza SSR.",
+          "Al conseguir 2 cofres diarios, lograras en la semana conseguir un cofre UR, para ello en nuestra alianza contamos con un jugador soporte `ShardExchangeBank` quien se encarga de intercambiar los fragmentos que necesites, al contar con un jugador para esta función intercambia todos los fragmentos de forma practica con toda la alianza.",
+          "Las recompensas de los cofres son excelentes para que puedas mejorar, entregándote en el resultado, aceleradores valiosos, piedras de equipamiento, insignias para subir habilidades entre otros."
+        ],
+        "en": [
+          "Every time you choose a Secret Operation Mission of UR or SSR rarity, you are given fragments of the treasure map.",
+          "If you strive to complete 6 UR Secret Operations and 1 SSR, you will get 2 daily chests with all the fragments you obtain. In case your sanctuary is below Lv.27, the superiors count on 8 secret operations.",
+          "If you have 7 secret operations, getting the 6 of UR rarity will be easier than the last one; the last one is of great difficulty, probably so that you spend many diamonds, but for the tactics, it is better that the last one is of SSR rarity.",
+          "By getting 2 daily chests, you will manage to get a UR chest during the week; for that, in our alliance we have a support player `ShardExchangeBank` who takes care of exchanging the fragments you need; having a player for this function, all the fragments are exchanged in a practical way with the whole alliance.",
+          "The chest rewards are excellent so that you can improve: you receive valuable accelerators, equipment stones, badges to upgrade skills among others."
+        ],
+        "pt": [
+          "Cada vez que você escolhe uma Missão Operação Secreta de raridade UR ou SSR, você recebe fragmentos do mapa do tesouro.",
+          "Se você se esforça para executar 6 Operações Secretas UR e 1 SSR, vai obter 2 cofres diários com todos os fragmentos que conseguir. No caso do seu santuário ser menor que Lv.27, os superiores contam com 8 operações secretas.",
+          "Se você tem 7 operações secretas, conseguir 6 de raridade UR será mais fácil do que a última; a última tem grande dificuldade, provavelmente para que você gaste muitos diamantes, mas taticamente é melhor que a última seja de raridade SSR.",
+          "Ao conseguir 2 cofres diários, você vai conseguir um cofre UR na semana; para isso, em nossa aliança contamos com um jogador de suporte `ShardExchangeBank` que se encarrega de trocar os fragmentos de que você precisa; havendo um jogador para esta função, todos os fragmentos são trocados de forma prática com toda a aliança.",
+          "As recompensas dos cofres são excelentes para que você possa melhorar, entregando no resultado aceleradores valiosos, pedras de equipamento, insígnias para subir habilidades entre outros."
+        ],
+        "it": [
+          "Ogni volta che scegli una Missione Operazione Segreta di rarità UR o SSR, ti vengono consegnati frammenti della mappa del tesoro.",
+          "Se ti sforzi di eseguire 6 Operazioni Segrete UR e 1 SSR, otterrai 2 cofri giornalieri con tutti i frammenti che riesci a ottenere. Nel caso in cui il tuo santuario sia inferiore a Lv.27, i superiori contano su 8 operazioni segrete.",
+          "Se hai 7 operazioni segrete, ottenere 6 di rarità UR sarà più facile dell'ultima; l'ultima è di grande difficoltà, probabilmente perché tu consumi molti diamanti, ma per la tattica è meglio che l'ultima sia di rarità SSR.",
+          "Ottenendo 2 cofri giornalieri, riuscirai nella settimana a ottenere un cofre UR; a tal proposito, nella nostra alleanza abbiamo un giocatore di supporto `ShardExchangeBank` che si occupa di scambiare i frammenti che ti servono; avendo un giocatore per questa funzione, tutti i frammenti vengono scambiati in modo pratico con tutta l'alleanza.",
+          "Le ricompense dei cofri sono eccellenti per farti migliorare: ricevi acceleratori preziosi, pietre di equipaggiamento, distintivi per aumentare le abilità e altro."
+        ],
+        "fr": [
+          "Chaque fois que vous choisissez une Mission Opération Secrète de rareté UR ou SSR, vous recevez des fragments de la carte au trésor.",
+          "Si vous vous efforcez d'accomplir 6 Opérations Secrètes UR et 1 SSR, vous obtiendrez 2 coffres quotidiens avec tous les fragments que vous râcoltez. Si votre sanctuaire est inférieur au Lv.27, les supérieurs comptent sur 8 opérations secrètes.",
+          "Si vous disposez de 7 opérations secrètes, obtenir les 6 de rareté UR sera plus facile que la dernière ; cette dernière est d'une grande difficulté, probablement pour que vous dépensiez beaucoup de diamants, mais tactiquement il vaut mieux que la dernière soit de rareté SSR.",
+          "En obtenant 2 coffres quotidiens, vous parviendrez dans la semaine à obtenir un coffre UR ; pour cela, dans notre alliance nous avons un joueur de support `ShardExchangeBank` qui s'occupe d'échanger les fragments dont vous avez besoin ; avec un joueur dédié à cette fonction, tous les fragments sont échangés de manière pratique avec toute l'alliance.",
+          "Les récompenses des coffres sont excellentes pour vous permettre de progresser : vous recevez des accélérateurs de valeur, des pierres d'équipement, des insignes pour améliorer vos compétences, entre autres."
+        ],
+        "ja": [
+          "秘密作戦のミッションで UR または SSR のレアリティを選ぶたびに、トレストマップの欠片が交付されます。",
+          "UR の秘密作戦 6 回と SSR 1 回を全力で実行すると、獲得したすべての欠片が日次チェスト 2 個にまとめられます。サンクトワールが Lv.27 未満の場合、上位者は秘密作戦を 8 回用意しています。",
+          "秘密作戦が 7 回ある場合、UR レアリティ 6 回のほう、最後の 1 回より容易です。最後の 1 回は非常に難易度が高く、多くのダイヤを消費させるために設計されています。しかし戦術的には、最後の 1 回を SSR レアリティにするのが最適です。",
+          "日次チェストを 2 個獲得すれば、週内に UR チェストを手に入れられます。そのために、当連合には必要な欠片を交換してくれるサポートプレイヤー `ShardExchangeBank` がいます。この役目を持つプレイヤーがいるため、欠片は連合全体で実務的に交換できます。",
+          "チェストの報酬は大変貴重で、価値あるアクセラレーター、装備用石材、スキル強化用の勲章などが入手でき、大きく成長できます。"
+        ],
+        "ru": [
+          "Каждый раз, когда вы выбираете миссию Секретной Операции редкости UR или SSR, вы получаете фрагменты карты сокровищ.",
+          "Если вы постараетесь выполнить 6 Секретных Операций UR и 1 SSR, вы получите 2 ежедневных сундука со всеми добытыми фрагментами. В случае если ваше святилище ниже Lv.27, у старших имеется 8 секретных операций.",
+          "Если у вас 7 секретных операций, получить 6 редкости UR будет проще, чем последнюю; последняя имеет очень высокую сложность, скорее всего, чтобы вы потратили много алмазов, но с тактической точки зрения лучше, чтобы последняя была редкости SSR.",
+          "Получив 2 ежедневных сундука, за неделю вы сможете получить сундук UR; для этого в нашем альянсе есть поддерживающий игрок `ShardExchangeBank`, который занимается обменом нужных вам фрагментов; имея такого игрока, все фрагменты обмениваются практично со всем альянсом.",
+          "Награды в сундуках превосходны для вашего роста: вы получаете ценные ускорители, камни снаряжения, значки для повышения навыков и многое другое."
+        ],
+        "zh": [
+          "每次选择稀有度为 UR 或 SSR 的秘密行动任务时，你都会获得藏宝图碎片。",
+          "如果努力完成 6 次 UR 秘密行动和 1 次 SSR，你将获得 2 个每日宝箱，内含你收集到的全部碎片。如果你的圣所等级低于 Lv.27，上级玩家会有 8 次秘密行动。",
+          "如果你有 7 次秘密行动，完成 6 次 UR 稀有度会比最后一次容易；最后一次难度很高，大概是让你消耗大量钻石，但从战术角度看，最后一次最好是 SSR 稀有度。",
+          "获得 2 个每日宝箱后，你就能在一周内拿到一个 UR 宝箱。为此，我们联盟有一位支援玩家 `ShardExchangeBank`，专门负责交换你需要的碎片；有了这样一位玩家，所有碎片都能与全联盟高效交换。",
+          "宝箱奖励非常丰厚，可帮助你成长：你会获得宝贵的加速器、装备石、提升技能用的徽章等等。"
+        ],
+        "tr": [
+          "UR veya SSR nadirlikte bir Gizli Operasyon görevi seçtiğiniz her seferinde harita parçaları verilir.",
+          "6 UR Gizli Operasyonu ve 1 SSR'yi uğraşarak tamamlamaya çalışırsanız, elde ettiğiniz tüm parçalarla 2 günlük sandık kazanırsınız. Kutsal alanınız Lv.27'nin altındaysa üst kademedekiler 8 gizli operasyona sahiptir.",
+          "7 gizli operasyonunuz varsa UR nadirlikte 6 tanesini almak sonuncusundan daha kolaydır; sonuncusu çok zordur, muhtemelen çok elmas harcanmanız için böyle tasarlanmıştır, ancak taktik açıdan sonuncusunun SSR nadirlikte olması daha iyidir.",
+          "2 günlük sandık elde ederek hafta içinde bir UR sandık elde edebilirsiniz; bunun için ittifakımızda ihtiyacınız olan parçaları takas etmekle görevli bir destek oyuncumuz `ShardExchangeBank` bulunur; bu işlevi üstlenen bir oyuncu olduğunda tüm parçalar ittifak genelinde pratik şekilde takas edilir.",
+          "Sandık ödülleri gelişiminiz için mükemmeldir: değerli hızlandırıcılar, ekipman taşları, beceri yükseltme rozetleri ve daha fazlası verilir."
+        ]
+      }
+    }
+  ]
+}

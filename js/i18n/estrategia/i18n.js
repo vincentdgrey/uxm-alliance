@@ -19,6 +19,7 @@ pageStrategyLead:"Instrucciones tácticas que te ayudarán en los eventos y en t
         searchEngineResults:"Coincidencias: {count}",
         searchEngineTopicEmpty:"Este tema todavía no tiene información cargada.",
         searchEngineTopicAll:"Ver todo el tema",
+        searchEngineUpdated:"Actualizado:",
     },
     en: {
         pageStrategyTitle:"Strategic Library",
@@ -36,6 +37,7 @@ pageStrategyLead:"Tactical instructions to help you in events and in your heroes
         searchEngineResults:"Matches: {count}",
         searchEngineTopicEmpty:"This topic has no information loaded yet.",
         searchEngineTopicAll:"See the whole topic",
+        searchEngineUpdated:"Updated:",
     },
     pt: {
         pageStrategyTitle:"Biblioteca Estratégica",
@@ -53,6 +55,7 @@ pageStrategyLead:"Instruções táticas que vão ajudar você nos eventos e na s
         searchEngineResults:"Correspondências: {count}",
         searchEngineTopicEmpty:"Este tema ainda não tem informação carregada.",
         searchEngineTopicAll:"Ver o tema completo",
+        searchEngineUpdated:"Atualizado:",
     },
     it: {
         pageStrategyTitle:"Biblioteca Strategica",
@@ -70,6 +73,7 @@ pageStrategyLead:"Istruzioni tattiche che ti aiuteranno negli eventi e nella tua
         searchEngineResults:"Corrispondenze: {count}",
         searchEngineTopicEmpty:"Questo tema non ha ancora informazioni caricate.",
         searchEngineTopicAll:"Vedi tutto il tema",
+        searchEngineUpdated:"Aggiornato:",
     },
     fr: {
         pageStrategyTitle:"Bibliothèque Stratégique",
@@ -87,6 +91,7 @@ pageStrategyLead:"Des instructions tactiques pour vous aider lors des événemen
         searchEngineResults:"Correspondances : {count}",
         searchEngineTopicEmpty:"Ce thème ne contient pas encore d'informations chargées.",
         searchEngineTopicAll:"Voir tout le thème",
+        searchEngineUpdated:"Mis à jour :",
     },
     ja: {
         pageStrategyTitle:"戦略ライブラリ",
@@ -104,6 +109,7 @@ pageStrategyLead:"イベントでの戦いと英雄の成長を見積もるた�
         searchEngineResults:"一致件数: {count}",
         searchEngineTopicEmpty:"このテーマにはまだ情報が登録されていません。",
         searchEngineTopicAll:"テーマ全体を表示",
+        searchEngineUpdated:"更新日:",
     },
     ru: {
         pageStrategyTitle:"Стратегическая библиотека",
@@ -121,6 +127,7 @@ pageStrategyLead:"Тактические инструкции, которые п
         searchEngineResults:"Совпадений: {count}",
         searchEngineTopicEmpty:"В этой теме пока нет загруженной информации.",
         searchEngineTopicAll:"Показать тему целиком",
+        searchEngineUpdated:"Обновлено:",
     },
     zh: {
         pageStrategyTitle:"战略资料库",
@@ -138,6 +145,7 @@ pageStrategyLead:"战术指引，帮助你应对活动并规划英雄成长。",
         searchEngineResults:"匹配结果: {count}",
         searchEngineTopicEmpty:"该主题尚未载入信息。",
         searchEngineTopicAll:"查看整个主题",
+        searchEngineUpdated:"更新日期:",
     },
     tr: {
         pageStrategyTitle:"Stratejik Kütüphane",
@@ -155,6 +163,7 @@ pageStrategyLead:"Etkinliklerde ve kahramanlarının gelişim projesinde sana ya
         searchEngineResults:"Eşleşme: {count}",
         searchEngineTopicEmpty:"Bu temada henüz yüklenmiş bilgi yok.",
         searchEngineTopicAll:"Tüm temayı gör",
+        searchEngineUpdated:"Güncellenme:",
     }
   };
 
