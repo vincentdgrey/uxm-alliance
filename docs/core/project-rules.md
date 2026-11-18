@@ -501,3 +501,15 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Junto al disparador se muestra la etiqueta visible «Lenguaje» (`.lang-label`, clave `language`), asociada al botón mediante `aria-labelledby="langLabel langToggle"`.
 - Cada idioma se muestra en su propio idioma (`Español`, `English`, `Português`, `Italiano`, `Français`, `日本語`, `Русский`, `中文`, `Türkçe`), con atributo `lang` y el activo marcado con `.selected` y `aria-current="true"`.
 - El cambio de idioma conserva la página actual y añade `?lang=`.
+
+### Contador de visitas local
+
+- El footer incluye `<p id="visitCounter" class="visit-counter"></p>` entre `#copyright` y `#langs`, presente en los seis HTML (`index.html` y `pages/*.html`).
+- El contador es **exclusivamente local**: no usa backend, ni servicios externos, ni API. El valor se guarda en `localStorage` (`uxmVisitCount`) y se muestra solo en el navegador del visitante.
+- La lógica vive en `js/app.js` (`countLocalVisits()`, `renderVisitCounter()`) y se ejecuta en el bloque `Init`.
+- Se cuenta **una visita por sesión**: la marca de sesión se guarda en `sessionStorage` (`uxmVisitSession`) con una validez de 30 minutos. Navegar entre páginas del sitio no aumenta el contador.
+- El texto usa `font-size: 10px` y `color: #ccc` (regla `.visit-counter` en `css/style.css`).
+- En escritorio el contador ocupa la columna central del grid del footer (`grid-column: 2`, `grid-row: 2`), justo bajo el copyright. A `620px` o menos vuelve a `grid-column: 1` y `grid-row: auto` para seguir la columna única.
+- El texto está traducido en los nueve idiomas mediante la clave `visitCounter` del núcleo `js/i18n.js`, con el marcador `{n}` sustituido por el total con `toLocaleString(LANG)`.
+- Si el almacenamiento está bloqueado (navegación privada, cookies bloqueadas), los accesos a `localStorage` y `sessionStorage` se capturan con `try/catch` y el contador se oculta sin romper el resto del sitio.
+- El contrato funcional de este bloque vive en `tests/visit-counter.test.cjs`.

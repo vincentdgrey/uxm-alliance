@@ -73,6 +73,53 @@
   var heroScrollCue = byId("heroScrollCue");
   if (heroScrollCue) heroScrollCue.setAttribute("aria-label", T.scrollCue);
 
+  /* ---------- Contador de visitas local ---------- */
+  /* El contador vive solo en el navegador del visitante: no hay backend ni
+     servicios externos. Se incrementa una vez por sesion (sessionStorage) y el
+     total se conserva en localStorage. */
+  var VISIT_COUNT_KEY = "uxmVisitCount";
+  var VISIT_SESSION_KEY = "uxmVisitSession";
+  var VISIT_SESSION_TTL = 30 * 60 * 1000; /* 30 minutos */
+
+  function storageGet(store, key) {
+    try { return store.getItem(key); } catch (e) { return null; }
+  }
+
+  function storageSet(store, key, value) {
+    try { store.setItem(key, value); return true; } catch (e) { return false; }
+  }
+
+  function countLocalVisits() {
+    var now = Date.now();
+    var session = storageGet(window.sessionStorage, VISIT_SESSION_KEY);
+    var last = parseInt(session, 10);
+
+    /* Sesion vigente: no se cuenta de nuevo. */
+    if (last && (now - last) < VISIT_SESSION_TTL) {
+      var current = parseInt(storageGet(window.localStorage, VISIT_COUNT_KEY), 10) || 0;
+      return current > 0 ? current : 0;
+    }
+
+    var total = parseInt(storageGet(window.localStorage, VISIT_COUNT_KEY), 10) || 0;
+    total += 1;
+
+    /* Si el almacenamiento esta bloqueado no se puede contabilizar la visita. */
+    if (!storageSet(window.localStorage, VISIT_COUNT_KEY, String(total))) return 0;
+    if (!storageSet(window.sessionStorage, VISIT_SESSION_KEY, String(now))) return 0;
+    return total;
+  }
+
+  function renderVisitCounter() {
+    var el = byId("visitCounter");
+    if (!el) return;
+
+    var total = countLocalVisits();
+    if (!total) return; /* Almacenamiento bloqueado: se oculta el contador. */
+
+    var label = T.visitCounter || "";
+    el.textContent = label.replace("{n}", total.toLocaleString(LANG));
+  }
+
   /* ---------- Tabla de bonos de la alianza ---------- */
   /* Las filas se generan con los datos de js/alliance-bonuses.js y los
      textos traducidos de js/i18n/index/i18n.js. */
@@ -509,4 +556,5 @@
   applyInfoContent();
   syncNavState();
   initHeroVideo();
+  renderVisitCounter();
 })();

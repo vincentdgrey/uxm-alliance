@@ -1030,6 +1030,17 @@ button,
 
 .copyright { margin: 0; text-align: center; }
 
+/* Contador de visitas local: texto discreto bajo el copyright */
+.visit-counter {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #ccc;
+  text-align: center;
+}
+
 /* Selector de idioma: lista desplegable alineada a la derecha */
 .langs {
   position: relative;
@@ -1136,4 +1147,5 @@ button,
   }
   .yt-link { justify-self: center; }
   .langs { justify-self: end; }
+  .visit-counter { grid-column: 1; grid-row: auto; }
 }
