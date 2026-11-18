@@ -1,0 +1,357 @@
+{
+  "id": "onboarding",
+  "order": 5,
+  "title": {
+    "es": "Onboarding",
+    "en": "Onboarding",
+    "pt": "Onboarding",
+    "it": "Onboarding",
+    "fr": "Onboarding",
+    "ja": "オンボーディング",
+    "ru": "Онбординг",
+    "zh": "新手引导",
+    "tr": "Onboarding"
+  },
+  "summary": {
+    "es": "Bienvenida al nuevo jugador y normas principales de la Alianza UXM.",
+    "en": "Welcome for the new player and the main rules of the UXM Alliance.",
+    "pt": "Boas-vindas ao novo jogador e as normas principais da Aliança UXM.",
+    "it": "Benvenuto per il nuovo giocatore e le regole principali dell'Alleanza UXM.",
+    "fr": "Bienvenue pour le nouveau joueur et les règles principales de l'Alliance UXM.",
+    "ja": "新規プレイヤーへの歓迎とUXM連合の主要ルール。",
+    "ru": "Приветствие нового игрока и основные правила Альянса UXM.",
+    "zh": "欢迎新玩家及UXM联盟的主要规则。",
+    "tr": "Yeni oyuncuya hoş geldiniz ve UXM İttifakının ana kuralları."
+  },
+  "keywords": {
+    "es": [
+      "onboarding",
+      "bienvenida",
+      "nuevo jugador",
+      "novato",
+      "normas",
+      "reglas de la alianza",
+      "aceptar normas",
+      "R1"
+    ],
+    "en": [
+      "onboarding",
+      "welcome",
+      "new player",
+      "rookie",
+      "rules",
+      "alliance rules",
+      "accept rules",
+      "R1"
+    ],
+    "pt": [
+      "onboarding",
+      "boas-vindas",
+      "novo jogador",
+      "novato",
+      "regras",
+      "regras da aliança",
+      "aceitar regras",
+      "R1"
+    ],
+    "it": [
+      "onboarding",
+      "benvenuto",
+      "nuovo giocatore",
+      "principiante",
+      "regole",
+      "regole dell'alleanza",
+      "accettare le regole",
+      "R1"
+    ],
+    "fr": [
+      "onboarding",
+      "bienvenue",
+      "nouveau joueur",
+      "novice",
+      "règles",
+      "règles de l'alliance",
+      "accepter les règles",
+      "R1"
+    ],
+    "ja": [
+      "オンボーディング",
+      "歓迎",
+      "新規プレイヤー",
+      "ルーキー",
+      "ルール",
+      "連合のルール",
+      "ルールへの同意",
+      "R1"
+    ],
+    "ru": [
+      "онбординг",
+      "приветствие",
+      "новый игрок",
+      "новичок",
+      "правила",
+      "правила альянса",
+      "принятие правил",
+      "R1"
+    ],
+    "zh": [
+      "新手引导",
+      "欢迎",
+      "新玩家",
+      "新手",
+      "规则",
+      "联盟规则",
+      "接受规则",
+      "R1"
+    ],
+    "tr": [
+      "onboarding",
+      "hoş geldiniz",
+      "yeni oyuncu",
+      "yeni başlayan",
+      "kurallar",
+      "ittifak kuralları",
+      "kuralları kabul et",
+      "R1"
+    ]
+  },
+  "sections": [
+    {
+      "title": {
+        "es": "Bienvenida",
+        "en": "Welcome",
+        "pt": "Boas-vindas",
+        "it": "Benvenuto",
+        "fr": "Bienvenue",
+        "ja": "歓迎",
+        "ru": "Приветствие",
+        "zh": "欢迎",
+        "tr": "Hoş geldiniz"
+      },
+      "paragraphs": {
+        "es": [
+          "Hola @Nuevo Jugador!! Bienvenido a nuestra Alianza UXM! Esperamos participes de nuestros eventos y los desafíos del Duelo de Alianzas.",
+          "Cada Evento te entregará recompensas suficientes para avanzar en el juego. Nuestros Bonos de crecimiento asegurarán que subas rápido: 20% de construcción, 15% de investigación y otros."
+        ],
+        "en": [
+          "Hello @New Player!! Welcome to our UXM Alliance! We hope you take part in our events and the Alliance Duel challenges.",
+          "Every Event will give you enough rewards to progress in the game. Our growth bonuses will make sure you rise fast: 20% construction, 15% research and others."
+        ],
+        "pt": [
+          "Olá @Novo Jogador!! Bem-vindo à nossa Aliança UXM! Esperamos que participe dos nossos eventos e dos desafios do Duelo de Alianças.",
+          "Cada Evento lhe dará recompensas suficientes para avançar no jogo. Nossos Bônus de crescimento garantirão que você suba rápido: 20% de construção, 15% de pesquisa e outros."
+        ],
+        "it": [
+          "Ciao @Nuovo Giocatore!! Benvenuto nella nostra Alleanza UXM! Speriamo che partecipi ai nostri eventi e alle sfide del Duello di Alleanze.",
+          "Ogni Evento ti darà ricompense sufficienti per progredire nel gioco. I nostri Bonus di crescita garantiranno che sali in fretta: 20% di costruzione, 15% di ricerca e altri."
+        ],
+        "fr": [
+          "Bonjour @Nouveau Joueur !! Bienvenue dans notre Alliance UXM ! Nous espérons que vous participerez à nos événements et aux défis du Duel des Alliances.",
+          "Chaque Événement vous apportera des récompenses suffisantes pour progresser dans le jeu. Nos Bonus de croissance vous feront monter vite : 20 % de construction, 15 % de recherche et d'autres."
+        ],
+        "ja": [
+          "こんにちは @新規プレイヤー ！！ UXM連合へようこそ！ 各イベントと連合決闘のチャレンジに参加できることを期待しています。",
+          "各イベントでは、ゲームを進めるのに十分な報酬が与えられます。成長ボーナス（建設20%、研究15%など）により、あなたの成長が確実に速まります。"
+
+        ],
+        "ru": [
+          "Здравствуйте, @Новый Игрок!! Добро пожаловать в наш Альянс UXM! Надеемся, что вы будете участвовать в наших событиях и в испытаниях Дуэли Альянсов.",
+          "Каждое Событие принесёт вам достаточно наград для прогресса в игре. Наши бонусы роста (20% строительство, 15% исследования и другие) обеспечат быстрый рост."
+        ],
+        "zh": [
+          "你好 @新玩家！！欢迎加入我们的UXM联盟！希望你参与我们的活动以及联盟对决的挑战。",
+          "每个活动都会为你提供足够的奖励，帮助你在游戏中进阶。我们的成长加成将确保你快速成长：建造20%、研究15%等。"
+        ],
+        "tr": [
+          "Merhaba @Yeni Oyuncu !! UXM İttifakımıza hoş geldiniz! Etkinliklerimize ve İttifak Düellosu challenge'larına katılmanızı umuyoruz.",
+          "Her Etkinlik size oyunda ilerlemeniz için yeterli ödüller sunacak. Büyüme bonuslarımız (inşaat %20, araştırma %15 ve diğerleri) hızlı yükselmenizi sağlayacak."
+        ]
+      }
+    },
+    {
+      "title": {
+        "es": "Actualización de Normas de la Alianza",
+        "en": "Alliance Rules Update",
+        "pt": "Atualização das Normas da Aliança",
+        "it": "Aggiornamento delle Regole dell'Alleanza",
+        "fr": "Mise à jour des Règles de l'Alliance",
+        "ja": "連合ルールの更新",
+        "ru": "Обновление правил Альянса",
+        "zh": "联盟规则更新",
+        "tr": "İttifak Kuralları Güncellemesi"
+      },
+      "paragraphs": {
+        "es": [
+          "Normas Principales de la Alianza:"
+        ],
+        "en": [
+          "Main Alliance rules:"
+        ],
+        "pt": [
+          "Normas Principais da Aliança:"
+        ],
+        "it": [
+          "Regole principali dell'Alleanza:"
+        ],
+        "fr": [
+          "Règles principales de l'Alliance :"
+        ],
+        "ja": [
+          "連合の主要ルール："
+        ],
+        "ru": [
+          "Основные правила Альянса:"
+        ],
+        "zh": [
+          "联盟主要规则："
+        ],
+        "tr": [
+          "İttifakın ana kuralları:"
+        ]
+      },
+      "items": {
+        "es": [
+          "Todo nombre «Doctor...» debe cambiarse a un nombre único (obligatorio), así comunicarnos y compartir correctamente.",
+          "No robar en el Reino 277. Se comparten los enlaces diariamente de a qué reino vamos a saquear: https://youtu.be/dSniK89OYKk?si=5BhgIkoZlNzaHLyj",
+          "Si saqueas o robas a alguien del Reino, con previa evidencia, TÚ serás saqueado.",
+          "Aprende a Activar Escudos cada día de Guerra (sábado): https://youtu.be/0InXLpMJIvg?si=9gmZsxN0xRmHiMsN",
+          "Aprende a Retirar los Soldados del Muro cada día de Guerra (sábado): https://youtu.be/gq-YtFJryok?si=oL7LNUpXEJ_p-Jwa",
+          "Sigue la Guía de Actividades Diarias para guardar recursos y activar en el día correcto: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
+          "Prefiere crear Rallys con el evento del día, no mayores a 1 minuto. Ganarás recompensa por Rally, regalo de Alianza y evento.",
+          "Dona Hierbas cada día para aumentar la Investigación de la Alianza; el líder define la ruta de prioridad para un crecimiento rápido."
+        ],
+        "en": [
+          "Every name that starts with «Doctor...» must be changed to a unique name (mandatory), so that we can communicate and share correctly.",
+          "Do not rob in Kingdom 277. The links of the kingdom we are going to loot are shared daily: https://youtu.be/dSniK89OYKk?si=5BhgIkoZlNzaHLyj",
+          "If you loot or rob someone from the Kingdom, with prior evidence, YOU will be looted.",
+          "Learn how to Activate Shields every War day (Saturday): https://youtu.be/0InXLpMJIvg?si=9gmZsxN0xRmHiMsN",
+          "Learn how to Withdraw the Soldiers from the Wall every War day (Saturday): https://youtu.be/gq-YtFJryok?si=oL7LNUpXEJ_p-Jwa",
+          "Follow the Daily Activities Guide to save resources and activate them on the right day: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
+          "Prefer creating Rallies with the event of the day, no longer than 1 minute. You will earn the Rally reward, the Alliance gift and the event reward.",
+          "Donate Herbs every day to increase the Alliance Research; the leader defines the priority path for fast growth."
+        ],
+        "pt": [
+          "Todo nome que começa com «Doctor...» deve ser alterado para um nome único (obrigatório), para que possamos nos comunicar e compartilhar corretamente.",
+          "Não robe no Reino 277. Os links do reino que vamos saquear são compartilhados diariamente: https://youtu.be/dSniK89OYKk?si=5BhgIkoZlNzaHLyj",
+          "Se você saquear ou roubar alguém do Reino, com evidência prévia, VOCÊ será saqueado.",
+          "Aprenda a Ativar Escudos todos os dias de Guerra (sábado): https://youtu.be/0InXLpMJIvg?si=9gmZsxN0xRmHiMsN",
+          "Aprenda a Retirar os Soldados do Muro todos os dias de Guerra (sábado): https://youtu.be/gq-YtFJryok?si=oL7LNUpXEJ_p-Jwa",
+          "Siga o Guia de Atividades Diárias para guardar recursos e ativar no dia correto: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
+          "Prefira criar Rallies com o evento do dia, não maiores que 1 minuto. Você ganha recompensa por Rally, presente da Aliança e evento.",
+          "Doe Ervas todos os dias para aumentar a Pesquisa da Aliança; o líder define a rota de prioridade para um crescimento rápido."
+        ],
+        "it": [
+          "Ogni nome che inizia con «Doctor...» deve essere cambiato con un nome univoco (obbligatorio), così da poterci comunicare e condividere correttamente.",
+          "Non rubare nel Regno 277. I link del regno che andiamo a saccheggiare vengono condivisi ogni giorno: https://youtu.be/dSniK89OYKk?si=5BhgIkoZlNzaHLyj",
+          "Se saccheggi o rubi qualcuno del Regno, con prove a priori, SARAI TU a essere saccheggiato.",
+          "Impara ad Attivare gli Scudi ogni giorno di Guerra (sabato): https://youtu.be/0InXLpMJIvg?si=9gmZsxN0xRmHiMsN",
+          "Impara a Ritirare i Soldati dal Muro ogni giorno di Guerra (sabato): https://youtu.be/gq-YtFJryok?si=oL7LNUpXEJ_p-Jwa",
+          "Segui la Guida delle Attività Daily per risparmiare risorse e attivarle nel giorno giusto: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
+          "Preferisci creare Rally con l'evento del giorno, non più lunghi di 1 minuto. Guadagnerai la ricompensa del Rally, il regalo dell'Alleanza e quella dell'evento.",
+          "Dona Erbe ogni giorno per aumentare la Ricerca dell'Alleanza; il leader definisce il percorso di priorità per una crescita rapida."
+        ],
+        "fr": [
+          "Tout nom commençant par « Doctor... » doit être remplacé par un nom unique (obligatoire), afin de pouvoir communiquer et partager correctement.",
+          "Ne pople pas dans le Royaume 277. Les liens du royaume que nous allons piller sont partagés chaque jour : https://youtu.be/dSniK89OYKk?si=5BhgIkoZlNzaHLyj",
+          "Si vous pillez ou volez quelqu'un du Royaume, avec des preuves au préalable, c'est VOUS qui serez pillé.",
+          "Apprenez à Activer les Boucliers chaque jour de Guerre (samedi) : https://youtu.be/0InXLpMJIvg?si=9gmZsxN0xRmHiMsN",
+          "Apprenez à Retirer les Soldats du Mur chaque jour de Guerre (samedi) : https://youtu.be/gq-YtFJryok?si=oL7LNUpXEJ_p-Jwa",
+          "Suivez le Guide des Activités Quotidiennes pour garder vos ressources et les activer le bon jour : https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
+          "Préférez créer des Rallies avec l'événement du jour, de 1 minute maximum. Vous gagnerez la récompense du Rally, le cadeau de l'Alliance et celle de l'événement.",
+          "Donnez des Herbes chaque jour pour augmenter la Recherche de l'Alliance ; le chef définit l'itinéraire prioritaire pour une croissance rapide."
+        ],
+        "ja": [
+          "「Doctor...」で始まる名前は、必ず固有の名前に変更してください（必須）。連絡と共有を正しく行うためです。",
+          "王国277では略奪・窃盗をしてはいけません。略奪先の王国のリンクは毎日共有されます: https://youtu.be/dSniK89OYKk?si=5BhgIkoZlNzaHLyj",
+          "王国の誰かを略奪・窃盗した場合、証拠を提示すれば、略奪されるのはYOUです。",
+          "戦争の日（土曜日）ごとに「シールドを起動」する方法を学びましょう: https://youtu.be/0InXLpMJIvg?si=9gmZsxN0xRmHiMsN",
+          "戦争の日（土曜日）ごとに「城壁から兵士を撤退」する方法を学びましょう: https://youtu.be/gq-YtFJryok?si=oL7LNUpXEJ_p-Jwa",
+          "リソースを節約し、正しい日に起動するために「日次活動ガイド」を守りましょう: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
+          "その日のイベントに合わせて集合を作成してください。1分を超えないこと。集合報酬、連合からの贈り物、イベント報酬が得られます。",
+          "連合の研究を毎日に進めます"
+        ],
+        "ru": [
+          "Любое имя, начинающееся с «Doctor...», должно быть заменено на уникальное имя (обязательно), чтобы мы могли правильно общаться и делиться информацией.",
+          "Не грабите в Королевстве 277. Ссылки на королевство, которое мы собираемся ограбить, публикуются ежедневно: https://youtu.be/dSniK89OYKk?si=5BhgIkoZlNzaHLyj",
+          "Если вы ограбите или украдёте кого-то из Королевства, при наличии доказательств, ограбят ВАС.",
+          "Научитесь Активировать Щиты в каждый день Войны (суббота): https://youtu.be/0InXLpMJIvg?si=9gmZsxN0xRmHiMsN",
+          "Научитесь Отводить Солдат от Стены в каждый день Войны (суббота): https://youtu.be/gq-YtFJryok?si=oL7LNUpXEJ_p-Jwa",
+          "Следуйте Руководству по ежедневным активностям, чтобы экономить ресурсы и активировать их в нужный день: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
+          "Предпочитайте создавать Ралли с событием дня, не длиннее 1 минуты. Вы получите награду за Ралли, подарок Альянса и награду за событие.",
+          "Дарите Травы каждый день для повышения Исследований Альянса; лидер определяет приоритетный путь для быстрого роста."
+        ],
+        "zh": [
+          "所有以「Doctor...」开头的名字都必须改为唯一姓名（强制要求），以便我们正确沟通和分享。",
+          "禁止在277王国抢劫或掠夺。我们每天都会分享将要掠夺的王国链接: https://youtu.be/dSniK89OYKk?si=5BhgIkoZlNzaHLyj",
+          "如果你掠夺或抢劫了王国成员，在有证据的情况下，被掠夺的将是你。",
+          "学会在每个战争日（周六）开启护盾: https://youtu.be/0InXLpMJIvg?si=9gmZsxN0xRmHiMsN",
+          "学会在每个战争日（周六）从城墙撤下士兵: https://youtu.be/gq-YtFJryok?si=oL7LNUpXEJ_p-Jwa",
+          "遵循每日活动指南，以保存资源并在正确的日期开启: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
+          "建议使用当天事件创建集结，时长不超过1分钟。你将获得集结奖励、联盟礼物和活动奖励。",
+          "每天捐献草药以提升联盟研究进度；由首领确定优先路线以实现快速成长。"
+        ],
+        "tr": [
+          "«Doctor...» ile başlayan tüm isimler benzersiz bir isme değiştirilmelidir (zorunlu), böylece doğru iletişim kurup doğru paylaşabiliriz.",
+          "277 Krallığı'nda yağma ya da hırsızlık yapma. Yağmalayacağımız krallığın bağlantıları her gün paylaşılır: https://youtu.be/dSniK89OYKk?si=5BhgIkoZlNzaHLyj",
+          "Krallıktan birini yağmalarsan ya da hırsızlık yaparsan, önceki kanıtlarla birlikte yağmalanacak kişi SEN olursun.",
+          "Her Savaş günü (Cumartesi) Kalkanları Etkinleştirmeyi öğrenin: https://youtu.be/0InXLpMJIvg?si=9gmZsxN0xRmHiMsN",
+          "Her Savaş günü (Cumartesi) Surlardan Askerleri Geri Çekmeyi öğrenin: https://youtu.be/gq-YtFJryok?si=oL7LNUpXEJ_p-Jwa",
+          "Kaynaklarını biriktirmek ve doğru günde etkinleştirmek için Günlük Etkinlik Rehberini takip edin: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
+          "Günün etkinliğiyle Rally oluşturmayı tercih edin, 1 dakikadan uzun olmasın. Rally ödülü, İttifak hediyesi ve etkinlik ödülü kazanırsınız.",
+          "İttifak Araştırmasını artırmak için her gün ot bağışlayın; hızlı büyüme için öncelik rotasını lider belirler."
+        ]
+      }
+    },
+    {
+      "title": {
+        "es": "Confirmación y Acompañamiento",
+        "en": "Confirmation and Support",
+        "pt": "Confirmação e Acompanhamento",
+        "it": "Conferma e Supporto",
+        "fr": "Confirmation et Accompagnement",
+        "ja": "確認とサポート",
+        "ru": "Подтверждение и Поддержка",
+        "zh": "确认与支持",
+        "tr": "Onay ve Destek"
+      },
+      "paragraphs": {
+        "es": [
+          "Por favor, necesitamos que nos indiques que aceptas y comprendes las Normas de la Alianza, y así actualizar tu posición a R1. 👍😉",
+          "Como siempre, estaremos disponibles para explicarte cómo mejorar y ayudarte con tus consultas. 👍😉"
+        ],
+        "en": [
+          "Please, let us know that you accept and understand the Alliance Rules, so we can update your position to R1. 👍😉",
+          "As always, we will be available to explain how to improve and to help you with your questions. 👍😉"
+        ],
+        "pt": [
+          "Por favor, preciso que nos informe que aceita e compreende as Normas da Aliança, para que possamos atualizar sua posição para R1. 👍😉",
+          "Como sempre, estaremos disponíveis para explicar como melhorar e ajudar você com suas dúvidas. 👍😉"
+        ],
+        "it": [
+          "Ti chiediamo cortesemente di indicarci che accetti e comprendi le Regole dell'Alleanza, così da aggiornare la tua posizione a R1. 👍😉",
+          "Come sempre, saremo disponibili a spiegarti come migliorare e ad aiutarti con i tuoi dubbi. 👍😉"
+        ],
+        "fr": [
+          "Merci de nous indiquer que vous acceptez et comprenez les Règles de l'Alliance, afin que nous puissions mettre à jour votre position à R1. 👍😉",
+          "Comme toujours, nous resterons disponibles pour vous expliquer comment vous améliorer et vous aider à répondre à vos questions. 👍😉"
+        ],
+        "ja": [
+          "連合ルールを受け入れて理解したことをお知らせください。それによりあなたのステータスをR1に更新します。👍😉",
+          "いつもどおり、改善の方法を説明し、ご質問にお答えするために常に対応しています。👍😉"
+        ],
+        "ru": [
+          "Пожалуйста, сообщите нам, что вы принимаете и понимаете Правила Альянса, чтобы мы обновили вашу позицию до R1. 👍😉",
+          "Как всегда, мы готовы объяснить, как развиваться, и помочь вам с вашими вопросами. 👍😉"
+        ],
+        "zh": [
+          "请告知我们你已接受并理解联盟规则，以便我们把你的等级更新为R1。👍😉",
+          "一如既往，我们会随时为你讲解如何提升，并解答你的疑问。👍😉"
+        ],
+        "tr": [
+          "Lütfen İttifak Kuralları'nı kabul ettiğinizi ve anladığınızı bize bildirin, böylece konumunuzu R1 olarak güncelleyebilelim. 👍😉",
+          "Her zaman olduğu gibi, nasıl gelişeceğinizi anlatmak ve sorularınızda size yardımcı olmak için buradayız. 👍😉"
+        ]
+      }
+    }
+  ]
+}

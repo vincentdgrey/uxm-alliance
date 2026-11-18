@@ -2,37 +2,175 @@
   "id": "caravan",
   "order": 20,
   "title": {
-    "es": "Caravana",
-    "en": "Caravan",
-    "pt": "Caravana",
-    "it": "Carovana",
-    "fr": "Caravane",
+    "es": "Caravanas",
+    "en": "Caravans",
+    "pt": "Caravanas",
+    "it": "Carovane",
+    "fr": "Caravanes",
     "ja": "キャラバン",
-    "ru": "Караван",
+    "ru": "Караваны",
     "zh": "商队",
-    "tr": "Kervan"
+    "tr": "Kervanlar"
   },
   "summary": {
-    "es": "",
-    "en": "",
-    "pt": "",
-    "it": "",
-    "fr": "",
-    "ja": "",
-    "ru": "",
-    "zh": "",
-    "tr": ""
+    "es": "Cómo enviar caravanas para no perder recompensas y aprovechar las de mayor calidad.",
+    "en": "How to send caravans without losing rewards and how to take advantage of the best ones.",
+    "pt": "Como enviar caravanas sem perder recompensas e aproveitar as de melhor qualidade.",
+    "it": "Come inviare carovane senza perdere ricompense e come sfruttare quelle migliori.",
+    "fr": "Comment envoyer des caravanes sans perdre de récompenses et comment profiter des meilleures.",
+    "ja": "報酬を取りこぼさず、より良いキャラバンをうまく利用するための方法。",
+    "ru": "Как отправлять караваны, не теряя награды, и как использовать лучшие из них.",
+    "zh": "如何派出商队而不损失奖励，以及如何利用最优质的车队。",
+    "tr": "Ödülleri kaybetmeden kervan gönderme ve en kaliteli kervanlardan yararlanma yolları."
   },
   "keywords": {
-    "es": [],
-    "en": [],
-    "pt": [],
-    "it": [],
-    "fr": [],
-    "ja": [],
-    "ru": [],
-    "zh": [],
-    "tr": []
+    "es": [
+      "caravana",
+      "caravanas",
+      "escuadrón",
+      "recompensa",
+      "recompensas",
+      "fragmentos UR",
+      "curiosidades SSR",
+      "recursos extraños"
+    ],
+    "en": [
+      "caravan",
+      "caravans",
+      "squad",
+      "reward",
+      "rewards",
+      "UR fragments",
+      "SSR curiosities",
+      "rare resources"
+    ],
+    "pt": [
+      "caravana",
+      "caravanas",
+      "esquadrão",
+      "recompensa",
+      "recompensas",
+      "fragmentos UR",
+      "curiosidades SSR",
+      "recursos raros"
+    ],
+    "it": [
+      "carovana",
+      "carovane",
+      "squadra",
+      "ricompensa",
+      "ricompense",
+      "frammenti UR",
+      "curiosità SSR",
+      "risorse rare"
+    ],
+    "fr": [
+      "caravane",
+      "caravanes",
+      "escadron",
+      "récompense",
+      "récompenses",
+      "fragments UR",
+      "curiosités SSR",
+      "ressources rares"
+    ],
+    "ja": [
+      "キャラバン",
+      "分隊",
+      "報酬",
+      "UR欠片",
+      "SSR Curiosity",
+      "希少な資源"
+    ],
+    "ru": [
+      "караван",
+      "караваны",
+      "отряд",
+      "награда",
+      "награды",
+      "фрагменты UR",
+      "любопытности SSR",
+      "редкие ресурсы"
+    ],
+    "zh": [
+      "商队",
+      "商队们",
+      "编队",
+      "奖励",
+      "UR碎片",
+      "SSR奇物",
+      "稀有资源"
+    ],
+    "tr": [
+      "kervan",
+      "kervanlar",
+      "birlik",
+      "ödül",
+      "UR parçaları",
+      "SSR merakları",
+      "nadir kaynaklar"
+    ]
   },
-  "sections": []
+  "sections": [
+    {
+      "title": {
+        "es": "Caravanas",
+        "en": "Caravans",
+        "pt": "Caravanas",
+        "it": "Carovane",
+        "fr": "Caravanes",
+        "ja": "キャラバン",
+        "ru": "Караваны",
+        "zh": "商队",
+        "tr": "Kervanlar"
+      },
+      "paragraphs": {
+        "es": [
+          "Para lograr no perder recompensas con cada caravana, elige enviar una sola caravana a la vez con tu escuadrón más fuerte.",
+          "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
+          "Prefiere Caravanas SSR o UR: es tu oportunidad de recibir recursos extraños o difíciles de conseguir como Fragmentos UR (dorados) o Curiosidades SSR (moradas)."
+        ],
+        "en": [
+          "To avoid losing rewards with each caravan, choose to send one caravan at a time with your strongest squad.",
+          "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
+          "Prefer SSR or UR Caravans: it is your chance to receive rare or hard-to-get resources such as UR Fragments (golden) or SSR Curiosities (purple)."
+        ],
+        "pt": [
+          "Para não perder recompensas com cada caravana, escolha enviar uma caravana por vez com seu esquadrão mais forte.",
+          "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
+          "Prefira Caravanas SSR ou UR: é a sua oportunidade de receber recursos estranhos ou difíceis de conseguir, como Fragmentos UR (dourados) ou Curiosidades SSR (roxas)."
+        ],
+        "it": [
+          "Per evitare di perdere ricompense con ogni carovana, scegli di inviare una sola carovana alla volta con la tua squadra più forte.",
+          "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
+          "Preferisci le Carovane SSR o UR: è la tua occasione per ricevere risorse strane o difficili da ottenere come Frammenti UR (dorati) o Curiosità SSR (violette)."
+        ],
+        "fr": [
+          "Pour ne pas perdre de récompenses avec chaque caravane, choisissez d'envoyer une seule caravane à la fois avec votre escadron le plus fort.",
+          "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
+          "Préférez les Caravanes SSR ou UR : c'est l'occasion de recevoir des ressources rares ou difficiles à obtenir comme des Fragments UR (dorés) ou des Curiosités SSR (mauves)."
+        ],
+        "ja": [
+          "各キャラバンで報酬を取りこぼさないよう、最も強い分隊で一度に一隊だけ派出してください。",
+          "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
+          "SSRまたはURのキャラバンを優先しましょう。UR欠片（ゴールド）やSSR Curiosity（パープル）のような、希少で入手しにくい資源を受け取るチャンスです。"
+        ],
+        "ru": [
+          "Чтобы не терять награды с каждым караваном, отправляйте по одному каравану за раз, используя свой самый сильный отряд.",
+          "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
+          "Предпочитайте караваны SSR или UR: это ваша возможность получить редкие или труднодоступные ресурсы, например Фрагменты UR (золотые) или Любопытности SSR (фиолетовые)."
+        ],
+        "zh": [
+          "为了不在每次派出商队时损失奖励，请选择一次只派出一支商队，并使用你最强大的编队。",
+          "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
+          "优先选择SSR或UR商队：这是你获得稀有或难以获得的资源的机会，例如UR碎片（金色）或SSR奇物（紫色）。"
+        ],
+        "tr": [
+          "Her kervanda ödül kaybetmemek için, en güçlü birliğinle aynı anda tek bir kervan göndermeyi seçin.",
+          "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
+          "SSR veya UR kervanları tercih edin: nadir ya da zor elde edilen kaynaklar, örneğin UR Parçaları (altın) veya SSR Merakları (mor) almak için fırsatınız."
+        ]
+      }
+    }
+  ]
 }

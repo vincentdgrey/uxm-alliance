@@ -34,5 +34,75 @@
     "zh": [],
     "tr": []
   },
-  "sections": []
+  "sections": [
+    {
+      "title": {
+        "es": "Normas para nuevos miembros",
+        "en": "Rules for new members",
+        "pt": "Regras para novos membros",
+        "it": "Regole per i nuovi membri",
+        "fr": "Règles pour les nouveaux membres",
+        "ja": "新規メンバーのルール",
+        "ru": "Правила для новых участников",
+        "zh": "新成员规则",
+        "tr": "Yeni üyeler için kurallar"
+      },
+      "items": {
+        "es": [
+          "Toda persona nueva debe cumplir las normas del Reino 277 y de la Alianza UXM.",
+          "El detalle de las normas está disponible en el sitio web <a target='_blank' href='https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html'>Normas UXM</a>.",
+          "La norma fundamental del Reino es: NO robar o saquear en nuestro Servidor.",
+          "Las normas fundamentales de la Alianza es: Donar Hierbas a la Alianza, Estudiar los <a target='_blank' href='https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html'>Video Tutoriales</a> y Realizar el Duelo de Alianzas en la semana siguiendo la <a target='_blank' href='https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html'>Guía de Actividades</a>."
+        ],
+        "en": [
+          "Every new member must comply with the rules of Kingdom 277 and of the UXM Alliance.",
+          "Rules details are available on the website https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html",
+          "The fundamental rule of the Kingdom is: DO NOT rob or loot on our Server.",
+          "The fundamental rules of the Alliance are: Donate Herbs to the Alliance, Study the Video Tutorials (https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html) and Take part in the Alliance Duel every week following the Activities Guide (https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html)."
+        ],
+        "pt": [
+          "Toda nova pessoa deve cumprir as regras do Reino 277 e da Aliança UXM.",
+          "O detalhe das regras está disponível no site https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html",
+          "A regra fundamental do Reino é: NÃO roubar ou saquear no nosso Servidor.",
+          "As regras fundamentais da Aliança são: Doar Ervas à Aliança, Estudar os Video Tutoriales (https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html) e Realizar o Duelo de Alianças na semana seguindo o Guia de Atividades (https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html)."
+        ],
+        "it": [
+          "Ogni nuovo membro deve rispettare le regole del Regno 277 e dell'Alleanza UXM.",
+          "Il dettaglio delle regole è disponibile sul sito https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html",
+          "La regola fondamentale del Regno è: NON rubare o saccheggiare sul nostro Server.",
+          "Le regole fondamentali dell'Alleanza sono: Donare Erbe all'Alleanza, Studiare i Video Tutorial (https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html) e partecipare al Duello di Alleanze ogni settimana seguendo la Guida delle Attività (https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html)."
+        ],
+        "fr": [
+          "Toute nouvelle personne doit respecter les règles du Royaume 277 et de l'Alliance UXM.",
+          "Le détail des règles est disponible sur le site https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html",
+          "La règle fondamentale du Royaume est : NE PAS voler ou piller sur notre Serveur.",
+          "Les règles fondamentales de l'Alliance sont : Donner des Herbes à l'Alliance, Étudier les Tutoriels Vidéo (https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html) et participer au Duel des Alliances chaque semaine en suivant le Guide des Activités (https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html)."
+        ],
+        "ja": [
+          "新しく入ったメンバーは、王国277とUXM連合のルールを遵守しなければならない。",
+          "ルールの詳細はウェブサイトに記載されています https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html",
+          "王国の基本ルールは次のとおりです：我々のサーバーで略奪や窃盗をしてはならない（NO 盗む・略奪する）。",
+          "連合の基本ルールは次のとおりです：連合にハーブを寄付する、ideoチュートリアルを視聴する（https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html）、活動ガイドに従って毎週連合決闘に参加する（https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html）。"
+        ],
+        "ru": [
+          "Каждый новый участник должен соблюдать правила Королевства 277 и Альянса UXM.",
+          "Подробности правил опубликованы на сайте https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html",
+          "Главное правило Королевства: НЕ грабить и не воровать на нашем Сервере.",
+          "Главные правила Альянса: дарить Травы Альянсу, изучать Видеоуроки (https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html) и участвовать в Дуэли Альянсов каждую неделю по Руководству по активностям (https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html)."
+        ],
+        "zh": [
+          "每位新成员都必须遵守277王国和UXM联盟的规则。",
+          "规则详情见网站 https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html",
+          "王国的基本规则是：不要在我们的服务器上抢劫或掠夺。",
+          "联盟的基本规则是：向联盟捐赠草药、观看视频教程（https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html），并按照活动指南每周参加联盟对决（https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html）。"
+        ],
+        "tr": [
+          "Her yeni üye, 277 Krallığı ve UXM İttifakı kurallarına uymak zorundadır.",
+          "Kuralların ayrıntıları web sitesinde bulunabilir https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html",
+          "Krallığın temel kuralı şudur: Sunucumuzda hırsızlık yapma ya da yağma.",
+          "İttifakın temel kuralları şunlardır: İttifaka otlar bağışla, Video Derslerini izle (https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html) ve Etkinlik Rehberini takip ederek haftalık İttifak Düellosu'na katıl (https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html)."
+        ]
+      }
+    }
+  ]
 }

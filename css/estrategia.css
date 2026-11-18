@@ -210,6 +210,11 @@
   padding-left: 20px;
   line-height: 1.7;
 }
+/* Los items con medio embebido usan la rejilla y no la viñeta de la lista. */
+.searchEngine-list > li.searchEngine-item-media {
+  list-style: none;
+  margin-left: -20px;
+}
 .searchEngine-figure {
   margin: 0;
 }
@@ -222,6 +227,48 @@
   color: var(--muted);
   font-size: 12px;
   text-align: center;
+}
+/* Enlaces detectados dentro del texto de los temas. */
+.searchEngine-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color .2s var(--ease), text-decoration-color .2s var(--ease);
+  overflow-wrap: anywhere;
+}
+.searchEngine-link:hover,
+.searchEngine-link:focus-visible {
+  color: var(--hot);
+  text-decoration-color: currentColor;
+}
+/* Bloques de dos columnas con medio embebido a la izquierda. */
+.searchEngine-media-row {
+  margin-bottom: 12px;
+}
+.searchEngine-media {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--button-radius);
+  background-color: #000;
+}
+.searchEngine-media-image {
+  background-color: transparent;
+}
+.searchEngine-media-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.searchEngine-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.searchEngine-media-image .searchEngine-image {
+  display: block;
+  height: auto;
 }
 @media (max-width: 768px) {
   .searchEngine-section-media {

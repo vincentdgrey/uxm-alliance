@@ -2,37 +2,203 @@
   "id": "incursion",
   "order": 30,
   "title": {
-    "es": "Incursión",
-    "en": "Incursion",
-    "pt": "Incursão",
-    "it": "Incursione",
-    "fr": "Incursion",
+    "es": "Incursiones",
+    "en": "Incursions",
+    "pt": "Incursões",
+    "it": "Incursioni",
+    "fr": "Incursions",
     "ja": "インカージョン",
-    "ru": "Вторжение",
+    "ru": "Вторжения",
     "zh": "突袭",
-    "tr": "Aksiyon"
+    "tr": "Akınlar"
   },
   "summary": {
-    "es": "",
-    "en": "",
-    "pt": "",
-    "it": "",
-    "fr": "",
-    "ja": "",
-    "ru": "",
-    "zh": "",
-    "tr": ""
+    "es": "Aprende a saltar entre reinos para atacar a nuestros contrincantes en el Duelo de Alianzas.",
+    "en": "Learn how to jump between kingdoms to attack our rivals in the Alliance Duel.",
+    "pt": "Aprenda a saltar entre reinos para atacar nossos rivais no Duelo de Alianças.",
+    "it": "Impara a saltare tra i regni per attaccare i nostri rivali nel Duello di Alleanze.",
+    "fr": "Apprenez à sauter d'un royaume à l'autre pour attaquer nos rivaux lors du Duel des Alliances.",
+    "ja": "連合決闘でライバルを攻撃するために、王国間を移動する方法を学びましょう。",
+    "ru": "Научитесь перемещаться между королевствами, чтобы атаковать соперников в Дуэли Альянсов.",
+    "zh": "学会在王国之间跳转，以便在联盟对决中攻击我们的对手。",
+    "tr": "İttifak Düellosu'nda rakiplerimize saldırmak için krallıklar arasında geçiş yapmayı öğrenin."
   },
   "keywords": {
-    "es": [],
-    "en": [],
-    "pt": [],
-    "it": [],
-    "fr": [],
-    "ja": [],
-    "ru": [],
-    "zh": [],
-    "tr": []
+    "es": [
+      "incursión",
+      "incursiones",
+      "salto",
+      "saltar",
+      "reino",
+      "reinos",
+      "día de guerra",
+      "banner",
+      "estrella",
+      "enlace"
+    ],
+    "en": [
+      "incursion",
+      "incursions",
+      "jump",
+      "kingdom",
+      "kingdoms",
+      "war day",
+      "banner",
+      "star",
+      "link"
+    ],
+    "pt": [
+      "incursão",
+      "incursões",
+      "salto",
+      "saltar",
+      "reino",
+      "reinos",
+      "dia de guerra",
+      "banner",
+      "estrela",
+      "link"
+    ],
+    "it": [
+      "incursione",
+      "incursioni",
+      "salto",
+      "reino",
+      "regni",
+      "giorno di guerra",
+      "banner",
+      "stella",
+      "link"
+    ],
+    "fr": [
+      "incursion",
+      "incursions",
+      "saut",
+      "royaume",
+      "royaumes",
+      "jour de guerre",
+      "banner",
+      "étoile",
+      "lien"
+    ],
+    "ja": [
+      "インカージョン",
+      "ジャンプ",
+      "王国",
+      "戦争の日",
+      "バナー",
+      "星",
+      "リンク"
+    ],
+    "ru": [
+      "вторжение",
+      "вторжения",
+      "прыжок",
+      "королевство",
+      "королевства",
+      "день войны",
+      "баннер",
+      "звезда",
+      "ссылка"
+    ],
+    "zh": [
+      "突袭",
+      "跳跃",
+      "王国",
+      "战争日",
+      "横幅",
+      "星星",
+      "链接"
+    ],
+    "tr": [
+      "akın",
+      "akınlar",
+      "atlama",
+      "krallık",
+      "savaş günü",
+      "banner",
+      "yıldız",
+      "bağlantı"
+    ]
   },
-  "sections": []
+  "sections": [
+    {
+      "title": {
+        "es": "Saltar entre Reinos",
+        "en": "Jumping between Kingdoms",
+        "pt": "Saltar entre Reinos",
+        "it": "Saltare tra i Regni",
+        "fr": "Sauter d'un Royaume à l'autre",
+        "ja": "王国間を移動する",
+        "ru": "Перемещение между Королевствами",
+        "zh": "在王国之间跳转",
+        "tr": "Krallıklar Arasında Geçiş"
+      },
+      "paragraphs": {
+        "es": [
+          "Cada sábado o día de Guerra nos movemos a otro reino para atacar a nuestros contrincantes en el Duelo de Alianzas, por ello es importante aprender a saltar entre reinos.",
+          "Los saltos de esta forma son gratis y con un tiempo de espera: al moverte a otro reino aparecerá un banner en la parte superior, en color amarillo, indicándote el reino que estás visitando, y una flecha que te permitirá regresar.",
+          "También es posible volver: al visitar tu mismo reino mediante un enlace a alguna ubicación, es otra forma práctica.",
+          "Una vez habilitado el día de Guerra, otro elemento que te ayudará son los enlaces creados para la alianza, ubicados en el mapa del reino: tienen un icono de estrella y el líder agregará los necesarios a otros reinos, lo que ayuda a saquear.",
+          "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
+        ],
+        "en": [
+          "Every Saturday or War Day we move to another kingdom to attack our rivals in the Alliance Duel, so it is important to learn how to jump between kingdoms.",
+          "Jumps of this kind are free and have a waiting time: when you move to another kingdom a banner appears at the top, in yellow, indicating the kingdom you are visiting, and an arrow that lets you go back.",
+          "It is also possible to return: by visiting your own kingdom through a link to some location, which is another practical way.",
+          "Once the War Day is enabled, another element that will help you are the links created for the alliance, located on the kingdom map: they have a star icon, and the leader will add the necessary ones to other kingdoms, which helps to loot.",
+          "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
+        ],
+        "pt": [
+          "Todo sábado ou Dia de Guerra vamos para outro reino para atacar nossos rivais no Duelo de Alianças, por isso é importante aprender a saltar entre reinos.",
+          "Os saltos desta forma são grátis e têm um tempo de espera: ao se mover para outro reino aparecerá um banner no topo, em amarelo, indicando o reino que você está percorrendo, e uma seta que permitirá retornar.",
+          "Também é possível voltar: ao visitar o seu próprio reino por meio de um link para alguma localização, essa é outra forma prática.",
+          "Uma vez habilitado o Dia de Guerra, outro elemento que vai te ajudar são os links criados para a aliança, localizados no mapa do reino: eles têm um ícone de estrela e o líder adicionará os necessários a outros reinos, o que ajuda a saquear.",
+          "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
+        ],
+        "it": [
+          "Ogni sabato o Giorno di Guerra ci spostiamo in un altro regno per attaccare i nostri rivali nel Duello di Alleanze, per cui è importante imparare a saltare tra i regni.",
+          "I salti di questo tipo sono gratuiti e hanno un tempo di attesa: spostandoti in un altro regno comparirà un banner in alto, di colore giallo, che indica il regno che stai percorrendo, e una freccia che ti permetterà di tornare.",
+          "È anche possibile tornare: visitare il proprio regno tramite un link verso una certa posizione è un altro modo pratico.",
+          "Una volta abilitato il Giorno di Guerra, un altro elemento che ti aiuterà sono i link creati per l'alleanza, presenti sulla mappa del regno: hanno un'icona a stella e il leader aggiungerà quelli necessari in altri regni, il che aiuta a saccheggiare.",
+          "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
+        ],
+        "fr": [
+          "Chaque samedi ou Jour de Guerre, nous nous déplaçons vers un autre royaume pour attaquer nos rivaux lors du Duel des Alliances : il est donc important d'apprendre à sauter d'un royaume à l'autre.",
+          "Les sauts de ce type sont gratuits et comportent un temps d'attente : lorsque vous vous déplacez vers un autre royaume, une bannière apparaît en haut, en jaune, indiquant le royaume que vous êtes en train de visiter, ainsi qu'une flèche qui vous permettra de revenir.",
+          "Il est également possible de revenir : visiter votre propre royaume via un lien vers un emplacement est une autre méthode pratique.",
+          "Une fois le Jour de Guerre activé, un autre élément vous aidera : les liens créés pour l'alliance, situés sur la carte du royaume. Ils portent une icône en étoile et le chef ajoutera ceux nécessaires dans les autres royaumes, ce qui aide à piller.",
+          "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
+        ],
+        "ja": [
+          "毎週土曜日または戦争の日は、連合決闘でライバルを攻撃するために別の王国へ移動します。そのため、王国間を移動する方法を学ぶことが重要です。",
+          "この移動は無料で、待機時間があります。他の王国へ移動すると、画面上部に黄色いバナーが現れ、訪問中の王国と戻れる矢印が表示されます。",
+          "自分の王国へ戻ることもできます。特定の地点へのリンクから自分の王国を訪問する方法も実用的な手段です。",
+          "戦争の日が有効になると、もう一つの助けになります：連合用に作成されたリンク、王国の地図上に配置されています。星のアイコンが付いており、リーダーが他の王国に必要なものを追加し、略奪（FarmingKingdom）の助けになります。",
+          "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
+        ],
+        "ru": [
+          "Каждую субботу или в День Войны мы перемещаемся в другое королевство, чтобы атаковать соперников в Дуэли Альянсов, поэтому важно научиться прыгать между королевствами.",
+          "Такие переходы бесплатны и требуют ожидания: при перемещении в другое королевство сверху появляется жёлтый баннер, показывающий королевство, которое вы посещаете, и стрелка, позволяющая вернуться.",
+          "Вернуться также можно: посещение собственного королевства по ссылке на нужную точку — ещё один практичный способ.",
+          "После активации Дня Войны вам помогут ссылки, созданные для альянса и расположенные на карте королевства: у них есть значок звезды, а лидер добавит нужные ссылки в других королевствах, что помогает ограбить.",
+          "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
+        ],
+        "zh": [
+          "每个周六或战争日，我们会移动到另一个王国，在联盟对决中攻击我们的对手，因此学会在王国之间跳转很重要。",
+          "这类跳转是免费的，但有等待时间：移动到另一个王国后，屏幕顶部会出现黄色横幅，指示你正在访问的王国，并附带一个可返回的箭头。",
+          "也可以返回：通过指向某个位置的链接访问自己的王国，也是另一种实用的方法。",
+          "启用战争日后，另一个帮助你的是为联盟创建的链接，位于王国地图上：它们带有星形图标，首领会在其他王国添加所需的链接，这有助于掠夺。",
+          "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
+        ],
+        "tr": [
+          "Her Cumartesi veya Savaş Günü, Duelo de Alianzas'taki rakiplerimize saldırmak için başka bir krallığa geçiyoruz; bu yüzden krallıklar arasında atlamayı öğrenmek önemlidir.",
+          "Bu tür geçişler ücretsizdir ve bir bekleme süresi vardır: başka bir krallığa geçtiğinizde ekranın üst kısmında sarı bir banner belirir; ziyaret ettiğiniz krallığı gösterir ve geri dönmenizi sağlayan bir ok sunar.",
+          "Geri dönmek de mümkündür: belirli bir konuma giden bir bağlantı üzerinden kendi krallığınızı ziyaret etmek de pratik bir yöntemdir.",
+          "Savaş günü etkinleştirildikten sonra size yardımcı olan başka bir unsur, krallık haritasında bulunan ittifak için oluşturulan bağlantılardır: yıldız simgeleri vardır ve lider diğer krallıklara gereken bağlantıları ekleyerek yağmaya yardımcı olur.",
+          "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
+        ]
+      }
+    }
+  ]
 }

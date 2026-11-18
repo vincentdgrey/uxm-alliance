@@ -13,6 +13,7 @@
     "tr": "Yeni Başlayanlar"
   },
   "topics": [
+    "rookie/onboarding.json",
     "rookie/rules.json",
     "rookie/caravan.json",
     "rookie/incursion.json",

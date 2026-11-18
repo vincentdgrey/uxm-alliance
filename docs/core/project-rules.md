@@ -458,8 +458,32 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - El texto se resuelve por idioma activo → inglés → español, con la función `localize()`.
 - La búsqueda compara en minúsculas y sin diacríticos latinos (`normalize("NFD")` y el rango `\u0300-\u036f`). Indexa título, resumen, palabras clave, subtítulos, párrafos, listas y textos alternativos de imagen.
 - Al escribir, los resultados muestran solo las secciones coincidentes; al elegir un tema (botón o árbol) se muestra el tema completo.
-- Todo el contenido de los JSON se inserta con `textContent`: nunca se interpreta HTML procedente de los datos.
+- Todo el contenido de los JSON se inserta con `textContent`: nunca se interpreta HTML procedente de los datos. La única excepción controlada es la etiqueta `<a>`, descrita más abajo.
 - Las imágenes se referencian como `media/...` y se sirven con `../` desde la subpágina; se rechazan las rutas con `..` o con esquema externo.
+
+#### Enlaces y medios embebidos en los temas
+
+- El renderizado detecta las URL `http`/`https` dentro de los párrafos y de los elementos de lista de cada sección.
+- Las URL válidas se convierten en enlaces `<a class="link-info searchEngine-link">` con `target="_blank"` y `rel="noopener noreferrer"`; el resto del texto se mantiene como texto plano. El enlace se construye con nodos DOM, nunca con `innerHTML`.
+- Se descartan las URL con protocolo distinto de `http`/`https` y los caracteres de puntuación que quedan pegados al final del enlace.
+
+##### Etiquetas `<a>` dentro del texto
+
+- El texto de los párrafos y de los elementos de lista admite etiquetas `<a>` escritas de dos formas equivalentes:
+  - Forma estándar: `<a target='_blank' href='https://ejemplo.com'>Texto</a>`.
+  - Forma simplificada: `<a https://ejemplo.com>Texto</a>`.
+- Ambas formas se reconstruyen como enlaces funcionales con `href` validado, `target="_blank"`, `rel="noopener noreferrer"` y las clases `link-info searchEngine-link`. El rótulo visible es el texto de la etiqueta, sin mostrar el marcado.
+- La forma estándar admite comillas simples, dobles o sin comillas, y cualquier orden de atributos.
+- Solo se admite la etiqueta `<a>`: cualquier otra etiqueta permanece como texto visible. El rótulo del enlace se interpreta como texto plano, sin HTML anidado.
+- El `href` se valida con la misma regla que las URL sueltas, de modo que se descartan `javascript:`, `data:` y otros protocolos. Una etiqueta sin destino válido muestra su rótulo como texto plano, sin enlace.
+- Los atributos del autor no se trasladan al enlace: `target` y `rel` se fijan siempre por seguridad y se ignoran atributos como `onclick`.
+
+- Un enlace a YouTube se detecta en los formatos `youtube.com/watch?v=...`, `youtu.be/...`, `/embed/...`, `/shorts/...` y `/live/...`. Solo se acepta un ID de video válido y el reproductor se incrusta con `https://www.youtube-nocookie.com/embed/<ID>`, sin reproducción automática y con carga diferida.
+- Un enlace a imagen se detecta por extensión (`.png`, `.jpg`, `.jpeg`, `.webp`, `.gif`, `.svg`). Las remotas solo se admiten por HTTPS y las locales siguen la ruta `media/...`; se rechazan las rutas con `..`.
+- Cuando un párrafo o elemento de lista contiene un medio, ese bloque se reparte en dos columnas: `.searchEngine-media-row` coloca el medio a la izquierda (`col-12 col-md-5`) y el texto informativo a la derecha (`col-12 col-md-7`). A `768px` o menos las columnas se apilan.
+- Un elemento de lista con medio conserva la etiqueta `li` y recibe la clase `searchEngine-item-media`, que elimina la viñeta y compensa el sangrado de la lista para que la rejilla quede alineada.
+- El medio incrustado conserva el enlace original dentro del texto de la derecha, de modo que sigue siendo accesible sin depender del reproductor.
+- El campo `image` de una sección mantiene su comportamiento previo: imagen a la izquierda y texto a la derecha.
 
 ### Textos de la interfaz
 

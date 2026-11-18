@@ -66,7 +66,7 @@
           CUMULUS:{objetive:"Recolecta Cristal Purificado en Cúmulos, 30min",resource:"Evento Valle Cúmulos de Cristal"}
         },
         adPhases:{
-          P00:"Fase 0 : Preparación",
+          P00:"Fase 0 : Recolección y Reserva",
           P01:"Fase 1 : Mejorar Cuervo",
           P02:"Fase 2 : Desarrollo del Territorio",
           P03:"Fase 3 : Investigación Tecnológica",
@@ -146,7 +146,7 @@ pageDailyLead:"Details of the daily activities that will help you improve every 
           SHIELD:{objetive:"Active Shields 24H, Free Shield 8H",resource:"Alliance Shop"},
           CUMULUS:{objetive:"Gather Purified Crystal in Cumulus, 30min",resource:"Cumulus Crystal Valley Event"}
         },
-        adPhases:{ P00:"Phase 0 : Preparation", P01:"Phase 1 : Enhance Raven", P02:"Phase 2 : Territory Development", P03:"Phase 3 : Tech Research", P04:"Phase 4 : Hero Growth", P05:"Phase 5 : War Preparation", P06:"Phase 6 : Raid the Enemy" },
+        adPhases:{ P00:"Phase 0 : Gathering and Stockpiling", P01:"Phase 1 : Enhance Raven", P02:"Phase 2 : Territory Development", P03:"Phase 3 : Tech Research", P04:"Phase 4 : Hero Growth", P05:"Phase 5 : War Preparation", P06:"Phase 6 : Raid the Enemy" },
         adEvents:{ DY:"Tips Daily", AD:"Alliance Duel", KVK:"Kingdoms War", ROY:"Scramble Royal City", BS:"Battle Survival", EQ:"Gear Upgrade", BEX:"Elixir Scramble", CUM:"Cristal Cruster Valley" }
     },
     pt: {
@@ -210,7 +210,7 @@ pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos
           SHIELD:{objetive:"Ative Escudos 24H, Escudo Grátis 8H",resource:"Loja da Aliança"},
           CUMULUS:{objetive:"Colete Cristal Purificado nos Cúmulos, 30min",resource:"Evento Vale dos Cúmulos de Cristal"}
         },
-        adPhases:{ P00:"Fase 0 : Preparação", P01:"Fase 1 : Melhorar Corvo", P02:"Fase 2 : Desenvolvimento do Território", P03:"Fase 3 : Pesquisa Tecnológica", P04:"Fase 4 : Crescimento de Heróis", P05:"Fase 5 : Preparação para a Guerra", P06:"Fase 6 : Assaltar o Inimigo" },
+        adPhases:{ P00:"Fase 0 : Coleta e Reserva", P01:"Fase 1 : Melhorar Corvo", P02:"Fase 2 : Desenvolvimento do Território", P03:"Fase 3 : Pesquisa Tecnológica", P04:"Fase 4 : Crescimento de Heróis", P05:"Fase 5 : Preparação para a Guerra", P06:"Fase 6 : Assaltar o Inimigo" },
         adEvents:{ DY:"Dica Diária", AD:"Duelo de Alianças", KVK:"Guerra de Reinos", ROY:"Tumulto na Cidade Real", BS:"Cronograma Battle Survival", EQ:"Melhoria de Equipamento", BEX:"Batalha do Elixir", CUM:"Vale dos Cumulos de Cristal" }
     },
     it: {
@@ -274,7 +274,7 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           SHIELD:{objetive:"Attiva Scudi 24H, Scudo Gratuito 8H",resource:"Negozio dell'Alleanza"},
           CUMULUS:{objetive:"Raccogli Cristallo Purificato nei Cumuli, 30min",resource:"Evento Valle dei Cumuli di Cristallo"}
         },
-        adPhases:{ P00:"Fase 0 : Preparazione", P01:"Fase 1 : Migliora Corvo", P02:"Fase 2 : Sviluppo del Territorio", P03:"Fase 3 : Ricerca Tecnologica", P04:"Fase 4 : Crescita degli Eroi", P05:"Fase 5 : Preparazione alla Guerra", P06:"Fase 6 : Assalta il Nemico" },
+        adPhases:{ P00:"Fase 0 : Raccolta e Riserva", P01:"Fase 1 : Migliora Corvo", P02:"Fase 2 : Sviluppo del Territorio", P03:"Fase 3 : Ricerca Tecnologica", P04:"Fase 4 : Crescita degli Eroi", P05:"Fase 5 : Preparazione alla Guerra", P06:"Fase 6 : Assalta il Nemico" },
         adEvents:{ DY:"Consiglio Giornaliero", AD:"Duello delle Alleanze", KVK:"Guerra tra Regni", ROY:"Tumulto della Città Reale", BS:"Calendario Battle Survival", EQ:"Miglioramento Equipaggiamento", BEX:"Battaglia dell'Elisir", CUM:"Valle dei Cumulo di Cristallo" }
     },
     fr: {
@@ -338,7 +338,7 @@ pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous am
           SHIELD:{objetive:"Activez les Boucliers 24H, Bouclier Gratuit 8H",resource:"Boutique de l'Alliance"},
           CUMULUS:{objetive:"Récoltez du Cristal Purifié dans les Cumuls, 30min",resource:"Événement Vallée des Cumuls de Cristal"}
         },
-        adPhases:{ P00:"Phase 0 : Préparation", P01:"Phase 1 : Améliorer le Corbeau", P02:"Phase 2 : Développement du Territoire", P03:"Phase 3 : Recherche Technologique", P04:"Phase 4 : Croissance des Héros", P05:"Phase 5 : Préparation à la Guerre", P06:"Phase 6 : Attaquer l'Ennemi" },
+        adPhases:{ P00:"Phase 0 : Collecte et Réserve", P01:"Phase 1 : Améliorer le Corbeau", P02:"Phase 2 : Développement du Territoire", P03:"Phase 3 : Recherche Technologique", P04:"Phase 4 : Croissance des Héros", P05:"Phase 5 : Préparation à la Guerre", P06:"Phase 6 : Attaquer l'Ennemi" },
         adEvents:{ DY:"Conseil Quotidien", AD:"Duelo d'Alliance", KVK:"Guerre des Royaumes", ROY:"Émeute de la Cité Royale", BS:"Calendrier Battle Survival", EQ:"Amélioration d'Équipement", BEX:"Bataille de l'Élixir", CUM:"Vallée des Amas de Cristal" }
     },
     ja: {
@@ -402,7 +402,7 @@ pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
           SHIELD:{objetive:"24Hシールドと無料8Hシールドを有効化",resource:"同盟ショップ"},
           CUMULUS:{objetive:"30分間クリスタルの山で精製クリスタルを採取する",resource:"イベント クリスタル堆積の谷"}
         },
-        adPhases:{ P00:"フェーズ0：準備", P01:"フェーズ1：レイベンの強化", P02:"フェーズ2：領土の開発", P03:"フェーズ3：技術の研究", P04:"フェーズ4：英雄の成長", P05:"フェーズ5：戦争の準備", P06:"フェーズ6：敵の襲撃" },
+        adPhases:{ P00:"フェーズ0：収集と備蓄", P01:"フェーズ1：レイベンの強化", P02:"フェーズ2：領土の開発", P03:"フェーズ3：技術の研究", P04:"フェーズ4：英雄の成長", P05:"フェーズ5：戦争の準備", P06:"フェーズ6：敵の襲撃" },
         adEvents:{ DY:"デイリーアドバイス", AD:"アライアンスデュエル", KVK:"王国戦", ROY:"王都の騒動", BS:"Battle Survival スケジュール", EQ:"装備の強化", BEX:"エリキシルの戦い", CUM:"クリスタル堆積の谷" }
     },
     ru: {
@@ -466,7 +466,7 @@ pageDailyLead:"Подробности ежедневных активносте�
           SHIELD:{objetive:"Активировать Щиты 24H, Бесплатный Щит 8H",resource:"Магазин Альянса"},
           CUMULUS:{objetive:"Собирать Очищенный Кристалл в Кристальных Холмах, 30мин",resource:"Событие Долина Кристальных Холмов"}
         },
-        adPhases:{ P00:"Фаза 0 : Подготовка", P01:"Фаза 1 : Улучшение Ворона", P02:"Фаза 2 : Развитие Территории", P03:"Фаза 3 : Технологические Исследования", P04:"Фаза 4 : Рост Героев", P05:"Фаза 5 : Подготовка к Войне", P06:"Фаза 6 : Поход на Врага" },
+        adPhases:{ P00:"Фаза 0 : Сбор и Резерв", P01:"Фаза 1 : Улучшение Ворона", P02:"Фаза 2 : Развитие Территории", P03:"Фаза 3 : Технологические Исследования", P04:"Фаза 4 : Рост Героев", P05:"Фаза 5 : Подготовка к Войне", P06:"Фаза 6 : Поход на Врага" },
         adEvents:{ DY:"Совет Дня", AD:"Дуэль Альянсов", KVK:"Война Королевств", ROY:"Мятеж в Королевском Городе", BS:"Расписание Battle Survival", EQ:"Улучшение Снаряжения", BEX:"Битва Эликсира", CUM:"Долина Кристаллических Наносов" }
     },
     zh: {
@@ -530,7 +530,7 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           SHIELD:{objetive:"启用 24H 护盾与免费 8H 护盾",resource:"联盟商店"},
           CUMULUS:{objetive:"从水晶堆中采集30分钟纯化水晶",resource:"活动 水晶堆谷"}
         },
-        adPhases:{ P00:"阶段 0：准备", P01:"阶段 1：强化渡鸦", P02:"阶段 2：领地发展", P03:"阶段 3：科技研究", P04:"阶段 4：英雄成长", P05:"阶段 5：战前准备", P06:"阶段 6：突袭敌人" },
+        adPhases:{ P00:"阶段 0：收集与储备", P01:"阶段 1：强化渡鸦", P02:"阶段 2：领地发展", P03:"阶段 3：科技研究", P04:"阶段 4：英雄成长", P05:"阶段 5：战前准备", P06:"阶段 6：突袭敌人" },
         adEvents:{ DY:"每日提示", AD:"联盟对决", KVK:"王国战争", ROY:"王都骚乱", BS:"Battle Survival 日程", EQ:"装备升级", BEX:"灵药争夺战", CUM:"水晶堆谷" }
     },
     tr: {
@@ -554,7 +554,7 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
         pageDailyTitle:"Günlük Etkinlikler",
         pageDailyLead:"Her gün gelişmene yardımcı olacak günlük etkinliklerin ayrıntıları.",
         adPhases:{
-          P00:"Faz 0 : Hazırlık",
+          P00:"Faz 0 : Toplama ve Rezerv",
           P01:"Faz 1 : Kargayı İyileştirin",
           P02:"Faz 2 : Bölge Geliştirme",
           P03:"Faz 3 : Teknoloji Araştırma",

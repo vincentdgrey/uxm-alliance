@@ -264,6 +264,198 @@
     });
   }
 
+  /* ---------- Enlaces y medios embebidos ---------- */
+  var URL_PATTERN = /https?:\/\/[^\s<>"'`]+/gi;
+  var IMAGE_PATTERN = /\.(png|jpe?g|webp|gif|svg)(?:[?#][^\s]*)?$/i;
+  var YOUTUBE_HOSTS = ["youtube.com", "www.youtube.com", "m.youtube.com", "youtube-nocookie.com", "www.youtube-nocookie.com"];
+  var YOUTUBE_SHORT_HOSTS = ["youtu.be", "www.youtu.be"];
+
+  /* Quita los signos de puntuacion que quedan pegados al final de la URL. */
+  function trimUrl(url) {
+    return url.replace(/[)\],.;:!?]+$/, "");
+  }
+
+  /* Devuelve la URL limpia o una cadena vacia si no es valida. */
+  function safeUrl(value) {
+    var raw = trimUrl(String(value || "").trim());
+    if (!raw) return "";
+
+    var parsed;
+    try {
+      parsed = new URL(raw);
+    } catch (error) {
+      return "";
+    }
+
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return "";
+    return parsed.href;
+  }
+
+  /* Extrae el ID de un video de YouTube en cualquiera de sus formatos. */
+  function youtubeId(url) {
+    var parsed;
+    try {
+      parsed = new URL(url);
+    } catch (error) {
+      return "";
+    }
+
+    var host = parsed.hostname.toLowerCase();
+    var id = "";
+
+    if (YOUTUBE_SHORT_HOSTS.indexOf(host) >= 0) {
+      id = parsed.pathname.split("/").filter(Boolean)[0] || "";
+    } else if (YOUTUBE_HOSTS.indexOf(host) >= 0) {
+      if (parsed.pathname === "/watch") {
+        id = parsed.searchParams.get("v") || "";
+      } else if (/^\/(embed|shorts|live)\//.test(parsed.pathname)) {
+        id = parsed.pathname.split("/").filter(Boolean)[1] || "";
+      }
+    }
+
+    if (!/^[A-Za-z0-9_-]{6,20}$/.test(id)) return "";
+    return id;
+  }
+
+  /* Localiza el primer medio embebible dentro de un texto. */
+  function detectMedia(text) {
+    var matches = String(text || "").match(URL_PATTERN) || [];
+    for (var i = 0; i < matches.length; i++) {
+      var url = safeUrl(matches[i]);
+      if (!url) continue;
+
+      if (youtubeId(url)) return { type: "video", url: url };
+      if (IMAGE_PATTERN.test(url)) return { type: "image", url: url };
+    }
+    return null;
+  }
+
+  /* Crea un enlace navegable con el estilo de link del sitio. */
+  function linkNode(url, label) {
+    var anchor = document.createElement("a");
+    anchor.className = "link-info searchEngine-link";
+    anchor.href = url;
+    anchor.target = "_blank";
+    anchor.rel = "noopener noreferrer";
+    anchor.textContent = label || url;
+    return anchor;
+  }
+
+  /* Lee el destino de una etiqueta <a>, en forma estandar o simplificada. */
+  function anchorHref(attributes) {
+    var attrs = String(attributes || "").trim();
+    if (!attrs) return "";
+
+    /* Forma estandar: href con comillas simples, dobles o sin comillas. */
+    var match = attrs.match(/\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
+    if (match) return safeUrl(match[1] !== undefined ? match[1] : (match[2] !== undefined ? match[2] : match[3]));
+
+    /* Forma simplificada: la URL aparece como atributo suelto, con o sin target. */
+    var simple = attrs.match(/(?:^|\s)(https?:\/\/[^\s>]+)/i);
+    if (simple) return safeUrl(simple[1]);
+
+    return "";
+  }
+
+  /* Extrae el texto visible de una etiqueta <a> sin interpretar su contenido. */
+  function anchorLabel(content) {
+    var text = String(content || "");
+    /* Solo se admite texto plano como rotulo del enlace. */
+    if (/<[^>]*>/.test(text)) text = text.replace(/<[^>]*>/g, "");
+    return text.trim();
+  }
+
+  /* Inserta el texto de un nodo convertiendo las URL en enlaces. */
+  function appendPlainText(node, text) {
+    var value = String(text || "");
+    var last = 0;
+    var matches = value.match(URL_PATTERN) || [];
+
+    for (var i = 0; i < matches.length; i++) {
+      var raw = matches[i];
+      var url = safeUrl(raw);
+      if (!url) continue;
+
+      var start = value.indexOf(raw, last);
+      if (start < 0) continue;
+
+      if (start > last) node.appendChild(document.createTextNode(value.slice(last, start)));
+      node.appendChild(linkNode(url, raw));
+      last = start + raw.length;
+    }
+
+    if (last < value.length) node.appendChild(document.createTextNode(value.slice(last)));
+    return node;
+  }
+
+  /* Inserta el texto admitiendo enlaces <a> y URL sueltas. */
+  function appendLinkedText(node, text) {
+    var value = String(text || "");
+    var pattern = /<a\s*((?:"[^"]*"|'[^']*'|[^>])*)>([\s\S]*?)<\/a\s*>/gi;
+    var last = 0;
+    var match;
+
+    while ((match = pattern.exec(value)) !== null) {
+      if (match.index > last) appendPlainText(node, value.slice(last, match.index));
+
+      var href = anchorHref(match[1]);
+      var label = anchorLabel(match[2]);
+
+      if (href && label) {
+        node.appendChild(linkNode(href, label));
+      } else if (label) {
+        /* Etiqueta no utilizable: se conserva el rotulo como texto plano. */
+        node.appendChild(document.createTextNode(label));
+      }
+
+      last = match.index + match[0].length;
+    }
+
+    if (last < value.length) appendPlainText(node, value.slice(last));
+    return node;
+  }
+
+  /* Reproductor de YouTube: solo se acepta un ID validado. */
+  function videoNode(id, title) {
+    var frame = document.createElement("div");
+    frame.className = "searchEngine-media searchEngine-media-video";
+
+    var iframe = document.createElement("iframe");
+    iframe.className = "searchEngine-video";
+    iframe.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id);
+    iframe.title = title || "YouTube";
+    iframe.loading = "lazy";
+    iframe.setAttribute("allow", "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+    iframe.setAttribute("allowfullscreen", "");
+    iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+
+    frame.appendChild(iframe);
+    return frame;
+  }
+
+  /* Imagen embebida: local en media/ o remota por HTTPS. */
+  function imageNode(url, alt) {
+    var frame = document.createElement("div");
+    frame.className = "searchEngine-media searchEngine-media-image";
+
+    var img = document.createElement("img");
+    img.className = "searchEngine-image";
+    img.alt = alt || "";
+    img.loading = "lazy";
+
+    if (/^https?:/i.test(url)) {
+      if (!/^https:/i.test(url)) return null;
+      img.src = url;
+    } else {
+      var safe = String(url).replace(/^\/+/, "");
+      if (safe.indexOf("..") >= 0) return null;
+      img.src = "../" + safe;
+    }
+
+    frame.appendChild(img);
+    return frame;
+  }
+
   /* ---------- Renderizado ---------- */
   function clear(node) {
     while (node && node.firstChild) node.removeChild(node.firstChild);
@@ -353,21 +545,75 @@
     var image = section.image;
     if (!image || !image.src) return null;
 
-    var safe = String(image.src).replace(/^\/+/, "");
-    if (safe.indexOf("..") >= 0 || /^[a-z]+:/i.test(safe)) return null;
-
     var figure = element("figure", "searchEngine-figure");
     var img = document.createElement("img");
     img.className = "img-fluid searchEngine-image";
-    img.src = "../" + safe;
     img.alt = localize(image.alt);
     img.loading = "lazy";
+
+    var src = String(image.src).trim();
+    if (/^https?:/i.test(src)) {
+      if (!/^https:/i.test(src)) return null;
+      img.src = src;
+    } else {
+      var safe = src.replace(/^\/+/, "");
+      if (safe.indexOf("..") >= 0 || /^[a-z]+:/i.test(safe)) return null;
+      img.src = "../" + safe;
+    }
+
     figure.appendChild(img);
 
     var caption = localize(image.caption);
     if (caption) figure.appendChild(element("figcaption", "searchEngine-caption", caption));
 
     return figure;
+  }
+
+  /* Construye el bloque de dos columnas: medio a la izquierda, texto a la derecha. */
+  function renderMediaRow(media, text, tagName, className) {
+    var row = element("div", "row g-3 searchEngine-section-body searchEngine-media-row");
+
+    var mediaColumn = element("div", "col-12 col-md-5 searchEngine-section-media");
+    mediaColumn.appendChild(media);
+
+    var textColumn = element("div", "col-12 col-md-7 searchEngine-section-text");
+    var node = element(tagName || "p", className || "searchEngine-paragraph");
+    appendLinkedText(node, text);
+    textColumn.appendChild(node);
+
+    row.appendChild(mediaColumn);
+    row.appendChild(textColumn);
+    return row;
+  }
+
+  /* Renderiza un parrafo o elemento de lista, con medio embebido si lo contiene. */
+  function renderContent(text, tagName, className, mediaTitle) {
+    var value = String(text).trim();
+    var media = detectMedia(value);
+
+    if (media) {
+      var row = null;
+      if (media.type === "video") {
+        row = renderMediaRow(videoNode(youtubeId(media.url), mediaTitle), value, "p", "searchEngine-paragraph");
+      } else {
+        var image = imageNode(media.url, mediaTitle);
+        if (image) row = renderMediaRow(image, value, "p", "searchEngine-paragraph");
+      }
+
+      if (row) {
+        /* Dentro de una lista el bloque conserva el elemento li. */
+        if (tagName === "li") {
+          var item = element("li", "searchEngine-item-media");
+          item.appendChild(row);
+          return item;
+        }
+        return row;
+      }
+    }
+
+    var node = element(tagName, className);
+    appendLinkedText(node, value);
+    return node;
   }
 
   function renderSection(section) {
@@ -390,7 +636,8 @@
     var paragraphs = localizeList(section.paragraphs);
     paragraphs.forEach(function (value) {
       var text = String(value).trim();
-      if (text) textColumn.appendChild(element("p", "searchEngine-paragraph", text));
+      if (!text) return;
+      textColumn.appendChild(renderContent(text, "p", "searchEngine-paragraph", title));
     });
 
     var items = localizeList(section.items);
@@ -399,7 +646,7 @@
       items.forEach(function (value) {
         var text = String(value).trim();
         if (!text) return;
-        list.appendChild(element("li", "", text));
+        list.appendChild(renderContent(text, "li", "", title));
       });
       if (list.firstChild) textColumn.appendChild(list);
     }
