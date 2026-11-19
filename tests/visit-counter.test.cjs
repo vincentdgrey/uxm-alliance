@@ -10,6 +10,7 @@ const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const htmlFiles = [
   "index.html",
   "pages/actividades-diarias.html",
+  "pages/reino.html",
   "pages/normas-uxm.html",
   "pages/video-tutoriales.html",
   "pages/estrategia.html",

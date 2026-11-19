@@ -22,16 +22,19 @@ UXM Alliance es un sitio web estático publicado en GitHub Pages. La portada viv
 |---|---|
 | `index.html` | Página principal (Home), en la raíz del repositorio |
 | `pages/actividades-diarias.html` | Actividades Diarias |
+| `pages/reino.html` | Reino |
 | `pages/normas-uxm.html` | Normas UXM |
 | `pages/video-tutoriales.html` | Video Tutoriales |
 | `pages/estrategia.html` | Estrategia |
 | `pages/contacto.html` | Contacto |
 | `css/style.css` | Estilos del sitio (se carga después de Bootstrap) |
 | `css/activities-daily.css` | Estilos propios de los cronogramas (solo en actividades diarias) |
+| `css/reino.css` | Estilos propios de la subpágina Reino (solo en Reino) |
 | `css/estrategia.css` | Estilos propios de la Biblioteca Estratégica (solo en Estrategia) |
 | `js/i18n.js` | Núcleo común de textos por idioma (9 idiomas) |
 | `js/i18n/index/i18n.js` | Textos i18n propios de la portada |
 | `js/i18n/actividades-diarias/i18n.js` | Textos i18n propios de Actividades Diarias |
+| `js/i18n/reino/i18n.js` | Textos i18n propios de Reino |
 | `js/i18n/normas-uxm/i18n.js` | Textos i18n propios de Normas UXM |
 | `js/i18n/video-tutoriales/i18n.js` | Textos i18n propios de Video Tutoriales |
 | `js/i18n/estrategia/i18n.js` | Textos i18n propios de Estrategia |
@@ -39,6 +42,7 @@ UXM Alliance es un sitio web estático publicado en GitHub Pages. La portada viv
 | `js/app.js` | Lógica del sitio: navegación, idiomas, contenido y video |
 | `js/alliance-bonuses.js` | Datos de los bonos de la Alianza (`window.ALLIANCE_BONUSES`) |
 | `js/activities-daily.js` | Script único de la subpágina de actividades diarias: datos, cronogramas y utilidades |
+| `js/reino.js` | Datos y renderizado de la subpágina Reino (objeto `KINGDOM`) |
 | `js/strategy-library.js` | Buscador, árbol de temas y renderizado de la Biblioteca Estratégica |
 | `js/video-cards.js` | Tarjetas de video de YouTube (solo en video tutoriales) |
 | `media/subpages/*.svg` | Fondos temáticos de las portadas de subpágina |
@@ -136,6 +140,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 |---|---|---|
 | `.subpage-rules` | Normas UXM | `media/subpages/normas-uxm.svg` |
 | `.subpage-daily` | Actividades Diarias | `media/subpages/actividades-diarias.svg` |
+| `.subpage-kingdom` | Reino | `media/subpages/reino.svg` |
 | `.subpage-tutorials` | Video Tutoriales | `media/subpages/video-tutoriales.svg` |
 | `.subpage-strategy` | Estrategia | `media/subpages/estrategia.svg` |
 | `.subpage-contact` | Contacto | `media/subpages/contacto.svg` |
@@ -175,7 +180,8 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - El primer enlace es la portada y usa la clave `navHome`; la ruta relativa se calcula con `basePath()` y conserva `?lang=`. En `index.html` se marca como página activa.
 - Los `.nav-item` y sus enlaces ocupan todo el ancho disponible, sin borde ni aspecto de botón. En `hover` y `focus-visible` se rellenan progresivamente de rojo escarlata desde la izquierda, con texto blanco.
 - La página activa se marca con `.active`, `aria-current="page"` y un punto azul. Los enlaces del menú lateral usan `border-radius: 1px` (ajuste manual del usuario) y no redefinen el radio en el estado activo.
-- Los enlaces se generan con `?lang=` para conservar el idioma y apuntan a `index.html`, `actividades-diarias.html`, `normas-uxm.html`, `video-tutoriales.html`, `estrategia.html` y `contacto.html`.
+- Los enlaces se generan con `?lang=` para conservar el idioma y apuntan a `index.html`, `actividades-diarias.html`, `reino.html`, `normas-uxm.html`, `video-tutoriales.html`, `estrategia.html` y `contacto.html`.
+- La entrada de la Biblioteca Estratégica se muestra con el rótulo «Biblioteca Estratégica» en lugar de «Estrategia»: la clave `navStrategy` de `js/i18n.js` contiene ese texto en los nueve idiomas. El archivo `estrategia.html` y la clave `pageStrategyTitle` no cambian.
 
 ## Secciones generales
 
@@ -340,8 +346,44 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - El párrafo `allianceMessage` de la página de Actividades Diarias declara `data-i18n-text="allianceMessage"`. Su redacción española manual es la fuente y se traduce en los 9 idiomas. Esta clave es propia de la subpágina y no modifica el mensaje homónimo de la portada.
 - El subtítulo propio `ad-subtitle` se eliminó: el encabezado de la sección es el que identifica el cronograma.
 
-### Aviso de la próxima actividad
+### Redacciones manuales de `DYBOTT` y `DYSOLDIER`
 
+- Las redacciones manuales del español en `texts.es.adActivities` son la fuente de verdad y prevalecen sobre cualquier traducción previa:
+  - `DYBOTT` → objetivo «Guarda Botellas de Energía/Stamina para la Próxima Fase del Cuervo», recurso «Botella de Energía/Stamina».
+  - `DYSOLDIER` → objetivo «Entrena Soldados T6 o T7; promover el Día de Preparación para la Guerra», recurso «Soldado T7».
+- Estos dos textos se propagan a los otros ocho idiomas con el español como fuente, sin sobrescribir el texto español.
+
+## Subpágina Reino
+
+### Estructura de la página
+
+- La subpágina `pages/reino.html` sigue el formato de Actividades Diarias: misma cabecera, menú lateral, portada de subpágina con inicial escarlata `R`, footer, selector de idiomas y Bootstrap por CDN.
+- Carga `../css/style.css` y después `../css/reino.css`. Los scripts se cargan en este orden: `../js/i18n.js`, `../js/i18n/reino/i18n.js`, `../js/app.js` y `../js/reino.js`.
+- Usa el tema `subpage-kingdom`, asociado al fondo `media/subpages/reino.svg` declarado en `css/style.css`.
+- El menú la registra en `js/app.js` como `{ file: "reino.html", key: "navKingdom", titleKey: "pageKingdomTitle" }`, detrás de Actividades Diarias. La clave `navKingdom` existe en los nueve idiomas de `js/i18n.js`.
+- El título y la introducción de la página viven en `js/i18n/reino/i18n.js` con las claves `pageKingdomTitle` y `pageKingdomLead`, presentes en los nueve idiomas.
+
+### Secciones
+
+- La página declara cinco secciones informativas, cada una con su encabezado traducido mediante `data-i18n`:
+  1. **Información del Reino** (`kingdomInfoTitle`): tarjetas con Reino, Alianza y Coalición.
+  2. **Territorios definidos** (`kingdomTerritoryTitle`): tabla con las columnas Territorio, Tipo, Coordenadas y Estado.
+  3. **Ubicación de la Alianza UXM** (`kingdomAllianceTitle`): tarjetas con Ubicación, Coordenadas y Referencia.
+  4. **Consejos** (`kingdomTipsTitle`): lista de recomendaciones.
+  5. **Planes de Batalla** (`kingdomPlansTitle`): tarjetas con título, resumen y pasos.
+
+### Datos
+
+- Los datos de la página viven en el objeto `KINGDOM` de `js/reino.js`:
+  - `territories`: lista de objetos con `name`, `type`, `coords` y `status`.
+  - `allianceLocation`: objeto con `location`, `coords` y `reference`.
+  - `tips`: lista de textos.
+  - `plans`: lista de objetos con `title`, `summary` y `steps`.
+- La página es estática y no usa `fetch`: no hay dependencias de red ni peticiones CORS.
+- Mientras una lista esté vacía, se muestra el estado «Información pendiente» (`kingdomPending`) en lugar de datos inventados. No se publican territorios, coordenadas, consejos ni planes que no hayan sido confirmados por el usuario.
+- Al cargar contenido nuevo en `KINGDOM` no se modifica el HTML: basta con editar el objeto del script.
+
+### Aviso de la próxima actividad
 - El calendario de Batalla de Supervivencia avisa cuando la **próxima actividad** está por comenzar, sin añadir texto al contador.
 - La fila objetivo es siempre la tercera de la tabla, es decir la inmediatamente siguiente a la actual (`rel === 1`, clase `bs-row-third`). La actividad cambia cada 4 horas con independencia del evento que tenga asignado, por lo que el aviso **no** depende del código del evento ni de `bs-dayend`.
 - La condición se cumple cuando el tiempo restante es **mayor que 0** y **menor o igual a `01:00:00`** (valores como `T-01:00:00`, `T-00:59:59` o `T-00:13:20`). La ventana se define con la constante `ALERT_WINDOW_SEC = 3600`.
@@ -453,7 +495,9 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Para publicar un grupo nuevo se crea su manifiesto y su carpeta de temas, y se registra el manifiesto en `index.json`. Para publicar un tema nuevo se crea su JSON en la carpeta del grupo y se añade su ruta a `topics`. No hay workflow ni build automático.
 - Los grupos y temas se ordenan por `order` y, en caso de empate, por el título localizado en orden alfabético.
 - Un tema sin secciones muestra el mensaje traducido `searchEngineTopicEmpty`.
-- El grupo «Novatos» (`db/library/rookie.json`) contiene, en este orden: `onboarding` (5), `rules` (10), `caravan` (20), `incursion` (30), `donate` (40), `rallies` (50), `rookie-equipment` (60) y `treasure-hunter` (70).
+- El grupo «Novatos» (`db/library/rookie.json`) contiene, en este orden: `onboarding` (5), `rules` (10), `caravan` (20), `incursion` (30), `donate` (40), `rallies` (50) y `treasure-hunter` (70).
+- El tema «Equipamiento» (`db/library/hero/equipment.json`) pertenece al grupo «Hero» y no al grupo «Novatos». Su sección «Prioridades de Rareza» incluye la indicación de que para fabricar equipamiento UR se necesita el Taller de Equipamiento Lv.20 y, como requisito previo, el Santuario en Lv.20.
+- El tema «Recolección y Reserva» (`db/library/alliance-duel/reserve.json`) conserva el título español «Recolección y Reserva» y lo propaga a los nueve idiomas. Su carpeta `sections` sigue vacía, por lo que muestra el mensaje `searchEngineTopicEmpty`.
 
 #### Fecha de actualización
 

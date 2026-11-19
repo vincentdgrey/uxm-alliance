@@ -21,18 +21,21 @@ Configuración para agentes de IA. Este archivo garantiza continuidad del proyec
 uxm-alliance/
 ├── css            # archivos de estilos del sitio web
 |   ├── style.css
-|   └── activities-daily.css  # Estilos de la subpágina Actividades Diarias
+|   ├── activities-daily.css  # Estilos de la subpágina Actividades Diarias
+|   └── reino.css  # Estilos de la subpágina Reino
 ├── js             # archivos javascript del sitio web
 |   ├── i18n.js    # Núcleo común de textos por idioma
 |   ├── i18n/      # Textos i18n específicos de cada página
 |   ├── app.js     # Lógica sitio web
 |   ├── alliance-bonuses.js  # Datos de los bonos de la Alianza
 |   ├── activities-daily.js  # Cronogramas y datos de Actividades Diarias
+|   ├── reino.js   # Datos y renderizado de la subpágina Reino (objeto KINGDOM)
 |   └── strategy-library.js  # Buscador y árbol de la Biblioteca Estratégica
 ├── media          # archivos multimedia
 |   └── video-particles-cyan.mp4  # video cover pagina de inicio
 ├── pages/         # Subpáginas del sitio web
 |   ├── actividades-diarias.html  # Actividades Diarias
+|   ├── reino.html                # Reino
 |   ├── normas-uxm.html           # Normas UXM
 |   ├── video-tutoriales.html     # Video Tutoriales
 |   ├── estrategia.html           # Estrategia

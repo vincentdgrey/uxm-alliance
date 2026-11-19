@@ -1,5 +1,20 @@
 # Changelog
 
+## [261119a] - 2026-11-19
+
+### Added
+- Nueva subpágina `pages/reino.html` («Reino») con cinco secciones informativas: información general del Reino 277, territorios definidos, ubicación de la Alianza UXM, consejos y planes de batalla. Incluye `css/reino.css`, `js/reino.js` y `js/i18n/reino/i18n.js` en los nueve idiomas.
+- La página Reino se registra en el menú como `navKingdom`, detrás de Actividades Diarias, y usa el fondo temático `media/subpages/reino.svg` declarado como `.subpage-kingdom` en `css/style.css`.
+- Los datos de la página Reino viven en el objeto `KINGDOM` de `js/reino.js`: `territories`, `allianceLocation`, `tips` y `plans`. Las listas vacías muestran el estado «Información pendiente» sin inventar información.
+- Se añaden seis pruebas de contrato para la subpágina Reino: orden de carga de scripts y estilos, secciones declaradas, textos propios en los nueve idiomas, entradas de menú y fondo temático.
+
+### Changed
+- El menú lateral muestra «Biblioteca Estratégica» en lugar de «Estrategia». La clave `navStrategy` de `js/i18n.js` se actualiza en los nueve idiomas; `estrategia.html` y el resto de claves no cambian.
+- Se propagan a los nueve idiomas las redacciones manuales de `DYBOTT` («Guarda Botellas de Energía/Stamina para la Próxima Fase del Cuervo») y `DYSOLDIER` («Entrena Soldados T6 o T7; promover el Día de Preparación para la Guerra») en `js/i18n/actividades-diarias/i18n.js`, con el español como fuente.
+- El tema «Recolección y Reserva» (`db/library/alliance-duel/reserve.json`) propaga su título español a los nueve idiomas y actualiza la fecha a `2026-11-19`.
+- El tema «Equipamiento» (`db/library/hero/equipment.json`) incorpora la viñeta sobre el Taller de Equipamiento Lv.20 y el Santuario Lv.20 en los nueve idiomas, y actualiza la fecha a `2026-11-19`.
+- La lista de temas esperada en `tests/strategy-library.test.cjs` se ajusta a la biblioteca vigente: el tema «Equipamiento» ya no está duplicado en Novatos y «Recolección y Reserva» sustituye a «Reserva».
+
 ## [261115a] - 2026-11-15
 
 ### Changed

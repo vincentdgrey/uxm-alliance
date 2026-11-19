@@ -9,6 +9,7 @@ const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const pageI18n = {
   home: "js/i18n/index/i18n.js",
   daily: "js/i18n/actividades-diarias/i18n.js",
+  kingdom: "js/i18n/reino/i18n.js",
   rules: "js/i18n/normas-uxm/i18n.js",
   tutorials: "js/i18n/video-tutoriales/i18n.js",
   strategy: "js/i18n/estrategia/i18n.js",
@@ -257,6 +258,7 @@ test("el título de subpágina usa el color gris claro solicitado", () => {
 test("todas las subpáginas usan el estándar de portada subpage-content", () => {
   const pages = [
     { file: "pages/actividades-diarias.html", theme: "subpage-daily", initial: "A" },
+    { file: "pages/reino.html", theme: "subpage-kingdom", initial: "R" },
     { file: "pages/normas-uxm.html", theme: "subpage-rules", initial: "N" },
     { file: "pages/video-tutoriales.html", theme: "subpage-tutorials", initial: "V" },
     { file: "pages/estrategia.html", theme: "subpage-strategy", initial: "B" },
@@ -288,6 +290,7 @@ test("cada subpágina asocia su fondo SVG temático", () => {
   const themes = {
     "subpage-rules": "normas-uxm.svg",
     "subpage-daily": "actividades-diarias.svg",
+    "subpage-kingdom": "reino.svg",
     "subpage-tutorials": "video-tutoriales.svg",
     "subpage-strategy": "estrategia.svg",
     "subpage-contact": "contacto.svg"
@@ -1722,7 +1725,7 @@ test("las traducciones japonesas no contienen textos corruptos", () => {
 
 test("solo los japones y los chinos contienen caracteres CJK", () => {
   const i18n = loadI18n("js/i18n.js", pageI18n.daily, pageI18n.home, pageI18n.tutorials,
-    pageI18n.rules, pageI18n.strategy, pageI18n.contact);
+    pageI18n.rules, pageI18n.strategy, pageI18n.contact, pageI18n.kingdom);
   const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
 
   for (const language of languages) {
@@ -1731,4 +1734,91 @@ test("solo los japones y los chinos contienen caracteres CJK", () => {
     const cjk = body.match(/[一-鿿]/g);
     assert.ok(!cjk, language + " no debe contener caracteres CJK");
   }
+});
+
+/* ---------- Subpagina Reino ---------- */
+
+test("reino carga su hoja de estilos propia después de la compartida", () => {
+  const html = read("pages/reino.html");
+  const sharedPos = html.indexOf('href="../css/style.css"');
+  const kingdomPos = html.indexOf('href="../css/reino.css"');
+
+  assert.ok(sharedPos >= 0 && kingdomPos >= 0);
+  assert.ok(sharedPos < kingdomPos, "reino.css debe cargarse después de style.css");
+  assert.ok(fs.existsSync(path.join(root, "css/reino.css")));
+});
+
+test("reino carga su script despues de i18n y de app", () => {
+  const html = read("pages/reino.html");
+  const i18nPos = html.indexOf('src="../js/i18n.js"');
+  const pagePos = html.indexOf('src="../js/i18n/reino/i18n.js"');
+  const appPos = html.indexOf('src="../js/app.js"');
+  const kingdomPos = html.indexOf('src="../js/reino.js"');
+
+  assert.ok(i18nPos >= 0 && pagePos >= 0 && appPos >= 0 && kingdomPos >= 0);
+  assert.ok(i18nPos < pagePos, "el i18n de la pagina debe cargarse antes");
+  assert.ok(pagePos < appPos, "app.js debe cargarse despues del i18n de la pagina");
+  assert.ok(appPos < kingdomPos, "reino.js debe cargarse despues de app.js");
+});
+
+test("reino declara las cinco secciones informative del reino", () => {
+  const html = read("pages/reino.html");
+
+  assert.match(html, /id="textKingdomInfo"/);
+  assert.match(html, /id="textKingdomTerritories"/);
+  assert.match(html, /id="textKingdomAlliance"/);
+  assert.match(html, /id="textKingdomTips"/);
+  assert.match(html, /id="textKingdomPlans"/);
+
+  assert.match(html, /id="kingdomTerritoryBody"/);
+  assert.match(html, /id="kingdomTipsList"/);
+  assert.match(html, /id="kingdomPlansList"/);
+  assert.match(html, /id="kingdomAllianceCoords"/);
+});
+
+test("los textos propios del reino estan traducidos en los nueve idiomas", () => {
+  const i18n = loadI18n("js/i18n.js", pageI18n.kingdom);
+  const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+  const keys = [
+    "pageKingdomTitle", "pageKingdomLead",
+    "kingdomInfoTitle", "kingdomInfoMessage",
+    "kingdomTerritoryTitle", "kingdomTerritoryMessage",
+    "kingdomTerritoryName", "kingdomTerritoryType", "kingdomTerritoryCoords", "kingdomTerritoryStatus",
+    "kingdomAllianceTitle", "kingdomAllianceMessage",
+    "kingdomAllianceLocation", "kingdomAllianceCoords", "kingdomAllianceReference",
+    "kingdomTipsTitle", "kingdomTipsMessage",
+    "kingdomPlansTitle", "kingdomPlansMessage",
+    "kingdomPending"
+  ];
+
+  for (const language of languages) {
+    for (const key of keys) {
+      assert.equal(typeof i18n[language][key], "string", language + " necesita " + key);
+      assert.ok(i18n[language][key].length > 0, language + "/" + key + " no puede estar vacio");
+    }
+  }
+});
+
+test("el menu ofrece la entrada Reino y la Biblioteca Estrategica en los nueve idiomas", () => {
+  const js = read("js/app.js");
+  const i18n = read("js/i18n.js");
+  const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+
+  assert.match(js, /\{ file: "reino\.html",\s*key: "navKingdom",\s*titleKey: "pageKingdomTitle" \}/);
+  assert.match(js, /\{ file: "estrategia\.html",\s*key: "navStrategy",\s*titleKey: "pageStrategyTitle" \}/);
+
+  for (const language of languages) {
+    const block = new RegExp(`${language}:\\s*\\{[\\s\\S]*?navKingdom:"([^"]+)"`).exec(i18n);
+    assert.ok(block, "falta navKingdom en " + language);
+    assert.ok(block[1].length > 0, language + " necesita un nombre de entrada de menu");
+  }
+
+  assert.match(i18n, /navStrategy:"Biblioteca Estratégica"/);
+  assert.doesNotMatch(i18n, /navStrategy:"Estrategia"/);
+});
+
+test("la hoja de estilos comparte el fondo tematico de la subpagina Reino", () => {
+  const css = read("css/style.css");
+  assert.match(css, /\.subpage-kingdom\s*\{[^}]*background-image:\s*url\("\.\.\/media\/subpages\/reino\.svg"\)/s);
+  assert.ok(fs.existsSync(path.join(root, "media/subpages/reino.svg")));
 });

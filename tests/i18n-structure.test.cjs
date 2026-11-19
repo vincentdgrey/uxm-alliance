@@ -10,6 +10,7 @@ const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const pages = [
   { id: "index", html: "index.html", script: "js/i18n/index/i18n.js", file: "js/i18n/index/i18n.js" },
   { id: "actividades-diarias", html: "pages/actividades-diarias.html", script: "../js/i18n/actividades-diarias/i18n.js", file: "js/i18n/actividades-diarias/i18n.js" },
+  { id: "reino", html: "pages/reino.html", script: "../js/i18n/reino/i18n.js", file: "js/i18n/reino/i18n.js" },
   { id: "normas-uxm", html: "pages/normas-uxm.html", script: "../js/i18n/normas-uxm/i18n.js", file: "js/i18n/normas-uxm/i18n.js" },
   { id: "video-tutoriales", html: "pages/video-tutoriales.html", script: "../js/i18n/video-tutoriales/i18n.js", file: "js/i18n/video-tutoriales/i18n.js" },
   { id: "estrategia", html: "pages/estrategia.html", script: "../js/i18n/estrategia/i18n.js", file: "js/i18n/estrategia/i18n.js" },
