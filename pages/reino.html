@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reino – UXM</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/reino.css">
+</head>
+<body>
+  <nav class="navbar topbar" aria-label="Main navigation">
+    <div class="container-fluid">
+      <button id="navToggle" class="btn-icon navbar-toggler nav-toggle" type="button"
+              aria-controls="navPanel" aria-expanded="false" aria-label="Menu">
+        <span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+      <a id="homeLink" class="navbar-brand topbar-brand" href="../index.html">UXM</a>
+    </div>
+    <div id="navPanel" class="nav-panel" role="dialog" aria-modal="true"
+         aria-labelledby="navPanelTitle" hidden>
+      <h2 id="navPanelTitle" class="visually-hidden">Site sections</h2>
+      <ul id="navList" class="nav-list navbar-nav"></ul>
+      <div id="sideLangs" class="langs side-langs"></div>
+    </div>
+    <div id="navBackdrop" class="nav-backdrop" hidden></div>
+  </nav>
+
+  <main id="stage">
+
+    <section class="subpage-content subpage-kingdom" id="content">
+      <div class="subpage">
+        <p class="tag">[UXM] · Kingdom 277</p>
+        <h1 id="heroTitle" class="subpage-title">
+          <span class="subpage-title-word">
+            <span class="subpage-title-initial subpage-title-accent">R</span><span>eino</span>
+          </span>
+        </h1>
+        <p id="pageLead" class="welcome"></p>
+      </div>
+    </section>
+
+    <section class="subpage-banner">
+      <h3 class="subtitle-info banner-subpage" id="textKingdomInfo" data-i18n="kingdomInfoTitle">Información del Reino</h3>
+    </section>
+
+    <section class="block-content-info">
+      <p class="message-info" id="kingdomInfoMessage" data-i18n-text="kingdomInfoMessage"></p>
+      <div class="kingdom-info-grid">
+        <div class="kingdom-info-card">
+          <p class="kingdom-info-label" data-i18n-text="kingdomNumberLabel"></p>
+          <p class="kingdom-info-value">277</p>
+        </div>
+        <div class="kingdom-info-card">
+          <p class="kingdom-info-label" data-i18n-text="kingdomAllianceLabel"></p>
+          <p class="kingdom-info-value">UXM</p>
+        </div>
+        <div class="kingdom-info-card">
+          <p class="kingdom-info-label" data-i18n-text="kingdomCoalitionLabel"></p>
+          <p class="kingdom-info-value" data-i18n-text="kingdomCoalitionValue">«Bloque de Hierro»</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="subpage-banner">
+      <h3 class="subtitle-info banner-subpage" id="textKingdomTerritories" data-i18n="kingdomTerritoryTitle">Territorios definidos</h3>
+    </section>
+
+    <section class="block-content-info">
+      <p class="message-info" id="kingdomTerritoryMessage" data-i18n-text="kingdomTerritoryMessage"></p>
+      <div class="kingdom-table-wrap">
+        <table class="kingdom-table">
+          <thead>
+            <tr>
+              <th id="kingdomThName"></th>
+              <th id="kingdomThType"></th>
+              <th id="kingdomThCoords"></th>
+              <th id="kingdomThStatus"></th>
+            </tr>
+          </thead>
+          <tbody id="kingdomTerritoryBody"></tbody>
+        </table>
+      </div>
+      <p class="kingdom-empty" id="kingdomTerritoryEmpty" data-i18n-text="kingdomTerritoryEmpty"></p>
+    </section>
+
+    <section class="subpage-banner">
+      <h3 class="subtitle-info banner-subpage" id="textKingdomAlliance" data-i18n="kingdomAllianceTitle">Ubicación de la Alianza UXM</h3>
+    </section>
+
+    <section class="block-content-info">
+      <p class="message-info" id="kingdomAllianceMessage" data-i18n-text="kingdomAllianceMessage"></p>
+      <div class="kingdom-info-grid">
+        <div class="kingdom-info-card">
+          <p class="kingdom-info-label" data-i18n-text="kingdomAllianceLocation"></p>
+          <p class="kingdom-info-value" id="kingdomAllianceLocation">—</p>
+        </div>
+        <div class="kingdom-info-card">
+          <p class="kingdom-info-label" data-i18n-text="kingdomAllianceCoords"></p>
+          <p class="kingdom-info-value" id="kingdomAllianceCoords">—</p>
+        </div>
+        <div class="kingdom-info-card">
+          <p class="kingdom-info-label" data-i18n-text="kingdomAllianceReference"></p>
+          <p class="kingdom-info-value" id="kingdomAllianceReference">—</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="subpage-banner">
+      <h3 class="subtitle-info banner-subpage" id="textKingdomTips" data-i18n="kingdomTipsTitle">Consejos</h3>
+    </section>
+
+    <section class="block-content-info">
+      <p class="message-info" id="kingdomTipsMessage" data-i18n-text="kingdomTipsMessage"></p>
+      <ul class="kingdom-list" id="kingdomTipsList"></ul>
+      <p class="kingdom-empty" id="kingdomTipsEmpty" data-i18n-text="kingdomTipsEmpty"></p>
+    </section>
+
+    <section class="subpage-banner">
+      <h3 class="subtitle-info banner-subpage" id="textKingdomPlans" data-i18n="kingdomPlansTitle">Planes de Batalla</h3>
+    </section>
+
+    <section class="block-content-info">
+      <p class="message-info" id="kingdomPlansMessage" data-i18n-text="kingdomPlansMessage"></p>
+      <div class="kingdom-plans" id="kingdomPlansList"></div>
+      <p class="kingdom-empty" id="kingdomPlansEmpty" data-i18n-text="kingdomPlansEmpty"></p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <a id="ytLink" class="yt-link" href="https://www.youtube.com/@VincentDantesGrey/videos"
+       target="_blank" rel="noopener noreferrer">
+      <svg class="yt-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+        <path fill="#ff1919" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8z"/>
+        <path fill="#fff" d="M9.6 15.6 15.8 12 9.6 8.4z"/>
+      </svg>
+      <span id="ytLabel">YouTube</span>
+    </a>
+    <p id="copyright" class="copyright"></p>
+    <p id="visitCounter" class="visit-counter"></p>
+    <div id="langs" class="langs"></div>
+  </footer>
+
+  <noscript>UXM – Under Xtreme Madness · Kingdom 277</noscript>
+  <script src="../js/i18n.js"></script>
+  <script src="../js/i18n/reino/i18n.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/reino.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL" crossorigin="anonymous"></script>
+</body>
+</html>
