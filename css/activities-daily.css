@@ -168,7 +168,7 @@ tr.bs-current td.bs-event::after {
   position: relative;
   box-shadow: 0 3px 5px rgba(8, 47, 58, .9);
 }
-.ad-item.ad-today .ad-item-title {
+.ad-item.ad-today.ad-open .ad-item-title {
   border: 2px solid #009922;
   background: #009922;
   color: #fff;

@@ -1,17 +1,17 @@
 {
   "id": "reserve",
   "order": 10,
-  "updated": "2026-11-17",
+  "updated": "2026-11-19",
   "title": {
-    "es": "Reserva",
-    "en": "Reserve",
-    "pt": "Reserva",
-    "it": "Riserva",
-    "fr": "Réserve",
-    "ja": "予備",
-    "ru": "Резерв",
-    "zh": "预备队",
-    "tr": "Rezerv"
+    "es": "Recolección y Reserva",
+    "en": "Gathering and Reserve",
+    "pt": "Coleta e Reserva",
+    "it": "Raccolta e Riserva",
+    "fr": "Collecte et Réserve",
+    "ja": "収集と備蓄",
+    "ru": "Сбор и Резерв",
+    "zh": "收集与储备",
+    "tr": "Toplama ve Rezerv"
   },
   "summary": {
     "es": "",
