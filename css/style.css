@@ -202,6 +202,10 @@ body:not(.nav-open) .nav-toggle:hover {
   transition: width .28s var(--ease), background-color .28s var(--ease);
   box-shadow: var(--nav-uxm-shadow);
 }
+body:not(.nav-open) .nav-toggle:hover nav-toggle-bars i {
+  /* background-color: var(--scarlet); */
+  /* background: #ccc; */
+}
 .home-topbar .nav-toggle-bars i {
   background: var(--hot);
 }
@@ -581,6 +585,7 @@ body:not(.nav-open) .nav-toggle:hover {
 .subpage-daily { background-image: url("../media/subpages/actividades-diarias.svg"); }
 .subpage-tutorials { background-image: url("../media/subpages/video-tutoriales.svg"); }
 .subpage-strategy { background-image: url("../media/subpages/estrategia.svg"); }
+.subpage-kingdom { background-image: url("../media/subpages/reino.svg"); }
 .subpage-contact { background-image: url("../media/subpages/contacto.svg"); }
 
 .subpage-title {
@@ -636,8 +641,9 @@ body:not(.nav-open) .nav-toggle:hover {
 .subpage-banner + .block-content-info {
   margin-top: 0;
 }
-.sibtitle-info {
-  margin: 0 0 12px;
+.subtitle-info {
+  padding-left: 3%;
+  padding-right: 3%;
   color: var(--concrete);
   font-family: "Cinzel", Georgia, "Times New Roman", serif;
   font-weight: 700;
@@ -645,13 +651,13 @@ body:not(.nav-open) .nav-toggle:hover {
   text-align: left;
   text-shadow: 0 2px 3px rgba(33, 33, 33, .45);
 }
-.sibtitle-info .info-initial {
+.subtitle-info .info-initial {
   color: var(--scarlet);
 }
-.sibtitle-info::first-letter {
+.subtitle-info::first-letter {
   color: var(--scarlet);
 }
-.center-content .sibtitle-info{
+.center-content .subtitle-info{
   text-align: center;
 }
 .dinamic-welcome {

@@ -9,6 +9,7 @@
   /* ---------- Páginas del menú ---------- */
   var PAGES = [
     { file: "actividades-diarias.html", key: "navDaily",  titleKey: "pageDailyTitle" },
+    { file: "reino.html",               key: "navKingdom", titleKey: "pageKingdomTitle" },
     { file: "normas-uxm.html",          key: "navRules",  titleKey: "pageRulesTitle" },
     { file: "video-tutoriales.html",    key: "navTutorials", titleKey: "pageTutorialsTitle" },
     { file: "estrategia.html",          key: "navStrategy", titleKey: "pageStrategyTitle" },
@@ -185,7 +186,7 @@
     }
 
     /* Todos los subtítulos informativos reciben inicial escarlata. */
-    var infoTitles = document.querySelectorAll(".sibtitle-info");
+    var infoTitles = document.querySelectorAll(".subtitle-info");
     for (var i = 0; i < infoTitles.length; i++) {
       var heading = infoTitles[i];
       if (heading.querySelector(".info-initial")) continue;
