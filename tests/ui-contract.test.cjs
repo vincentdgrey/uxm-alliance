@@ -1433,6 +1433,50 @@ test("los textos de tutoriales y estrategia de la portada se traducen en los 9 i
   assert.match(i18n, /strategyMessage:"Buscaremos distintas formas de ayudar/);
 });
 
+/* ---------- Marcadores de la Biblioteca Estrategica en la portada ---------- */
+
+test("la portada reserva el bloque de marcadores de la biblioteca estrategica", () => {
+  const html = read("index.html");
+
+  assert.match(html, /<div class="block-booksmarks" id="strategyBookmarks"><\/div>/);
+  /* La hoja de la biblioteca aporta el estilo minimalista de los grupos. */
+  assert.match(html, /<link rel="stylesheet" href="css\/estrategia\.css">/);
+});
+
+test("la portada ofrece un boton general y grupos automaticos de la biblioteca", () => {
+  const js = read("js/app.js");
+
+  assert.match(js, /function buildStrategyBookmarks\(container\)/);
+  assert.match(js, /btn-outline btn-info-rules/);
+  assert.match(js, /withLang\(pageUrl\("estrategia\.html"\), LANG\)/);
+  assert.match(js, /searchEngine-topics-list/);
+  assert.match(js, /searchEngine-topic/);
+  /* El grupo viaja en la URL hacia la subpagina. */
+  assert.match(js, /\?group=" \+ encodeURIComponent\(group\.id\)/);
+
+  /* El boton general se construye con la traduccion ya existente. */
+  const i18n = loadI18n("js/i18n.js", pageI18n.home);
+  assert.equal(typeof i18n.es.navStrategy, "string");
+});
+
+test("los grupos de la portada se cargan desde el indice de la biblioteca", () => {
+  const js = read("js/app.js");
+
+  assert.match(js, /var LIBRARY_INDEX = LIBRARY_BASE \+ "index\.json"/);
+  assert.match(js, /function loadLibraryGroups\(\)/);
+  assert.match(js, /fetchLibraryJson\(LIBRARY_INDEX\)/);
+  /* No se cargan los temas individuales, solo los manifiestos de grupo. */
+  assert.doesNotMatch(js, /group\.topics/);
+});
+
+test("los estilos de los marcadores centran el boton y la lista de grupos", () => {
+  const css = read("css/style.css");
+
+  assert.match(css, /\.block-booksmarks\s*\{[^}]*display:\s*flex/s);
+  assert.match(css, /\.block-booksmarks\s*\{[^}]*align-items:\s*center/s);
+  assert.match(css, /\.block-booksmarks \.block-booksmarks-groups\s*\{[^}]*justify-content:\s*center/s);
+});
+
 /* ---------- Traducciones de actividades, fases y eventos ---------- */
 
 test("las actividades, fases y eventos del duelo de alianzas se traducen en los 9 idiomas", () => {
@@ -1774,6 +1818,75 @@ test("reino declara las cinco secciones informative del reino", () => {
   assert.match(html, /id="kingdomTipsList"/);
   assert.match(html, /id="kingdomPlansList"/);
   assert.match(html, /id="kingdomAllianceCoords"/);
+});
+
+test("el plano 3D de la Ciudad Real se monta en su contenedor propio", () => {
+  const html = read("pages/reino.html");
+
+  assert.match(html, /<div class="kingdom-render" id="kingdomRender">/);
+  assert.match(html, /id="kingdomRenderFallback"/);
+  assert.match(html, /id="kingdomRenderDescription"/);
+  assert.match(html, /id="kingdomRenderTop"/);
+  assert.match(html, /id="kingdomRenderReset"/);
+  assert.ok(fs.existsSync(path.join(root, "js/reino-castle.js")));
+});
+
+test("reino carga Three.js mediante import map y su modulo despues de app", () => {
+  const html = read("pages/reino.html");
+  const js = read("js/reino-castle.js");
+
+  const mapPos = html.indexOf('type="importmap"');
+  const appPos = html.indexOf('src="../js/app.js"');
+  const castlePos = html.indexOf('src="../js/reino-castle.js"');
+
+  assert.ok(mapPos >= 0, "reino debe declarar un import map");
+  assert.ok(castlePos >= 0, "reino debe cargar su modulo 3D");
+  assert.ok(mapPos < castlePos, "el import map debe precede al modulo 3D");
+  assert.ok(appPos < castlePos, "reino-castle.js debe cargarse despues de app.js");
+
+  assert.match(html, /"three":\s*"https:\/\/cdn\.jsdelivr\.net\/npm\/three@[\d.]+\/build\/three\.module\.js"/);
+  assert.match(html, /"three\/addons\/":\s*"https:\/\/cdn\.jsdelivr\.net\/npm\/three@[\d.]+\/examples\/jsm\/"/);
+
+  assert.match(js, /from "three"/);
+  assert.match(js, /three\/addons\/controls\/OrbitControls\.js/);
+  assert.match(js, /three\/addons\/renderers\/CSS2DRenderer\.js/);
+});
+
+test("la Ciudad Real tiene cuatro torretas con la Torre Norte al noreste", () => {
+  const js = read("js/reino-castle.js");
+  const towers = js.match(/\{ id: "(oeste|norte|este|sur)", labelKey: "kingdomTower\w+", x: -?\d+, z: -?\d+ \}/g) || [];
+
+  assert.equal(towers.length, 4, "debe haber cuatro torres");
+  assert.ok(js.match(/id: "norte"[^}]*x: 6, z: -6/), "la Torre Norte debe ocupar la esquina noreste");
+  assert.ok(js.match(/id: "oeste"[^}]*x: -6, z: -6/));
+  assert.ok(js.match(/id: "este"[^}]*x: 6, z: 6/));
+  assert.ok(js.match(/id: "sur"[^}]*x: -6, z: 6/));
+});
+
+test("los santuarios se configuran con variante, nivel y posicion", () => {
+  const js = read("js/reino-castle.js");
+  const sanctuaries = js.match(/\{ id: "santuario-\w+", nameKey: "kingdomSanctuary\w+", variant: "(blue|white)", level: \d+, x: -?\d+, z: -?\d+ \}/g) || [];
+
+  assert.ok(sanctuaries.length >= 2, "deben existir los santuarios de ejemplo");
+  assert.match(js, /variant === "white" \? COLORS\.white : COLORS\.blue/);
+});
+
+test("los textos del plano 3D estan traducidos en los nueve idiomas", () => {
+  const i18n = loadI18n("js/i18n.js", pageI18n.kingdom);
+  const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+  const keys = [
+    "kingdomCastleName",
+    "kingdomTowerWest", "kingdomTowerNorth", "kingdomTowerEast", "kingdomTowerSouth",
+    "kingdomSanctuaryBlue", "kingdomSanctuaryWhite",
+    "kingdomRenderDescription", "kingdomRenderTop", "kingdomRenderReset", "kingdomRenderFallback"
+  ];
+
+  for (const language of languages) {
+    for (const key of keys) {
+      assert.equal(typeof i18n[language][key], "string", language + " necesita " + key);
+      assert.ok(i18n[language][key].length > 0, language + "/" + key + " no puede estar vacio");
+    }
+  }
 });
 
 test("los textos propios del reino estan traducidos en los nueve idiomas", () => {
