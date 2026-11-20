@@ -1,5 +1,15 @@
 # Changelog
 
+## [261119d] - 2026-11-19
+
+### Changed
+- Las cuatro torretas exteriores de la Ciudad Real son ahora **cilíndricas**: base ancha, fuste estrecho, corona más ancha y cuatro almenas, construidas con `CylinderGeometry` de 12 segmentos. Mantienen su posición, con la Torre Norte en la esquina noreste.
+- Se **eliminan todos los muros** del castillo. Solo permanece la plataforma cuadrada gris (`COLORS.base`), con superficie rellena y contorno wireframe, y se mantiene la separación visible entre las cuatro torretas de las esquinas y la Ciudad Real central.
+- La Ciudad Real gana **detalle** siguiendo `media/draft/royal-city.png`: cuerpo principal con almenas, segundo cuerpo escalonado, torreón central con tejado cónico, cuatro torrecillas interiores con techo cónico, dos cuerpos laterales, portal de entrada y escalones. Se conserva el estilo wireframe low-poly sin texturas.
+- El terreno se divide en **lodo** (marrón `COLORS.mud`) en el cuadrado central y **césped** (verde `COLORS.grass`) en el territorio exterior, con `GRASS_CELLS = 20` celdas adicionales por cada lado del lodo (`GRASS_HALF = MUD_HALF + GRASS_CELLS * CELL_SIZE`, celda de `1.5`). La cuadrícula cubre todo el territorio.
+- **Ambas vistas conservan el norte hacia arriba.** Cada vista fija su vector `camera.up`: la vista superior usa `(0, 0, -1)` con cámara en `(0, 74, 0.001)`, y la vista inicial y restablecida usa `(0, 1, 0)` con cámara en `(0, 26, 34)`, al sur mirando hacia el norte.
+- Se añaden cuatro pruebas de contrato: torretas cilíndricas sin muros, terreno de lodo y césped con veinte celdas por lado, orientación norte en ambas vistas y detalle de la Ciudad Real.
+
 ## [261119c] - 2026-11-19
 
 ### Added

@@ -411,10 +411,15 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
   - `three/addons/` → `https://cdn.jsdelivr.net/npm/three@<versión>/examples/jsm/`.
   - La página declara un `<script type="importmap">` con esas dos entradas y la versión queda fijada, sin rangos.
 - El módulo importa `OrbitControls` (rotación, zoom y desplazamiento) y `CSS2DRenderer` (etiquetas HTML ancladas a la escena).
-- La Ciudad Real es un modelo **wireframe minimalista** construido con `EdgesGeometry` y `LineSegments`:
-  - Platforma cuadrada, cuerpo principal, torreón central, puerta y almenas.
-  - Cuatro torretas con forma de pieza de ajedrez (base ancha, fuste estrecho, corona más ancha y cuatro almenas), siempre menores que el castillo y sin detalles adicionales.
-  - Las murallas son líneas secundarias y el muro sur se abre para dejar la puerta.
+- La Ciudad Real es un modelo **wireframe** construido con `EdgesGeometry` y `LineSegments`:
+  - **Base**: plataforma cuadrada gris (`COLORS.base`) de `CASTLE_HALF * 2` de lado, con superficie rellena y contorno wireframe. **No hay muros**: el castillo no está cerrado por murallas.
+  - **Cuerpo principal** con almenas, segundo cuerpo más estrecho y alto, torreón central con tejado cónico y cuatro torrecillas interiores con techo cónico, dos cuerpos laterales, portal de entrada y escalones. El conjunto sigue `media/draft/royal-city.png` sin usar texturas.
+  - **Cuatro torretas exteriores cilíndricas**, inspiradas en la pieza de ajedrez: base cilíndrica ancha, fuste estrecho, corona más ancha y cuatro almenas. Siempre menores que la Ciudad Real y sin detalles adicionales.
+  - Las torretas y la Ciudad Real permanecen separadas: las torretas ocupan las esquinas de la plataforma y el castillo se concentra en el centro, con una separación visible.
+- El terreno tiene dos superficies:
+  - **Lodo** (`COLORS.mud`, marrón) en el cuadrado central de `MUD_HALF * 2` de lado, a `y = 0.02`.
+  - **Césped** (`COLORS.grass`, verde) en el territorio exterior, a `y = 0`. El césped añade `GRASS_CELLS = 20` celdas por cada lado del lodo: `GRASS_HALF = MUD_HALF + GRASS_CELLS * CELL_SIZE`.
+  - La cuadrícula cubre todo el territorio con celdas de `CELL_SIZE = 1.5` y se eleva a `y = 0.05` para no superponerse al terreno.
 - La distribución cenital usa el norte hacia `-Z` y el este hacia `+X`. Las cuatro torres se declaran en la constante `TOWERS`:
   - Oeste `(-6, -6)`, **Norte `(6, -6)`**, Este `(6, 6)`, Sur `(-6, 6)`.
   - La Torre Norte ocupa por tanto la esquina noreste del cuadrado.
@@ -422,7 +427,10 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Las referencias `media/draft/royal-city.png`, `media/draft/sanc-blue.png` y `media/draft/sanc-white.png` son material de diseño: el plano se genera con geometría de Three.js, no con imágenes planas.
 - Etiquetas: `CSS2DObject` para la Ciudad Real, las cuatro torres y cada santuario, más los ejes cardinales N, S, E y O. Los textos vienen de `js/i18n/reino/i18n.js` en los nueve idiomas: `kingdomCastleName`, `kingdomTowerWest`, `kingdomTowerNorth`, `kingdomTowerEast`, `kingdomTowerSouth`, `kingdomSanctuaryBlue` y `kingdomSanctuaryWhite`.
 - Interacción: arrastrar para rotar, rueda o pinza para acercar y alejar, botón `kingdomRenderTop` para la vista superior y `kingdomRenderReset` para restablecer la perspectiva inicial. El renderizado es bajo demanda, se repinta con el evento `change` de los controles y no hay bucle de animación permanente.
-- La vista superior debe conservar el norte hacia arriba: con la cámara cenital, la Torre Norte queda en la esquina superior derecha del lienzo.
+- **Orientación norte:** tanto la vista superior como la vista inicial conservan el norte hacia arriba. Cada vista fija su vector `camera.up`:
+  - Vista superior: `up = (0, 0, -1)` y cámara en `(0, 74, 0.001)`, con el norte arriba y el este a la derecha.
+  - Vista inicial y restablecida: `up = (0, 1, 0)` y cámara en `(0, 26, 34)`, al sur mirando hacia el norte, de modo que el norte queda en la parte superior del lienzo.
+  - `setView()` aplica `camera.up`, la posición, el objetivo y `controls.update()` antes de repintar.
 - El visor se redimensiona con `ResizeObserver` (o `resize` como respaldo) y respeta `min-height` de `420px` en escritorio y `320px` en móvil (`640px`).
 - Si no hay WebGL o el módulo no puede ejecutarse, el mensaje `#kingdomRenderFallback` permanece visible con el texto `kingdomRenderFallback` y el resto de la página sigue funcionando.
 
