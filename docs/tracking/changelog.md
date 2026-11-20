@@ -1,5 +1,46 @@
 # Changelog
 
+## [261120c] - 2026-11-20
+
+### Changed
+- Se propaga la redacción manual de `texts.es.adActivities.DYBOTWAR` («Guarda Botellas de Stamina para la Fase de Guerra») a los otros ocho idiomas de `js/i18n/actividades-diarias/i18n.js`: `en` → «Save Stamina Bottles for the War Phase», `pt` → «Guarde Garrafas de Stamina para a Fase de Guerra», `it` → «Salva Bottiglie di Stamina per la Fase di Guerra», `fr` → «Sauvegardez des Bouteilles d'Endurance pour la Phase de Guerre», `ja` → «戦争フェーズ用にスタミナボトルを保存», `ru` → «Сохранить Бутылки Стамины для Фазы Войны», `zh` → «为战争阶段保存体力瓶» y `tr` → «Savaş Aşaması için Dayanıklılık Şişelerini Kaydet». El texto español y los valores `resource` se conservan sin cambios.
+
+### Added
+- `docs/core/project-rules.md` documenta `DYBOTWAR` junto a `DYBOTT` y `DYSOLDIER` en la sección de redacciones manuales de `adActivities`.
+
+## [261120b] - 2026-11-20
+
+### Changed
+- Los indicadores de atención de `DAILY` se separan en dos atributos independientes: `flag` afecta **solo a la columna Tarea** y `ani` afecta **solo a la columna Contador** de los cronogramas de Actividades Diarias. El indicador `flag` se renderiza como la clase `ad-task-flag-<indicador>` en la celda `.ad-objective`; el indicador `ani` se renderiza como la clase `ad-counter-ani-<indicador>` en la celda `.ad-time` y únicamente en la tabla del día actual. Una tarea sin `flag` ni `ani` no recibe clases de indicador, pero sí su clase de estado.
+- El estado del contador (`ad-state-countdown`, `ad-state-progress` o `ad-state-normal`) se aplica ahora a **todas** las filas, con independencia de si declaran `flag` o `ani`, de modo que el indicador `ani` pueda reaccionar con el estado sin necesidad del `flag`.
+- La columna Contador distingue cuatro estados en la tabla del día actual: **OFF** (celda vacía cuando la tarea no define `server_time` ni vincula un `codebs`), **COUNTDOWN** (`T-HH:MM:SS`), **PROGRESS** (`+ HH:MM:SS`) y **FINISHED** (`--:--:--`, antes `End`). Las tareas vinculadas a Battle Survival usan una duración predeterminada de **4 horas** (`LINKED_DEFAULT_DURATION`).
+- Las tablas de días futuros muestran la fecha `MM/DD` para toda tarea con horario, ya sea `server_time` o vínculo `codebs`; antes solo la mostraban las tareas vinculadas a `codebs`. Las tareas OFF quedan en blanco.
+- Se reescriben los estilos de los indicadores en `css/activities-daily.css` con la nomenclatura vigente: `flag` `A` (`#8a000050` / `#ffee00`), `W` (`#ffee0050` / `#115a96`), `I` (`#80808050` / `#115a96`) y `S` (`#006d0050` / `#fff`) en la columna Tarea; `ani` `A` (cuenta atrás `#ffee00` → `#ffee002f` y progreso `#8a0000` → `#ff0000` con texto `#fffb00`), `I` (base `#00578a` y progreso `#00578a` → `#00aeff`) y `S` (negrita con texto verde `#009400` ↔ `#333` intermitente) en la columna Contador. Todas las animaciones usan `1.8s ease-in-out infinite` y se desactivan con `prefers-reduced-motion: reduce`.
+- `js/activities-daily.js` renombra `counterState()` a `linkedCounterState()` y devuelve un objeto `{ state, text }` con el estado explícito, sustituyendo la clasificación del texto por prefijo. `linkedDateLabel()` se sustituye por `dayDateLabel()`, que muestra la fecha de la tabla para toda tarea con horario.
+
+### Removed
+- Se elimina todo el código CSS obsoleto de la nomenclatura numérica anterior: los selectores `ad-flag-1` a `ad-flag-5` y sus animaciones `uxm-ad-flag-1-countdown`, `uxm-ad-flag-1-progress`, `uxm-ad-flag-2-progress` y `uxm-ad-flag-3-progress`.
+
+### Fixed
+- `tests/activity-flags.test.cjs` se reescribe para validar el contrato vigente: separación entre `flag` y `ani`, los cuatro estilos de `flag`, los comportamientos de `ani` `S`, `A` e `I`, los cuatro estados del contador, la duración de cuatro horas del vínculo `codebs`, las fechas `MM/DD` de las tablas futuras sin contadores y la ausencia del código antiguo `ad-flag-`.
+- `tests/ui-contract.test.cjs` actualiza las comprobaciones del contador del Duelo de Alianzas al nuevo contrato de estados.
+
+## [261120a] - 2026-11-20
+
+### Changed
+- Todos los identificadores técnicos del sitio se estandarizan en **inglés**: la propiedad `objetive` pasa a `objective` en los nueve idiomas de `adActivities`, y las claves e IDs `arengaTitle` / `arengaMessage` pasan a `warCryTitle` / `warCryMessage`.
+- Los identificadores semánticos de `js/reino-castle.js` se traducen: las torres usan `west`, `north`, `east` y `south`, y los santuarios `sanctuary-blue` y `sanctuary-white`.
+- Las clases CSS se normalizan a `kebab-case` en inglés, corrigiendo además las erratas heredadas: `block-content-destacated` → `block-content-featured`, `dinamic-welcome` → `dynamic-welcome`, `message-arenga` → `message-war-cry`, `block-booksmarks` → `block-bookmarks`, `text-video-learnig` → `text-video-learning`, `banner-divisor` → `banner-divider`, `line-divisor-*` → `line-divider-*`, `ad-obj` → `ad-objective` y todo el prefijo de clases `searchEngine-*` → `search-engine-*`. Los `id` DOM y las claves i18n (`searchEngineInput`, `searchEngineTitle`) conservan su `camelCase`.
+- Se **retira** la regla anterior que obligaba a conservar la errata `block-booksmarks`: el nombre sigue ahora la convención vigente.
+
+### Added
+- Nueva regla permanente de nomenclatura en `AGENTS.md` y `docs/core/project-rules.md`: identificadores técnicos en inglés, `camelCase` para variables, funciones, `id` y claves i18n, `UPPER_SNAKE_CASE` para constantes, `PascalCase` para constructores y `kebab-case` para clases CSS y custom properties. Se documentan las excepciones permitidas (textos visibles, rutas, códigos del juego y `db/*.json` obsoletos).
+- Nueva prueba `tests/naming-convention.test.cjs` con cinco casos que comprueban la ausencia de identificadores heredados, el formato `kebab-case` de las clases CSS, la ausencia de palabras en español en identificadores JavaScript y el uso del prefijo `search-engine` en las clases del buscador.
+
+### Fixed
+- `tests/activity-flags.test.cjs` deja de depender de una fecha absoluta («viernes 13 de noviembre de 2026»), que caducaba con el calendario. Los instantes de prueba se calculan ahora a partir del viernes de la semana en curso, de modo que la comprobación de los estados `T-`, `+` y `End` sigue siendo válida indefinidamente.
+- Las comprobaciones de los indicadores de atención validan la estructura y los colores sin fijar la nomenclatura concreta del indicador, que la fuente de verdad y el CSS todavía no unifican: los datos de `DAILY` usan `A`, `I` y `W`, mientras `css/activities-daily.css` mantiene `ad-flag-1` a `ad-flag-5`. Se actualizan además los colores de la columna Tarea a los valores vigentes (`#ffee0050` y `#80808050`).
+
 ## [261119d] - 2026-11-19
 
 ### Changed

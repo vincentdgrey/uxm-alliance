@@ -181,12 +181,12 @@ test("el render muestra la fecha de actualizacion como elemento time", () => {
   assert.match(js, /function updatedDate\(source\)/);
   assert.match(js, /function formatUpdated\(value\)/);
   assert.match(js, /function renderUpdated\(source, className\)/);
-  assert.match(js, /element\("time", "searchEngine-updated-date"/);
+  assert.match(js, /element\("time", "search-engine-updated-date"/);
   assert.match(js, /time\.setAttribute\("datetime", value\)/);
   /* La fecha se formatea en el idioma activo y siempre en UTC. */
   assert.match(js, /timeZone:\s*"UTC"/);
-  assert.match(js, /renderUpdated\(topic, "searchEngine-updated searchEngine-topic-updated"\)/);
-  assert.match(js, /renderUpdated\(group, "searchEngine-updated searchEngine-tree-group-updated"\)/);
+  assert.match(js, /renderUpdated\(topic, "search-engine-updated search-engine-topic-updated"\)/);
+  assert.match(js, /renderUpdated\(group, "search-engine-updated search-engine-tree-group-updated"\)/);
 });
 
 test("la etiqueta de la fecha de actualizacion esta traducida en los nueve idiomas", () => {
@@ -199,9 +199,9 @@ test("la etiqueta de la fecha de actualizacion esta traducida en los nueve idiom
 test("la biblioteca strategies declara los estilos de la fecha", () => {
   const css = read("css/estrategia.css");
 
-  assert.match(css, /\.searchEngine-updated\s*\{/);
-  assert.match(css, /\.searchEngine-updated-date\s*\{/);
-  assert.match(css, /\.searchEngine-tree-group-updated\s*\{/);
+  assert.match(css, /\.search-engine-updated\s*\{/);
+  assert.match(css, /\.search-engine-updated-date\s*\{/);
+  assert.match(css, /\.search-engine-tree-group-updated\s*\{/);
 });
 
 test("la pagina de estrategia carga su script y su hoja de estilos propios", () => {
@@ -209,7 +209,7 @@ test("la pagina de estrategia carga su script y su hoja de estilos propios", () 
 
   assert.match(html, /<script src="\.\.\/js\/strategy-library\.js"><\/script>/);
   assert.match(html, /<link rel="stylesheet" href="\.\.\/css\/estrategia\.css">/);
-  assert.match(html, /class="searchEngine-elements row g-4"/);
+  assert.match(html, /class="search-engine-elements row g-4"/);
   assert.match(html, /id="searchEngineTopics"/);
   assert.match(html, /id="searchEngineTree"/);
   assert.match(html, /id="searchEngineContents"/);
@@ -218,8 +218,8 @@ test("la pagina de estrategia carga su script y su hoja de estilos propios", () 
 test("el buscador separa el campo de busqueda y el arbol de temas", () => {
   const html = read("pages/estrategia.html");
 
-  assert.match(html, /col-6 col-lg-6 searchEngine-panel/);
-  assert.equal((html.match(/col-6 col-lg-6 searchEngine-panel/g) || []).length, 2);
+  assert.match(html, /col-6 col-lg-6 search-engine-panel/);
+  assert.equal((html.match(/col-6 col-lg-6 search-engine-panel/g) || []).length, 2);
   assert.match(html, /<input type="search" class="form-control" id="searchEngineInput"/);
   assert.match(html, /role="status" aria-live="polite"/);
 });
@@ -246,8 +246,8 @@ test("el render localiza listas por idioma y aplana los mapas", () => {
 
   assert.match(js, /function localizeList\(field\)/);
   assert.match(js, /function flatten\(field\)/);
-  assert.match(js, /searchEngine-paragraph/);
-  assert.match(js, /searchEngine-list/);
+  assert.match(js, /search-engine-paragraph/);
+  assert.match(js, /search-engine-list/);
   assert.match(js, /img\.loading = "lazy"/);
 });
 
@@ -297,16 +297,16 @@ test("los estilos de la biblioteca estan definidos en su hoja propia", () => {
   const css = read("css/estrategia.css");
 
   for (const selector of [
-    /\.searchEngine-elements/,
-    /\.searchEngine-panel/,
-    /\.searchEngine-tree-list/,
-    /\.searchEngine-tree-group/,
-    /\.searchEngine-tree-topic/,
-    /\.searchEngine-topics-list/,
-    /\.searchEngine-contents/,
-    /\.searchEngine-article/,
-    /\.searchEngine-section-media/,
-    /\.searchEngine-image/
+    /\.search-engine-elements/,
+    /\.search-engine-panel/,
+    /\.search-engine-tree-list/,
+    /\.search-engine-tree-group/,
+    /\.search-engine-tree-topic/,
+    /\.search-engine-topics-list/,
+    /\.search-engine-contents/,
+    /\.search-engine-article/,
+    /\.search-engine-section-media/,
+    /\.search-engine-image/
   ]) {
     assert.match(css, selector);
   }
@@ -317,8 +317,8 @@ test("el arbol de grupos es accesible y permite expandir las carpetas", () => {
 
   assert.match(js, /aria-expanded/);
   assert.match(js, /aria-controls/);
-  assert.match(js, /searchEngine-tree-group/);
-  assert.match(js, /searchEngine-tree-topic/);
+  assert.match(js, /search-engine-tree-group/);
+  assert.match(js, /search-engine-tree-topic/);
   assert.match(js, /subList\.hidden\s*=\s*!expanded/);
 });
 
@@ -340,10 +340,20 @@ test("los temas de acceso rapido se muestran como enlaces textuales sin estilo d
   const js = read("js/strategy-library.js");
   const css = read("css/estrategia.css");
 
-  assert.match(js, /element\("button", "searchEngine-topic"/);
-  assert.doesNotMatch(js, /element\("button", "btn btn-outline-primary searchEngine-topic"/);
-  assert.match(css, /\.searchEngine-topic\s*\{[^}]*border:\s*0/s);
-  assert.match(css, /\.searchEngine-topic\s*\{[^}]*background:\s*transparent/s);
+  assert.match(js, /element\("button", "search-engine-topic"/);
+  assert.doesNotMatch(js, /element\("button", "btn btn-outline-primary search-engine-topic"/);
+  assert.match(css, /\.search-engine-topic\s*\{[^}]*border:\s*0/s);
+  assert.match(css, /\.search-engine-topic\s*\{[^}]*background:\s*transparent/s);
+});
+
+test("la pagina de estrategia abre el grupo solicitado por la url", () => {
+  const js = read("js/strategy-library.js");
+
+  assert.match(js, /function requestedGroup\(\)/);
+  assert.match(js, /function expandGroupFromUrl\(groups\)/);
+  assert.match(js, /\[?&\]group=\(\[\^&#\]\+\)/);
+  assert.match(js, /groups\[i\]\.setExpanded\(true\)/);
+  assert.match(js, /expandGroupFromUrl\(result\.groups\)/);
 });
 
 test("al seleccionar un tema se expande su grupo para mostrarlo", () => {

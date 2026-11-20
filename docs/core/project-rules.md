@@ -84,7 +84,7 @@ Reglas:
 - Las ediciones manuales de `texts.es` se conservan literalmente y constituyen la base para propagar los cambios a los demás idiomas. Una regeneración automática no debe sobrescribir esos textos.
 - El idioma se resuelve con `?lang=<código>`; si no existe, se usa `navigator.language` y, como último recurso, inglés (`DEFAULT_LANG = "en"`).
 - Cada traducción visible del sitio se controla mediante una clave de `window.I18N` y se aplica en `js/app.js` con `setText()` o una función equivalente.
-- Los identificadores HTML y las claves de traducción mantienen el mismo nombre cuando el contenido pertenece a una sección concreta: `arengaTitle`, `arengaMessage`, `tutoTitle`, `tutorialsMessage`, `strategyTitle`, `strategyMessage`, `allianceTitle`, `allianceMessage`, `bonusAlliance`, `bonusFastBuild`, `bonusResearchSpeedup`, `bonusCraftingSpeedup`, `bonusFastTraining`, `bonusRallyStats`, `bonusShardExchange` y `bonusInProgress`.
+- Los identificadores HTML y las claves de traducción mantienen el mismo nombre cuando el contenido pertenece a una sección concreta: `warCryTitle`, `warCryMessage`, `tutoTitle`, `tutorialsMessage`, `strategyTitle`, `strategyMessage`, `allianceTitle`, `allianceMessage`, `bonusAlliance`, `bonusFastBuild`, `bonusResearchSpeedup`, `bonusCraftingSpeedup`, `bonusFastTraining`, `bonusRallyStats`, `bonusShardExchange` y `bonusInProgress`.
 - Las tres secciones nuevas de la portada se localizan con atributos, sin necesidad de `setText()`: `tutorialsMessage` y `strategyMessage` declaran `data-i18n-text`, y `strategyTitle` declara `data-i18n` para que reciba la inicial escarlata de `applySectionTitles()`. Sus textos españoles son los manuales vigentes de `index.html`.
 - La arenga española es el texto manual vigente de `index.html`; no se recupera de los bloques obsoletos de `src/`.
 - `allianceMessage` de la portada usa el texto manual vigente de `index.html` como fuente y se traduce a los 9 idiomas. La subpágina de Actividades Diarias define una clave `allianceMessage` propia en su archivo i18n.
@@ -96,6 +96,56 @@ Reglas:
 - Las traducciones japonesas se corrigen sin alterar los valores del juego (`277`, `25%`, `60%`, `30M`, `150K`, `1.5M`, `225M`, `990M`, `Lv.6`, `MVP 1`, `SSR`, `UR`, `R1`, `R2`, `35`, `8H`, `24H`). Los nombres de eventos de `bsEvents` y los objetivos de `adActivities` se traducen con terminología japonesa propia, sin汉字 simplificados ni mezclas con otros idiomas.
 - Todos los archivos i18n se guardan en UTF-8 válido. No se permiten el carácter de reemplazo `�`, secuencias de mojibake, controles invisibles ni mezclas accidentales de alfabetos. Las excepciones en latín son valores técnicos justificados, como `UXM`, `YouTube`, `SSR`, `UR`, `T8`, `Lv.6` o `Rally HP/ATK/DEF`.
 - El chino debe usar caracteres Han y no puede mezclar kana japonés ni cirílico. El ruso debe usar cirílico en sus textos lingüísticos y no puede mezclar CJK. Estas reglas se verifican en `tests/i18n-unicode.test.cjs`.
+
+### Nomenclatura de identificadores (inglés)
+
+Todos los identificadores técnicos del sitio se escriben en inglés. Esta regla es obligatoria y está verificada por `tests/naming-convention.test.cjs`, que falla si reaparece un identificador heredado.
+
+**JavaScript**
+
+| Elemento | Formato | Ejemplo |
+|---|---|---|
+| Variables y funciones | `camelCase` | `dynamicWelcome`, `buildStrategyBookmarks` |
+| Constantes globales | `UPPER_SNAKE_CASE` | `LIBRARY_BASE`, `DEFAULT_LANG` |
+| Constructores y clases | `PascalCase` | `Card` |
+| Propiedades de objetos | `camelCase` | `objective`, `resource` |
+
+**CSS**
+
+| Elemento | Formato | Ejemplo |
+|---|---|---|
+| Clases | `kebab-case` minúsculas | `block-content-featured`, `search-engine-topic` |
+| Custom properties | `kebab-case` minúsculas | `--button-radius`, `--nav-uxm-shadow` |
+
+**HTML y i18n**
+
+- Los `id` DOM y las claves de `window.I18N` usan `camelCase`: `strategyBookmarks`, `searchEngineInput`, `searchEngineTitle`.
+- Las clases CSS usan siempre `kebab-case` en minúsculas.
+
+**Excepciones permitidas**
+
+- Los textos visibles, las traducciones y los comentarios pueden estar en español.
+- Las rutas publicadas, los nombres de archivo y las URLs no se renombran por idioma.
+- Los códigos del juego (`BUILD`, `HEROE`, `KVK`, `P00`…), las claves de almacenamiento y las abreviaturas heredadas estables (`bs-`, `ad-`) se conservan.
+- Los `db/*.json` obsoletos no se modifican.
+
+**Identificadores heredados corregidos**
+
+| Antes | Ahora |
+|---|---|
+| `objetive` | `objective` |
+| `arengaTitle` / `arengaMessage` | `warCryTitle` / `warCryMessage` |
+| `block-content-destacated` | `block-content-featured` |
+| `dinamic-welcome` | `dynamic-welcome` |
+| `message-arenga` | `message-war-cry` |
+| `block-booksmarks` | `block-bookmarks` |
+| `text-video-learnig` | `text-video-learning` |
+| `banner-divisor` | `banner-divider` |
+| `line-divisor-*` | `line-divider-*` |
+| `ad-obj` | `ad-objective` |
+| `searchEngine-*` (clases CSS) | `search-engine-*` |
+| `oeste`, `norte`, `este`, `sur` | `west`, `north`, `east`, `south` |
+| `santuario-azul`, `santuario-blanco` | `sanctuary-blue`, `sanctuary-white` |
 
 ### Paleta base del sitio
 
@@ -215,12 +265,12 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Cada tarjeta declara el video en `data-youtube-id="<ID de YouTube>"` y contiene:
   - `<div class="card-video-media">` con la miniatura `<img class="card-video-thumb">` y los controles.
   - `<button class="card-video-play">` para reproducir y `<button class="card-video-sound">` para activar el audio.
-  - La descripción `<p class="text-video-learnig" id="desc-video-...">`, debajo del video.
+  - La descripción `<p class="text-video-learning" id="desc-video-...">`, debajo del video.
 - No usar `<video>` con URL de página de YouTube (`youtube.com/watch?v=...`): ese elemento no reproduce ese tipo de contenido. El reproductor se crea con la API de YouTube.
 - `.tutorials-content` usa `display: grid` con `grid-template-columns: repeat(2, minmax(0, 1fr))`, de modo que se muestran **dos tarjetas por ancho de página**; a `640px` o menos pasa a una sola columna.
 - `.card-video` se muestra como tarjeta: fondo `var(--panel)`, borde `var(--line)`, `border-radius: var(--button-radius)`, sombra suave y elevación en `hover` y `focus-within`.
 - `.card-video-media` usa `aspect-ratio: 16 / 9` y oculta el contenido con `overflow: hidden`; el iframe del reproductor se posiciona de forma absoluta sobre él.
-- `.text-video-learnig` es el texto descriptivo de la tarjeta, con `padding: 12px 14px 14px` y alineación izquierda.
+- `.text-video-learning` es el texto descriptivo de la tarjeta, con `padding: 12px 14px 14px` y alineación izquierda.
 - El contenido se carga bajo demanda: la miniatura se muestra siempre con `loading="lazy"` y el iframe del reproductor se crea únicamente cuando el visitante interactúa con la tarjeta. Así no se cargan los 10 reproductores a la vez.
 - La lógica vive en `js/video-cards.js`, que se carga después de `js/app.js`. El script carga la API de YouTube (`https://www.youtube.com/iframe_api`) de forma diferida y solo una vez.
 - Comportamiento de reproducción:
@@ -234,35 +284,35 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 ### Contenido común de las secciones
 
-- Los bloques comunes son `<section class="block-content-info">` y `<section class="block-content-destacated">`. Ambos usan `margin: 40px auto`, `padding: 0 10%` y alineación izquierda por defecto.
-- `.center-content` centra visualmente el contenido y el subtítulo. Sin esa clase, `.sibtitle-info` permanece alineado a la izquierda.
-- `.block-content-destacated` usa fondo `#d3d3d3` y texto `#ccc` como contraste frente al bloque informativo.
-- Los subtítulos son `<h2 class="sibtitle-info">` y usan Cinzel, texto `var(--concrete)`, sombra gris y primera letra escarlata mediante `.info-initial`. En la subpágina de tutoriales son `<h3 class="sibtitle-info banner-divisor">` por decisión manual del usuario.
-- `.dinamic-welcome` enumera la palabra «Bienvenido» de todos los idiomas definidos salvo el activo, separados por ` · `. No utiliza temporizadores ni rotación.
-- `.message-welcome` y `.message-arenga` limitan el texto a `760px`, lo centran y aplican `margin: 0 auto 24px`.
-- `.message-welcome p` y `.message-arenga p` eliminan el margen superior e inferior y usan `line-height: 1.7`. La arenga usa `white-space: pre-line` para conservar sus saltos de línea.
+- Los bloques comunes son `<section class="block-content-info">` y `<section class="block-content-featured">`. Ambos usan `margin: 40px auto`, `padding: 0 10%` y alineación izquierda por defecto.
+- `.center-content` centra visualmente el contenido y el subtítulo. Sin esa clase, `.subtitle-info` permanece alineado a la izquierda.
+- `.block-content-featured` usa fondo `#d3d3d3` y texto `#ccc` como contraste frente al bloque informativo.
+- Los subtítulos son `<h2 class="subtitle-info">` y usan Cinzel, texto `var(--concrete)`, sombra gris y primera letra escarlata mediante `.info-initial`. En la subpágina de tutoriales son `<h3 class="subtitle-info banner-divider">` por decisión manual del usuario.
+- `.dynamic-welcome` enumera la palabra «Bienvenido» de todos los idiomas definidos salvo el activo, separados por ` · `. No utiliza temporizadores ni rotación.
+- `.message-welcome` y `.message-war-cry` limitan el texto a `760px`, lo centran y aplican `margin: 0 auto 24px`.
+- `.message-welcome p` y `.message-war-cry p` eliminan el margen superior e inferior y usan `line-height: 1.7`. La arenga usa `white-space: pre-line` para conservar sus saltos de línea.
 - `.block-buttons` distribuye sus tres enlaces con `gap: 10%`:
   - YouTube: borde y texto `var(--scarlet)`, icono SVG y relleno animado; abre en pestaña nueva con `rel="noopener noreferrer"`.
   - Normas UXM: borde y texto `var(--primary-btn)`, relleno animado del mismo color y ruta relativa `pages/normas-uxm.html` con `?lang=`. Nunca usar `127.0.0.1`.
   - Actividades Diarias: borde y texto `var(--primary-btn)`, relleno animado del mismo color y ruta relativa `pages/actividades-diarias.html` con `?lang=`. Su etiqueta usa la clave i18n `navDaily`, traducida en los nueve idiomas.
 - `.component-buttons` genera tres enlaces `btn-outline btn-info-rules` hacia `#learningPriority`, `#tips` y `#events` de `pages/video-tutoriales.html`, conservando `?lang=`.
 - `.ha-author` se muestra en cursiva, color `#7c7c7c`, alineado a la derecha y con `padding-bottom: 2px`. Su pseudoelemento `::after` dibuja el subrayado gris.
-- `.line-divisor-scarlet` dibuja una línea `3px` de rojo escarlata, `width: 100%`, centrada y con `margin: 24px auto 0`.
-- `.banner-divisor` convierte los subtítulos de la subpágina de tutoriales en banners con fondo `#ccc` y texto `#3d3d3d`, manteniendo la inicial escarlata.
-- `.banner-subpage` comparte el mismo estilo que `.banner-divisor` (fondo `#ccc`, texto `#3d3d3d`, `padding: 12px 16px`, centrado, sin sombra e inicial escarlata) y se usa en los encabezados de sección de la subpágina de actividades diarias.
+- `.line-divider-scarlet` dibuja una línea `3px` de rojo escarlata, `width: 100%`, centrada y con `margin: 24px auto 0`.
+- `.banner-divider` convierte los subtítulos de la subpágina de tutoriales en banners con fondo `#ccc` y texto `#3d3d3d`, manteniendo la inicial escarlata.
+- `.banner-subpage` comparte el mismo estilo que `.banner-divider` (fondo `#ccc`, texto `#3d3d3d`, `padding: 12px 16px`, centrado, sin sombra e inicial escarlata) y se usa en los encabezados de sección de la subpágina de actividades diarias.
 - Los encabezados con `.banner-subpage` viven en un contenedor dedicado `<section class="subpage-banner">`, hermano de `.block-content-info` dentro de `<main>`. Ese contenedor usa `width: 100%` y el fondo del `h2` ocupa de ese modo todo el ancho de la página.
 - El contenedor `.subpage-banner` usa `margin: 40px 0 12px` y `.subpage-banner + .block-content-info` anula el `margin-top` del bloque informativo para no duplicar la separación vertical.
 - No usar márgenes negativos ni `100vw` para alcanzar el ancho completo: `100vw` incluye el ancho de la barra de desplazamiento y genera overflow horizontal.
-- La portada contiene las secciones de bienvenida (`infoTitle`), arenga (`arengaTitle` y `arengaMessage`), video tutorial (`tutoTitle`, `tutorialsMessage`) y alliance (`allianceTitle`, `allianceMessage` y la tabla de bonos), además de la sección de estrategia (`strategyTitle` y `strategyMessage`).
+- La portada contiene las secciones de bienvenida (`infoTitle`), arenga (`warCryTitle` y `warCryMessage`), video tutorial (`tutoTitle`, `tutorialsMessage`) y alliance (`allianceTitle`, `allianceMessage` y la tabla de bonos), además de la sección de estrategia (`strategyTitle` y `strategyMessage`).
 
 ### Marcadores de la Biblioteca Estratégica en la portada
 
-- La sección de estrategia de `index.html` reserva `<div class="block-booksmarks" id="strategyBookmarks"></div>`. El nombre de la clase `block-booksmarks` se conserva tal cual, con su errata original.
+- La sección de estrategia de `index.html` reserva `<div class="block-bookmarks" id="strategyBookmarks"></div>`. El nombre de la clase `block-bookmarks` sigue la convención `kebab-case` en inglés; la errata anterior (`block-booksmarks`) quedó corregida.
 - `js/app.js` genera su contenido con `buildStrategyBookmarks()`, que solo actúa si existe `#strategyBookmarks`.
 - El bloque contiene dos partes:
   1. Un botón general con las clases `btn-outline btn-info-rules`, idénticas en estilo y animación a los botones de `#infoButtons`. Enlaza a `pages/estrategia.html` conservando `?lang=` y usa la traducción `navStrategy`.
-  2. Una lista minimalista `.searchEngine-topics-list` con un enlace `.searchEngine-topic` por **grupo** de la biblioteca, con el mismo tratamiento visual que los temas de acceso rápido de `pages/estrategia.html`.
-- La portada carga `css/estrategia.css` para reutilizar las reglas de `.searchEngine-topics-list` y `.searchEngine-topic` sin duplicarlas. `css/style.css` añade solo la disposición de `.block-booksmarks`: columna, centrado y separación de `18px`.
+  2. Una lista minimalista `.search-engine-topics-list` con un enlace `.search-engine-topic` por **grupo** de la biblioteca, con el mismo tratamiento visual que los temas de acceso rápido de `pages/estrategia.html`.
+- La portada carga `css/estrategia.css` para reutilizar las reglas de `.search-engine-topics-list` y `.search-engine-topic` sin duplicarlas. `css/style.css` añade solo la disposición de `.block-bookmarks`: columna, centrado y separación de `18px`.
 - La lista de grupos se obtiene en tiempo de ejecución:
   - Se carga `db/library/index.json` y luego **solo los manifiestos de grupo**, nunca los temas individuales. La subpágina de estrategia es la que descarga los temas.
   - Se ordenan por `order` y, a igualdad, por título localizado.
@@ -304,8 +354,8 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Excepción activa: `db/library/` sí lo carga `js/strategy-library.js` y es la fuente de verdad de los temas de la Biblioteca Estratégica.
 - La estructura `src/` también es obsoleta y no se enlaza.
 - Al modificar datos deben respetarse las referencias: todo `CALENDAR.codebs` existe en `ACTIVITIES`, todo `ACTIVITY_CODE.codebs` vacío o existente en `ACTIVITIES`, todo `DAILY.code_task` en `ACTIVITY_CODE`, todo `DAILY.event` en `EVENT_CODE` y toda fase usada en `PHASES`.
-- Al añadir o modificar una entrada de `ACTIVITY_CODE`, `PHASES` o `EVENT_CODE` deben añadirse también sus traducciones en los 9 idiomas: una entrada sin traducir cae al inglés y, en el último caso, al texto canónico en español. Cada `code` de `ACTIVITY_CODE` debe estar en `adActivities` con `objetive` y `resource`, cada fase normalizada en `adPhases` y cada `event` en `adEvents`.
-- La fuente de verdad de los textos de actividades es `texts.es.adActivities` de `js/i18n/actividades-diarias/i18n.js`. `ACTIVITY_CODE` conserva únicamente los datos estructurales (`group`, `icon`, `point` y `codebs`) y no duplica `objetive` ni `resource`. Cuando el usuario modifique `texts.es`, sus valores prevalecen y se traducen a los otros ocho idiomas sin sobrescribir el español.
+- Al añadir o modificar una entrada de `ACTIVITY_CODE`, `PHASES` o `EVENT_CODE` deben añadirse también sus traducciones en los 9 idiomas: una entrada sin traducir cae al inglés y, en el último caso, al texto canónico en español. Cada `code` de `ACTIVITY_CODE` debe estar en `adActivities` con `objective` y `resource`, cada fase normalizada en `adPhases` y cada `event` en `adEvents`.
+- La fuente de verdad de los textos de actividades es `texts.es.adActivities` de `js/i18n/actividades-diarias/i18n.js`. `ACTIVITY_CODE` conserva únicamente los datos estructurales (`group`, `icon`, `point` y `codebs`) y no duplica `objective` ni `resource`. Cuando el usuario modifique `texts.es`, sus valores prevalecen y se traducen a los otros ocho idiomas sin sobrescribir el español.
 - Los horarios `DAILY.server_time` y las duraciones `DAILY.server_duration` se expresan en UTC-2 y en formato `hh:mm:ss`. Toda fila con `server_time` debe declarar también `server_duration`. Las duraciones se validan con el mismo reloj (`hh:mm:ss`, hasta `23:59:59`), por lo que una duración de 24 h se expresa con `server_time` y un final de día distinto.
 
 ### Cronograma de Batalla de Supervivencia
@@ -326,7 +376,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - La lógica vive en `initAllianceDuel()` de `js/activities-daily.js`.
 - Las traducciones del calendario viven exclusivamente en `js/i18n/actividades-diarias/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (cinco encabezados de tabla), presentes en los 9 idiomas. El calendario no mantiene una tabla de traducciones propia.
 - Los textos de las actividades, las fases y los eventos también se localizan en `js/i18n/actividades-diarias/i18n.js`, mediante tres mapas por idioma:
-  - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (46 registros), con los campos `objetive` y `resource`.
+  - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (46 registros), con los campos `objective` y `resource`.
   - `adPhases`: indexado por la fase normalizada (`P00`-`P06`).
   - `adEvents`: indexado por el `event` de `EVENT_CODE` (`DY`, `AD`, `KVK`, `ROY`, `BS`, `EQ`, `BEX`, `CUM`).
 - La resolución de cada texto sigue el orden **idioma activo → inglés → texto canónico en español**. `js/activities-daily.js` lo aplica con `activityText(code, field)`, `phaseText(phase)` y `eventLabel(r)`. El inglés se toma de `window.I18N.en` mediante la constante `T_EN` y el español canónico de `window.I18N.es` mediante `T_ES`.
@@ -336,18 +386,19 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - La tabla de cada día tiene **cinco columnas** en este orden:
   1. `Contador`.
   2. Columna de imagen de la tarea, cargada desde `media/glyph/<icon>.png` según el valor `icon` de `ACTIVITY_CODE`.
-  3. `Tarea`, con la traducción de `objetive`.
+  3. `Tarea`, con la traducción de `objective`.
   4. `Recurso`, con la traducción de `resource`.
   5. `Evento`, con la traducción del evento.
 - La columna de imagen del recurso se retiró por obsoleta: ya no se genera la celda `<td class="ad-icon ad-resource-icon" data-code=""></td>` ni su columna equivalente en `AD_COLUMNS`.
 - La columna `Fase` se retiró de la tabla: la fase solo se muestra en el título del día.
-- La columna `Contador` muestra tres estados posibles, solo en la tabla del día actual (`ad-today`):
-  1. `T-HH:MM:SS` antes del inicio, cuando la fila declara `DAILY.server_time`.
-  2. `+ HH:MM:SS` durante el evento, es decir desde `server_time` hasta `server_time + server_duration`.
-  3. `End` al alcanzar el final de `server_duration`.
-- Si `server_time` o `server_duration` fueran inválidos, la celda muestra `—` en lugar de un contador incorrecto.
-- Cuando la fila del día actual **no** declara `server_time`, el contador usa la vinculación `ACTIVITY_CODE.codebs → ACTIVITIES.codebs → CALENDAR.codebs`: `+ HH:MM:SS` mientras el horario está en curso, `T-HH:MM:SS` para el próximo horario y `End` cuando ya no queda ninguno. Cada horario de Battle Survival permanece en curso hasta que empieza el siguiente horario del día, aunque este tenga otro código; si un código tiene dos horarios en el mismo día, el contador pasa al segundo cuando termina el primero.
-- Las tablas de días futuros muestran la fecha `MM/DD` de la tabla para las tareas vinculadas. Las tareas sin `codebs` muestran `—` en la columna `Contador`; `server_time` y `server_duration` no se utilizan en los días futuros. El valor `DAILY.time_init` ya no se utiliza para este renderizado.
+- La columna `Contador` muestra cuatro estados posibles, solo en la tabla del día actual (`ad-today`):
+  1. **OFF**: la tarea no define `server_time` ni vincula un `codebs`; la celda queda completamente vacía.
+  2. `T-HH:MM:SS` antes del inicio, cuando la fila declara `DAILY.server_time` o tiene un horario vinculado.
+  3. `+ HH:MM:SS` durante el evento, es decir desde `server_time` hasta `server_time + server_duration`.
+  4. `--:--:--` al alcanzar el final de `server_duration` o de la duración predeterminada del vínculo.
+- Si `server_time` fuera inválido, la celda queda vacía en lugar de mostrar un contador incorrecto.
+- Cuando la fila del día actual **no** declara `server_time`, el contador usa la vinculación `ACTIVITY_CODE.codebs → ACTIVITIES.codebs → CALENDAR.codebs`: `+ HH:MM:SS` mientras el horario está en curso, `T-HH:MM:SS` para el próximo horario y `--:--:--` cuando ya no queda ninguno. La duración predeterminada de una tarea vinculada es de **4 horas** (`LINKED_DEFAULT_DURATION`). Cada horario de Battle Survival permanece en curso hasta que empieza el siguiente horario del día, aunque este tenga otro código; si un código tiene dos horarios en el mismo día, el contador pasa al segundo cuando termina el primero.
+- Las tablas de días futuros muestran la fecha `MM/DD` de la tabla para toda tarea con horario, ya sea `server_time` o vínculo `codebs`. Las tareas sin horario ni vínculo (OFF) muestran la celda vacía. `server_time` y `server_duration` no se utilizan para calcular contadores en los días futuros. El valor `DAILY.time_init` ya no se utiliza para este renderizado.
 - El Duelo de Alianzas no muestra un reloj de zona horaria: se eliminaron `#ad-tzinfo`, su regla CSS y sus referencias en JavaScript.
 - Las celdas de imagen usan las clases `.ad-icon` y `.ad-task-icon`; la columna conserva `35 px` de ancho y la imagen admite hasta `64 px`. La segunda columna muestra el PNG indicado por `ACTIVITY_CODE.icon`; si el archivo no existe, la imagen se oculta y la celda queda vacía. El atributo `data-code` guarda el código de la tarea.
 - El valor `resource` se toma de la traducción de `adActivities`; si la traducción, el respaldo inglés y el texto canónico en español están vacíos, la celda queda vacía.
@@ -358,19 +409,29 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - El panel de la fase actual añade al texto de `.ad-title-phase` una cuenta atrás con el formato `T-HH:MM:SS`. Cada fase empieza a las `00:00:00` UTC-2 y termina a las `00:00:00` UTC-2 del día siguiente: al iniciar muestra `T-24:00:00` y en el último segundo `T-00:00:01`. Los seis paneles futuros no muestran contador. El valor se actualiza con el `setInterval` compartido de un segundo y, al cruzar el reset, el calendario se reconstruye con la fase nueva.
 - La cuenta atrás de fase se monta en un nodo propio, `<span class="ad-countdown">`, dentro de `.ad-title-phase`. De ese modo el contador se actualiza cada segundo sin reconstruir el texto del título y puede tener un color propio: `.ad-countdown` usa blanco semitransparente `#ffffffad`, `font-size: 1rem` y JetBrainsMono.
 - El reset del día se muestra en formato `YYYY.MM.DD HH:mm`. Cada día comienza a las `00:00:00` en UTC-2 y ese instante se convierte a la zona horaria detectada en el navegador, por lo que la fecha puede mostrar el día anterior. El título conserva el nombre de la fase y ya no incluye la abreviatura del día.
-- Los indicadores de atención de `DAILY.flag` se renderizan como clases `ad-flag-1` a `ad-flag-5` en la fila y se combinan con los estados `ad-state-countdown`, `ad-state-progress` o `ad-state-normal` del contador. `js/activities-daily.js` los actualiza en el temporizador compartido mediante `applyCounterState()`.
-- Los estilos manuales de los indicadores viven en `css/activities-daily.css` y no deben alterarse: la columna Contador usa `padding: 6px 4px`; `flag-1` alterna amarillo/rojo oscuro en cuenta atrás y rojo en curso; `flag-2` alterna azul claro y azul oscuro; `flag-3` alterna amarillo y azul en sus estados; `flag-4` y `flag-5` resaltan la columna Tarea en filas normales. Las animaciones se desactivan con `prefers-reduced-motion: reduce`.
+- Los indicadores de atención de `DAILY.flag` y `DAILY.ani` son independientes y se aplican a columnas distintas:
+  - `flag` afecta **solo a la columna Tarea**: se renderiza como la clase `ad-task-flag-<indicador>` en la celda `.ad-objective`.
+  - `ani` afecta **solo a la columna Contador**: se renderiza como la clase `ad-counter-ani-<indicador>` en la celda `.ad-time` y únicamente en la tabla del día actual.
+  - El estado del contador (`ad-state-countdown`, `ad-state-progress` o `ad-state-normal`) se aplica a **todas** las filas, con independencia de si declaran `flag` o `ani`. `js/activities-daily.js` lo actualiza en el temporizador compartido mediante `applyCounterState()`.
+  - Una tarea sin `flag` ni `ani` no recibe ninguna clase de indicador, pero sí su clase de estado.
+- La fuente de verdad declara los indicadores por letra en minúsculas (`flag`: `A`, `I`, `W`, `S`; `ani`: `A`, `I`, `S`). El CSS usa la misma nomenclatura en `ad-task-flag-<indicador>` y `ad-counter-ani-<indicador>`. La numeración histórica `ad-flag-1` a `ad-flag-5` quedó obsoleta y fue eliminada junto con sus `@keyframes`.
+- Los estilos de los indicadores viven en `css/activities-daily.css`:
+  - Columna Tarea (`flag`): `A` usa fondo `#8a000050` y texto `#ffee00`; `W` usa fondo `#ffee0050` y texto `#115a96`; `I` usa fondo `#80808050` y texto `#115a96`; `S` usa fondo `#006d0050` y texto `#fff`. Todos llevan `border-radius: 4px`.
+  - Columna Contador (`ani`): `A` en cuenta atrás alterna `#ffee00` y `#ffee002f` con texto `#9b0000`; `A` en progreso usa fondo `#8a0000` → `#ff0000` con texto `#fffb00`; `I` usa base `#00578a` con texto `#00415f` y, en progreso, alterna el fondo con `#00aeff`; `S` en progreso usa negrita y un texto verde `#009400` ↔ `#333` intermitente.
+  - Todas las animaciones usan `1.8s ease-in-out infinite` y se desactivan con `prefers-reduced-motion: reduce`.
+  - La columna Contador conserva el `padding: 6px 4px` definido por el usuario.
 - El calendario presenta los siete días desde el día actual en UTC-2, con el día actual destacado, los dos primeros paneles abiertos y conversión de horarios a la zona local del visitante.
 - El párrafo `survivalMessage` de la página de Actividades Diarias declara `data-i18n-text="survivalMessage"` y su texto se traduce en los 9 idiomas mediante la clave i18n `survivalMessage`.
 - El párrafo `allianceMessage` de la página de Actividades Diarias declara `data-i18n-text="allianceMessage"`. Su redacción española manual es la fuente y se traduce en los 9 idiomas. Esta clave es propia de la subpágina y no modifica el mensaje homónimo de la portada.
 - El subtítulo propio `ad-subtitle` se eliminó: el encabezado de la sección es el que identifica el cronograma.
 
-### Redacciones manuales de `DYBOTT` y `DYSOLDIER`
+### Redacciones manuales de `DYBOTT`, `DYBOTWAR` y `DYSOLDIER`
 
 - Las redacciones manuales del español en `texts.es.adActivities` son la fuente de verdad y prevalecen sobre cualquier traducción previa:
   - `DYBOTT` → objetivo «Guarda Botellas de Energía/Stamina para la Próxima Fase del Cuervo», recurso «Botella de Energía/Stamina».
+  - `DYBOTWAR` → objetivo «Guarda Botellas de Stamina para la Fase de Guerra», recurso «Botella de Stamina».
   - `DYSOLDIER` → objetivo «Entrena Soldados T6 o T7; promover el Día de Preparación para la Guerra», recurso «Soldado T7».
-- Estos dos textos se propagan a los otros ocho idiomas con el español como fuente, sin sobrescribir el texto español.
+- Estos tres textos se propagan a los otros ocho idiomas con el español como fuente, sin sobrescribir el texto español.
 
 ## Subpágina Reino
 
@@ -517,10 +578,10 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 - La subpágina `pages/estrategia.html` es la **Biblioteca Estratégica**: su título manual vigente es «Biblioteca Estratégica» y su inicial escarlata es la `B`. La clave i18n `pageStrategyTitle` refleja ese texto en los nueve idiomas y `pageStrategyLead` conserva la introducción táctica vigente.
 - El contenido vive en `<section class="block-content-info">` con tres bloques:
-  - `.searchEngine-elements`: buscador (izquierda) y árbol de temas (derecha), en una rejilla `row g-4` con dos columnas `col-6 col-lg-6 searchEngine-panel`.
-  - `.searchEngine-topics`: enlaces textuales minimalistas de acceso rápido a cada tema; no usan la apariencia de botones Bootstrap.
-  - `.searchEngine-contents`: resultado de la búsqueda o contenido del tema seleccionado.
-- Los separadores entre bloques son `.line-divisor-scarlet`, igual que en el resto del sitio.
+  - `.search-engine-elements`: buscador (izquierda) y árbol de temas (derecha), en una rejilla `row g-4` con dos columnas `col-6 col-lg-6 search-engine-panel`.
+  - `.search-engine-topics`: enlaces textuales minimalistas de acceso rápido a cada tema; no usan la apariencia de botones Bootstrap.
+  - `.search-engine-contents`: resultado de la búsqueda o contenido del tema seleccionado.
+- Los separadores entre bloques son `.line-divider-scarlet`, igual que en el resto del sitio.
 - La página carga `../css/style.css` y después `../css/estrategia.css`; los estilos específicos de la biblioteca no se duplican en la hoja compartida. Los scripts se cargan en este orden: `../js/i18n.js`, `../js/i18n/estrategia/i18n.js`, `../js/app.js` y `../js/strategy-library.js`. Bootstrap se sigue cargando por CDN.
 - La subpágina admite el parámetro `?group=<id>` para abrir un grupo concreto desde la portada: tras renderizar el árbol, `expandGroupFromUrl()` despliega solo ese grupo. No selecciona ningún tema ni lanza una búsqueda, y un identificador desconocido se ignora. El parámetro convive con `?lang=`.
 
@@ -576,7 +637,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 #### Enlaces y medios embebidos en los temas
 
 - El renderizado detecta las URL `http`/`https` dentro de los párrafos y de los elementos de lista de cada sección.
-- Las URL válidas se convierten en enlaces `<a class="link-info searchEngine-link">` con `target="_blank"` y `rel="noopener noreferrer"`; el resto del texto se mantiene como texto plano. El enlace se construye con nodos DOM, nunca con `innerHTML`.
+- Las URL válidas se convierten en enlaces `<a class="link-info search-engine-link">` con `target="_blank"` y `rel="noopener noreferrer"`; el resto del texto se mantiene como texto plano. El enlace se construye con nodos DOM, nunca con `innerHTML`.
 - Se descartan las URL con protocolo distinto de `http`/`https` y los caracteres de puntuación que quedan pegados al final del enlace.
 
 ##### Etiquetas `<a>` dentro del texto
@@ -584,7 +645,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - El texto de los párrafos y de los elementos de lista admite etiquetas `<a>` escritas de dos formas equivalentes:
   - Forma estándar: `<a target='_blank' href='https://ejemplo.com'>Texto</a>`.
   - Forma simplificada: `<a https://ejemplo.com>Texto</a>`.
-- Ambas formas se reconstruyen como enlaces funcionales con `href` validado, `target="_blank"`, `rel="noopener noreferrer"` y las clases `link-info searchEngine-link`. El rótulo visible es el texto de la etiqueta, sin mostrar el marcado.
+- Ambas formas se reconstruyen como enlaces funcionales con `href` validado, `target="_blank"`, `rel="noopener noreferrer"` y las clases `link-info search-engine-link`. El rótulo visible es el texto de la etiqueta, sin mostrar el marcado.
 - La forma estándar admite comillas simples, dobles o sin comillas, y cualquier orden de atributos.
 - Solo se admite la etiqueta `<a>`: cualquier otra etiqueta permanece como texto visible. El rótulo del enlace se interpreta como texto plano, sin HTML anidado.
 - El `href` se valida con la misma regla que las URL sueltas, de modo que se descartan `javascript:`, `data:` y otros protocolos. Una etiqueta sin destino válido muestra su rótulo como texto plano, sin enlace.
@@ -592,8 +653,8 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 - Un enlace a YouTube se detecta en los formatos `youtube.com/watch?v=...`, `youtu.be/...`, `/embed/...`, `/shorts/...` y `/live/...`. Solo se acepta un ID de video válido y el reproductor se incrusta con `https://www.youtube-nocookie.com/embed/<ID>`, sin reproducción automática y con carga diferida.
 - Un enlace a imagen se detecta por extensión (`.png`, `.jpg`, `.jpeg`, `.webp`, `.gif`, `.svg`). Las remotas solo se admiten por HTTPS y las locales siguen la ruta `media/...`; se rechazan las rutas con `..`.
-- Cuando un párrafo o elemento de lista contiene un medio, ese bloque se reparte en dos columnas: `.searchEngine-media-row` coloca el medio a la izquierda (`col-12 col-md-5`) y el texto informativo a la derecha (`col-12 col-md-7`). A `768px` o menos las columnas se apilan.
-- Un elemento de lista con medio conserva la etiqueta `li` y recibe la clase `searchEngine-item-media`, que elimina la viñeta y compensa el sangrado de la lista para que la rejilla quede alineada.
+- Cuando un párrafo o elemento de lista contiene un medio, ese bloque se reparte en dos columnas: `.search-engine-media-row` coloca el medio a la izquierda (`col-12 col-md-5`) y el texto informativo a la derecha (`col-12 col-md-7`). A `768px` o menos las columnas se apilan.
+- Un elemento de lista con medio conserva la etiqueta `li` y recibe la clase `search-engine-item-media`, que elimina la viñeta y compensa el sangrado de la lista para que la rejilla quede alineada.
 - El medio incrustado conserva el enlace original dentro del texto de la derecha, de modo que sigue siendo accesible sin depender del reproductor.
 - El campo `image` de una sección mantiene su comportamiento previo: imagen a la izquierda y texto a la derecha.
 

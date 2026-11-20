@@ -82,25 +82,25 @@ test("los codigos de actividades coinciden con ACTIVITY_CODE", () => {
 test("los textos españoles manuales se conservan como fuente de traduccion", () => {
   const activities = loadI18n("actividades-diarias").es.adActivities;
   const expected = {
-    CON1SP: { objetive: "Usa Aceleración de Construcción", resource: "Activa Ministerio Construcción" },
-    TCH1SP: { objetive: "Usa Aceleración de Investigación", resource: "Activa Ministerio Investigación" },
-    TCHMGH: { objetive: "Aumenta el Poder de Tecnología", resource: "Buscar Investigaciones con Pergamino de Estudio" },
-    SHRDSR: { objetive: "Consume Fragmento de Héroe SR", resource: "Tienda Santuario" },
-    SHRDSS: { objetive: "Consume Fragmento de Héroe SSR", resource: "Tienda Santuario" },
-    SHRDUR: { objetive: "Consume Fragmento de Héroe UR", resource: "Tienda Santuario" },
-    SKILLB: { objetive: "Usa Insignia de Habilidad", resource: "Aumenta Habilidad Heroe UR" },
-    SOLD1TRN: { objetive: "Usa Aceleración de Entrenamiento", resource: "Activa Ministro de Guerra" },
-    SOLDT10: { objetive: "Entrena Soldado, Prioridad Promoverlos", resource: "Soldados T6 > T7 > T8" },
-    ELIXIR: { objetive: "Puntos por Captura de Edificios", resource: "Castillo del Elixir" },
-    CRVNUR: { objetive: "Envía Caravanas UR", resource: "4 Caravanas" },
-    OPENUR: { objetive: "Ejecuta Operaciones Encubiertas UR", resource: "7 Operaciones Encubiertas" },
-    ANTX: { objetive: "Consume Antitoxinas x660", resource: "Compra Suministros Antidoto" },
-    HERBS: { objetive: "Recolecta Hierbas x60, todo el día", resource: "Jardín de Hierbas Nv.10, 8H, 1.1M" },
-    GRAIN: { objetive: "Recolecta Trigo/Madera x100", resource: "Granja Nv.10, 6.5H, 2.2M" },
-    CONMGH: { objetive: "Aumenta el Poder de Un Edificio", resource: "Prefiere un tiempo de construcción más corto" },
-    SCRAMBLE: { objetive: "100K Puntos de Honor, Captura/Defiende una Granja en el lodo", resource: "Granjas de la Ciudad Real" },
-    KWAR: { objetive: "1.5M Puntos de Honor, Derrota/Pierde/Cura Soldados", resource: "Guerra de Reinos (KvK)" },
-    CUMULUS: { objetive: "Recolecta Cristal Purificado en Cúmulos, 30min", resource: "Evento Valle Cúmulos de Cristal" }
+    CON1SP: { objective: "Usa Aceleración de Construcción", resource: "Activa Ministerio Construcción" },
+    TCH1SP: { objective: "Usa Aceleración de Investigación", resource: "Activa Ministerio Investigación" },
+    TCHMGH: { objective: "Aumenta el Poder de Tecnología", resource: "Buscar Investigaciones con Pergamino de Estudio" },
+    SHRDSR: { objective: "Consume Fragmento de Héroe SR", resource: "Tienda Santuario" },
+    SHRDSS: { objective: "Consume Fragmento de Héroe SSR", resource: "Tienda Santuario" },
+    SHRDUR: { objective: "Consume Fragmento de Héroe UR", resource: "Tienda Santuario" },
+    SKILLB: { objective: "Usa Insignia de Habilidad", resource: "Aumenta Habilidad Heroe UR" },
+    SOLD1TRN: { objective: "Usa Aceleración de Entrenamiento", resource: "Activa Ministro de Guerra" },
+    SOLDT10: { objective: "Entrena Soldado, Prioridad Promoverlos", resource: "Soldados T6 > T7 > T8" },
+    ELIXIR: { objective: "Puntos por Captura de Edificios", resource: "Castillo del Elixir" },
+    CRVNUR: { objective: "Envía Caravanas UR", resource: "4 Caravanas" },
+    OPENUR: { objective: "Ejecuta Operaciones Encubiertas UR", resource: "7 Operaciones Encubiertas" },
+    ANTX: { objective: "Consume Antitoxinas x660", resource: "Compra Suministros Antidoto" },
+    HERBS: { objective: "Recolecta Hierbas x60, todo el día", resource: "Jardín de Hierbas Nv.10, 8H, 1.1M" },
+    GRAIN: { objective: "Recolecta Trigo/Madera x100", resource: "Granja Nv.10, 6.5H, 2.2M" },
+    CONMGH: { objective: "Aumenta el Poder de Un Edificio", resource: "Prefiere un tiempo de construcción más corto" },
+    SCRAMBLE: { objective: "100K Puntos de Honor, Captura/Defiende una Granja en el lodo", resource: "Granjas de la Ciudad Real" },
+    KWAR: { objective: "1.5M Puntos de Honor, Derrota/Pierde/Cura Soldados", resource: "Guerra de Reinos (KvK)" },
+    CUMULUS: { objective: "Recolecta Cristal Purificado en Cúmulos, 30min", resource: "Evento Valle Cúmulos de Cristal" }
   };
 
   for (const [code, values] of Object.entries(expected)) {
@@ -114,7 +114,7 @@ test("todas las traducciones de actividades cubren los 46 codigos", () => {
     const activities = i18n[lang].adActivities;
     assert.equal(Object.keys(activities).length, 46, lang);
     for (const code of Object.keys(activities)) {
-      assert.equal(typeof activities[code].objetive, "string", `${lang}/${code}`);
+      assert.equal(typeof activities[code].objective, "string", `${lang}/${code}`);
       assert.equal(typeof activities[code].resource, "string", `${lang}/${code}`);
     }
   }

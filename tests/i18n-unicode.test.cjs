@@ -138,8 +138,8 @@ test("las traducciones respetan los valores y codigos del juego", () => {
     const activities = i18n[language].adActivities;
     for (const code of Object.keys(canonical)) {
       if (!activities[code]) continue;
-      const sourceText = String(canonical[code].objetive + " " + canonical[code].resource);
-      const translatedText = String(activities[code].objetive + " " + activities[code].resource);
+      const sourceText = String(canonical[code].objective + " " + canonical[code].resource);
+      const translatedText = String(activities[code].objective + " " + activities[code].resource);
       for (const token of protectedTokens) {
         if (!sourceText.includes(token)) continue;
         assert.ok(translatedText.includes(token), language + "/" + code + " debe conservar " + token);

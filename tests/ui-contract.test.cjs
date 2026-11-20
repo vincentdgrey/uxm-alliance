@@ -33,8 +33,8 @@ test("los botones usan el radio de 4px y el menu lateral el ajuste manual de 1px
 test("la portada incluye la sección informativa con el subtítulo centrado", () => {
   const html = read("index.html");
   assert.match(html, /<section class="block-content-info center-content">/);
-  assert.match(html, /<h2 class="sibtitle-info"[^>]*>/);
-  assert.match(html, /<p class="dinamic-welcome"[^>]*><\/p>/);
+  assert.match(html, /<h2 class="subtitle-info"[^>]*>/);
+  assert.match(html, /<p class="dynamic-welcome"[^>]*><\/p>/);
   assert.match(html, /<div class="message-welcome">\s*<p id="welcomeMessage">/s);
   assert.match(html, /<div class="block-buttons"[^>]*>/);
 });
@@ -109,8 +109,8 @@ test("la subpágina de tutoriales usa banners y anclas únicas", () => {
   assert.match(html, /id="tips"/);
   assert.match(html, /id="events"/);
   assert.equal((html.match(/id="tips"/g) || []).length, 1);
-  assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*background-color:\s*#ccc/s);
-  assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*color:\s*#3d3d3d/s);
+  assert.match(css, /\.banner-divider,\s*\.banner-subpage\s*\{[^}]*background-color:\s*#ccc/s);
+  assert.match(css, /\.banner-divider,\s*\.banner-subpage\s*\{[^}]*color:\s*#3d3d3d/s);
 });
 
 test("las tarjetas de video tutorial se identifican de forma única", () => {
@@ -139,7 +139,7 @@ test("cada tarjeta declara su video, miniatura y controles", () => {
   assert.equal((html.match(/class="card-video-sound"/g) || []).length, 10);
   assert.equal((html.match(/loading="lazy"/g) || []).length, 10);
   assert.equal((html.match(/i\.ytimg\.com\/vi\//g) || []).length, 10);
-  assert.match(html, /class="text-video-learnig" id="desc-video-p1"/);
+  assert.match(html, /class="text-video-learning" id="desc-video-p1"/);
 });
 
 test("las tarjetas se muestran de a dos por ancho y se apilan en movil", () => {
@@ -150,7 +150,7 @@ test("las tarjetas se muestran de a dos por ancho y se apilan en movil", () => {
   assert.match(css, /\.card-video\s*\{[^}]*flex-direction:\s*column/s);
   assert.match(css, /\.card-video\s*\{[^}]*border-radius:\s*var\(--button-radius\)/s);
   assert.match(css, /\.card-video-media\s*\{[^}]*aspect-ratio:\s*16 \/ 9/s);
-  assert.match(css, /\.text-video-learnig\s*\{[^}]*padding:\s*12px 14px 14px/s);
+  assert.match(css, /\.text-video-learning\s*\{[^}]*padding:\s*12px 14px 14px/s);
   assert.match(css, /@media\s*\(max-width:\s*640px\)\s*\{[^}]*\.tutorials-content\s*\{\s*grid-template-columns:\s*1fr/s);
 });
 
@@ -223,9 +223,9 @@ test("los botones de la portada conservan sus etiquetas originales", () => {
 
 test("el banner de subpágina comparte estilo con el divisor y ocupa todo el ancho", () => {
   const css = read("css/style.css");
-  assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*padding:\s*12px 16px/s);
-  assert.match(css, /\.banner-divisor,\s*\.banner-subpage\s*\{[^}]*text-align:\s*center/s);
-  assert.match(css, /\.banner-divisor \.info-initial,\s*\.banner-subpage \.info-initial\s*\{[^}]*color:\s*var\(--scarlet\)/s);
+  assert.match(css, /\.banner-divider,\s*\.banner-subpage\s*\{[^}]*padding:\s*12px 16px/s);
+  assert.match(css, /\.banner-divider,\s*\.banner-subpage\s*\{[^}]*text-align:\s*center/s);
+  assert.match(css, /\.banner-divider \.info-initial,\s*\.banner-subpage \.info-initial\s*\{[^}]*color:\s*var\(--scarlet\)/s);
   assert.match(css, /\.subpage-banner\s*\{[^}]*width:\s*100%/s);
   assert.doesNotMatch(css, /\.banner-subpage\s*\{[^}]*margin-left:\s*-/s);
   assert.doesNotMatch(css, /\.banner-subpage\s*\{[^}]*margin-right:\s*-/s);
@@ -234,10 +234,10 @@ test("el banner de subpágina comparte estilo con el divisor y ocupa todo el anc
 test("el banner de subpágina usa un contenedor dedicado fuera del bloque informativo", () => {
   const html = read("pages/actividades-diarias.html");
   const css = read("css/style.css");
-  assert.match(html, /<section class="subpage-banner">\s*<h3 class="sibtitle-info banner-subpage"/);
+  assert.match(html, /<section class="subpage-banner">\s*<h3 class="subtitle-info banner-subpage"/);
   assert.match(css, /\.subpage-banner \.banner-subpage\s*\{[^}]*margin:\s*0/s);
   assert.match(css, /\.subpage-banner \+ \.block-content-info\s*\{[^}]*margin-top:\s*0/s);
-  assert.doesNotMatch(html, /<section class="block-content-info">\s*<h2 class="sibtitle-info banner-subpage"/);
+  assert.doesNotMatch(html, /<section class="block-content-info">\s*<h2 class="subtitle-info banner-subpage"/);
 });
 
 test("la inicial escarlata del título de subpágina forma parte del flujo del texto y permite ajustar lineas", () => {
@@ -316,27 +316,27 @@ test("los subtítulos informativos usan H2, Cinzel, inicial escarlata y sombra g
   const html = read("index.html");
   const css = read("css/style.css");
   const js = read("js/app.js");
-  assert.doesNotMatch(html, /<h3 class="sibtitle-info/);
-  assert.ok((html.match(/<h2 class="sibtitle-info/g) || []).length >= 4);
-  assert.match(css, /\.sibtitle-info\s*\{[^}]*font-family:\s*"Cinzel", Georgia, "Times New Roman", serif/s);
-  assert.match(css, /\.sibtitle-info\s*\{[^}]*text-shadow:[^}]*rgba\(33,\s*33,\s*33/s);
-  assert.match(css, /\.sibtitle-info \.info-initial\s*\{[^}]*color:\s*var\(--scarlet\)/s);
-  assert.match(js, /querySelectorAll\("\.sibtitle-info"\)/);
+  assert.doesNotMatch(html, /<h3 class="subtitle-info/);
+  assert.ok((html.match(/<h2 class="subtitle-info/g) || []).length >= 4);
+  assert.match(css, /\.subtitle-info\s*\{[^}]*font-family:\s*"Cinzel", Georgia, "Times New Roman", serif/s);
+  assert.match(css, /\.subtitle-info\s*\{[^}]*text-shadow:[^}]*rgba\(33,\s*33,\s*33/s);
+  assert.match(css, /\.subtitle-info \.info-initial\s*\{[^}]*color:\s*var\(--scarlet\)/s);
+  assert.match(js, /querySelectorAll\("\.subtitle-info"\)/);
 });
 
 test("el bloque destacado comparte layout y usa fondo azul grisáceo", () => {
   const html = read("index.html");
   const css = read("css/style.css");
-  assert.match(html, /<section class="block-content-destacated center-content extra-top-space">/);
-  assert.match(css, /\.block-content-destacated\s*\{[^}]*background-color:\s*#d3d3d3/s);
-  assert.match(css, /\.block-content-destacated\s*\{[^}]*color:\s*#ccc/s);
+  assert.match(html, /<section class="block-content-featured center-content extra-top-space">/);
+  assert.match(css, /\.block-content-featured\s*\{[^}]*background-color:\s*#d3d3d3/s);
+  assert.match(css, /\.block-content-featured\s*\{[^}]*color:\s*#ccc/s);
 });
 
 test("los bloques informativos se centran solo con center-content y usan padding responsive", () => {
   const css = read("css/style.css");
-  assert.match(css, /\.block-content-info,\s*\.block-content-destacated\s*\{[^}]*padding:\s*0 10%/s);
-  assert.match(css, /\.block-content-info,\s*\.block-content-destacated\s*\{[^}]*text-align:\s*left/s);
-  assert.match(css, /\.block-content-info\.center-content,\s*\.block-content-destacated\.center-content\s*\{[^}]*text-align:\s*center/s);
+  assert.match(css, /\.block-content-info,\s*\.block-content-featured\s*\{[^}]*padding:\s*0 10%/s);
+  assert.match(css, /\.block-content-info,\s*\.block-content-featured\s*\{[^}]*text-align:\s*left/s);
+  assert.match(css, /\.block-content-info\.center-content,\s*\.block-content-featured\.center-content\s*\{[^}]*text-align:\s*center/s);
 });
 
 test("actividades diarias incluye el calendario de batalla de supervivencia", () => {
@@ -563,14 +563,13 @@ test("el duelo de alianzas vincula sus tareas con los horarios de battle surviva
 
   assert.match(js, /a && a\.codebs/);
   assert.match(js, /slotsByCodebs/);
-  assert.match(js, /function counterState\(codebs, noday, nowSec\)/);
-  assert.match(js, /function linkedDateLabel\(startDayMs, offset, noday, codebs\)/);
+  assert.match(js, /function linkedCounterState\(codebs, noday, nowSec\)/);
   assert.match(js, /var allDaySlots = slotsByDay\[noday\] \|\| \[\]/);
   assert.match(js, /var endSec = s \+ 1 < allDaySlots\.length \? allDaySlots\[s \+ 1\]\.sec : 86400/);
   assert.match(js, /allDaySlots\[s\]\.codebs === codebs && nowSec >= allDaySlots\[s\]\.sec && nowSec < endSec/);
   assert.match(js, /"T-"/);
   assert.match(js, /"\+ "/);
-  assert.match(js, /"End"/);
+  assert.match(js, /var FINISHED_LABEL = "--:--:--"/);
   assert.match(js, /pad\(loc\.getUTCMonth\(\) \+ 1\) \+ "\/" \+ pad\(loc\.getUTCDate\(\)\)/);
   assert.match(js, /var nowSec = origin\.getUTCHours\(\) \* 3600 \+ origin\.getUTCMinutes\(\) \* 60 \+ origin\.getUTCSeconds\(\)/);
   assert.doesNotMatch(js, /ad-past/);
@@ -582,15 +581,15 @@ test("el contador del duelo de alianzas usa server_time con server_duration", ()
   /* La hora propia del servidor tiene prioridad sobre el vinculo codebs. */
   assert.match(js, /function parseClock\(value\)/);
   assert.match(js, /function serverCounterState\(serverTime, serverDuration, nowSec\)/);
-  assert.match(js, /if \(nowSec < startSec\) return "T-" \+ fmtCounter\(startSec - nowSec\)/);
-  assert.match(js, /if \(nowSec < endSec\) return "\+ " \+ fmtCounter\(nowSec - startSec\)/);
-  assert.match(js, /return "End";/);
+  assert.match(js, /if \(nowSec < startSec\)/);
+  assert.match(js, /if \(nowSec < endSec\)/);
+  assert.match(js, /return \{ state: STATE_FINISHED, text: FINISHED_LABEL \};/);
   assert.match(js, /if \(offset === 0 && r\.server_time\)/);
-  assert.match(js, /serverCounterState\(r\.server_time, r\.server_duration, nowSec\) \|\| "—"/);
+  assert.match(js, /serverCounterState\(r\.server_time, r\.server_duration, nowSec\)/);
 
   /* El tick mantiene el mismo estado para las filas con hora propia. */
-  assert.match(js, /text = serverCounterState\(counter\.serverTime, counter\.serverDuration, nowSec\) \|\| "—"/);
-  assert.match(js, /counter\.td\.textContent = text/);
+  assert.match(js, /serverCounterState\(counter\.serverTime, counter\.serverDuration, nowSec\)/);
+  assert.match(js, /counter\.td\.textContent = result\.text/);
 });
 
 test("los datos de los cronogramas viven en el script unificado y no dependen de red", () => {
@@ -641,7 +640,7 @@ test("las variables de datos son la fuente de verdad y estan completas", () => {
   }
 
   /* Los textos de actividad no se duplican en ACTIVITY_CODE. */
-  assert.ok(activityCode.every((a) => !("objetive" in a)));
+  assert.ok(activityCode.every((a) => !("objective" in a)));
   assert.ok(activityCode.every((a) => !("resource" in a)));
 });
 
@@ -763,7 +762,7 @@ test("la tabla del duelo de alianzas usa cinco columnas con la imagen de la tare
   /* Orden de las columnas: hora, icono, tarea, recurso, evento. */
   assert.match(js, /appendCell\(tr, timeTxt, "ad-time"\)/);
   assert.match(js, /appendIconCell\(tr, "ad-task-icon", r\.code_task\)/);
-  assert.match(js, /appendCell\(tr, a \? \(activityText\(r\.code_task, "objetive"\) \|\| r\.code_task\) : r\.code_task, "ad-obj"\)/);
+  assert.match(js, /appendCell\(tr, a \? \(activityText\(r\.code_task, "objective"\) \|\| r\.code_task\) : r\.code_task, "ad-objective"\)/);
   assert.match(js, /appendCell\(tr, a \? activityText\(r\.code_task, "resource"\) : "", "ad-resource"\)/);
   assert.match(js, /appendCell\(tr, eventLabel\(r\), "ad-event"\)/);
 
@@ -912,7 +911,7 @@ test("el autor de la arenga se muestra en cursiva, a la derecha y en gris", () =
 
 test("la arenga conserva los saltos de línea de la traducción", () => {
   const css = read("css/style.css");
-  assert.match(css, /\.message-arenga p\s*\{[^}]*white-space:\s*pre-line/s);
+  assert.match(css, /\.message-war-cry p\s*\{[^}]*white-space:\s*pre-line/s);
 });
 
 test("se eliminó join y el mouse apunta a la sección informativa", () => {
@@ -928,9 +927,9 @@ test("se eliminó join y el mouse apunta a la sección informativa", () => {
 
 test("el divisor escarlata ocupa todo el ancho disponible", () => {
   const css = read("css/style.css");
-  assert.match(css, /\.line-divisor-scarlet,\s*\.line-divisor-grey\s*\{[^}]*width:\s*100%/s);
-  assert.match(css, /\.line-divisor-scarlet\s*\{[^}]*border-top:\s*3px solid var\(--scarlet\)/s);
-  assert.match(css, /\.line-divisor-scarlet\s*\{[^}]*margin:[^;]*auto/s);
+  assert.match(css, /\.line-divider-scarlet,\s*\.line-divider-grey\s*\{[^}]*width:\s*100%/s);
+  assert.match(css, /\.line-divider-scarlet\s*\{[^}]*border-top:\s*3px solid var\(--scarlet\)/s);
+  assert.match(css, /\.line-divider-scarlet\s*\{[^}]*margin:[^;]*auto/s);
 });
 
 test("el menú lateral incluye un selector de idioma independiente al final", () => {
@@ -1156,13 +1155,13 @@ test("las secciones de portada traducidas están conectadas en todos los idiomas
   const js = read("js/app.js");
   const i18n = readI18n(pageI18n.home);
 
-  for (const id of ["arengaTitle", "arengaMessage", "tutoTitle", "allianceTitle", "allianceMessage"]) {
+  for (const id of ["warCryTitle", "warCryMessage", "tutoTitle", "allianceTitle", "allianceMessage"]) {
     assert.match(html, new RegExp(`id="${id}"`));
     assert.match(js, new RegExp(`setText\\("${id}", T\\.${id}\\)`));
     assert.ok((i18n.match(new RegExp(`\\b${id}:"`, "g")) || []).length === 9);
   }
 
-  assert.match(i18n, /arengaMessage:"Bajo las llamas más aplastantes,/);
+  assert.match(i18n, /warCryMessage:"Bajo las llamas más aplastantes,/);
   assert.match(i18n, /allianceMessage:"Conoce nuestra Alianza, buscamos ayudar a todos del reino 277/);
   assert.equal((i18n.match(/allianceMessage:""/g) || []).length, 0);
 });
@@ -1372,7 +1371,7 @@ test("la página de contacto incrusta el formulario y ofrece el enlace alternati
   const html = read("pages/contacto.html");
   const i18n = readI18n(pageI18n.contact);
 
-  assert.match(html, /<h3 class="sibtitle-info" id="contactForm" data-i18n="contactFormTitle">/);
+  assert.match(html, /<h3 class="subtitle-info" id="contactForm" data-i18n="contactFormTitle">/);
   assert.match(html, /<div class="form-content">[\s\S]*?<iframe class="form-frame"[\s\S]*?<\/div>/);
 
   /* El formulario incrustado usa la vista embebible de Google Forms. */
@@ -1420,7 +1419,7 @@ test("los textos de tutoriales y estrategia de la portada se traducen en los 9 i
   /* Los parrafos usan data-i18n-text y el subtitulo data-i18n. */
   assert.match(html, /<p id="tutorialsMessage" data-i18n-text="tutorialsMessage">/);
   assert.match(html, /<p id="strategyMessage" data-i18n-text="strategyMessage">/);
-  assert.match(html, /<h2 class="sibtitle-info" id="strategyTitle" data-i18n="strategyTitle">/);
+  assert.match(html, /<h2 class="subtitle-info" id="strategyTitle" data-i18n="strategyTitle">/);
 
   for (const key of ["tutorialsMessage", "strategyTitle", "strategyMessage"]) {
     const found = i18n.match(new RegExp(`\\b${key}:"[^"]+"`, "g")) || [];
@@ -1438,7 +1437,7 @@ test("los textos de tutoriales y estrategia de la portada se traducen en los 9 i
 test("la portada reserva el bloque de marcadores de la biblioteca estrategica", () => {
   const html = read("index.html");
 
-  assert.match(html, /<div class="block-booksmarks" id="strategyBookmarks"><\/div>/);
+  assert.match(html, /<div class="block-bookmarks" id="strategyBookmarks"><\/div>/);
   /* La hoja de la biblioteca aporta el estilo minimalista de los grupos. */
   assert.match(html, /<link rel="stylesheet" href="css\/estrategia\.css">/);
 });
@@ -1449,8 +1448,8 @@ test("la portada ofrece un boton general y grupos automaticos de la biblioteca",
   assert.match(js, /function buildStrategyBookmarks\(container\)/);
   assert.match(js, /btn-outline btn-info-rules/);
   assert.match(js, /withLang\(pageUrl\("estrategia\.html"\), LANG\)/);
-  assert.match(js, /searchEngine-topics-list/);
-  assert.match(js, /searchEngine-topic/);
+  assert.match(js, /search-engine-topics-list/);
+  assert.match(js, /search-engine-topic/);
   /* El grupo viaja en la URL hacia la subpagina. */
   assert.match(js, /\?group=" \+ encodeURIComponent\(group\.id\)/);
 
@@ -1472,9 +1471,9 @@ test("los grupos de la portada se cargan desde el indice de la biblioteca", () =
 test("los estilos de los marcadores centran el boton y la lista de grupos", () => {
   const css = read("css/style.css");
 
-  assert.match(css, /\.block-booksmarks\s*\{[^}]*display:\s*flex/s);
-  assert.match(css, /\.block-booksmarks\s*\{[^}]*align-items:\s*center/s);
-  assert.match(css, /\.block-booksmarks \.block-booksmarks-groups\s*\{[^}]*justify-content:\s*center/s);
+  assert.match(css, /\.block-bookmarks\s*\{[^}]*display:\s*flex/s);
+  assert.match(css, /\.block-bookmarks\s*\{[^}]*align-items:\s*center/s);
+  assert.match(css, /\.block-bookmarks \.block-bookmarks-groups\s*\{[^}]*justify-content:\s*center/s);
 });
 
 /* ---------- Traducciones de actividades, fases y eventos ---------- */
@@ -1493,7 +1492,7 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
     assert.ok(texts.adActivities, language + " debe declarar adActivities");
     assert.deepEqual(Object.keys(texts.adActivities), activityCode, language);
     for (const code of activityCode) {
-      assert.equal(typeof texts.adActivities[code].objetive, "string", language + "/" + code);
+      assert.equal(typeof texts.adActivities[code].objective, "string", language + "/" + code);
       assert.equal(typeof texts.adActivities[code].resource, "string", language + "/" + code);
     }
 
@@ -1758,7 +1757,7 @@ test("las traducciones japonesas no contienen textos corruptos", () => {
   assert.match(ja.rulesPositionR2, /^時折参加するプレイヤー/);
   assert.match(ja.rulesPositionR4, /^リーダーチーム：同盟を支援し、メンバーを励ます/);
   assert.match(ja.rulesPositionR5, /判断して追放します/);
-  assert.equal(ja.adActivities.RAVESS.objetive, "レイベンのエッセンスを消費する");
+  assert.equal(ja.adActivities.RAVESS.objective, "レイベンのエッセンスを消費する");
 
   /* Los valores del juego no se alteran al corregir. */
   const tutorialValues = [ja.videoTutorialTip1, ja.videoTutorialPriority3, ja.videoTutorialEvent1, ja.videoTutorialEvent2, ja.videoTutorialEvent3, ja.videoTutorialEvent4].join("\n");
@@ -1854,18 +1853,18 @@ test("reino carga Three.js mediante import map y su modulo despues de app", () =
 
 test("la Ciudad Real tiene cuatro torretas con la Torre Norte al noreste", () => {
   const js = read("js/reino-castle.js");
-  const towers = js.match(/\{ id: "(oeste|norte|este|sur)", labelKey: "kingdomTower\w+", x: -?\d+, z: -?\d+ \}/g) || [];
+  const towers = js.match(/\{ id: "(west|north|east|south)", labelKey: "kingdomTower\w+", x: -?\d+, z: -?\d+ \}/g) || [];
 
   assert.equal(towers.length, 4, "debe haber cuatro torres");
-  assert.ok(js.match(/id: "norte"[^}]*x: 6, z: -6/), "la Torre Norte debe ocupar la esquina noreste");
-  assert.ok(js.match(/id: "oeste"[^}]*x: -6, z: -6/));
-  assert.ok(js.match(/id: "este"[^}]*x: 6, z: 6/));
-  assert.ok(js.match(/id: "sur"[^}]*x: -6, z: 6/));
+  assert.ok(js.match(/id: "north"[^}]*x: 6, z: -6/), "la Torre Norte debe ocupar la esquina noreste");
+  assert.ok(js.match(/id: "west"[^}]*x: -6, z: -6/));
+  assert.ok(js.match(/id: "east"[^}]*x: 6, z: 6/));
+  assert.ok(js.match(/id: "south"[^}]*x: -6, z: 6/));
 });
 
 test("los santuarios se configuran con variante, nivel y posicion", () => {
   const js = read("js/reino-castle.js");
-  const sanctuaries = js.match(/\{ id: "santuario-\w+", nameKey: "kingdomSanctuary\w+", variant: "(blue|white)", level: \d+, x: -?\d+, z: -?\d+ \}/g) || [];
+  const sanctuaries = js.match(/\{ id: "sanctuary-\w+", nameKey: "kingdomSanctuary\w+", variant: "(blue|white)", level: \d+, x: -?\d+, z: -?\d+ \}/g) || [];
 
   assert.ok(sanctuaries.length >= 2, "deben existir los santuarios de ejemplo");
   assert.match(js, /variant === "white" \? COLORS\.white : COLORS\.blue/);

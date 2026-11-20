@@ -112,6 +112,42 @@ Colores neutros complementarios (no requieren token):
 ```
 ---
 
+## Nomenclatura de Identificadores (Inglés)
+
+> Todos los identificadores técnicos del sitio se escriben en **inglés**. Esta regla es obligatoria y está verificada por `tests/naming-convention.test.cjs`.
+
+**JavaScript**
+
+| Elemento | Formato | Ejemplo |
+|---|---|---|
+| Variables y funciones | `camelCase` | `dynamicWelcome`, `buildStrategyBookmarks` |
+| Constantes globales | `UPPER_SNAKE_CASE` | `LIBRARY_BASE`, `DEFAULT_LANG` |
+| Constructores y clases | `PascalCase` | `Card` |
+| Propiedades de objetos | `camelCase` | `objective`, `server_time` es excepción heredada estable |
+
+**CSS**
+
+| Elemento | Formato | Ejemplo |
+|---|---|---|
+| Clases | `kebab-case` minúsculas | `block-content-featured`, `search-engine-topic` |
+| Custom properties | `kebab-case` minúsculas | `--button-radius`, `--nav-uxm-shadow` |
+
+**HTML y i18n**
+
+- Los `id` y las claves de `window.I18N` usan `camelCase`: `strategyBookmarks`, `searchEngineInput`, `searchEngineTitle`.
+- Las clases CSS usan siempre `kebab-case`.
+
+**Excepciones permitidas**
+
+- Textos visibles, traducciones y comentarios pueden estar en español.
+- Rutas publicadas, nombres de archivo y URLs no se renombran por idioma.
+- Códigos del juego (`BUILD`, `HEROE`, `KVK`, `P00`…), claves de almacenamiento y abreviaturas heredadas estables (`bs-`, `ad-`) se conservan.
+- `db/*.json` obsoletos no se modifican.
+
+**Al añadir un identificador nuevo**, debe cumplir esta regla desde el primer commit. No se admiten identificadores en español ni clases fuera de `kebab-case`.
+
+---
+
 ## Flujo de Trabajo
 
 1. **Plan**: Usar modo Plan para decisiones de arquitectura antes de construir.
