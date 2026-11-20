@@ -119,6 +119,105 @@
   line-height: 1.6;
 }
 
+/* ---------- Plano 3D de la Ciudad Real ---------- */
+.kingdom-render {
+  position: relative;
+  width: 100%;
+  min-height: 420px;
+  margin-top: 20px;
+  overflow: hidden;
+  background-color: #f4f6f9;
+  border: 1px solid var(--line);
+  border-radius: var(--button-radius);
+  box-shadow: 0 2px 8px rgba(33, 33, 33, .08);
+}
+.kingdom-render canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+.kingdom-render-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.kingdom-render-fallback {
+  margin: 0;
+  padding: 24px 18px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+}
+.kingdom-render-fallback[hidden] {
+  display: none;
+}
+
+.kingdom-render-label {
+  padding: 3px 8px;
+  background-color: rgba(255, 255, 255, .88);
+  border: 1px solid var(--line);
+  border-radius: var(--button-radius);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(33, 33, 33, .12);
+}
+.kingdom-render-label-city {
+  border-color: var(--primary-btn);
+  color: var(--primary-btn);
+}
+.kingdom-render-label-tower {
+  border-color: var(--scarlet);
+  color: #8a3a12;
+}
+.kingdom-render-label-sanctuary {
+  border-width: 2px;
+}
+.kingdom-render-label-blue {
+  border-color: #2f9bff;
+  color: #1b6fc4;
+}
+.kingdom-render-label-white {
+  border-color: #9fb0c2;
+  color: #4a5a6b;
+}
+.kingdom-render-cardinal {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.kingdom-render-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+.kingdom-render-description {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: left;
+  flex: 1 1 260px;
+}
+.kingdom-render-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.kingdom-render-button {
+  cursor: pointer;
+  font-size: 13px;
+}
+
 /* ---------- Estado vacio ---------- */
 .kingdom-empty {
   margin: 20px 0 0;
@@ -137,5 +236,12 @@
   .kingdom-info-grid,
   .kingdom-plans {
     grid-template-columns: 1fr;
+  }
+  .kingdom-render {
+    min-height: 320px;
+  }
+  .kingdom-render-bar {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
