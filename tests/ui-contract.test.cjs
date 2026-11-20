@@ -1871,6 +1871,54 @@ test("los santuarios se configuran con variante, nivel y posicion", () => {
   assert.match(js, /variant === "white" \? COLORS\.white : COLORS\.blue/);
 });
 
+test("las torretas son cilindricas y el castillo no tiene muros", () => {
+  const js = read("js/reino-castle.js");
+  const towerBlock = /function buildTower\(color\) \{([\s\S]*?)\n\}/.exec(js);
+
+  assert.ok(towerBlock, "debe existir buildTower");
+  assert.match(towerBlock[1], /CylinderGeometry/, "las torretas deben usar cilindros");
+  assert.doesNotMatch(towerBlock[1], /BoxGeometry\(1\.6/, "la base de la torreta no debe ser cubica");
+  assert.match(towerBlock[1], /CylinderGeometry\(0\.95, 1\.05, 0\.35/, "base ancha de la torreta");
+  assert.match(towerBlock[1], /CylinderGeometry\(0\.58, 0\.66, 1\.9/, "fuste estrecho de la torreta");
+  assert.match(towerBlock[1], /CylinderGeometry\(0\.82, 0\.7, 0\.28/, "corona de la torreta");
+
+  assert.doesNotMatch(js, /northWall|eastWall|westWall|southWall/, "no debe haber muros");
+  assert.match(js, /CASTLE_HALF \* 2, CASTLE_HALF \* 2, COLORS\.base/, "debe quedar la base gris");
+});
+
+test("el terreno usa lodo central y cesped con veinte celdas por lado", () => {
+  const js = read("js/reino-castle.js");
+
+  assert.match(js, /const GRASS_CELLS = 20;/);
+  assert.match(js, /const GRASS_HALF = MUD_HALF \+ GRASS_CELLS \* CELL_SIZE;/);
+  assert.match(js, /mud: 0x8a6a48/, "el lodo debe ser cafe");
+  assert.match(js, /grass: 0x6f9153/, "el cesped debe ser verde");
+  assert.match(js, /const mud = surface\(MUD_HALF \* 2, MUD_HALF \* 2, COLORS\.mud\)/);
+  assert.match(js, /const grass = surface\(GRASS_HALF \* 2, GRASS_HALF \* 2, COLORS\.grass\)/);
+});
+
+test("las vistas mantienen el norte hacia arriba", () => {
+  const js = read("js/reino-castle.js");
+
+  assert.match(js, /const upTop = new THREE\.Vector3\(0, 0, -1\)/, "la vista superior orienta el norte arriba");
+  assert.match(js, /const topPosition = new THREE\.Vector3\(0, 74, 0\.001\)/, "la vista superior es cenital");
+  assert.match(js, /const homePosition = new THREE\.Vector3\(0, 26, 34\)/, "la vista inicial mira desde el sur");
+  assert.match(js, /setView\(topPosition, new THREE\.Vector3\(0, 0, 0\), upTop\)/);
+  assert.match(js, /setView\(homePosition, homeTarget, upHome\)/);
+  assert.match(js, /camera\.up\.copy\(up\)/, "el vector up debe fijarse en cada vista");
+});
+
+test("la Ciudad Real tiene mas detalle que un bloque simple", () => {
+  const js = read("js/reino-castle.js");
+  const castleBlock = /function buildCastle\(\) \{([\s\S]*?)\n\}\n/.exec(js);
+
+  assert.ok(castleBlock, "debe existir buildCastle");
+  assert.match(castleBlock[1], /buildInnerTurret/, "debe incluir torrecillas interiores");
+  assert.match(castleBlock[1], /ConeGeometry/, "debe incluir tejados conicos");
+  assert.match(castleBlock[1], /stepWidths/, "debe incluir los escalones de entrada");
+  assert.ok((castleBlock[1].match(/edges\(new THREE\.BoxGeometry/g) || []).length >= 5, "debe tener varios volumenes");
+});
+
 test("los textos del plano 3D estan traducidos en los nueve idiomas", () => {
   const i18n = loadI18n("js/i18n.js", pageI18n.kingdom);
   const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
