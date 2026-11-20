@@ -399,7 +399,7 @@
         /* La proxima actividad (tercera de la tabla) siempre se resalta en su
            contador, con independencia del evento que tenga asignado. */
         var counterSpecial = rel === 1 || (rel > 0 && slot.hlSpecial);
-        var td = appendCell(tr, rel === -1 ? "—" : "", "bs-counter" + (counterSpecial ? " bs-hl-special" : ""));
+        var td = appendCell(tr, rel === -1 ? "--:--:--" : "", "bs-counter" + (counterSpecial ? " bs-hl-special" : ""));
         if (rel === 0) counters.push({ tr: tr, td: td, startSec: uSec, elapsed: true, prefix: "+ " });
         else if (rel > 0) {
           counters.push({ tr: tr, td: td, targetSec: uSec, prefix: "T- ", alert: rel === 1 });
