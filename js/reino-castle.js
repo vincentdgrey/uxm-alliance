@@ -24,8 +24,11 @@ const SANCTUARIES = [
   { id: "santuario-blanco", nameKey: "kingdomSanctuaryWhite", variant: "white", level: 30, x: 13, z: -4 }
 ];
 
-const CASTLE_HALF = 7.5;      /* Lado del cuadrado del castillo */
-const GROUND_HALF = 18;       /* Lado del plano de juego */
+const CASTLE_HALF = 7.5;       /* Lado del cuadrado del castillo */
+const MUD_HALF = 18;           /* Lado del cuadrado de lodo */
+const CELL_SIZE = 1.5;         /* Lado de una celda de la cuadrícula */
+const GRASS_CELLS = 20;        /* Celdas de cesped alrededor del lodo, por lado */
+const GRASS_HALF = MUD_HALF + GRASS_CELLS * CELL_SIZE;
 const FALLBACK_LANG = "en";
 
 /* ---------- Textos ---------- */
@@ -54,13 +57,16 @@ function text(key) {
 const COLORS = {
   castle: 0x2266bb,
   castleLight: 0x4f8fd6,
+  castleRoof: 0x1c4f8c,
   tower: 0x1c4f8c,
-  wall: 0x8fa8c4,
+  base: 0x8d9196,        /* Base gris del castillo */
   grid: 0x9aa7b4,
   blue: 0x2f9bff,
   blueDark: 0x1b6fc4,
   white: 0xdfe7ef,
-  whiteDark: 0x9fb0c2
+  whiteDark: 0x9fb0c2,
+  mud: 0x8a6a48,         /* Lodo */
+  grass: 0x6f9153        /* Cesped */
 };
 
 /* Devuelve las aristas de una geometria como LineSegments. */
@@ -73,34 +79,40 @@ function edges(geometry, color, opacity) {
   return line;
 }
 
-/* Coloca una pieza centrada en x/z con su base a la altura y. */
-function place(object, x, y, z) {
-  object.position.set(x, y, z);
-  return object;
+/* Superficie plana opaca, usada para terreno y bases. */
+function surface(width, depth, color) {
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(width, depth),
+    new THREE.MeshBasicMaterial({ color: color })
+  );
+  mesh.rotation.x = -Math.PI / 2;
+  return mesh;
 }
 
-/* ---------- Ciudad Real ---------- */
+/* ---------- Torretas ---------- */
 
-/* Torre con forma de pieza de ajedrez: base ancha, fuste estrecho,
-   corona mas ancha y cuatro almenas cuadradas. Sin detalles adicionales. */
+/* Torreta cilindrica inspirada en la pieza de ajedrez: base ancha,
+   fuste estrecho, corona mas ancha y cuatro almenas alrededor.
+   Sin detalles adicionales y siempre menor que la Ciudad Real. */
 function buildTower(color) {
   const group = new THREE.Group();
+  const segments = 12;
 
-  const base = edges(new THREE.BoxGeometry(1.6, 0.35, 1.6), color, 0.95);
+  const base = edges(new THREE.CylinderGeometry(0.95, 1.05, 0.35, segments), color, 0.95);
   base.position.y = 0.175;
   group.add(base);
 
-  const shaft = edges(new THREE.BoxGeometry(1.05, 1.9, 1.05), color, 1);
+  const shaft = edges(new THREE.CylinderGeometry(0.58, 0.66, 1.9, segments), color, 1);
   shaft.position.y = 0.35 + 0.95;
   group.add(shaft);
 
-  const crown = edges(new THREE.BoxGeometry(1.35, 0.28, 1.35), color, 1);
+  const crown = edges(new THREE.CylinderGeometry(0.82, 0.7, 0.28, segments), color, 1);
   crown.position.y = 0.35 + 1.9 + 0.14;
   group.add(crown);
 
   const merlonHeight = 0.26;
   const merlonY = 0.35 + 1.9 + 0.28 + merlonHeight / 2;
-  const offset = 0.48;
+  const offset = 0.56;
   const merlons = [
     [-offset, -offset], [offset, -offset], [-offset, offset], [offset, offset]
   ];
@@ -113,86 +125,118 @@ function buildTower(color) {
   return group;
 }
 
-/* Ciudad Real: cuerpo principal, torreon central, puerta y almenas. */
-function buildCastle() {
+/* ---------- Ciudad Real ---------- */
+
+/* Torrecilla interior con tejado conico, al estilo de la referencia. */
+function buildInnerTurret(color, roofColor, radius, wallHeight, roofHeight) {
   const group = new THREE.Group();
 
-  /* Plataforma del castillo */
-  const platform = edges(new THREE.BoxGeometry(CASTLE_HALF * 2, 0.4, CASTLE_HALF * 2), COLORS.wall, 0.8);
-  platform.position.y = 0.2;
+  const walls = edges(new THREE.CylinderGeometry(radius, radius * 1.08, wallHeight, 8), color, 1);
+  walls.position.y = wallHeight / 2;
+  group.add(walls);
+
+  const roof = edges(new THREE.ConeGeometry(radius * 1.28, roofHeight, 8), roofColor, 1);
+  roof.position.y = wallHeight + roofHeight / 2;
+  group.add(roof);
+
+  return group;
+}
+
+/* Ciudad Real: conjunto escalonado con torreon central, torrecillas
+   interiores con tejado, cuerpos laterales, entrada y escalones. */
+function buildCastle() {
+  const group = new THREE.Group();
+  const baseY = 0.4;
+
+  /* Plataforma gris del castillo: unica base, sin muros. */
+  const platform = surface(CASTLE_HALF * 2, CASTLE_HALF * 2, COLORS.base);
+  platform.position.y = baseY;
   group.add(platform);
 
+  const platformEdge = edges(new THREE.BoxGeometry(CASTLE_HALF * 2, 0.4, CASTLE_HALF * 2), COLORS.base, 1);
+  platformEdge.position.y = 0.2;
+  group.add(platformEdge);
+
   /* Cuerpo principal */
-  const body = edges(new THREE.BoxGeometry(7.4, 2.6, 7.4), COLORS.castle, 1);
-  body.position.y = 0.4 + 1.3;
+  const body = edges(new THREE.BoxGeometry(6.6, 2.4, 6.6), COLORS.castle, 1);
+  body.position.y = baseY + 1.2;
   group.add(body);
 
-  /* Torreon central */
-  const keep = edges(new THREE.BoxGeometry(3.6, 3.1, 3.6), COLORS.castleLight, 1);
-  keep.position.y = 0.4 + 2.6 + 1.55;
-  group.add(keep);
-
   /* Almenas del cuerpo principal */
-  const merlonHeight = 0.34;
-  const bodyMerlonY = 0.4 + 2.6 + merlonHeight / 2;
-  const bodyOffset = 3.25;
+  const merlonHeight = 0.32;
+  const bodyMerlonY = baseY + 2.4 + merlonHeight / 2;
+  const bodyOffset = 3.05;
   for (let i = 0; i < 4; i++) {
     const sign = i < 2 ? -1 : 1;
-    const along = i % 2 === 0 ? -bodyOffset + 1.4 : bodyOffset - 1.4;
-    const merlonA = edges(new THREE.BoxGeometry(0.42, merlonHeight, 0.42), COLORS.castle, 1);
+    const along = i % 2 === 0 ? -bodyOffset + 1.3 : bodyOffset - 1.3;
+    const merlonA = edges(new THREE.BoxGeometry(0.4, merlonHeight, 0.4), COLORS.castle, 1);
     merlonA.position.set(along, bodyMerlonY, sign * bodyOffset);
     group.add(merlonA);
-    const merlonB = edges(new THREE.BoxGeometry(0.42, merlonHeight, 0.42), COLORS.castle, 1);
+    const merlonB = edges(new THREE.BoxGeometry(0.4, merlonHeight, 0.4), COLORS.castle, 1);
     merlonB.position.set(sign * bodyOffset, bodyMerlonY, along);
     group.add(merlonB);
   }
 
-  /* Almenas del torreon */
-  const keepMerlonY = 0.4 + 2.6 + 3.1 + merlonHeight / 2;
-  const keepOffset = 1.5;
+  /* Segundo cuerpo, mas estrecho y algo mas alto: escalona la silueta */
+  const upper = edges(new THREE.BoxGeometry(4.6, 1.5, 4.6), COLORS.castleLight, 1);
+  upper.position.y = baseY + 2.4 + 0.75;
+  group.add(upper);
+
+  /* Torreon central con tejado conico */
+  const keep = edges(new THREE.BoxGeometry(2.4, 2.9, 2.4), COLORS.castleLight, 1);
+  keep.position.y = baseY + 2.4 + 1.5 + 1.45;
+  group.add(keep);
+
+  const keepRoof = edges(new THREE.ConeGeometry(1.95, 1.9, 8), COLORS.castleRoof, 1);
+  keepRoof.position.y = baseY + 2.4 + 1.5 + 2.9 + 0.95;
+  group.add(keepRoof);
+
+  /* Almenas de la base del torreon */
+  const keepMerlonY = baseY + 2.4 + 1.5 + 0.16;
+  const keepOffset = 1.05;
   for (let i = 0; i < 4; i++) {
     const sign = i < 2 ? -1 : 1;
-    const along = i % 2 === 0 ? -keepOffset + 0.7 : keepOffset - 0.7;
-    const merlonA = edges(new THREE.BoxGeometry(0.34, merlonHeight, 0.34), COLORS.castleLight, 1);
+    const along = i % 2 === 0 ? -keepOffset + 0.45 : keepOffset - 0.45;
+    const merlonA = edges(new THREE.BoxGeometry(0.3, 0.32, 0.3), COLORS.castleLight, 1);
     merlonA.position.set(along, keepMerlonY, sign * keepOffset);
     group.add(merlonA);
-    const merlonB = edges(new THREE.BoxGeometry(0.34, merlonHeight, 0.34), COLORS.castleLight, 1);
+    const merlonB = edges(new THREE.BoxGeometry(0.3, 0.32, 0.3), COLORS.castleLight, 1);
     merlonB.position.set(sign * keepOffset, keepMerlonY, along);
     group.add(merlonB);
   }
 
-  /* Puerta: solo el contorno del vano en la fachada sur */
-  const gate = edges(new THREE.BoxGeometry(1.6, 1.7, 0.08), COLORS.castleLight, 1);
-  gate.position.set(0, 0.4 + 0.85, 3.74);
+  /* Torrecillas interiores con tejado en las cuatro esquinas */
+  const innerOffset = 2.35;
+  const innerTurrets = [
+    [-innerOffset, -innerOffset], [innerOffset, -innerOffset],
+    [-innerOffset, innerOffset], [innerOffset, innerOffset]
+  ];
+  innerTurrets.forEach(function (position) {
+    const turret = buildInnerTurret(COLORS.castleLight, COLORS.castleRoof, 0.62, 2.1, 1.35);
+    turret.position.set(position[0], baseY + 2.4, position[1]);
+    group.add(turret);
+  });
+
+  /* Cuerpos laterales: anexos mas bajos que rompen la simetria plana */
+  const sideA = edges(new THREE.BoxGeometry(2.1, 1.6, 2.6), COLORS.castle, 1);
+  sideA.position.set(-2.35, baseY + 0.8, 2.55);
+  group.add(sideA);
+
+  const sideB = edges(new THREE.BoxGeometry(2.4, 1.4, 2.1), COLORS.castle, 1);
+  sideB.position.set(2.5, baseY + 0.7, -2.45);
+  group.add(sideB);
+
+  /* Entrada: portal y escalones al sur */
+  const gate = edges(new THREE.BoxGeometry(1.5, 1.6, 0.1), COLORS.castleLight, 1);
+  gate.position.set(0, baseY + 0.8, 3.34);
   group.add(gate);
 
-  /* Muro perimetral con una abertura para la puerta */
-  const wallHeight = 1.1;
-  const wallY = 0.4 + wallHeight / 2;
-  const wallThickness = 0.35;
-  const wallOffset = CASTLE_HALF - 0.2;
-
-  const northWall = edges(new THREE.BoxGeometry(wallOffset * 2, wallHeight, wallThickness), COLORS.wall, 0.75);
-  northWall.position.set(0, wallY, -wallOffset);
-  group.add(northWall);
-
-  const eastWall = edges(new THREE.BoxGeometry(wallThickness, wallHeight, wallOffset * 2), COLORS.wall, 0.75);
-  eastWall.position.set(wallOffset, wallY, 0);
-  group.add(eastWall);
-
-  const westWall = edges(new THREE.BoxGeometry(wallThickness, wallHeight, wallOffset * 2), COLORS.wall, 0.75);
-  westWall.position.set(-wallOffset, wallY, 0);
-  group.add(westWall);
-
-  /* Muro sur partido en dos tramos para dejar la puerta */
-  const southSpan = (wallOffset * 2 - 2.2) / 2;
-  const southOffset = 1.1 + southSpan / 2;
-  const southWallA = edges(new THREE.BoxGeometry(southSpan, wallHeight, wallThickness), COLORS.wall, 0.75);
-  southWallA.position.set(-southOffset, wallY, wallOffset);
-  group.add(southWallA);
-  const southWallB = edges(new THREE.BoxGeometry(southSpan, wallHeight, wallThickness), COLORS.wall, 0.75);
-  southWallB.position.set(southOffset, wallY, wallOffset);
-  group.add(southWallB);
+  const stepWidths = [2.4, 1.9, 1.4];
+  stepWidths.forEach(function (width, index) {
+    const step = edges(new THREE.BoxGeometry(width, 0.22, 0.5), COLORS.castleLight, 1);
+    step.position.set(0, baseY + 0.11 + index * 0.22, 3.55 + index * 0.5);
+    group.add(step);
+  });
 
   return group;
 }
@@ -242,8 +286,8 @@ function buildScene(container) {
   const width = container.clientWidth || 640;
   const height = container.clientHeight || 420;
 
-  const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 200);
-  camera.position.set(16, 16, 20);
+  const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 500);
+  camera.position.set(0, 26, 34);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -259,29 +303,33 @@ function buildScene(container) {
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
   controls.minDistance = 8;
-  controls.maxDistance = 60;
+  controls.maxDistance = 160;
   controls.maxPolarAngle = Math.PI / 2.05;
   controls.target.set(0, 1.5, 0);
 
-  /* Suelo con cuadrícula */
-  const ground = new THREE.Mesh(
-    new THREE.PlaneGeometry(GROUND_HALF * 2, GROUND_HALF * 2),
-    new THREE.MeshBasicMaterial({ color: 0xe7ebf0 })
-  );
-  ground.rotation.x = -Math.PI / 2;
-  scene.add(ground);
+  /* Terreno: cesped exterior y lodo central. */
+  const grass = surface(GRASS_HALF * 2, GRASS_HALF * 2, COLORS.grass);
+  grass.position.y = 0;
+  scene.add(grass);
 
-  const grid = new THREE.GridHelper(GROUND_HALF * 2, 24, COLORS.grid, COLORS.grid);
+  const mud = surface(MUD_HALF * 2, MUD_HALF * 2, COLORS.mud);
+  mud.position.y = 0.02;
+  scene.add(mud);
+
+  /* Cuadricula sobre todo el territorio */
+  const cells = Math.round((GRASS_HALF * 2) / CELL_SIZE);
+  const grid = new THREE.GridHelper(GRASS_HALF * 2, cells, COLORS.grid, COLORS.grid);
+  grid.position.y = 0.05;
   grid.material.transparent = true;
   grid.material.opacity = 0.45;
   scene.add(grid);
 
   /* Ejes cardinales: norte hacia -Z, este hacia +X */
   const cardinals = [
-    { label: "N", position: [0, 0.02, -GROUND_HALF + 1.2], color: COLORS.castle },
-    { label: "S", position: [0, 0.02, GROUND_HALF - 1.2], color: COLORS.wall },
-    { label: "E", position: [GROUND_HALF - 1.2, 0.02, 0], color: COLORS.wall },
-    { label: "O", position: [-GROUND_HALF + 1.2, 0.02, 0], color: COLORS.wall }
+    { label: "N", position: [0, 0.06, -GRASS_HALF + 1.4], color: COLORS.castle },
+    { label: "S", position: [0, 0.06, GRASS_HALF - 1.4], color: COLORS.castle },
+    { label: "E", position: [GRASS_HALF - 1.4, 0.06, 0], color: COLORS.castle },
+    { label: "O", position: [-GRASS_HALF + 1.4, 0.06, 0], color: COLORS.castle }
   ];
   cardinals.forEach(function (cardinal) {
     const label = makeLabel("kingdom-render-cardinal", cardinal.label);
@@ -295,13 +343,13 @@ function buildScene(container) {
   scene.add(castle);
 
   const castleLabel = makeLabel("kingdom-render-label kingdom-render-label-city", text("kingdomCastleName"));
-  castleLabel.position.set(0, 0.4 + 2.6 + 3.1 + 0.9, 0);
+  castleLabel.position.set(0, 0.4 + 2.4 + 1.5 + 2.9 + 1.9 + 0.8, 0);
   scene.add(castleLabel);
 
   /* Torres */
   TOWERS.forEach(function (tower) {
     const group = buildTower(COLORS.tower);
-    place(group, tower.x, 0.4, tower.z);
+    group.position.set(tower.x, 0.4, tower.z);
     scene.add(group);
 
     const label = makeLabel("kingdom-render-label kingdom-render-label-tower", text(tower.labelKey));
@@ -312,7 +360,7 @@ function buildScene(container) {
   /* Santuarios */
   SANCTUARIES.forEach(function (sanctuary) {
     const group = buildSanctuary(sanctuary.variant);
-    place(group, sanctuary.x, 0, sanctuary.z);
+    group.position.set(sanctuary.x, 0, sanctuary.z);
     scene.add(group);
 
     const name = text(sanctuary.nameKey);
@@ -325,22 +373,27 @@ function buildScene(container) {
     scene.add(label);
   });
 
-  /* Vista inicial y vista superior */
-  const homePosition = new THREE.Vector3(16, 16, 20);
-  const homeTarget = new THREE.Vector3(0, 1.5, 0);
-  const topPosition = new THREE.Vector3(0.01, 32, 0.01);
+  /* Vistas: en ambas el norte queda hacia arriba (norte hacia -Z). */
+  const homePosition = new THREE.Vector3(0, 26, 34);
+  const homeTarget = new THREE.Vector3(0, 2, 0);
+  const topPosition = new THREE.Vector3(0, 74, 0.001);
 
   function render() {
     renderer.render(scene, camera);
     labelRenderer.render(scene, camera);
   }
 
-  function setView(position, target) {
+  function setView(position, target, up) {
+    camera.up.copy(up);
     camera.position.copy(position);
     controls.target.copy(target);
+    camera.lookAt(target);
     controls.update();
     render();
   }
+
+  const upTop = new THREE.Vector3(0, 0, -1);
+  const upHome = new THREE.Vector3(0, 1, 0);
 
   controls.addEventListener("change", render);
 
@@ -348,12 +401,12 @@ function buildScene(container) {
   const resetButton = document.getElementById("kingdomRenderReset");
   if (topButton) {
     topButton.addEventListener("click", function () {
-      setView(topPosition, new THREE.Vector3(0, 0, 0));
+      setView(topPosition, new THREE.Vector3(0, 0, 0), upTop);
     });
   }
   if (resetButton) {
     resetButton.addEventListener("click", function () {
-      setView(homePosition, homeTarget);
+      setView(homePosition, homeTarget, upHome);
     });
   }
 
@@ -374,8 +427,8 @@ function buildScene(container) {
     window.addEventListener("resize", resize);
   }
 
-  controls.update();
-  render();
+  /* Vista inicial orientada al norte, igual que la vista superior. */
+  setView(homePosition, homeTarget, upHome);
 
   return { render: render, resize: resize };
 }
