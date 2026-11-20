@@ -273,18 +273,42 @@ tr.bs-current td.bs-event::after {
 .ad-schedule td.ad-time {
   padding: 6px 4px;
 }
-/* Estilos de atención por indicador flag y estado del contador. */
-.ad-schedule tbody tr.ad-flag-1.ad-state-countdown > td.ad-time {
+/* ---------- Indicadores flag y animaciones ani ----------
+   El indicador flag de la fuente de verdad se aplica a la columna Tarea
+   mediante la clase ad-task-flag-<indicador> de la celda.
+   El indicador ani se aplica a la columna Contador mediante la clase
+   ad-counter-ani-<indicador> de la celda y soloanimate en la tabla del
+   dia actual, segun el estado ad-state-countdown o ad-state-progress. */
+
+/* Tarea: indicadores flag. */
+.ad-schedule td.ad-objective.ad-task-flag-a {
+  background-color: #8a000030;
+  color: #7e0000;
+  border-radius: 4px;
+}
+.ad-schedule td.ad-objective.ad-task-flag-w {
+  background-color: #ffee0030;
+  color: #115a96;
+  border-radius: 4px;
+}
+.ad-schedule td.ad-objective.ad-task-flag-i {
+  background-color: #80808030;
+  color: #115a96;
+  border-radius: 4px;
+}
+.ad-schedule td.ad-objective.ad-task-flag-s {
+  background-color: #006d0030;
+  color: #fff;
+  border-radius: 4px;
+}
+
+/* Contador: indicador ani en cuenta regresiva. */
+.ad-schedule tbody tr.ad-state-countdown > td.ad-time.ad-counter-ani-a {
   background-color: #ffee00;
   color: #8a0000;
-  animation: uxm-ad-flag-1-countdown 1.8s ease-in-out infinite;
+  animation: uxm-ad-counter-ani-a-countdown 1.8s ease-in-out infinite;
 }
-.ad-schedule tbody tr.ad-flag-1.ad-state-progress > td.ad-time {
-  background-color: #8a0000;
-  color: #fffb00;
-  animation: uxm-ad-flag-1-progress 1.8s ease-in-out infinite;
-}
-@keyframes uxm-ad-flag-1-countdown {
+@keyframes uxm-ad-counter-ani-a-countdown {
   0%, 100% {
     background-color: #ffee00;
     color: #9b0000;
@@ -294,7 +318,14 @@ tr.bs-current td.bs-event::after {
     color: #9b0000;
   }
 }
-@keyframes uxm-ad-flag-1-progress {
+
+/* Contador: indicador ani en progreso. */
+.ad-schedule tbody tr.ad-state-progress > td.ad-time.ad-counter-ani-a {
+  background-color: #8a0000;
+  color: #fffb00;
+  animation: uxm-ad-counter-ani-a-progress 1.8s ease-in-out infinite;
+}
+@keyframes uxm-ad-counter-ani-a-progress {
   0%, 100% {
     background-color: #8a0000;
   }
@@ -303,15 +334,16 @@ tr.bs-current td.bs-event::after {
   }
 }
 
-.ad-schedule tbody tr.ad-flag-2.ad-state-countdown > td.ad-time {
-  background-color: #00ccff65;
-}
-.ad-schedule tbody tr.ad-flag-2.ad-state-progress > td.ad-time {
+.ad-schedule tbody tr.ad-state-countdown > td.ad-time.ad-counter-ani-i {
   background-color: #00578a;
   color: #00415f;
-  animation: uxm-ad-flag-2-progress 1.8s ease-in-out infinite;
 }
-@keyframes uxm-ad-flag-2-progress {
+.ad-schedule tbody tr.ad-state-progress > td.ad-time.ad-counter-ani-i {
+  background-color: #00578a;
+  color: #00415f;
+  animation: uxm-ad-counter-ani-i-progress 1.8s ease-in-out infinite;
+}
+@keyframes uxm-ad-counter-ani-i-progress {
   0%, 100% {
     background-color: #00578a;
   }
@@ -320,39 +352,26 @@ tr.bs-current td.bs-event::after {
   }
 }
 
-.ad-schedule tbody tr.ad-flag-3.ad-state-countdown > td.ad-time {
-  background-color: #ffee00;
+/* Contador: indicador ani en progreso con texto verde intermitente. */
+.ad-schedule tbody tr.ad-state-progress > td.ad-time.ad-counter-ani-s {
+  font-weight: bold;
+  animation: uxm-ad-counter-ani-s-progress 1.8s ease-in-out infinite;
 }
-.ad-schedule tbody tr.ad-flag-3.ad-state-progress > td.ad-time {
-  background-color: #006ec9;
-  color: #fff;
-  animation: uxm-ad-flag-3-progress 1.8s ease-in-out infinite;
-}
-@keyframes uxm-ad-flag-3-progress {
+@keyframes uxm-ad-counter-ani-s-progress {
   0%, 100% {
-    background-color: #006fc96c;
+    color: #00b100;
   }
   50% {
-    background-color: #006ec9;
+    color: #333;
+    background-color: #00b10030;
   }
 }
 
-.ad-schedule tbody tr.ad-flag-4.ad-state-normal > td.ad-obj {
-  background-color: #ffee0050;
-  color: #115a96;
-  border-radius: 4px;
-}
-
-.ad-schedule tbody tr.ad-flag-5.ad-state-normal > td.ad-obj {
-  background-color: #80808050;
-  color: #115a96;
-  border-radius: 4px;
-}
 @media (prefers-reduced-motion: reduce) {
-  .ad-schedule tbody tr.ad-flag-1.ad-state-countdown > td.ad-time,
-  .ad-schedule tbody tr.ad-flag-1.ad-state-progress > td.ad-time,
-  .ad-schedule tbody tr.ad-flag-2.ad-state-progress > td.ad-time,
-  .ad-schedule tbody tr.ad-flag-3.ad-state-progress > td.ad-time {
+  .ad-schedule tbody tr.ad-state-countdown > td.ad-time.ad-counter-ani-a,
+  .ad-schedule tbody tr.ad-state-progress > td.ad-time.ad-counter-ani-a,
+  .ad-schedule tbody tr.ad-state-progress > td.ad-time.ad-counter-ani-i,
+  .ad-schedule tbody tr.ad-state-progress > td.ad-time.ad-counter-ani-s {
     animation: none;
   }
 }

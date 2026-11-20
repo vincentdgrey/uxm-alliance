@@ -1,32 +1,32 @@
 /* ---------- Biblioteca estrategica ---------- */
-.searchEngine-elements {
+.search-engine-elements {
   margin-top: 8px;
 }
-.searchEngine-panel {
+.search-engine-panel {
   padding: 16px;
   background-color: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--button-radius);
   box-shadow: 0 2px 8px rgba(33, 33, 41, .08);
 }
-.searchEngine-form .form-label {
+.search-engine-form .form-label {
   margin-bottom: 6px;
   font-weight: 600;
   color: var(--text);
 }
-.searchEngine-form .form-control {
+.search-engine-form .form-control {
   border-radius: var(--button-radius) 0 0 var(--button-radius);
 }
-.searchEngine-form .input-group .btn {
+.search-engine-form .input-group .btn {
   border-radius: 0 var(--button-radius) var(--button-radius) 0;
 }
-.searchEngine-status {
+.search-engine-status {
   min-height: 1.2em;
   margin: 10px 0 0;
   color: var(--muted);
   font-size: 13px;
 }
-.searchEngine-tree-title {
+.search-engine-tree-title {
   margin: 0 0 10px;
   font-family: "Cinzel", Georgia, "Times New Roman", serif;
   font-size: 1rem;
@@ -38,23 +38,23 @@
   max-height: 250px;
   overflow-y: auto;
 }
-.searchEngine-tree-list,
-.searchEngine-tree-sublist {
+.search-engine-tree-list,
+.search-engine-tree-sublist {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.searchEngine-tree-item {
+.search-engine-tree-item {
   margin-bottom: 4px;
 }
-.searchEngine-tree-sublist {
+.search-engine-tree-sublist {
   margin: 2px 0 6px 15px;
   padding-left: 10px;
   border-left: 1px solid var(--line);
 }
-.searchEngine-tree-group-button,
-.searchEngine-tree-sublink,
-.searchEngine-tree-topic {
+.search-engine-tree-group-button,
+.search-engine-tree-sublink,
+.search-engine-tree-topic {
   display: flex;
   align-items: flex-start;
   width: 100%;
@@ -69,42 +69,42 @@
   border-radius: var(--button-radius);
   transition: background-color .2s var(--ease), color .2s var(--ease);
 }
-.searchEngine-tree-group-button {
+.search-engine-tree-group-button {
   gap: 7px;
   font-weight: 700;
 }
-.searchEngine-tree-group-button::before {
+.search-engine-tree-group-button::before {
   content: "\25BE";
   flex: 0 0 auto;
   color: var(--muted);
   font-size: 11px;
   line-height: 1.55;
 }
-.searchEngine-tree-group-button[aria-expanded="false"]::before {
+.search-engine-tree-group-button[aria-expanded="false"]::before {
   content: "\25B8";
 }
-.searchEngine-tree-group-button:hover,
-.searchEngine-tree-group-button:focus-visible,
-.searchEngine-tree-sublink:hover,
-.searchEngine-tree-sublink:focus-visible {
+.search-engine-tree-group-button:hover,
+.search-engine-tree-group-button:focus-visible,
+.search-engine-tree-sublink:hover,
+.search-engine-tree-sublink:focus-visible {
   color: #fff;
   background-color: #26b;
   outline: none;
 }
-.searchEngine-tree-group-button:hover::before,
-.searchEngine-tree-group-button:focus-visible::before {
+.search-engine-tree-group-button:hover::before,
+.search-engine-tree-group-button:focus-visible::before {
   color: #fff;
 }
-.searchEngine-tree-group-button:focus-visible,
-.searchEngine-tree-sublink:focus-visible {
+.search-engine-tree-group-button:focus-visible,
+.search-engine-tree-sublink:focus-visible {
   box-shadow: 0 0 0 2px #ffbf47;
 }
-.searchEngine-tree-sublink {
+.search-engine-tree-sublink {
   gap: 7px;
   color: var(--muted);
   font-size: 13px;
 }
-.searchEngine-tree-sublink::before {
+.search-engine-tree-sublink::before {
   content: "";
   flex: 0 0 auto;
   width: 10px;
@@ -115,16 +115,16 @@
   background: linear-gradient(to bottom, transparent 3px, currentColor 3px, currentColor 4px, transparent 4px, transparent 7px, currentColor 7px, currentColor 8px, transparent 8px);
   opacity: .75;
 }
-.searchEngine-tree-sublink.active {
+.search-engine-tree-sublink.active {
   color: #fff;
   background-color: var(--hot);
 }
-.searchEngine-topics-list {
+.search-engine-topics-list {
   display: flex;
   flex-wrap: wrap;
   gap: 2px 16px;
 }
-.searchEngine-topic {
+.search-engine-topic {
   padding: 2px 0;
   color: var(--primary-btn);
   font-weight: 200;
@@ -139,30 +139,30 @@
   cursor: pointer;
   transition: color .2s var(--ease), text-decoration-color .2s var(--ease);
 }
-.searchEngine-topic:hover,
-.searchEngine-topic:focus-visible {
+.search-engine-topic:hover,
+.search-engine-topic:focus-visible {
   color: var(--hot);
   text-decoration-color: currentColor;
   outline: none;
 }
-.searchEngine-topic.active {
+.search-engine-topic.active {
   color: var(--hot);
   font-weight: 700;
   text-decoration-thickness: 2px;
 }
-.searchEngine-topic:focus-visible {
+.search-engine-topic:focus-visible {
   box-shadow: 0 0 0 2px #ffbf47;
 }
-.searchEngine-contents {
+.search-engine-contents {
   min-height: 120px;
 }
-.searchEngine-placeholder,
-.searchEngine-empty {
+.search-engine-placeholder,
+.search-engine-empty {
   margin: 0;
   color: var(--muted);
   font-style: italic;
 }
-.searchEngine-article {
+.search-engine-article {
   margin-bottom: 28px;
   padding: 18px;
   background-color: var(--panel);
@@ -170,7 +170,7 @@
   border-radius: var(--button-radius);
   box-shadow: 0 2px 8px rgba(33, 33, 41, .08);
 }
-.searchEngine-topic-title {
+.search-engine-topic-title {
   margin: 0 0 6px;
   font-family: "Cinzel", Georgia, "Times New Roman", serif;
   font-size: 1.25rem;
@@ -178,7 +178,7 @@
   letter-spacing: .04em;
   color: var(--concrete);
 }
-.searchEngine-topic-group {
+.search-engine-topic-group {
   margin: 0 0 8px;
   color: var(--primary-btn);
   font-size: 12px;
@@ -186,117 +186,117 @@
   letter-spacing: .05em;
   text-transform: uppercase;
 }
-.searchEngine-topic-summary {
+.search-engine-topic-summary {
   margin: 0 0 12px;
   color: var(--muted);
   line-height: 1.7;
 }
 /* Fecha de actualizacion del tema o del grupo. */
-.searchEngine-updated {
+.search-engine-updated {
   margin: 0 0 8px;
   color: #aaa;
   font-size: 12px;
   line-height: 1.4;
 }
-.searchEngine-updated-date {
+.search-engine-updated-date {
   font-weight: 600;
   color: var(--muted);
 }
 /* La fecha del grupo se muestra dentro del boton del arbol. */
-.searchEngine-tree-group-updated {
+.search-engine-tree-group-updated {
   margin: 0;
   font-size: 11px;
   font-weight: 400;
   white-space: nowrap;
 }
-.searchEngine-tree-group-name {
+.search-engine-tree-group-name {
   flex: 1 1 auto;
 }
-.searchEngine-section {
+.search-engine-section {
   margin-top: 18px;
   padding-top: 14px;
   border-top: 1px solid var(--line);
 }
-.searchEngine-section-title {
+.search-engine-section-title {
   margin: 0 0 10px;
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--text);
 }
-.searchEngine-paragraph {
+.search-engine-paragraph {
   margin: 0;
   line-height: 1.7;
 }
-.searchEngine-list {
+.search-engine-list {
   margin: 10px 0 0;
   padding-left: 20px;
   line-height: 1.7;
 }
 /* Los items con medio embebido usan la rejilla y no la viñeta de la lista. */
-.searchEngine-list > li.searchEngine-item-media {
+.search-engine-list > li.search-engine-item-media {
   list-style: none;
   margin-left: -20px;
 }
-.searchEngine-figure {
+.search-engine-figure {
   margin: 0;
 }
-.searchEngine-image {
+.search-engine-image {
   width: 100%;
   border-radius: var(--button-radius);
 }
-.searchEngine-caption {
+.search-engine-caption {
   margin-top: 6px;
   color: var(--muted);
   font-size: 12px;
   text-align: center;
 }
 /* Enlaces detectados dentro del texto de los temas. */
-.searchEngine-link {
+.search-engine-link {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   transition: color .2s var(--ease), text-decoration-color .2s var(--ease);
   overflow-wrap: anywhere;
 }
-.searchEngine-link:hover,
-.searchEngine-link:focus-visible {
+.search-engine-link:hover,
+.search-engine-link:focus-visible {
   color: var(--hot);
   text-decoration-color: currentColor;
 }
 /* Bloques de dos columnas con medio embebido a la izquierda. */
-.searchEngine-media-row {
+.search-engine-media-row {
   margin-bottom: 12px;
 }
-.searchEngine-media {
+.search-engine-media {
   margin: 0;
   overflow: hidden;
   border-radius: var(--button-radius);
   background-color: #000;
 }
-.searchEngine-media-image {
+.search-engine-media-image {
   background-color: transparent;
 }
-.searchEngine-media-video {
+.search-engine-media-video {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
 }
-.searchEngine-video {
+.search-engine-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
 }
-.searchEngine-media-image .searchEngine-image {
+.search-engine-media-image .search-engine-image {
   display: block;
   height: auto;
 }
 @media (max-width: 768px) {
-  .searchEngine-section-media {
+  .search-engine-section-media {
     margin-bottom: 12px;
   }
-  .searchEngine-tree-sublist {
+  .search-engine-tree-sublist {
     margin-left: 10px;
     padding-left: 7px;
   }

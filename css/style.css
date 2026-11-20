@@ -602,20 +602,20 @@ body:not(.nav-open) .nav-toggle:hover nav-toggle-bars i {
 
 /* ---------- Bloques de contenido informativo ---------- */
 .block-content-info,
-.block-content-destacated {
+.block-content-featured {
   margin: 40px auto;
   padding: 0 3%;
   text-align: left;
 }
 .block-content-info.center-content,
-.block-content-destacated.center-content {
+.block-content-featured.center-content {
   text-align: center;
 }
-.block-content-destacated {
+.block-content-featured {
   background-color: #d3d3d3;
   color: #ccc;
 }
-.banner-divisor,
+.banner-divider,
 .banner-subpage {
   padding: 12px 16px;
   background-color: #ccc;
@@ -623,7 +623,7 @@ body:not(.nav-open) .nav-toggle:hover nav-toggle-bars i {
   text-align: center;
   text-shadow: none;
 }
-.banner-divisor .info-initial,
+.banner-divider .info-initial,
 .banner-subpage .info-initial {
   color: var(--scarlet);
 }
@@ -660,24 +660,24 @@ body:not(.nav-open) .nav-toggle:hover nav-toggle-bars i {
 .center-content .subtitle-info{
   text-align: center;
 }
-.dinamic-welcome {
+.dynamic-welcome {
   margin: 0 0 18px;
   color: var(--muted);
   font-size: 14px;
   letter-spacing: .04em;
 }
 .message-welcome,
-.message-arenga {
+.message-war-cry {
   max-width: 760px;
   margin: 0 auto 24px;
   color: var(--text);
 }
 .message-welcome p,
-.message-arenga p {
+.message-war-cry p {
   margin: 0;
   line-height: 1.7;
 }
-.message-arenga p {
+.message-war-cry p {
   white-space: pre-line;
 }
 .block-buttons {
@@ -730,6 +730,21 @@ body:not(.nav-open) .nav-toggle:hover nav-toggle-bars i {
 }
 .block-buttons .yt-icon {
   flex: 0 0 auto;
+}
+
+/* ---------- Marcadores de la Biblioteca Estrategica ---------- */
+.block-bookmarks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.block-bookmarks .block-buttons {
+  width: 100%;
+}
+.block-bookmarks .block-bookmarks-groups {
+  justify-content: center;
+  gap: 4px 16px;
 }
 
 /* ---------- Componentes de video tutorial ---------- */
@@ -931,7 +946,7 @@ body:not(.nav-open) .nav-toggle:hover nav-toggle-bars i {
 .card-video.is-muted .card-video-sound::after {
   opacity: .35;
 }
-.text-video-learnig {
+.text-video-learning {
   flex: 1 1 auto;
   margin: 0;
   padding: 12px 14px 14px;
@@ -973,17 +988,17 @@ body:not(.nav-open) .nav-toggle:hover nav-toggle-bars i {
   left: 0;
   border-bottom: 1px solid #7c7c7c;
 }
-.line-divisor-scarlet,
-.line-divisor-grey {
+.line-divider-scarlet,
+.line-divider-grey {
   width: 100%;
   height: 0;
   border-radius: 4px;
 }
-.line-divisor-scarlet {
+.line-divider-scarlet {
   margin: 24px auto 0 auto;
   border-top: 3px solid var(--scarlet);
 }
-.line-divisor-concrete {
+.line-divider-concrete {
   margin: 24px auto 0 auto;
   height: 36px;
   border-top: 3px solid #999;

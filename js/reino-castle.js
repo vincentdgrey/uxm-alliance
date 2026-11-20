@@ -10,18 +10,18 @@ import { CSS2DRenderer, CSS2DObject } from "three/addons/renderers/CSS2DRenderer
 /* Las cuatro torres del castillo. La torre Norte ocupa la esquina noreste
    del cuadrado, con el norte hacia -Z y el este hacia +X. */
 const TOWERS = [
-  { id: "oeste", labelKey: "kingdomTowerWest", x: -6, z: -6 },
-  { id: "norte", labelKey: "kingdomTowerNorth", x: 6, z: -6 },
-  { id: "este", labelKey: "kingdomTowerEast", x: 6, z: 6 },
-  { id: "sur", labelKey: "kingdomTowerSouth", x: -6, z: 6 }
+  { id: "west", labelKey: "kingdomTowerWest", x: -6, z: -6 },
+  { id: "north", labelKey: "kingdomTowerNorth", x: 6, z: -6 },
+  { id: "east", labelKey: "kingdomTowerEast", x: 6, z: 6 },
+  { id: "south", labelKey: "kingdomTowerSouth", x: -6, z: 6 }
 ];
 
 /* Santuarios: ciudades adicionales colocadas sobre el mismo plano.
    Edita esta lista para anadir, quitar o reubicar santuarios.
    variant: "blue" | "white". level: numero opcional mostrado en la etiqueta. */
 const SANCTUARIES = [
-  { id: "santuario-azul", nameKey: "kingdomSanctuaryBlue", variant: "blue", level: 25, x: -13, z: 4 },
-  { id: "santuario-blanco", nameKey: "kingdomSanctuaryWhite", variant: "white", level: 30, x: 13, z: -4 }
+  { id: "sanctuary-blue", nameKey: "kingdomSanctuaryBlue", variant: "blue", level: 25, x: -13, z: 4 },
+  { id: "sanctuary-white", nameKey: "kingdomSanctuaryWhite", variant: "white", level: 30, x: 13, z: -4 }
 ];
 
 const CASTLE_HALF = 7.5;       /* Lado del cuadrado del castillo */

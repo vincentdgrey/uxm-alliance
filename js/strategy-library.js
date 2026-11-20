@@ -150,10 +150,10 @@
     var value = updatedDate(source);
     if (!value) return null;
 
-    var wrapper = element("p", className || "searchEngine-updated");
+    var wrapper = element("p", className || "search-engine-updated");
     wrapper.appendChild(document.createTextNode((texts().searchEngineUpdated || "") + " "));
 
-    var time = element("time", "searchEngine-updated-date", formatUpdated(value));
+    var time = element("time", "search-engine-updated-date", formatUpdated(value));
     time.setAttribute("datetime", value);
     wrapper.appendChild(time);
 
@@ -380,7 +380,7 @@
   /* Crea un enlace navegable con el estilo de link del sitio. */
   function linkNode(url, label) {
     var anchor = document.createElement("a");
-    anchor.className = "link-info searchEngine-link";
+    anchor.className = "link-info search-engine-link";
     anchor.href = url;
     anchor.target = "_blank";
     anchor.rel = "noopener noreferrer";
@@ -465,10 +465,10 @@
   /* Reproductor de YouTube: solo se acepta un ID validado. */
   function videoNode(id, title) {
     var frame = document.createElement("div");
-    frame.className = "searchEngine-media searchEngine-media-video";
+    frame.className = "search-engine-media search-engine-media-video";
 
     var iframe = document.createElement("iframe");
-    iframe.className = "searchEngine-video";
+    iframe.className = "search-engine-video";
     iframe.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id);
     iframe.title = title || "YouTube";
     iframe.loading = "lazy";
@@ -483,10 +483,10 @@
   /* Imagen embebida: local en media/ o remota por HTTPS. */
   function imageNode(url, alt) {
     var frame = document.createElement("div");
-    frame.className = "searchEngine-media searchEngine-media-image";
+    frame.className = "search-engine-media search-engine-media-image";
 
     var img = document.createElement("img");
-    img.className = "searchEngine-image";
+    img.className = "search-engine-image";
     img.alt = alt || "";
     img.loading = "lazy";
 
@@ -519,11 +519,11 @@
     clear(container);
     if (!container) return;
 
-    var list = element("div", "searchEngine-topics-list");
+    var list = element("div", "search-engine-topics-list");
     list.setAttribute("role", "group");
 
     topics.forEach(function (topic) {
-      var button = element("button", "searchEngine-topic", topicTitle(topic));
+      var button = element("button", "search-engine-topic", topicTitle(topic));
       button.type = "button";
       button.setAttribute("data-topic", topic.id);
       button.addEventListener("click", function () { onSelect(topic.id); });
@@ -537,20 +537,20 @@
     clear(container);
     if (!container) return;
 
-    var root = element("ul", "searchEngine-tree-list");
+    var root = element("ul", "search-engine-tree-list");
     root.setAttribute("role", "list");
 
     groups.forEach(function (group) {
-      var item = element("li", "searchEngine-tree-item searchEngine-tree-group");
-      var groupButton = element("button", "searchEngine-tree-group-button");
-      var subList = element("ul", "searchEngine-tree-sublist");
+      var item = element("li", "search-engine-tree-item search-engine-tree-group");
+      var groupButton = element("button", "search-engine-tree-group-button");
+      var subList = element("ul", "search-engine-tree-sublist");
       var subListId = "searchEngine-group-" + group.id;
       var expanded = false;
 
       /* El boton del grupo lleva su nombre y la fecha de actualizacion. */
-      groupButton.appendChild(element("span", "searchEngine-tree-group-name", groupTitle(group)));
+      groupButton.appendChild(element("span", "search-engine-tree-group-name", groupTitle(group)));
 
-      var groupUpdated = renderUpdated(group, "searchEngine-updated searchEngine-tree-group-updated");
+      var groupUpdated = renderUpdated(group, "search-engine-updated search-engine-tree-group-updated");
       if (groupUpdated) groupButton.appendChild(groupUpdated);
 
       groupButton.type = "button";
@@ -563,8 +563,8 @@
       subList.hidden = !expanded;
 
       group.topics.forEach(function (topic) {
-        var subItem = element("li", "searchEngine-tree-subitem");
-        var subButton = element("button", "searchEngine-tree-sublink searchEngine-tree-topic", topicTitle(topic));
+        var subItem = element("li", "search-engine-tree-subitem");
+        var subButton = element("button", "search-engine-tree-sublink search-engine-tree-topic", topicTitle(topic));
         subButton.type = "button";
         subButton.setAttribute("data-tree-topic", topic.id);
         subButton.addEventListener("click", function () { onSelect(topic.id); });
@@ -598,9 +598,9 @@
     var image = section.image;
     if (!image || !image.src) return null;
 
-    var figure = element("figure", "searchEngine-figure");
+    var figure = element("figure", "search-engine-figure");
     var img = document.createElement("img");
-    img.className = "img-fluid searchEngine-image";
+    img.className = "img-fluid search-engine-image";
     img.alt = localize(image.alt);
     img.loading = "lazy";
 
@@ -617,20 +617,20 @@
     figure.appendChild(img);
 
     var caption = localize(image.caption);
-    if (caption) figure.appendChild(element("figcaption", "searchEngine-caption", caption));
+    if (caption) figure.appendChild(element("figcaption", "search-engine-caption", caption));
 
     return figure;
   }
 
   /* Construye el bloque de dos columnas: medio a la izquierda, texto a la derecha. */
   function renderMediaRow(media, text, tagName, className) {
-    var row = element("div", "row g-3 searchEngine-section-body searchEngine-media-row");
+    var row = element("div", "row g-3 search-engine-section-body search-engine-media-row");
 
-    var mediaColumn = element("div", "col-12 col-md-5 searchEngine-section-media");
+    var mediaColumn = element("div", "col-12 col-md-5 search-engine-section-media");
     mediaColumn.appendChild(media);
 
-    var textColumn = element("div", "col-12 col-md-7 searchEngine-section-text");
-    var node = element(tagName || "p", className || "searchEngine-paragraph");
+    var textColumn = element("div", "col-12 col-md-7 search-engine-section-text");
+    var node = element(tagName || "p", className || "search-engine-paragraph");
     appendLinkedText(node, text);
     textColumn.appendChild(node);
 
@@ -647,16 +647,16 @@
     if (media) {
       var row = null;
       if (media.type === "video") {
-        row = renderMediaRow(videoNode(youtubeId(media.url), mediaTitle), value, "p", "searchEngine-paragraph");
+        row = renderMediaRow(videoNode(youtubeId(media.url), mediaTitle), value, "p", "search-engine-paragraph");
       } else {
         var image = imageNode(media.url, mediaTitle);
-        if (image) row = renderMediaRow(image, value, "p", "searchEngine-paragraph");
+        if (image) row = renderMediaRow(image, value, "p", "search-engine-paragraph");
       }
 
       if (row) {
         /* Dentro de una lista el bloque conserva el elemento li. */
         if (tagName === "li") {
-          var item = element("li", "searchEngine-item-media");
+          var item = element("li", "search-engine-item-media");
           item.appendChild(row);
           return item;
         }
@@ -670,32 +670,32 @@
   }
 
   function renderSection(section) {
-    var block = element("section", "searchEngine-section");
+    var block = element("section", "search-engine-section");
     var title = localize(section.title);
-    if (title) block.appendChild(element("h3", "searchEngine-section-title", title));
+    if (title) block.appendChild(element("h3", "search-engine-section-title", title));
 
-    var body = element("div", "row g-3 searchEngine-section-body");
+    var body = element("div", "row g-3 search-engine-section-body");
     var figure = renderImage(section);
 
     var textColumn = element("div", "col-12");
     if (figure) {
-      figure.classList.add("col-12", "col-md-5", "searchEngine-section-media");
+      figure.classList.add("col-12", "col-md-5", "search-engine-section-media");
       body.appendChild(figure);
-      textColumn.className = "col-12 col-md-7 searchEngine-section-text";
+      textColumn.className = "col-12 col-md-7 search-engine-section-text";
     } else {
-      textColumn.classList.add("searchEngine-section-text");
+      textColumn.classList.add("search-engine-section-text");
     }
 
     var paragraphs = localizeList(section.paragraphs);
     paragraphs.forEach(function (value) {
       var text = String(value).trim();
       if (!text) return;
-      textColumn.appendChild(renderContent(text, "p", "searchEngine-paragraph", title));
+      textColumn.appendChild(renderContent(text, "p", "search-engine-paragraph", title));
     });
 
     var items = localizeList(section.items);
     if (items.length) {
-      var list = element("ul", "searchEngine-list");
+      var list = element("ul", "search-engine-list");
       items.forEach(function (value) {
         var text = String(value).trim();
         if (!text) return;
@@ -713,23 +713,23 @@
     clear(container);
     if (!container) return;
 
-    var article = element("article", "searchEngine-article");
+    var article = element("article", "search-engine-article");
     article.setAttribute("data-topic", topic.id);
-    article.appendChild(element("h2", "searchEngine-topic-title", topicTitle(topic)));
+    article.appendChild(element("h2", "search-engine-topic-title", topicTitle(topic)));
 
     if (topic.group) {
-      article.appendChild(element("p", "searchEngine-topic-group", groupTitle(topic.group)));
+      article.appendChild(element("p", "search-engine-topic-group", groupTitle(topic.group)));
     }
 
-    var topicUpdated = renderUpdated(topic, "searchEngine-updated searchEngine-topic-updated");
+    var topicUpdated = renderUpdated(topic, "search-engine-updated search-engine-topic-updated");
     if (topicUpdated) article.appendChild(topicUpdated);
 
     var summary = topicSummary(topic);
-    if (summary) article.appendChild(element("p", "searchEngine-topic-summary", summary));
+    if (summary) article.appendChild(element("p", "search-engine-topic-summary", summary));
 
     var sections = Array.isArray(topic.sections) ? topic.sections : [];
     if (!sections.length) {
-      article.appendChild(element("p", "searchEngine-empty", texts().searchEngineTopicEmpty || ""));
+      article.appendChild(element("p", "search-engine-empty", texts().searchEngineTopicEmpty || ""));
       container.appendChild(article);
       return;
     }
@@ -748,29 +748,29 @@
     var t = texts();
 
     if (!entries.length) {
-      container.appendChild(element("p", "searchEngine-empty", t.searchEngineNoResults || ""));
+      container.appendChild(element("p", "search-engine-empty", t.searchEngineNoResults || ""));
       return;
     }
 
     entries.forEach(function (entry) {
-      var article = element("article", "searchEngine-article");
+      var article = element("article", "search-engine-article");
       article.setAttribute("data-topic", entry.topic.id);
-      article.appendChild(element("h2", "searchEngine-topic-title", topicTitle(entry.topic)));
+      article.appendChild(element("h2", "search-engine-topic-title", topicTitle(entry.topic)));
 
       if (entry.topic.group) {
-        article.appendChild(element("p", "searchEngine-topic-group", groupTitle(entry.topic.group)));
+        article.appendChild(element("p", "search-engine-topic-group", groupTitle(entry.topic.group)));
       }
 
-      var entryUpdated = renderUpdated(entry.topic, "searchEngine-updated searchEngine-topic-updated");
+      var entryUpdated = renderUpdated(entry.topic, "search-engine-updated search-engine-topic-updated");
       if (entryUpdated) article.appendChild(entryUpdated);
 
       var summary = topicSummary(entry.topic);
-      if (summary) article.appendChild(element("p", "searchEngine-topic-summary", summary));
+      if (summary) article.appendChild(element("p", "search-engine-topic-summary", summary));
 
       var sections = Array.isArray(entry.topic.sections) ? entry.topic.sections : [];
 
       if (!sections.length) {
-        article.appendChild(element("p", "searchEngine-empty", t.searchEngineTopicEmpty || ""));
+        article.appendChild(element("p", "search-engine-empty", t.searchEngineTopicEmpty || ""));
         container.appendChild(article);
         return;
       }
@@ -786,7 +786,7 @@
       });
 
       if (!shown) {
-        article.appendChild(element("p", "searchEngine-empty", t.searchEngineTopicEmpty || ""));
+        article.appendChild(element("p", "search-engine-empty", t.searchEngineTopicEmpty || ""));
       }
 
       container.appendChild(article);
@@ -829,6 +829,30 @@
     }
   }
 
+  /* Despliega el grupo indicado en la URL (?group=id) sin elegir un tema. */
+  function expandGroupFromUrl(groups) {
+    var id = requestedGroup();
+    if (!id) return;
+
+    for (var i = 0; i < groups.length; i++) {
+      if (groups[i].id !== id) continue;
+      if (typeof groups[i].setExpanded === "function") groups[i].setExpanded(true);
+      return;
+    }
+  }
+
+  /* Lee el grupo solicitado en la URL. */
+  function requestedGroup() {
+    var query = window.location.search || "";
+    var match = /[?&]group=([^&#]+)/.exec(query);
+    if (!match) return "";
+    try {
+      return decodeURIComponent(match[1]);
+    } catch (e) {
+      return match[1];
+    }
+  }
+
   function selectTopic(id) {
     var topic = null;
     for (var i = 0; i < topics.length; i++) {
@@ -852,7 +876,7 @@
         selectTopic(selectedTopic);
       } else {
         clear(container);
-        container.appendChild(element("p", "searchEngine-placeholder", texts().searchEngineInitial || ""));
+        container.appendChild(element("p", "search-engine-placeholder", texts().searchEngineInitial || ""));
       }
       return;
     }
@@ -890,10 +914,12 @@
         selectTopic(id);
       });
 
+      expandGroupFromUrl(result.groups);
+
       var container = byId("searchEngineContents");
       if (container && !topics.length) {
         clear(container);
-        container.appendChild(element("p", "searchEngine-empty", texts().searchEngineTopicEmpty || ""));
+        container.appendChild(element("p", "search-engine-empty", texts().searchEngineTopicEmpty || ""));
       }
 
       if (result.errors.length) {
@@ -905,7 +931,7 @@
       var box = byId("searchEngineContents");
       if (box) {
         clear(box);
-        box.appendChild(element("p", "searchEngine-empty", texts().searchEngineLoadError || ""));
+        box.appendChild(element("p", "search-engine-empty", texts().searchEngineLoadError || ""));
       }
       setStatus(texts().searchEngineLoadError || "");
     });

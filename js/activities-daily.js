@@ -146,10 +146,10 @@
 
   var DAILY = [
     { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "ANTX",   "server_time":"" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "FAQS",   "server_time":"", "flag":"5" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "FAQS",   "server_time":"", "flag":"I" },
     { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVESS", "server_time":"" },
     { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVFRT", "server_time":"" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "STMN",   "server_time":"" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "STMN",   "server_time":"", "ani":"S" },
     { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "EPIUR",  "server_time":"" },
     { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "HERBS",  "server_time":"" },
 
@@ -158,20 +158,20 @@
     { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "DYSOLDIER", "server_time":"" },
     
     { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "TCKSUR", "server_time":"" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CON1SP", "server_time":"" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CONMGH", "server_time":"" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CRVNUR", "server_time":"", "flag":"4" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "OPENUR", "server_time":"", "flag":"4" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CON1SP", "server_time":"", "ani":"S" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CONMGH", "server_time":"", "ani":"S" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CRVNUR", "server_time":"", "flag":"W" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "OPENUR", "server_time":"", "flag":"W" },
 
-    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYFALCON", "server_time":"", "flag":"5" },
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYFALCON", "server_time":"", "flag":"A" },
     { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYELITE",  "server_time":"" },
     { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "FREETH",   "server_time":"" },
     { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYSOLDIER", "server_time":"" },
     
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "RAVCH1", "server_time":"" },
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "STDSCR", "server_time":"" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCH1SP", "server_time":"" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCHMGH", "server_time":"" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCH1SP", "server_time":"", "ani":"S" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCHMGH", "server_time":"", "ani":"S" },
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "FAQS",   "server_time":"" },
 
     { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "SAVETH", "server_time":"" },
@@ -185,49 +185,50 @@
     { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDUR", "server_time":"" },
     { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SKILLB", "server_time":"" },
 
-    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYFALCON", "server_time":"", "flag":"5" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYFALCON", "server_time":"", "flag":"A" },
     { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYELITE",  "server_time":"" },
     { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "FREETS",   "server_time":"" },
     { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYBOTWAR", "server_time":"" },
     { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYSOLDIER", "server_time":"" },
     
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLDT10",  "server_time":"" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLD1TRN", "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLDT10",  "server_time":"", "ani":"S" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLD1TRN", "server_time":"", "ani":"S" },
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "FAQS",     "server_time":"" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CON1SP",   "server_time":"" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CONMGH",   "server_time":"" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCH1SP",   "server_time":"" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCHMGH",   "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CON1SP",   "server_time":"", "ani":"S" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CONMGH",   "server_time":"", "ani":"S" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCH1SP",   "server_time":"", "ani":"S" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCHMGH",   "server_time":"", "ani":"S" },
 
-    { "noday": 5, "day": "Fri", "event": "ROY", "phase": "PH05", "code_task": "SCRAMBLE", "server_time":"12:00:00", "server_duration":"01:00:00", "flag":"1" },
-    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"09:00:00", "server_duration":"00:30:00", "flag":"3" },
-    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"22:00:00", "server_duration":"00:30:00", "flag":"3" },
+    { "noday": 5, "day": "Fri", "event": "ROY", "phase": "PH05", "code_task": "SCRAMBLE", "server_time":"12:00:00", "server_duration":"01:00:00", "flag":"A", "ani":"A" },
+    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"09:00:00", "server_duration":"00:30:00", "flag":"I", "ani":"S" },
+    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"18:00:00", "server_duration":"00:30:00", "flag":"I", "ani":"S" },
+    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"22:00:00", "server_duration":"00:30:00", "flag":"I", "ani":"S" },
     { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "FREETH",   "server_time":"" },
     { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "FREETS",   "server_time":"" },
     { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "DYBOTWAR", "server_time":"" },
-    { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "DYHOSPITAL", "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "DYHOSPITAL", "server_time":"", "flag":"W" },
     
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CON1SP",   "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "TCH1SP",   "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLD1TRN", "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CON1SP",   "server_time":"", "ani":"S" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "TCH1SP",   "server_time":"", "ani":"S" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLD1TRN", "server_time":"", "ani":"S" },
     { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "HEA1SP",   "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDDFT",  "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDLST",  "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDMTC",  "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CRVNUR",   "server_time":"", "flag":"4" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "OPENUR",   "server_time":"", "flag":"4" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CRVNUR",   "server_time":"", "flag":"W" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "OPENUR",   "server_time":"", "flag":"W" },
 
     { "noday": 6, "day": "Sat", "event": "EQ", "phase": "PH06", "code_task": "EQGEAR", "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "EQ", "phase": "PH06", "code_task": "EQBPRN", "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETH", "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETS", "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "SHIELD", "server_time":"00:00:00", "server_duration":"23:00:00", "flag":"1" },
-    { "noday": 6, "day": "Sat", "event": "KVK","phase": "PH06", "code_task": "KWAR",   "server_time":"12:00:00", "server_duration":"01:00:00", "flag":"1" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "SHIELD", "server_time":"00:00:00", "server_duration":"23:00:00", "flag":"W", "ani":"S" },
+    { "noday": 6, "day": "Sat", "event": "KVK","phase": "PH06", "code_task": "KWAR",   "server_time":"12:00:00", "server_duration":"01:00:00", "flag":"A", "ani":"A" },
     
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYFALCON", "server_time":"", "flag":"5" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYFALCON", "server_time":"", "flag":"A" },
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYELITE",  "server_time":"" },
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYBOTT",   "server_time":"" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYHERBS",  "server_time":"16:30:00", "server_duration":"08:00:00", "flag":"3" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYHERBS",  "server_time":"16:30:00", "server_duration":"08:00:00" },
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "FREETH",   "server_time":"" },
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "SAVETS",   "server_time":"" },
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYSOLDIER", "server_time":"" },
@@ -235,10 +236,10 @@
     { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQGEAR", "server_time":"" },
     { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQBPRN", "server_time":"" },
 
-    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"02:00:00", "server_duration":"00:30:00", "flag":"1" },
-    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"09:00:00", "server_duration":"00:30:00", "flag":"1" },
-    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"18:00:00", "server_duration":"00:30:00", "flag":"1" },
-    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"23:00:00", "server_duration":"00:30:00", "flag":"1" },
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"02:00:00", "server_duration":"00:30:00", "ani":"S" },
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"09:00:00", "server_duration":"00:30:00", "ani":"S" },
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"18:00:00", "server_duration":"00:30:00", "ani":"S" },
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"23:00:00", "server_duration":"00:30:00", "ani":"S" },
   ];
 
   /* ---------- Utilidades compartidas ---------- */
@@ -567,19 +568,48 @@
       return h * 3600 + m * 60 + s;
     }
 
+    /* ---------- Estados del contador ----------
+       Cada tarea define su contador con una hora propia del servidor
+       (server_time) o con un vinculo a un horario de Battle Survival
+       (codebs). El estado resultante es uno de estos:
+
+         off       la tarea no define ni vincula contador; la celda queda vacia.
+         countdown la tarea tiene hora asignada y cuenta el tiempo restante.
+         progress  la tarea tiene hora asignada y cuenta el tiempo transcurrido.
+         finished  la tarea cumplio su duracion; la celda muestra --:--:--.
+
+       Las tablas de dias futuros no calculan contadores: muestran la fecha
+       MM/DD de la tarea y quedan en estado normal. */
+
+    var STATE_OFF = "off";
+    var STATE_COUNTDOWN = "countdown";
+    var STATE_PROGRESS = "progress";
+    var STATE_FINISHED = "finished";
+    var STATE_NORMAL = "normal";
+
+    var FINISHED_LABEL = "--:--:--";
+    /* Duracion predeterminada de una tarea vinculada a Battle Survival. */
+    var LINKED_DEFAULT_DURATION = 4 * 3600;
+
     /* Estado del contador para una tarea con hora propia del servidor. */
     function serverCounterState(serverTime, serverDuration, nowSec) {
       var startSec = parseClock(serverTime);
-      if (startSec === null) return null;
+      if (startSec === null) return { state: STATE_OFF, text: "" };
       var durationSec = parseClock(serverDuration);
       if (durationSec === null) durationSec = 0;
       var endSec = startSec + durationSec;
-      if (nowSec < startSec) return "T-" + fmtCounter(startSec - nowSec);
-      if (nowSec < endSec) return "+ " + fmtCounter(nowSec - startSec);
-      return "End";
+      if (nowSec < startSec) {
+        return { state: STATE_COUNTDOWN, text: "T-" + fmtCounter(startSec - nowSec) };
+      }
+      if (nowSec < endSec) {
+        return { state: STATE_PROGRESS, text: "+ " + fmtCounter(nowSec - startSec) };
+      }
+      return { state: STATE_FINISHED, text: FINISHED_LABEL };
     }
 
-    function counterState(codebs, noday, nowSec) {
+    /* Estado del contador para una tarea vinculada a un horario de Battle
+       Survival. Cada horario dura hasta el siguiente horario del dia. */
+    function linkedCounterState(codebs, noday, nowSec) {
       var allDaySlots = slotsByDay[noday] || [];
       var codebsSlots = slotsByCodebs[codebs] || [];
       var currentSlot = null;
@@ -602,78 +632,85 @@
         }
       }
 
-      if (currentSlot) return "+ " + fmtCounter(nowSec - currentSlot.sec);
-      if (nextSlot) return "T-" + fmtCounter(nextSlot.sec - nowSec);
-      return "End";
+      if (currentSlot) {
+        var elapsed = nowSec - currentSlot.sec;
+        /* La duracion predeterminada de una tarea vinculada es de 4 horas. */
+        if (elapsed >= LINKED_DEFAULT_DURATION) {
+          return { state: STATE_FINISHED, text: FINISHED_LABEL };
+        }
+        return { state: STATE_PROGRESS, text: "+ " + fmtCounter(elapsed) };
+      }
+      if (nextSlot) {
+        return { state: STATE_COUNTDOWN, text: "T-" + fmtCounter(nextSlot.sec - nowSec) };
+      }
+      return { state: STATE_FINISHED, text: FINISHED_LABEL };
     }
 
-    function linkedDateLabel(startDayMs, offset, noday, codebs) {
-      var hasDaySlot = (slotsByCodebs[codebs] || []).some(function (slot) {
-        return slot.noday === noday;
-      });
-      if (!hasDaySlot) return "—";
+    /* Aplica las clases de estado del contador a la fila. */
+    function applyCounterState(tr, state) {
+      tr.classList.toggle("ad-state-countdown", state === STATE_COUNTDOWN);
+      tr.classList.toggle("ad-state-progress", state === STATE_PROGRESS);
+      tr.classList.toggle("ad-state-normal", state !== STATE_COUNTDOWN && state !== STATE_PROGRESS);
+    }
+
+    /* Fecha MM/DD de la tabla para las tareas de dias futuros. */
+    function dayDateLabel(startDayMs, offset) {
       var loc = new Date(startDayMs + offset * 86400000);
       return pad(loc.getUTCMonth() + 1) + "/" + pad(loc.getUTCDate());
     }
 
-    /* Clasifica el estado visible del contador para aplicar los estilos del flag. */
-    function applyCounterState(tr, flag, text) {
-      if (!flag) return;
-
-      var state = "normal";
-      if (String(text).indexOf("T-") === 0) {
-        state = "countdown";
-      } else if (String(text).indexOf("+") === 0) {
-        state = "progress";
-      }
-
-      tr.classList.toggle("ad-state-countdown", state === "countdown");
-      tr.classList.toggle("ad-state-progress", state === "progress");
-      tr.classList.toggle("ad-state-normal", state === "normal");
-    }
-
     function buildRow(r, offset, startDayMs, nowSec) {
       var tr = document.createElement("tr");
-      var timeTxt = "—";
+      var timeTxt = "";
+      var state = STATE_OFF;
       var a = actMap[r.code_task];
       var codebs = a && a.codebs;
       var timeCell = null;
-      var flag = r.flag ? String(r.flag) : "";
-
-      if (flag) tr.classList.add("ad-flag-" + flag);
+      var flag = r.flag ? String(r.flag).toLowerCase() : "";
+      var ani = r.ani ? String(r.ani).toLowerCase() : "";
+      var hasSchedule = !!r.server_time || !!codebs;
 
       if (offset === 0 && r.server_time) {
         /* El dia actual usa la hora propia del servidor y su duracion. */
-        timeTxt = serverCounterState(r.server_time, r.server_duration, nowSec) || "—";
+        var own = serverCounterState(r.server_time, r.server_duration, nowSec);
+        state = own.state;
+        timeTxt = own.text;
         timeCell = appendCell(tr, timeTxt, "ad-time");
-        counters.push({ td: timeCell, tr: tr, flag: flag, serverTime: r.server_time, serverDuration: r.server_duration });
-      } else if (codebs) {
-        if (offset === 0) {
-          /* El dia actual muestra el contador del horario vinculado. */
-          timeTxt = counterState(codebs, r.noday, nowSec);
-          timeCell = appendCell(tr, timeTxt, "ad-time");
-          counters.push({ td: timeCell, tr: tr, flag: flag, codebs: codebs, noday: r.noday });
-        } else {
-          /* Los dias futuros muestran la fecha de la tarea vinculada. */
-          timeTxt = linkedDateLabel(startDayMs, offset, r.noday, codebs);
-        }
+        counters.push({
+          td: timeCell, tr: tr, serverTime: r.server_time, serverDuration: r.server_duration
+        });
+      } else if (offset === 0 && codebs) {
+        /* El dia actual muestra el contador del horario vinculado. */
+        var linked = linkedCounterState(codebs, r.noday, nowSec);
+        state = linked.state;
+        timeTxt = linked.text;
+        timeCell = appendCell(tr, timeTxt, "ad-time");
+        counters.push({ td: timeCell, tr: tr, codebs: codebs, noday: r.noday });
+      } else if (offset > 0 && hasSchedule) {
+        /* Los dias futuros muestran la fecha de la tarea, sin contadores. */
+        state = STATE_NORMAL;
+        timeTxt = dayDateLabel(startDayMs, offset);
       }
 
       /* 1. Contador */
       if (!timeCell) timeCell = appendCell(tr, timeTxt, "ad-time");
-      applyCounterState(tr, flag, timeTxt);
+      applyCounterState(tr, state);
 
       /* 2. Imagen de referencia de la tarea. */
       appendIconCell(tr, "ad-task-icon", r.code_task);
 
-      /* 3. Tarea */
-      appendCell(tr, a ? (activityText(r.code_task, "objetive") || r.code_task) : r.code_task, "ad-obj");
+      /* 3. Tarea: el indicador flag solo afecta a esta columna. */
+      var taskCell = appendCell(tr, a ? (activityText(r.code_task, "objective") || r.code_task) : r.code_task, "ad-objective");
+      if (flag) taskCell.classList.add("ad-task-flag-" + flag);
 
       /* 4. Recurso */
       appendCell(tr, a ? activityText(r.code_task, "resource") : "", "ad-resource");
 
       /* 5. Evento */
       appendCell(tr, eventLabel(r), "ad-event");
+
+      /* La animacion del contador solo se aplica en la tabla del dia actual. */
+      if (ani && offset === 0) timeCell.classList.add("ad-counter-ani-" + ani);
 
       return tr;
     }
@@ -826,14 +863,14 @@
       }
       for (var i = 0; i < counters.length; i++) {
         var counter = counters[i];
-        var text;
+        var result;
         if (counter.serverTime) {
-          text = serverCounterState(counter.serverTime, counter.serverDuration, nowSec) || "—";
+          result = serverCounterState(counter.serverTime, counter.serverDuration, nowSec);
         } else {
-          text = counterState(counter.codebs, counter.noday, nowSec);
+          result = linkedCounterState(counter.codebs, counter.noday, nowSec);
         }
-        counter.td.textContent = text;
-        applyCounterState(counter.tr, counter.flag, text);
+        counter.td.textContent = result.text;
+        applyCounterState(counter.tr, result.state);
       }
     }
 

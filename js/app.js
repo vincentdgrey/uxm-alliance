@@ -8,11 +8,11 @@
 
   /* ---------- Páginas del menú ---------- */
   var PAGES = [
-    { file: "actividades-diarias.html", key: "navDaily",  titleKey: "pageDailyTitle" },
-    { file: "reino.html",               key: "navKingdom", titleKey: "pageKingdomTitle" },
     { file: "normas-uxm.html",          key: "navRules",  titleKey: "pageRulesTitle" },
     { file: "video-tutoriales.html",    key: "navTutorials", titleKey: "pageTutorialsTitle" },
+    { file: "actividades-diarias.html", key: "navDaily",  titleKey: "pageDailyTitle" },
     { file: "estrategia.html",          key: "navStrategy", titleKey: "pageStrategyTitle" },
+    { file: "reino.html",               key: "navKingdom", titleKey: "pageKingdomTitle" },
     { file: "contacto.html",            key: "navContact", titleKey: "pageContactTitle" }
   ];
 
@@ -62,8 +62,8 @@
     if (el) el.textContent = text;
   }
 
-  setText("arengaTitle", T.arengaTitle);
-  setText("arengaMessage", T.arengaMessage);
+  setText("warCryTitle", T.warCryTitle);
+  setText("warCryMessage", T.warCryMessage);
   setText("tutoTitle", T.tutoTitle);
   setText("allianceTitle", T.allianceTitle);
   setText("allianceMessage", T.allianceMessage);
@@ -215,6 +215,9 @@
 
     var videoButtonsBox = byId("videoTutorialButtons");
     if (videoButtonsBox) buildVideoTutorialButtons(videoButtonsBox);
+
+    var bookmarksBox = byId("strategyBookmarks");
+    if (bookmarksBox) buildStrategyBookmarks(bookmarksBox);
   }
 
   function buildInfoButtons(container) {
@@ -263,6 +266,100 @@
       button.href = withLang(pageUrl("video-tutoriales.html"), LANG) + "#" + section.id;
       button.textContent = T[section.labelKey] || section.id;
       container.appendChild(button);
+    });
+  }
+
+  /* ---------- Marcadores de la Biblioteca Estrategica ---------- */
+  /* Los grupos viven en db/library. Solo se cargan los manifiestos de grupo:
+     los temas individuales se cargan ya en la subpagina de estrategia. */
+  var LIBRARY_BASE = "db/library/";
+  var LIBRARY_INDEX = LIBRARY_BASE + "index.json";
+  var LIBRARY_FALLBACK_LANGS = ["en", "es"];
+
+  function libraryTitle(field) {
+    if (!field) return "";
+    if (typeof field === "string") return field;
+
+    var candidates = [field[LANG]];
+    for (var i = 0; i < LIBRARY_FALLBACK_LANGS.length; i++) {
+      candidates.push(field[LIBRARY_FALLBACK_LANGS[i]]);
+    }
+    for (var c = 0; c < candidates.length; c++) {
+      if (typeof candidates[c] === "string" && candidates[c]) return candidates[c];
+    }
+    return "";
+  }
+
+  function fetchLibraryJson(url) {
+    return fetch(url, { cache: "no-cache" }).then(function (response) {
+      if (!response.ok) throw new Error("No se pudo cargar " + url);
+      return response.json();
+    });
+  }
+
+  /* Construye el boton general y la lista automatica de grupos. */
+  function buildStrategyBookmarks(container) {
+    if (!container) return;
+    container.innerHTML = "";
+
+    var buttonBox = document.createElement("div");
+    buttonBox.className = "block-buttons";
+
+    var strategyButton = document.createElement("a");
+    strategyButton.className = "btn-outline btn-info-rules";
+    strategyButton.href = withLang(pageUrl("estrategia.html"), LANG);
+    strategyButton.textContent = T.navStrategy;
+    buttonBox.appendChild(strategyButton);
+
+    var groupBox = document.createElement("div");
+    groupBox.className = "search-engine-topics-list block-bookmarks-groups";
+    groupBox.setAttribute("role", "group");
+
+    container.appendChild(buttonBox);
+    container.appendChild(groupBox);
+
+    loadLibraryGroups().then(function (groups) {
+      groups.forEach(function (group) {
+        var link = document.createElement("a");
+        link.className = "search-engine-topic";
+        link.href = withLang(pageUrl("estrategia.html") + "?group=" + encodeURIComponent(group.id), LANG);
+        link.textContent = group.title;
+        groupBox.appendChild(link);
+      });
+    }, function () {
+      /* Si la biblioteca no carga, el boton general sigue siendo valido. */
+    });
+  }
+
+  /* Carga el indice y los manifiestos de grupo, tolerando fallos parciales. */
+  function loadLibraryGroups() {
+    return fetchLibraryJson(LIBRARY_INDEX).then(function (index) {
+      var files = Array.isArray(index && index.files) ? index.files : [];
+      var requests = files.map(function (file) {
+        return fetchLibraryJson(LIBRARY_BASE + file).then(
+          function (group) { return { group: group, error: null }; },
+          function () { return { group: null, error: file }; }
+        );
+      });
+
+      return Promise.all(requests).then(function (results) {
+        var groups = [];
+        results.forEach(function (result) {
+          if (!result.group) return;
+          var group = result.group;
+          groups.push({
+            id: group.id,
+            title: libraryTitle(group.title) || group.id,
+            order: typeof group.order === "number" ? group.order : 999
+          });
+        });
+
+        groups.sort(function (a, b) {
+          if (a.order !== b.order) return a.order - b.order;
+          return a.title.localeCompare(b.title, LANG);
+        });
+        return groups;
+      });
     });
   }
 
