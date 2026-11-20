@@ -115,8 +115,8 @@
     { "code": "EQGEAR",  "group":"GEAR",  "icon":"gearstone",     "point": "",          "codebs": "" },
     { "code": "EQBPRN",  "group":"GEAR",  "icon":"gear-blueprint-ur", "point": "",      "codebs": "" },
     { "code": "ELIXIR",  "group":"FOCUS", "icon":"",              "point": "",          "codebs": "" },
-    { "code": "SCRAMBLE", "group":"FOCUS", "icon":"",             "point": "",          "codebs": "" },
-    { "code": "KWAR",    "group":"FOCUS", "icon":"",              "point": "",          "codebs": "" },
+    { "code": "SCRAMBLE", "group":"FOCUS", "icon":"medall-fame",  "point": "",          "codebs": "" },
+    { "code": "KWAR",    "group":"FOCUS", "icon":"medall-fame",   "point": "",          "codebs": "" },
     { "code": "SHIELD",  "group":"FOCUS", "icon":"",              "point": "",          "codebs": "" },
     { "code": "CUMULUS", "group":"FOCUS", "icon":"cumulus-cristal", "point": "",        "codebs": "" },
   ];
