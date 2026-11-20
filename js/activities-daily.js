@@ -199,7 +199,7 @@
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCH1SP",   "server_time":"", "ani":"S" },
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCHMGH",   "server_time":"", "ani":"S" },
 
-    { "noday": 5, "day": "Fri", "event": "ROY", "phase": "PH05", "code_task": "SCRAMBLE", "server_time":"12:00:00", "server_duration":"01:00:00", "flag":"A", "ani":"A" },
+    { "noday": 5, "day": "Fri", "event": "ROY", "phase": "PH05", "code_task": "SCRAMBLE", "server_time":"12:00:00", "server_duration":"02:00:00", "flag":"A", "ani":"A" },
     { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"09:00:00", "server_duration":"00:30:00", "flag":"I", "ani":"S" },
     { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"18:00:00", "server_duration":"00:30:00", "flag":"I", "ani":"S" },
     { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"22:00:00", "server_duration":"00:30:00", "flag":"I", "ani":"S" },
@@ -223,7 +223,7 @@
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETH", "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETS", "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "SHIELD", "server_time":"00:00:00", "server_duration":"23:00:00", "flag":"W", "ani":"S" },
-    { "noday": 6, "day": "Sat", "event": "KVK","phase": "PH06", "code_task": "KWAR",   "server_time":"12:00:00", "server_duration":"01:00:00", "flag":"A", "ani":"A" },
+    { "noday": 6, "day": "Sat", "event": "KVK","phase": "PH06", "code_task": "KWAR",   "server_time":"12:00:00", "server_duration":"02:00:00", "flag":"A", "ani":"A" },
     
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYFALCON", "server_time":"", "flag":"A" },
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYELITE",  "server_time":"" },
