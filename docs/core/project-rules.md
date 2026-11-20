@@ -43,6 +43,7 @@ UXM Alliance es un sitio web estático publicado en GitHub Pages. La portada viv
 | `js/alliance-bonuses.js` | Datos de los bonos de la Alianza (`window.ALLIANCE_BONUSES`) |
 | `js/activities-daily.js` | Script único de la subpágina de actividades diarias: datos, cronogramas y utilidades |
 | `js/reino.js` | Datos y renderizado de la subpágina Reino (objeto `KINGDOM`) |
+| `js/reino-castle.js` | Plano 3D de la Ciudad Real de la subpágina Reino (módulo ES con Three.js) |
 | `js/strategy-library.js` | Buscador, árbol de temas y renderizado de la Biblioteca Estratégica |
 | `js/video-cards.js` | Tarjetas de video de YouTube (solo en video tutoriales) |
 | `media/subpages/*.svg` | Fondos temáticos de las portadas de subpágina |
@@ -254,6 +255,24 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - No usar márgenes negativos ni `100vw` para alcanzar el ancho completo: `100vw` incluye el ancho de la barra de desplazamiento y genera overflow horizontal.
 - La portada contiene las secciones de bienvenida (`infoTitle`), arenga (`arengaTitle` y `arengaMessage`), video tutorial (`tutoTitle`, `tutorialsMessage`) y alliance (`allianceTitle`, `allianceMessage` y la tabla de bonos), además de la sección de estrategia (`strategyTitle` y `strategyMessage`).
 
+### Marcadores de la Biblioteca Estratégica en la portada
+
+- La sección de estrategia de `index.html` reserva `<div class="block-booksmarks" id="strategyBookmarks"></div>`. El nombre de la clase `block-booksmarks` se conserva tal cual, con su errata original.
+- `js/app.js` genera su contenido con `buildStrategyBookmarks()`, que solo actúa si existe `#strategyBookmarks`.
+- El bloque contiene dos partes:
+  1. Un botón general con las clases `btn-outline btn-info-rules`, idénticas en estilo y animación a los botones de `#infoButtons`. Enlaza a `pages/estrategia.html` conservando `?lang=` y usa la traducción `navStrategy`.
+  2. Una lista minimalista `.searchEngine-topics-list` con un enlace `.searchEngine-topic` por **grupo** de la biblioteca, con el mismo tratamiento visual que los temas de acceso rápido de `pages/estrategia.html`.
+- La portada carga `css/estrategia.css` para reutilizar las reglas de `.searchEngine-topics-list` y `.searchEngine-topic` sin duplicarlas. `css/style.css` añade solo la disposición de `.block-booksmarks`: columna, centrado y separación de `18px`.
+- La lista de grupos se obtiene en tiempo de ejecución:
+  - Se carga `db/library/index.json` y luego **solo los manifiestos de grupo**, nunca los temas individuales. La subpágina de estrategia es la que descarga los temas.
+  - Se ordenan por `order` y, a igualdad, por título localizado.
+  - El texto de cada grupo es su `title` en el idioma activo, con `en` y `es` como respaldo, igual que en la biblioteca.
+  - No hay grupos, títulos ni cantidades escritos en el código: para añadir un grupo basta crear su JSON y registrarlo en `db/library/index.json`.
+- Cada enlace de grupo apunta a `pages/estrategia.html?group=<id>&lang=<idioma>`. El identificador viaja codificado con `encodeURIComponent`.
+- Si la biblioteca no carga, el botón general permanece disponible y la lista queda vacía. Si un solo grupo falla, los demás se muestran con normalidad.
+- La subpágina `pages/estrategia.html` admite el parámetro `?group=`: tras renderizar el árbol, `expandGroupFromUrl()` despliega únicamente el grupo indicado, sin seleccionar un tema ni ejecutar una búsqueda. Un identificador desconocido se ignora y el árbol mantiene su estado inicial contraído.
+- El parámetro `?group=` es complementario de `?lang=`: ambos conviven en la misma URL.
+
 ### Script único de Actividades Diarias
 
 - La subpágina `pages/actividades-diarias.html` carga el núcleo `js/i18n.js`, el archivo `js/i18n/actividades-diarias/i18n.js`, `js/app.js` y un **único script propio**: `js/activities-daily.js`, al final de `<body>`.
@@ -358,7 +377,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 ### Estructura de la página
 
 - La subpágina `pages/reino.html` sigue el formato de Actividades Diarias: misma cabecera, menú lateral, portada de subpágina con inicial escarlata `R`, footer, selector de idiomas y Bootstrap por CDN.
-- Carga `../css/style.css` y después `../css/reino.css`. Los scripts se cargan en este orden: `../js/i18n.js`, `../js/i18n/reino/i18n.js`, `../js/app.js` y `../js/reino.js`.
+- Carga `../css/style.css` y después `../css/reino.css`. Los scripts se cargan en este orden: `../js/i18n.js`, `../js/i18n/reino/i18n.js`, `../js/app.js`, `../js/reino.js` y el módulo `../js/reino-castle.js`.
 - Usa el tema `subpage-kingdom`, asociado al fondo `media/subpages/reino.svg` declarado en `css/style.css`.
 - El menú la registra en `js/app.js` como `{ file: "reino.html", key: "navKingdom", titleKey: "pageKingdomTitle" }`, detrás de Actividades Diarias. La clave `navKingdom` existe en los nueve idiomas de `js/i18n.js`.
 - El título y la introducción de la página viven en `js/i18n/reino/i18n.js` con las claves `pageKingdomTitle` y `pageKingdomLead`, presentes en los nueve idiomas.
@@ -382,6 +401,30 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - La página es estática y no usa `fetch`: no hay dependencias de red ni peticiones CORS.
 - Mientras una lista esté vacía, se muestra el estado «Información pendiente» (`kingdomPending`) en lugar de datos inventados. No se publican territorios, coordenadas, consejos ni planes que no hayan sido confirmados por el usuario.
 - Al cargar contenido nuevo en `KINGDOM` no se modifica el HTML: basta con editar el objeto del script.
+
+### Plano 3D de la Ciudad Real
+
+- La subpágina Reino incluye un visor 3D interactivo dentro de la sección **Planes de Batalla**, montado en el contenedor `<div class="kingdom-render" id="kingdomRender">`. El bloque de controles y la descripción viven en `.kingdom-render-bar`, fuera del lienzo.
+- El visor lo construye `js/reino-castle.js`, un módulo ES independiente de `js/reino.js`. No usa `fetch` ni carga JSON: los datos son literales dentro del propio archivo.
+- Dependencias externas por CDN, sin npm ni proceso de compilación:
+  - `three` → `https://cdn.jsdelivr.net/npm/three@<versión>/build/three.module.js`.
+  - `three/addons/` → `https://cdn.jsdelivr.net/npm/three@<versión>/examples/jsm/`.
+  - La página declara un `<script type="importmap">` con esas dos entradas y la versión queda fijada, sin rangos.
+- El módulo importa `OrbitControls` (rotación, zoom y desplazamiento) y `CSS2DRenderer` (etiquetas HTML ancladas a la escena).
+- La Ciudad Real es un modelo **wireframe minimalista** construido con `EdgesGeometry` y `LineSegments`:
+  - Platforma cuadrada, cuerpo principal, torreón central, puerta y almenas.
+  - Cuatro torretas con forma de pieza de ajedrez (base ancha, fuste estrecho, corona más ancha y cuatro almenas), siempre menores que el castillo y sin detalles adicionales.
+  - Las murallas son líneas secundarias y el muro sur se abre para dejar la puerta.
+- La distribución cenital usa el norte hacia `-Z` y el este hacia `+X`. Las cuatro torres se declaran en la constante `TOWERS`:
+  - Oeste `(-6, -6)`, **Norte `(6, -6)`**, Este `(6, 6)`, Sur `(-6, 6)`.
+  - La Torre Norte ocupa por tanto la esquina noreste del cuadrado.
+- Los santuarios (ciudades adicionales) se declaran en la constante `SANCTUARIES` con `id`, `nameKey`, `variant` (`blue` o `white`), `level`, `x` y `z`. Para anadir, quitar o reubicar uno basta con editar esa lista: el renderizado es genérico. Las variantes se modelan como formas angulares escalonadas, inspiradas en los iconos `media/draft/sanc-blue.png` y `media/draft/sanc-white.png`, que son solo referencia visual y no se cargan en la página.
+- Las referencias `media/draft/royal-city.png`, `media/draft/sanc-blue.png` y `media/draft/sanc-white.png` son material de diseño: el plano se genera con geometría de Three.js, no con imágenes planas.
+- Etiquetas: `CSS2DObject` para la Ciudad Real, las cuatro torres y cada santuario, más los ejes cardinales N, S, E y O. Los textos vienen de `js/i18n/reino/i18n.js` en los nueve idiomas: `kingdomCastleName`, `kingdomTowerWest`, `kingdomTowerNorth`, `kingdomTowerEast`, `kingdomTowerSouth`, `kingdomSanctuaryBlue` y `kingdomSanctuaryWhite`.
+- Interacción: arrastrar para rotar, rueda o pinza para acercar y alejar, botón `kingdomRenderTop` para la vista superior y `kingdomRenderReset` para restablecer la perspectiva inicial. El renderizado es bajo demanda, se repinta con el evento `change` de los controles y no hay bucle de animación permanente.
+- La vista superior debe conservar el norte hacia arriba: con la cámara cenital, la Torre Norte queda en la esquina superior derecha del lienzo.
+- El visor se redimensiona con `ResizeObserver` (o `resize` como respaldo) y respeta `min-height` de `420px` en escritorio y `320px` en móvil (`640px`).
+- Si no hay WebGL o el módulo no puede ejecutarse, el mensaje `#kingdomRenderFallback` permanece visible con el texto `kingdomRenderFallback` y el resto de la página sigue funcionando.
 
 ### Aviso de la próxima actividad
 - El calendario de Batalla de Supervivencia avisa cuando la **próxima actividad** está por comenzar, sin añadir texto al contador.
@@ -471,6 +514,7 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
   - `.searchEngine-contents`: resultado de la búsqueda o contenido del tema seleccionado.
 - Los separadores entre bloques son `.line-divisor-scarlet`, igual que en el resto del sitio.
 - La página carga `../css/style.css` y después `../css/estrategia.css`; los estilos específicos de la biblioteca no se duplican en la hoja compartida. Los scripts se cargan en este orden: `../js/i18n.js`, `../js/i18n/estrategia/i18n.js`, `../js/app.js` y `../js/strategy-library.js`. Bootstrap se sigue cargando por CDN.
+- La subpágina admite el parámetro `?group=<id>` para abrir un grupo concreto desde la portada: tras renderizar el árbol, `expandGroupFromUrl()` despliega solo ese grupo. No selecciona ningún tema ni lanza una búsqueda, y un identificador desconocido se ignora. El parámetro convive con `?lang=`.
 
 ### Datos de la biblioteca
 

@@ -30,6 +30,7 @@ uxm-alliance/
 |   ├── alliance-bonuses.js  # Datos de los bonos de la Alianza
 |   ├── activities-daily.js  # Cronogramas y datos de Actividades Diarias
 |   ├── reino.js   # Datos y renderizado de la subpágina Reino (objeto KINGDOM)
+|   ├── reino-castle.js  # Plano 3D de la Ciudad Real (módulo ES con Three.js)
 |   └── strategy-library.js  # Buscador y árbol de la Biblioteca Estratégica
 ├── media          # archivos multimedia
 |   └── video-particles-cyan.mp4  # video cover pagina de inicio
@@ -67,6 +68,7 @@ uxm-alliance/
 - Si una regla anterior contradice al código manual, prevalece el código manual y la regla obsoleta debe corregirse.
 - `db/*.json` está obsoleto: se conserva como histórico y no lo carga el sitio. Excepción activa: `db/library/` alimenta la Biblioteca Estratégica (ver `docs/core/project-rules.md`).
 - La fuente de verdad de los datos de actividades son las variables de `js/activities-daily.js`.
+- La fuente de verdad del plano 3D de la Ciudad Real son las constantes `TOWERS` y `SANCTUARIES` de `js/reino-castle.js`.
 - La fuente de verdad de los datos de los bonos de la Alianza es `window.ALLIANCE_BONUSES` en `js/alliance-bonuses.js`; sus textos traducibles siguen en `js/i18n/index/i18n.js`.
 - La fuente de verdad de los textos i18n es el conjunto `js/i18n.js` (núcleo común) más `js/i18n/<página>/i18n.js`. Las ediciones manuales de `texts.es` se conservan y son la base para propagar cambios a los demás idiomas.
 - La fuente de verdad de los temas de la Biblioteca Estratégica son los archivos `db/library/<tema>.json`; el índice manual `db/library/index.json` los enumera.

@@ -1,5 +1,31 @@
 # Changelog
 
+## [261119c] - 2026-11-19
+
+### Added
+- La subpágina `pages/reino.html` incorpora un plano 3D interactivo de la Ciudad Real en la sección «Planes de Batalla`, montado en `<div class="kingdom-render" id="kingdomRender">`. El visor lo construye el nuevo módulo `js/reino-castle.js` con Three.js, `OrbitControls` y `CSS2DRenderer`, cargados por CDN mediante un `<script type="importmap">` con la versión fijada.
+- La Ciudad Real es un modelo wireframe minimalista: plataforma, cuerpo principal, torreón central, puerta, almenas y cuatro torretas con forma de pieza de ajedrez (base ancha, fuste estrecho, corona más ancha y cuatro almenas), siempre menores que el castillo. Las murallas son líneas secundarias.
+- Las cuatro torres se declaran en la constante `TOWERS` de `js/reino-castle.js`: Oeste `(-6, -6)`, Norte `(6, -6)`, Este `(6, 6)` y Sur `(-6, 6)`, de modo que la Torre Norte ocupa la esquina noreste del cuadrado (norte hacia `-Z`, este hacia `+X`).
+- Los santuarios (ciudades adicionales) se declaran en la constante `SANCTUARIES` con `id`, `nameKey`, `variant` (`blue` o `white`), `level`, `x` y `z`. Las variantes se modelan como formas angulares escalonadas, inspiradas en `media/draft/sanc-blue.png` y `media/draft/sanc-white.png`, que son solo referencia visual. Se incluyen dos ejemplos provisionales con niveles 25 y 30.
+- Etiquetas `CSS2DObject` para la Ciudad Real, las cuatro torres, cada santuario y los ejes cardinales N, S, E y O. Interacción con arrastrar, rueda o pinza, más los botones «Vista superior» y «Restablecer vista». El renderizado es bajo demanda y el mensaje `#kingdomRenderFallback` se mantiene visible si no hay WebGL.
+- Once claves propias del visor en `js/i18n/reino/i18n.js`, presentes en los nueve idiomas: `kingdomCastleName`, `kingdomTowerWest`, `kingdomTowerNorth`, `kingdomTowerEast`, `kingdomTowerSouth`, `kingdomSanctuaryBlue`, `kingdomSanctuaryWhite`, `kingdomRenderDescription`, `kingdomRenderTop`, `kingdomRenderReset` y `kingdomRenderFallback`.
+- `css/reino.css` incorpora los estilos del visor, de las etiquetas y de los controles, con `min-height` de `420px` en escritorio y `320px` en móvil.
+- Se añaden cinco pruebas de contrato: contenedor y controles del visor, carga de Three.js por import map, distribución de las cuatro torres con la Torre Norte al noreste, configuración de los santuarios y textos del plano en los nueve idiomas.
+
+### Changed
+- `docs/core/project-rules.md` documenta el plano 3D de la Ciudad Real: estructura, dependencias, modelo wireframe, convención de ejes, datos configurables, interacción y comportamiento sin WebGL.
+
+## [261119b] - 2026-11-19
+
+### Added
+- La sección «Biblioteca Estratégica» de la portada (`index.html`) rellena `<div class="block-booksmarks" id="strategyBookmarks">` con dos partes: un botón general con el estilo y la animación de `#infoButtons` que enlaza a `pages/estrategia.html?lang=`, y una lista minimalista con un enlace por grupo de la biblioteca.
+- La lista de grupos de la portada es automática: `js/app.js` carga `db/library/index.json` y solo los manifiestos de grupo, los ordena por `order` y muestra su `title` en el idioma activo. No hay grupos ni títulos escritos en el código.
+- `pages/estrategia.html` acepta el parámetro `?group=<id>`: al llegar desde la portada, `expandGroupFromUrl()` despliega únicamente ese grupo en el árbol, sin seleccionar un tema ni ejecutar una búsqueda.
+- Se añaden cinco pruebas de contrato: bloque de marcadores en la portada, botón general y grupos automáticos, carga desde el índice de la biblioteca, estilos de los marcadores y apertura del grupo por URL.
+
+### Changed
+- `index.html` carga `css/estrategia.css` para reutilizar las reglas de `.searchEngine-topics-list` y `.searchEngine-topic` en la lista de grupos. `css/style.css` añade solo la disposición de `.block-booksmarks`: columna, centrado y separación.
+
 ## [261119a] - 2026-11-19
 
 ### Added
