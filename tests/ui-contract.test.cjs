@@ -1487,11 +1487,18 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
   const activityCode = [...js.matchAll(/"code": "([A-Z0-9]+)"/g)].map((m) => m[1]);
   assert.equal(activityCode.length, 46);
 
+  /* El español es la fuente de verdad: define el orden canonico de las traducciones. */
+  const canonicalCodes = Object.keys(i18n.es.adActivities);
+  assert.equal(canonicalCodes.length, 47);
+  for (const code of activityCode) {
+    assert.ok(canonicalCodes.includes(code), "el canon debe traducir " + code);
+  }
+
   for (const language of languages) {
     const texts = i18n[language];
     assert.ok(texts.adActivities, language + " debe declarar adActivities");
-    assert.deepEqual(Object.keys(texts.adActivities), activityCode, language);
-    for (const code of activityCode) {
+    assert.deepEqual(Object.keys(texts.adActivities), canonicalCodes, language);
+    for (const code of canonicalCodes) {
       assert.equal(typeof texts.adActivities[code].objective, "string", language + "/" + code);
       assert.equal(typeof texts.adActivities[code].resource, "string", language + "/" + code);
     }
@@ -1501,7 +1508,7 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
     for (const phase of Object.keys(texts.adPhases)) assert.equal(typeof texts.adPhases[phase], "string", language + "/" + phase);
 
     assert.ok(texts.adEvents, language + " debe declarar adEvents");
-    assert.deepEqual(Object.keys(texts.adEvents), ["DY", "AD", "KVK", "ROY", "BS", "EQ", "BEX", "CUM"]);
+    assert.deepEqual(Object.keys(texts.adEvents), ["DY", "AD", "KVK", "ROY", "BS", "EQ", "BEX", "CUM", "CHE"]);
     for (const event of Object.keys(texts.adEvents)) assert.equal(typeof texts.adEvents[event], "string", language + "/" + event);
   }
 });
@@ -1757,7 +1764,8 @@ test("las traducciones japonesas no contienen textos corruptos", () => {
   assert.match(ja.rulesPositionR2, /^時折参加するプレイヤー/);
   assert.match(ja.rulesPositionR4, /^リーダーチーム：同盟を支援し、メンバーを励ます/);
   assert.match(ja.rulesPositionR5, /判断して追放します/);
-  assert.equal(ja.adActivities.RAVESS.objective, "レイベンのエッセンスを消費する");
+  assert.equal(ja.adActivities.RAVESS.objective, "レイベンのエッセンスを消費する、優先");
+  assert.equal(ja.adActivities.RAVESS.resource, "レイベンのエッセンス");
 
   /* Los valores del juego no se alteran al corregir. */
   const tutorialValues = [ja.videoTutorialTip1, ja.videoTutorialPriority3, ja.videoTutorialEvent1, ja.videoTutorialEvent2, ja.videoTutorialEvent3, ja.videoTutorialEvent4].join("\n");

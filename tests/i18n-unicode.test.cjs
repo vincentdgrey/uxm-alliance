@@ -132,7 +132,9 @@ test("el ruso usa cirilico y no mezcla CJK", () => {
 test("las traducciones respetan los valores y codigos del juego", () => {
   const i18n = loadAllI18n();
   const canonical = i18n.es.adActivities;
-  const protectedTokens = ["UR", "SSR", "SR", "T8", "150%", "24H", "1.1M", "2.2M", "100K", "1.5M", "35"];
+  /* "30min" se excluye a proposito: cada idioma lo expresa con su convencion local
+     (30min, 30분간, 30мин, 30分钟, 30 dakika) conservando siempre la cifra 30. */
+  const protectedTokens = ["UR", "SSR", "SR", "T8", "T7", "150%", "24H", "1.1M", "2.2M", "100K", "1.5M", "35", "40", "10", "11", "24", "6", "+50", "335M", "1.4B", "MVP1"];
 
   for (const language of languages) {
     const activities = i18n[language].adActivities;

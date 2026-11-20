@@ -376,13 +376,14 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - La lógica vive en `initAllianceDuel()` de `js/activities-daily.js`.
 - Las traducciones del calendario viven exclusivamente en `js/i18n/actividades-diarias/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (cinco encabezados de tabla), presentes en los 9 idiomas. El calendario no mantiene una tabla de traducciones propia.
 - Los textos de las actividades, las fases y los eventos también se localizan en `js/i18n/actividades-diarias/i18n.js`, mediante tres mapas por idioma:
-  - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (46 registros), con los campos `objective` y `resource`.
+  - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (46 registros activos), con los campos `objective` y `resource`. El mapa i18n declara **47 entradas**: las 46 activas más `CHEESE7`, traducción preparada y pendiente de integrar en los datos.
   - `adPhases`: indexado por la fase normalizada (`P00`-`P06`).
-  - `adEvents`: indexado por el `event` de `EVENT_CODE` (`DY`, `AD`, `KVK`, `ROY`, `BS`, `EQ`, `BEX`, `CUM`).
-- La resolución de cada texto sigue el orden **idioma activo → inglés → texto canónico en español**. `js/activities-daily.js` lo aplica con `activityText(code, field)`, `phaseText(phase)` y `eventLabel(r)`. El inglés se toma de `window.I18N.en` mediante la constante `T_EN` y el español canónico de `window.I18N.es` mediante `T_ES`.
+  - `adEvents`: indexado por el `event` de `EVENT_CODE` (`DY`, `AD`, `KVK`, `ROY`, `BS`, `EQ`, `BEX`, `CUM`), más `CHE` («Trampa del Queso»), igualmente pendiente de integrar en los datos.
+- **El orden canónico de `adActivities` y `adEvents` lo define el bloque español** (`texts.es`), no `ACTIVITY_CODE`. Los nueve idiomas deben declarar las mismas claves en el mismo orden que el español; las pruebas comparan contra el canon español y verifican que los 46 `code` de `ACTIVITY_CODE` esten cubiertos.
+- La resolucion de cada texto sigue el orden **idioma activo → inglés → texto canónico en español**. `js/activities-daily.js` lo aplica con `activityText(code, field)`, `phaseText(phase)` y `eventLabel(r)`. El inglés se toma de `window.I18N.en` mediante la constante `T_EN` y el español canónico de `window.I18N.es` mediante `T_ES`.
 - Los códigos, `codebs`, `icon` y `point` **no se traducen**: son identificadores estables del juego. Los `resource` vacíos en el texto canónico en español permanecen vacíos en los 9 idiomas.
-- Las definiciones vigentes de las operaciones UR en `texts.es.adActivities` son: `CRVNUR` → `Envía Caravanas UR` con recurso `4 Caravanas`; `OPENUR` → `Ejecuta Operaciones Encubiertas UR` con recurso `7 Operaciones Encubiertas`. Las traducciones de `adActivities` en los 9 idiomas se ajustan a esas definiciones, con el español como fuente.
-- Las últimas ediciones manuales de `texts.es.adActivities` también son la fuente de verdad para las siguientes actividades: `ANTX` → `Consume Antitoxinas x660`; `HERBS` → `Recolecta Hierbas x60, todo el día`; `GRAIN` → `Recolecta Trigo/Madera x100`; `CONMGH` → `Aumenta el Poder de Un Edificio`; `SCRAMBLE` → objetivo `100K Puntos de Honor, Captura/Defiende una Granja en el lodo` y recurso `Granjas de la Ciudad Real`; `KWAR` → objetivo `1.5M Puntos de Honor, Derrota/Pierde/Cura Soldados` y recurso `Guerra de Reinos (KvK)`; `CUMULUS` → `Recolecta Cristal Purificado en Cúmulos, 30min`. Las cifras, el identificador `KvK` y los recursos vacíos deben conservarse en las traducciones.
+- Las definiciones vigentes de las operaciones UR en `texts.es.adActivities` son: `CRVNUR` → `Envía Caravanas UR` con recurso `4 Caravanas`; `OPENUR` → `Ejecuta Operaciones Encubiertas UR, mínimo 6, la última es más difícil` con recurso `7 Operaciones Encubiertas`. Las traducciones de `adActivities` en los 9 idiomas se ajustan a esas definiciones, con el español como fuente.
+- Las últimas ediciones manuales de `texts.es.adActivities` también son la fuente de verdad para las siguientes actividades: `ANTX` → `Consume Antitoxinas x660`; `HERBS` → `Recolecta Hierbas x60, todo el día`; `GRAIN` → `Recolecta Trigo/Madera x100`; `SCRAMBLE` → objetivo `100K Puntos de Honor, Captura/Defiende una Granja en el lodo` y recurso `Granjas de la Ciudad Real`; `KWAR` → objetivo `1.5M Puntos de Honor, Derrota/Pierde/Cura Soldados` y recurso `Guerra de Reinos (KvK)`; `CUMULUS` → objetivo `Recolecta Cristal Purificado en Cúmulos, 30min duración` y recurso `Cúmulos de Cristal`. Las cifras, el identificador `KvK` y los recursos vacíos deben conservarse en las traducciones.
 - La tabla de cada día tiene **cinco columnas** en este orden:
   1. `Contador`.
   2. Columna de imagen de la tarea, cargada desde `media/glyph/<icon>.png` según el valor `icon` de `ACTIVITY_CODE`.
@@ -429,8 +430,8 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 
 - Las redacciones manuales del español en `texts.es.adActivities` son la fuente de verdad y prevalecen sobre cualquier traducción previa:
   - `DYBOTT` → objetivo «Guarda Botellas de Energía/Stamina para la Próxima Fase del Cuervo», recurso «Botella de Energía/Stamina».
-  - `DYBOTWAR` → objetivo «Guarda Botellas de Stamina para la Fase de Guerra», recurso «Botella de Stamina».
-  - `DYSOLDIER` → objetivo «Entrena Soldados T6 o T7; promover el Día de Preparación para la Guerra», recurso «Soldado T7».
+  - `DYBOTWAR` → objetivo «Guarda Botellas de Energía/Stamina para la Fase de Guerra», recurso «Botella de Energía/Stamina».
+  - `DYSOLDIER` → objetivo «Entrena Soldados T6 o T7; Promover el Día de Preparación de Guerra», recurso «Soldado T7».
 - Estos tres textos se propagan a los otros ocho idiomas con el español como fuente, sin sobrescribir el texto español.
 
 ### Redacciones manuales de `FALCON` y `DYFALCON`
@@ -440,6 +441,18 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
   - `FALCON` → objetivo «Completa Misiones del Halcón, 10 ó 11 cada 6 Horas», recurso «Torre del Halcón».
   - `DYFALCON` → objetivo «Inicia Misiones Halcón, pero no las completes, mantiene en espera 35 ó 40», recurso «Torre del Halcón».
 - Estos dos textos se propagan a los otros ocho idiomas con el español como fuente, sin sobrescribir el texto español. Las cifras `10`, `11`, `6`, `35` y `40` deben conservarse en las traducciones.
+
+### Reordenamiento del bloque español de `adActivities` y traducciones pendientes
+
+- El usuario reordenó por completo el bloque `texts.es.adActivities` y agrupó las actividades por tema (consumibles, raven, construcción, tickets, soldados, equipo y eventos). Ese orden es el **canónico**: los nueve idiomas declaran las mismas claves en el mismo orden.
+- La misma edición manual actualizó 26 actividades ya existentes. Sus textos nuevos se propagaron a los otros ocho idiomas con el español como fuente, sin sobrescribir el texto español:
+  - Consumibles y raven: `ANTX`, `STMN`, `DYBOTWAR`, `EPIUR`, `RAVESS`, `RAVFRT`, `RAVCH1`.
+  - Construcción, investigación y operaciones: `CON1SP`, `CONMGH`, `TCH1SP`, `TCHMGH`, `OPENUR`, `TCKSUR`, `TCKHER`, `SKILLB`.
+  - Soldados, curación y equipo: `SOLD1TRN`, `SOLDT10`, `DYSOLDIER`, `HEA1SP`, `DYHOSPITAL`, `DYELITE`, `EQGEAR`, `EQBPRN`.
+  - Eventos: `SHIELD`, `ELIXIR`, `CUMULUS`.
+- Muchas de estas actividades **fusionan en el objetivo lo que antes era el recurso** (por ejemplo `CON1SP` y `TCH1SP`) y el recurso pasa a nombrar el objeto concreto (`Acelerador Construcción`, `Acelerador Desarrollo`, `Acelerador Entrenamiento`, `Acelerador Curación`, `Insignia de Habilidad`, `Piedra de Equipo`, `Escudo`, `Cofres de Epígrafes`).
+- `CHEESE7` y `adEvents.CHE` («Trampa del Queso») están traducidos en los nueve idiomas, pero **aún no existen en `ACTIVITY_CODE`, `EVENT_CODE` ni `DAILY`**: no aparecen en los cronogramas hasta que se integren en los datos. La única clave i18n admitida como pendiente de integración es `CHEESE7`.
+- El valor `30min` no se protege como token literal en las pruebas: cada idioma expresa la duración con su convención local (`30min`, `30分間`, `30мин`, `30分钟`, `30 dakika`) conservando siempre la cifra `30`.
 
 ## Subpágina Reino
 

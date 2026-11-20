@@ -1,5 +1,19 @@
 # Changelog
 
+## [261120e] - 2026-11-20
+
+### Changed
+- Se propaga a los otros ocho idiomas de `js/i18n/actividades-diarias/i18n.js` la edición manual de `texts.es.adActivities`, que reordena las 47 claves del bloque español y actualiza 26 actividades existentes: `ANTX`, `STMN`, `DYBOTWAR`, `EPIUR`, `RAVESS`, `RAVFRT`, `RAVCH1`, `CON1SP`, `CONMGH`, `TCH1SP`, `TCHMGH`, `OPENUR`, `TCKSUR`, `TCKHER`, `SKILLB`, `SOLD1TRN`, `SOLDT10`, `DYSOLDIER`, `HEA1SP`, `DYHOSPITAL`, `DYELITE`, `EQGEAR`, `EQBPRN`, `SHIELD`, `ELIXIR` y `CUMULUS`. El texto español se conserva sin cambios. Varias actividades fusionan en el objetivo lo que antes era el recurso y el recurso pasa a nombrar el objeto concreto.
+- El orden de las claves de `adActivities` y `adEvents` queda fijado por el bloque español: los nueve idiomas declaran las mismas claves en el mismo orden.
+- `adEvents` incorpora la clave `CHE` («Trampa del Queso») en los nueve idiomas.
+
+### Added
+- `adActivities.CHEESE7` («335M de Daño al Ladrón del Queso Lv.7, 30min duración, 1.4B de daño para el MVP1») se traduce en los nueve idiomas. La clave queda **pendiente de integración**: todavía no existe en `ACTIVITY_CODE`, `EVENT_CODE` ni `DAILY`, por lo que no aparece en los cronogramas.
+- `tests/i18n-structure.test.cjs` valida el orden canónico del español, las 47 traducciones por idioma y la lista de redacciones españolas protegidas; admite explícitamente `CHEESE7` como la única clave pendiente de integrar.
+- `tests/ui-contract.test.cjs` compara las claves y el orden de `adActivities` contra el canon español y reconoce las nueve claves de `adEvents`.
+- `tests/i18n-unicode.test.cjs` amplía los tokens protegidos del juego (`T7`, `40`, `10`, `11`, `24`, `6`, `+50`, `335M`, `1.4B`, `MVP1`) y excluye `30min`, que cada idioma expresa con su convencion local conservando la cifra `30`.
+- `docs/core/project-rules.md` documenta el reordenamiento del bloque español, la propagación de los 26 textos nuevos y el estado pendiente de `CHEESE7` y `CHE`.
+
 ## [261120d] - 2026-11-20
 
 ### Changed
