@@ -433,6 +433,14 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
   - `DYSOLDIER` → objetivo «Entrena Soldados T6 o T7; promover el Día de Preparación para la Guerra», recurso «Soldado T7».
 - Estos tres textos se propagan a los otros ocho idiomas con el español como fuente, sin sobrescribir el texto español.
 
+### Redacciones manuales de `FALCON` y `DYFALCON`
+
+- La clave `FAQS` se renombró a `FALCON` en `ACTIVITY_CODE` y en los nueve idiomas de `js/i18n/actividades-diarias/i18n.js`.
+- Las redacciones manuales del español en `texts.es.adActivities` son la fuente de verdad y prevalecen sobre cualquier traducción previa:
+  - `FALCON` → objetivo «Completa Misiones del Halcón, 10 ó 11 cada 6 Horas», recurso «Torre del Halcón».
+  - `DYFALCON` → objetivo «Inicia Misiones Halcón, pero no las completes, mantiene en espera 35 ó 40», recurso «Torre del Halcón».
+- Estos dos textos se propagan a los otros ocho idiomas con el español como fuente, sin sobrescribir el texto español. Las cifras `10`, `11`, `6`, `35` y `40` deben conservarse en las traducciones.
+
 ## Subpágina Reino
 
 ### Estructura de la página

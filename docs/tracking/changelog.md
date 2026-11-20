@@ -1,5 +1,14 @@
 # Changelog
 
+## [261120d] - 2026-11-20
+
+### Changed
+- Se propaga a los otros ocho idiomas de `js/i18n/actividades-diarias/i18n.js` la redacción manual de `texts.es.adActivities.FALCON` («Completa Misiones del Halcón, 10 ó 11 cada 6 Horas»): `en` → «Complete Falcon Missions, 10 or 11 every 6 Hours», `pt` → «Complete Missões do Falcão, 10 ou 11 a cada 6 Horas», `it` → «Completa Missioni del Falco, 10 o 11 ogni 6 Ore», `fr` → «Terminez les Missions du Faucon, 10 ou 11 toutes les 6 Heures», `ja` → 「ファルコンミッションを完了する、6時間ごとに10または11」, `ru` → «Завершить Миссии Сокола, 10 или 11 каждые 6 Часов», `zh` → 「完成猎鹰任务，每6小时10或11次」 y `tr` → «Şahin Görevlerini Tamamla, her 6 Saatte 10 veya 11». El recurso «Torre del Halcón» se mantiene sin cambios.
+- Se propaga a los otros ocho idiomas la redacción manual de `texts.es.adActivities.DYFALCON` («Inicia Misiones Halcón, pero no las completes, mantiene en espera 35 ó 40» con recurso «Torre del Halcón»): `en` → «Start Falcon Missions, but do not complete them, keep 35 or 40 pending» / «Falcon Tower», `pt` → «Inicie Missões do Falcão, mas não as complete, mantenha 35 ou 40 em espera» / «Torre do Falcão», `it` → «Avvia Missioni del Falco, ma non completarle, mantieni 35 o 40 in attesa» / «Torre del Falco», `fr` → «Lancez des Missions du Faucon, mais ne les terminez pas, gardez 35 ou 40 en attente» / «Tour du Faucon», `ja` → 「ファルコンミッションを開始するが完了しない、35または40を待機状態に保つ」/「ファルコンの塔」, `ru` → «Начать Миссии Сокола, но не завершать их, держите 35 или 40 в ожидании» / «Башня Сокола», `zh` → 「开始猎鹰任务，但不要完成，保持35或40个待处理」/「猎鹰塔」 y `tr` → «Şahin Görevlerini başlat ancak tamamlama, 35 veya 40'ı bekletmede tut» / «Şahin Kulesi». El texto español se conserva sin cambios.
+
+### Added
+- `docs/core/project-rules.md` documenta `FALCON` y `DYFALCON` en una sección propia de redacciones manuales de `adActivities`, junto con el renombrado de la clave `FAQS` a `FALCON`.
+
 ## [261120c] - 2026-11-20
 
 ### Changed

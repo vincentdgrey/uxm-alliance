@@ -74,7 +74,7 @@
 
   var ACTIVITY_CODE = [
     { "code": "ANTX",   "group":"FOCUS", "icon":"antitoxin",      "point": "+2.4",      "codebs": "HEROE" },
-    { "code": "FAQS",   "group":"FOCUS", "icon":"falcon-mission", "point": "+29'000.0", "codebs": "" },
+    { "code": "FALCON",   "group":"FOCUS", "icon":"falcon-mission", "point": "+29'000.0", "codebs": "" },
     { "code": "EPIUR",  "group":"RAVEN", "icon":"epigraf-chest",  "point": "+2'700.0",  "codebs": "" },
     { "code": "HERBS",  "group":"FARM",  "icon":"garden",         "point": "+12.0",     "codebs": "" },
     { "code": "GRAIN",  "group":"FARM",  "icon":"farm",           "point": "+12.0",     "codebs": "" },
@@ -146,7 +146,7 @@
 
   var DAILY = [
     { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "ANTX",   "server_time":"" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "FAQS",   "server_time":"", "flag":"I" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "FALCON",   "server_time":"", "flag":"I" },
     { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVESS", "server_time":"" },
     { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVFRT", "server_time":"" },
     { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "STMN",   "server_time":"", "ani":"S" },
@@ -172,7 +172,7 @@
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "STDSCR", "server_time":"" },
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCH1SP", "server_time":"", "ani":"S" },
     { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCHMGH", "server_time":"", "ani":"S" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "FAQS",   "server_time":"" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "FALCON",   "server_time":"" },
 
     { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "SAVETH", "server_time":"" },
     { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "FREETS", "server_time":"" },
@@ -193,7 +193,7 @@
     
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLDT10",  "server_time":"", "ani":"S" },
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLD1TRN", "server_time":"", "ani":"S" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "FAQS",     "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "FALCON",     "server_time":"" },
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CON1SP",   "server_time":"", "ani":"S" },
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CONMGH",   "server_time":"", "ani":"S" },
     { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCH1SP",   "server_time":"", "ani":"S" },

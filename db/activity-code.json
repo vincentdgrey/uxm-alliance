@@ -1,7 +1,7 @@
 [
   { "code": "ANTX",    "objetive": "660 Antitoxin",                        "point": "+2.4",         "phase": "P01" },
   { "code": "EPIUR",   "objetive": "1 Epigrafe Shard UR",                  "point": "+2'700.0",     "phase": "P01" },
-  { "code": "FAQS",    "objetive": "Falcon Quest once",                    "point": "+29'000.0",    "phase": "P01" },
+  { "code": "FALCON",    "objetive": "Falcon Quest once",                    "point": "+29'000.0",    "phase": "P01" },
   { "code": "HERBS",   "objetive": "60 Herbs [Lv.10 8H]",                  "point": "+12.0",        "phase": "P01" },
   { "code": "GRAIN",   "objetive": "100 Grain/100 Timber",                 "point": "+12.0",        "phase": "P01" },
   { "code": "RAVESS",  "objetive": "1 Raven Essence",                      "point": "+6'000.0",     "phase": "P01" },
