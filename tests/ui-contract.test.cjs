@@ -628,7 +628,7 @@ test("las variables de datos son la fuente de verdad y estan completas", () => {
 
   assert.equal(activities.length, 6);
   assert.equal(calendar.length, 42);
-  assert.equal(activityCode.length, 46);
+  assert.equal(activityCode.length, 47);
   assert.equal(eventCode.length, 8);
   assert.equal(phases.length, 7);
   assert.equal(daily.length, 80);
@@ -1485,11 +1485,11 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
 
   /* El codigo de cada actividad debe estar en el mapa de los 9 idiomas. */
   const activityCode = [...js.matchAll(/"code": "([A-Z0-9]+)"/g)].map((m) => m[1]);
-  assert.equal(activityCode.length, 46);
+  assert.equal(activityCode.length, 47);
 
   /* El español es la fuente de verdad: define el orden canonico de las traducciones. */
   const canonicalCodes = Object.keys(i18n.es.adActivities);
-  assert.equal(canonicalCodes.length, 47);
+  assert.equal(canonicalCodes.length, 48);
   for (const code of activityCode) {
     assert.ok(canonicalCodes.includes(code), "el canon debe traducir " + code);
   }

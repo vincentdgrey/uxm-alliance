@@ -45,13 +45,13 @@
           CRVNUR:{objective:"Envía Caravanas UR",resource:"4 Caravanas"},
           OPENUR:{objective:"Ejecuta Operaciones Encubiertas UR, mínimo 6, la última es más difícil",resource:"7 Operaciones Encubiertas"},
           
-          TCKSUR:{objective:"Recluta un Superviviente una vez, usar TODOS los Tickets de Superviviente",resource:"Tickets de Superviviente"},
+          TCKSUR:{objective:"Recluta Supervivientes, usando TODOS los Tickets de Superviviente",resource:"Ticket de Superviviente"},
           SAVETS:{objective:"GUARDA TODOS los Tickets de Superviviente",resource:"Ticket de Superviviente"},
-          FREETS:{objective:"Usa SOLO Tickets GRATIS de Superviviente",resource:"Ticket de Superviviente"},
+          FREETS:{objective:"Usa SOLO 1 Ticket GRATIS de Superviviente",resource:"Ticket de Superviviente"},
 
-          TCKHER:{objective:"Recluta Héroes usando Tickets de Héroe, +50 obtienes Héroe UR",resource:"TODOS los Tickets de Héroe"},
+          TCKHER:{objective:"Recluta Héroes, usando TODOS los Tickets de Héroe, +50 obtienes Héroe UR",resource:"Ticket de Héroe"},
           SAVETH:{objective:"GUARDA TODOS los Tickets de Héroe",resource:"Ticket de Héroe"},
-          FREETH:{objective:"Usa SOLO Tickets GRATIS de Héroe",resource:"Ticket de Héroe"},
+          FREETH:{objective:"Usa SOLO 1 Ticket GRATIS de Héroe",resource:"Ticket de Héroe"},
 
           SHRDSR:{objective:"Consume Fragmento de Héroe SR",resource:"Tienda Santuario"},
           SHRDSS:{objective:"Consume Fragmento de Héroe SSR",resource:"Tienda Santuario"},
@@ -64,6 +64,7 @@
           SOLDLST:{objective:"Pierde Soldados, Duelo de Alianzas",resource:"Defensa"},
           SOLDMTC:{objective:"Derrota Soldados (partida específica)",resource:"T8 vs T8"},
           DYSOLDIER:{objective:"Entrena Soldados T6 o T7; Promover el Día de Preparación de Guerra",resource:"Soldado T7"},
+          DYWALL:{objective:"Retira tus soldados del Muro; Día de Guerra",resource:"Muro Santuario"},
 
           HEA1SP:{objective:"Usa Aceleración de Curación, Buff de Curación +150%",resource:"Acelerador Curación"},
           DYHOSPITAL:{objective:"NO Cures Soldados; Mantener en el Hospital, para usar aceleradores curación el día de Guerra",resource:"Hospital"},
@@ -143,13 +144,13 @@ pageDailyLead:"Details of the daily activities that will help you improve every 
           CRVNUR:{objective:"Dispatch UR Caravans",resource:"4 Caravan"},
           OPENUR:{objective:"Execute UR Covert Operations, minimum 6, the last one is harder",resource:"7 Black Ops"},
 
-          TCKSUR:{objective:"Recruit Survivor once, use ALL Survivor Tickets",resource:"Survivor Tickets"},
+          TCKSUR:{objective:"Recruit Survivors, using ALL Survivor Tickets",resource:"Survivor Ticket"},
           SAVETS:{objective:"SAVE ALL Survivor Tickets",resource:"Survivor Ticket"},
-          FREETS:{objective:"Use ONLY FREE Survivor Tickets",resource:"Survivor Ticket"},
+          FREETS:{objective:"Use ONLY 1 FREE Survivor Ticket",resource:"Survivor Ticket"},
 
-          TCKHER:{objective:"Recruit Heroes using Hero Tickets, +50 you get a UR Hero",resource:"ALL Hero Tickets"},
+          TCKHER:{objective:"Recruit Heroes, using ALL Hero Tickets, +50 you get a UR Hero",resource:"Hero Ticket"},
           SAVETH:{objective:"SAVE ALL Hero Tickets",resource:"Hero Ticket"},
-          FREETH:{objective:"Use ONLY FREE Hero Tickets",resource:"Hero Ticket"},
+          FREETH:{objective:"Use ONLY 1 FREE Hero Ticket",resource:"Hero Ticket"},
 
           SHRDSR:{objective:"Consume SR Hero Shard", resource:"Sanctuary Shop"},
           SHRDSS:{objective:"Consume SSR Hero Shard", resource:"Sanctuary Shop"},
@@ -162,6 +163,7 @@ pageDailyLead:"Details of the daily activities that will help you improve every 
           SOLDLST:{objective:"Losing Soldiers, Alliance Duel",resource:"Defense"},
           SOLDMTC:{objective:"Defeating Soldiers (specific match)",resource:"T8 vs T8"},
           DYSOLDIER:{objective:"Train T6 or T7 Soldiers; Promote on the War Preparation Day",resource:"Soldier T7"},
+          DYWALL:{objective:"Withdraw your soldiers from the Wall; War Day",resource:"Sanctuary Wall"},
 
           HEA1SP:{objective:"Use Healing Speedup, Healing Buff +150%",resource:"Healing Speedup"},
           DYHOSPITAL:{objective:"Do NOT cure Soldiers; Keep them in the Hospital to use healing speedups on the War Day",resource:"Hospital"},
@@ -223,13 +225,13 @@ pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos
           CRVNUR:{objective:"Envie Caravanas UR",resource:"4 Caravanas"},
           OPENUR:{objective:"Execute Operações Secretas UR, mínimo 6, a última é mais difícil",resource:"7 Operações Secretas"},
 
-          TCKSUR:{objective:"Recrute um Sobrevivente uma vez, use TODOS os Tickets de Sobrevivente",resource:"Tickets de Sobrevivente"},
+          TCKSUR:{objective:"Recrute Sobreviventes, usando TODOS os Tickets de Sobrevivente",resource:"Ticket de Sobrevivente"},
           SAVETS:{objective:"GUARDE TODOS os Tickets de Sobrevivente",resource:"Ticket de Sobrevivente"},
-          FREETS:{objective:"Use SOMENTE Tickets GRATUITOS de Sobrevivente",resource:"Ticket de Sobrevivente"},
+          FREETS:{objective:"Use SOMENTE 1 Ticket GRATUITO de Sobrevivente",resource:"Ticket de Sobrevivente"},
 
-          TCKHER:{objective:"Recrute Heróis usando Tickets de Herói, +50 você obtém um Herói UR",resource:"TODOS os Tickets de Herói"},
+          TCKHER:{objective:"Recrute Heróis, usando TODOS os Tickets de Herói, +50 você obtém um Herói UR",resource:"Ticket de Herói"},
           SAVETH:{objective:"GUARDE TODOS os Tickets de Herói",resource:"Ticket de Herói"},
-          FREETH:{objective:"Use SOMENTE Tickets GRATUITOS de Herói",resource:"Ticket de Herói"},
+          FREETH:{objective:"Use SOMENTE 1 Ticket GRATUITO de Herói",resource:"Ticket de Herói"},
 
           SHRDSR:{objective:"Consuma Fragmentos de Herói SR", resource:"Loja do Santuário"},
           SHRDSS:{objective:"Consuma Fragmentos de Herói SSR", resource:"Loja do Santuário"},
@@ -242,6 +244,7 @@ pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos
           SOLDLST:{objective:"Perca Soldados, Duelo de Alianças",resource:"Defesa"},
           SOLDMTC:{objective:"Derrote Soldados (partida específica)",resource:"T8 vs T8"},
           DYSOLDIER:{objective:"Treine Soldados T6 ou T7; Promova no Dia de Preparação para a Guerra",resource:"Soldado T7"},
+          DYWALL:{objective:"Retire seus soldados do Muro; Dia de Guerra",resource:"Muro do Santuário"},
 
           HEA1SP:{objective:"Use Aceleração de Cura, Bônus de Cura +150%",resource:"Aceleração de Cura"},
           DYHOSPITAL:{objective:"NÃO cure Soldados; Mantenha-os no Hospital para usar aceleradores de cura no dia de Guerra",resource:"Hospital"},
@@ -303,13 +306,13 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           CRVNUR:{objective:"Invia Carovane UR",resource:"4 Carovane"},
           OPENUR:{objective:"Esegui Operazioni Segrete UR, minimo 6, l'ultima è più difficile",resource:"7 Operazioni Segrete"},
 
-          TCKSUR:{objective:"Recluta un Sopravvissuto una volta, usa TUTTI i Ticket del Sopravvissuto",resource:"Ticket del Sopravvissuto"},
+          TCKSUR:{objective:"Recluta Sopravvissuti, usando TUTTI i Ticket del Sopravvissuto",resource:"Ticket del Sopravvissuto"},
           SAVETS:{objective:"SALVA TUTTI i Ticket del Sopravvissuto",resource:"Ticket del Sopravvissuto"},
-          FREETS:{objective:"Usa SOLO Ticket GRATIS del Sopravvissuto",resource:"Ticket del Sopravvissuto"},
+          FREETS:{objective:"Usa SOLO 1 Ticket GRATIS del Sopravvissuto",resource:"Ticket del Sopravvissuto"},
 
-          TCKHER:{objective:"Recluta Eroi usando i Ticket di Eroe, +50 ottieni un Eroe UR",resource:"TUTTI i Ticket dell'Eroe"},
+          TCKHER:{objective:"Recluta Eroi, usando TUTTI i Ticket dell'Eroe, +50 ottieni un Eroe UR",resource:"Ticket dell'Eroe"},
           SAVETH:{objective:"SALVA TUTTI i Ticket dell'Eroe",resource:"Ticket dell'Eroe"},
-          FREETH:{objective:"Usa SOLO Ticket GRATIS dell'Eroe",resource:"Ticket dell'Eroe"},
+          FREETH:{objective:"Usa SOLO 1 Ticket GRATIS dell'Eroe",resource:"Ticket dell'Eroe"},
 
           SHRDSR:{objective:"Consuma Frammento di Eroe SR", resource:"Negozio del Santuario"},
           SHRDSS:{objective:"Consuma Frammento di Eroe SSR", resource:"Negozio del Santuario"},
@@ -322,6 +325,7 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           SOLDLST:{objective:"Perdi Soldati, Duelo delle Alleanze",resource:"Difesa"},
           SOLDMTC:{objective:"Sconfiggi Soldati (partita specifica)",resource:"T8 vs T8"},
           DYSOLDIER:{objective:"Addestra Soldati T6 o T7; Promuovi il Giorno di Preparazione alla Guerra",resource:"Soldato T7"},
+          DYWALL:{objective:"Ritira i tuoi soldati dal Muro; Giorno di Guerra",resource:"Muro del Santuario"},
 
           HEA1SP:{objective:"Usa Accelerazione di Cura, Bonus di Cura +150%",resource:"Accelerazione di Cura"},
           DYHOSPITAL:{objective:"Non curare i Soldati; Tienili in Ospedale per usare acceleratori di guarigione il giorno della Guerra",resource:"Ospedale"},
@@ -383,13 +387,13 @@ pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous am
           CRVNUR:{objective:"Envoyez des Caravanes UR",resource:"4 Caravanes"},
           OPENUR:{objective:"Effectuez des Opérations Secrètes UR, minimum 6, la dernière est plus difficile",resource:"7 Opérations Secrètes"},
 
-          TCKSUR:{objective:"Recrutez un Survivant une fois, utilisez TOUS les Tickets de Survivant",resource:"Tickets de Survivant"},
+          TCKSUR:{objective:"Recrutez des Survivants, en utilisant TOUS les Tickets de Survivant",resource:"Ticket de Survivant"},
           SAVETS:{objective:"SAUVEGARDEZ TOUS les Tickets de Survivant",resource:"Ticket de Survivant"},
-          FREETS:{objective:"Utilisez UNIQUEMENT des Tickets GRATUITS de Survivant",resource:"Ticket de Survivant"},
+          FREETS:{objective:"Utilisez UNIQUEMENT 1 Ticket GRATUIT de Survivant",resource:"Ticket de Survivant"},
 
-          TCKHER:{objective:"Recrutez des Héros avec des Tickets de Héros, +50 vous obtenez un Héros UR",resource:"TOUS les Tickets de Héros"},
+          TCKHER:{objective:"Recrutez des Héros, en utilisant TOUS les Tickets de Héros, +50 vous obtenez un Héros UR",resource:"Ticket de Héros"},
           SAVETH:{objective:"SAUVEGARDEZ TOUS les Tickets de Héros",resource:"Ticket de Héros"},
-          FREETH:{objective:"Utilisez UNIQUEMENT des Tickets GRATUITS de Héros",resource:"Ticket de Héros"},
+          FREETH:{objective:"Utilisez UNIQUEMENT 1 Ticket GRATUIT de Héros",resource:"Ticket de Héros"},
 
           SHRDSR:{objective:"Consommez un Fragment de Héros SR", resource:"Boutique du Sanctuaire"},
           SHRDSS:{objective:"Consommez un Fragment de Héros SSR", resource:"Boutique du Sanctuaire"},
@@ -402,6 +406,7 @@ pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous am
           SOLDLST:{objective:"Perdre des Soldats, Duel d'Alliance",resource:"Défense"},
           SOLDMTC:{objective:"Vaincre des Soldats (match spécifique)",resource:"T8 vs T8"},
           DYSOLDIER:{objective:"Entraînez des Soldats T6 ou T7 ; promouvez-les le Jour de Préparation à la Guerre",resource:"Soldat T7"},
+          DYWALL:{objective:"Retirez vos soldats du Mur ; Jour de Guerre",resource:"Mur du Sanctuaire"},
 
           HEA1SP:{objective:"Utilisez une Accélération de Soin, Bonus de Soin +150%",resource:"Accélération de Soin"},
           DYHOSPITAL:{objective:"Ne soignez PAS les Soldats ; gardez-les à l'Hôpital pour utiliser des accélérateurs de soin le Jour de Guerre",resource:"Hôpital"},
@@ -463,13 +468,13 @@ pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
           CRVNUR:{objective:"UR隊商を派遣する",resource:"隊商 4つ"},
           OPENUR:{objective:"UR秘密作戦を実行する、最低6回、最後が最も難しい",resource:"秘密作戦 7回"},
 
-          TCKSUR:{objective:"生存者を1回リクルートする、すべての生存者のチケットを使う",resource:"生存者のチケット"},
+          TCKSUR:{objective:"生存者をリクルートする、すべての生存者のチケットを使う",resource:"生存者のチケット"},
           SAVETS:{objective:"生存者のチケットをすべて保存する",resource:"生存者のチケット"},
-          FREETS:{objective:"無料の生存者のチケットだけを使う",resource:"生存者のチケット"},
+          FREETS:{objective:"無料の生存者のチケット1個だけを使う",resource:"生存者のチケット"},
 
-          TCKHER:{objective:"英雄のチケットで英雄をリクルートする、+50でUR英雄を獲得",resource:"英雄のすべてのチケット"},
+          TCKHER:{objective:"英雄をリクルートする、すべての英雄のチケットを使う、+50でUR英雄を獲得",resource:"英雄のチケット"},
           SAVETH:{objective:"英雄のチケットをすべて保存する",resource:"英雄のチケット"},
-          FREETH:{objective:"無料の英雄チケットだけを使う",resource:"英雄のチケット"},
+          FREETH:{objective:"無料の英雄チケット1枚だけを使う",resource:"英雄のチケット"},
 
           SHRDSR:{objective:"SR英雄の欠片を消費する", resource:"聖域のショップ"},
           SHRDSS:{objective:"SSR英雄の欠片を消費する", resource:"聖域のショップ"},
@@ -482,6 +487,7 @@ pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
           SOLDLST:{objective:"兵士を失う、同盟対決",resource:"防御"},
           SOLDMTC:{objective:"兵士を撃破する（特定の戦闘）",resource:"T8 vs T8"},
           DYSOLDIER:{objective:"T6またはT7兵士を訓練し、戦争準備日に昇格させる",resource:"兵士 T7"},
+          DYWALL:{objective:"壁から兵士を撤退させる、戦争当日",resource:"聖域の壁"},
 
           HEA1SP:{objective:"治療速度アップを使う、治療バフ +150%",resource:"治療速度アップ"},
           DYHOSPITAL:{objective:"兵士を治療しない。戦争当日に治療加速剤を使えるよう病院に保管する",resource:"病院"},
@@ -543,13 +549,13 @@ pageDailyLead:"Подробности ежедневных активносте�
           CRVNUR:{objective:"Отправить 4 Каравана UR",resource:"4 Каравана"},
           OPENUR:{objective:"Выполнить 7 Скрытых Операций UR, минимум 6, последняя самая сложная",resource:"7 Скрытых Операций"},
 
-          TCKSUR:{objective:"Нанять Выжившего один раз, используйте ВСЕ Билеты Выжившего",resource:"Билеты Выжившего"},
+          TCKSUR:{objective:"Нанять Выживших, используйте ВСЕ Билеты Выжившего",resource:"Билет Выжившего"},
           SAVETS:{objective:"СОХРАНИТЬ ВСЕ Билеты Выжившего",resource:"Билет Выжившего"},
-          FREETS:{objective:"Использовать ТОЛЬКО Бесплатные Билеты Выжившего",resource:"Билет Выжившего"},
+          FREETS:{objective:"Использовать ТОЛЬКО 1 Бесплатный Билет Выжившего",resource:"Билет Выжившего"},
 
-          TCKHER:{objective:"Нанять Героев с помощью Билетов Героя, +50 получите Героя UR",resource:"ВСЕ Билеты Героя"},
+          TCKHER:{objective:"Нанять Героев, используйте ВСЕ Билеты Героя, +50 получите Героя UR",resource:"Билет Героя"},
           SAVETH:{objective:"СОХРАНИТЬ ВСЕ Билеты Героя",resource:"Билет Героя"},
-          FREETH:{objective:"Использовать ТОЛЬКО Бесплатные Билеты Героя",resource:"Билет Героя"},
+          FREETH:{objective:"Использовать ТОЛЬКО 1 Бесплатный Билет Героя",resource:"Билет Героя"},
 
           SHRDSR:{objective:"Потребить Осколок Героя SR", resource:"Магазин Святилища"},
           SHRDSS:{objective:"Потребить Осколок Героя SSR", resource:"Магазин Святилища"},
@@ -562,6 +568,7 @@ pageDailyLead:"Подробности ежедневных активносте�
           SOLDLST:{objective:"Потерять Солдат, Дуэль Альянсов",resource:"Оборона"},
           SOLDMTC:{objective:"Победить Солдат (конкретный матч)",resource:"T8 vs T8"},
           DYSOLDIER:{objective:"Обучить Солдат T6 или T7; повысить их в День Подготовки к Войне",resource:"Солдат T7"},
+          DYWALL:{objective:"Отозвать солдат со Стены; День Войны",resource:"Стена Святилища"},
 
           HEA1SP:{objective:"Использовать Ускорение Лечения, Бонус Лечения +150%",resource:"Ускорение Лечения"},
           DYHOSPITAL:{objective:"Не лечить Солдат; держите их в Госпитале для ускорителей лечения в День Войны",resource:"Госпиталь"},
@@ -623,13 +630,13 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           CRVNUR:{objective:"派遣4支UR商队",resource:"4支商队"},
           OPENUR:{objective:"执行7次UR秘密行动，至少6次，最后一次最难",resource:"7次秘密行动"},
 
-          TCKSUR:{objective:"招募一次幸存者，使用所有幸存者票券",resource:"幸存者票券"},
+          TCKSUR:{objective:"招募幸存者，使用所有幸存者票券",resource:"幸存者票券"},
           SAVETS:{objective:"保存所有幸存者票券",resource:"幸存者票券"},
-          FREETS:{objective:"仅使用免费幸存者票券",resource:"幸存者票券"},
+          FREETS:{objective:"仅使用1张免费幸存者票券",resource:"幸存者票券"},
 
-          TCKHER:{objective:"使用英雄票券招募英雄，+50获得UR英雄",resource:"全部英雄票券"},
+          TCKHER:{objective:"招募英雄，使用所有英雄票券，+50获得UR英雄",resource:"英雄票券"},
           SAVETH:{objective:"保存所有英雄票券",resource:"英雄票券"},
-          FREETH:{objective:"仅使用免费英雄票券",resource:"英雄票券"},
+          FREETH:{objective:"仅使用1张免费英雄票券",resource:"英雄票券"},
 
           SHRDSR:{objective:"消耗SR英雄碎片", resource:"圣所商店"},
           SHRDSS:{objective:"消耗SSR英雄碎片", resource:"圣所商店"},
@@ -642,6 +649,7 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           SOLDLST:{objective:"损失士兵，联盟对决",resource:"防御"},
           SOLDMTC:{objective:"击败士兵（指定战斗）",resource:"T8 vs T8"},
           DYSOLDIER:{objective:"训练T6或T7士兵，并在战争准备日晋升他们",resource:"士兵 T7"},
+          DYWALL:{objective:"将士兵从城墙撤回；战争日",resource:"圣所城墙"},
 
           HEA1SP:{objective:"使用治疗加速，治疗增益 +150%",resource:"治疗加速"},
           DYHOSPITAL:{objective:"不要治疗士兵；将他们保存在医院，以便在战争当天使用治疗加速器",resource:"医院"},
@@ -781,28 +789,28 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           },
 
           TCKSUR:{
-            objective:"Bir Hayatta Kalana Bir Kez İşe Al, Tüm Hayatta Kalana Biletlerini Kullan",
-            resource:"Hayatta Kalana Biletleri"
+            objective:"Hayatta Kalanları İşe Al, Tüm Hayatta Kalana Biletlerini Kullan",
+            resource:"Hayatta Kalana Bileti"
           },
           SAVETS:{
             objective:"TÜM Hayatta Kalana Biletlerini Kaydet",
             resource:"Hayatta Kalana Bileti"
           },
           FREETS:{
-            objective:"Yalnızca Ücretsiz Hayatta Kalana Biletlerini Kullan",
+            objective:"Yalnızca 1 Ücretsiz Hayatta Kalana Biletini Kullan",
             resource:"Hayatta Kalana Bileti"
           },
 
           TCKHER:{
-            objective:"Kahraman Biletleriyle Kahraman İşe Al, +50 ile UR Kahraman kazanırsın",
-            resource:"TÜM Kahraman Biletleri"
+            objective:"Kahramanları İşe Al, Tüm Kahraman Biletlerini Kullan, +50 ile UR Kahraman kazanırsın",
+            resource:"Kahraman Bileti"
           },
           SAVETH:{
             objective:"TÜM Kahraman Biletlerini Kaydet",
             resource:"Kahraman Bileti"
           },
           FREETH:{
-            objective:"Yalnızca Ücretsiz Kahraman Biletlerini Kullan",
+            objective:"Yalnızca 1 Ücretsiz Kahraman Biletini Kullan",
             resource:"Kahraman Bileti"
           },
 
@@ -846,6 +854,10 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           DYSOLDIER:{
             objective:"T6 veya T7 Askerleri Eğit, Savaş Hazırlık Gününde Yükselt",
             resource:"Asker T7"
+          },
+          DYWALL:{
+            objective:"Askerlerini Surlardan Geri Çek, Savaş Günü",
+            resource:"Kutsal Alan Surları"
           },
 
           HEA1SP:{

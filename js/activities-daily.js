@@ -118,6 +118,7 @@
     { "code": "SCRAMBLE", "group":"FOCUS", "icon":"medall-fame",  "point": "",          "codebs": "" },
     { "code": "KWAR",    "group":"FOCUS", "icon":"medall-fame",   "point": "",          "codebs": "" },
     { "code": "SHIELD",  "group":"FOCUS", "icon":"",              "point": "",          "codebs": "" },
+    { "code": "DYWALL",  "group":"FOCUS", "icon":"",              "point": "",          "codebs": "" },
     { "code": "CUMULUS", "group":"FOCUS", "icon":"cumulus-cristal", "point": "",        "codebs": "" },
   ];
 
@@ -223,6 +224,8 @@
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETH", "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETS", "server_time":"" },
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "SHIELD", "server_time":"00:00:00", "server_duration":"23:00:00", "flag":"W", "ani":"S" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "DYWALL", "server_time":"00:00:00", "server_duration":"23:00:00", "flag":"W", "ani":"S" },
+
     { "noday": 6, "day": "Sat", "event": "KVK","phase": "PH06", "code_task": "KWAR",   "server_time":"12:00:00", "server_duration":"02:00:00", "flag":"A", "ani":"A" },
     
     { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYFALCON", "server_time":"", "flag":"A" },

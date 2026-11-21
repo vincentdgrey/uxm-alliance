@@ -70,7 +70,7 @@ test("los codigos de actividades coinciden con ACTIVITY_CODE", () => {
   vm.createContext(context);
   vm.runInContext("var ACTIVITY_CODE = " + match[1], context);
   const rows = context.ACTIVITY_CODE;
-  assert.equal(rows.length, 46);
+  assert.equal(rows.length, 47);
 
   const i18n = loadI18n("actividades-diarias");
   const canonicalCodes = Object.keys(i18n.es.adActivities);
@@ -130,8 +130,10 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
     RAVESS: { objective: "Consume Esencia de Cuervo, Prioridad", resource: "Esencia de Cuervo" },
     RAVFRT: { objective: "Consume Fruta de Cuervo", resource: "Fruta de Cuervo" },
     RAVCH1: { objective: "Abre Cofre de Equipo de Cuervo", resource: "Cofre de Cuervo" },
-    TCKSUR: { objective: "Recluta un Superviviente una vez, usar TODOS los Tickets de Superviviente", resource: "Tickets de Superviviente" },
-    TCKHER: { objective: "Recluta Héroes usando Tickets de Héroe, +50 obtienes Héroe UR", resource: "TODOS los Tickets de Héroe" },
+    TCKSUR: { objective: "Recluta Supervivientes, usando TODOS los Tickets de Superviviente", resource: "Ticket de Superviviente" },
+    FREETS: { objective: "Usa SOLO 1 Ticket GRATIS de Superviviente", resource: "Ticket de Superviviente" },
+    TCKHER: { objective: "Recluta Héroes, usando TODOS los Tickets de Héroe, +50 obtienes Héroe UR", resource: "Ticket de Héroe" },
+    FREETH: { objective: "Usa SOLO 1 Ticket GRATIS de Héroe", resource: "Ticket de Héroe" },
     HEA1SP: { objective: "Usa Aceleración de Curación, Buff de Curación +150%", resource: "Acelerador Curación" },
     DYHOSPITAL: { objective: "NO Cures Soldados; Mantener en el Hospital, para usar aceleradores curación el día de Guerra", resource: "Hospital" },
     DYELITE: { objective: "Monstruos Elite Plaga, obtén Ticket de Héroe y Antitoxina", resource: "Monstruos" },
@@ -139,6 +141,7 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
     EQBPRN: { objective: "Usa Plano de Equipo, Promueve Estadísticas Adicionales UR", resource: "Plano el Equipo" },
     SHIELD: { objective: "Activa Escudos 24H, Compra Escudo Gratis 8H en Tienda de la Alianza", resource: "Escudo" },
     DYSOLDIER: { objective: "Entrena Soldados T6 o T7; Promover el Día de Preparación de Guerra", resource: "Soldado T7" },
+    DYWALL: { objective: "Retira tus soldados del Muro; Día de Guerra", resource: "Muro Santuario" },
     CHEESE7: { objective: "335M de Daño al Ladrón del Queso Lv.7, 30min duración, 1.4B de daño para el MVP1", resource: "Trampa del Queso" }
   };
 
@@ -150,7 +153,7 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
 test("todas las traducciones de actividades cubren los codigos canonicos", () => {
   const i18n = loadI18n("actividades-diarias");
   const canonicalCodes = Object.keys(i18n.es.adActivities);
-  assert.equal(canonicalCodes.length, 47);
+  assert.equal(canonicalCodes.length, 48);
 
   for (const lang of languages) {
     const activities = i18n[lang].adActivities;

@@ -1,5 +1,16 @@
 # Changelog
 
+## [261121a] - 2026-11-21
+
+### Added
+- `adActivities.DYWALL` («Retira tus soldados del Muro; Día de Guerra» / recurso «Muro Santuario») se traduce en los nueve idiomas, tras `DYSOLDIER`. La actividad ya está registrada en `ACTIVITY_CODE` y en `DAILY` (día 6, fase `P06`); el bloque español pasa de 47 a 48 claves y `ACTIVITY_CODE` de 46 a 47 registros.
+
+### Changed
+- Se propaga a los otros ocho idiomas de `js/i18n/actividades-diarias/i18n.js` la edición manual de `texts.es.adActivities` para `TCKSUR`, `FREETS`, `TCKHER` y `FREETH`: el objetivo pasa a indicar uso exhaustivo de tickets al reclutar (`TODOS`) y el uso de un único ticket gratuito (`1`), y el recurso queda en singular (`Ticket de Superviviente`, `Ticket de Héroe`). El texto español se conserva sin cambios.
+- `tests/i18n-structure.test.cjs` actualiza los conteos (47 registros en `ACTIVITY_CODE`, 48 claves canónicas) y las redacciones españolas protegidas de `TCKSUR`, `FREETS`, `TCKHER` y `FREETH`, e incorpora `DYWALL` a la lista protegida.
+- `tests/ui-contract.test.cjs` actualiza los conteos de `ACTIVITY_CODE` (47) y de las claves canónicas (48).
+- `docs/core/project-rules.md` documenta los conteos vigentes, la redacción canónica de los tickets y la nueva actividad `DYWALL`.
+
 ## [261120e] - 2026-11-20
 
 ### Changed
