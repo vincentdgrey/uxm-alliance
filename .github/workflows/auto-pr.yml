@@ -1,27 +1,48 @@
-name: Auto PR & Auto-Merge Develop to Main
+name: PR de Developed a main
 
 on:
   push:
     branches:
-      - develop
+      - Developed
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 
-jobs:
-  create-and-enable-automerge:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Descargar repositorio
-        uses: actions/checkout@v4
+concurrency:
+  group: pr-developed-to-main
+  cancel-in-progress: false
 
-      - name: Crear PR y activar Auto-Merge
+jobs:
+  create-or-update-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Crear o reutilizar el PR y activar auto-merge
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_BRANCH: Developed
+          TARGET_BRANCH: main
+          REVIEWER: edwin-coder-arquitech
         run: |
-          # 1. Crear el Pull Request (si ya existe uno abierto, no falla)
-          PR_URL=$(gh pr create --base main --head develop --title "Merge automático: develop -> main" --body "Listo para aprobar desde el móvil. Se fusionará solo al aprobar." --reviewer "edwin-coder-arquitech" || gh pr view develop --json url -q .url)
-          
-          # 2. Activar el auto-merge en ese PR (usa --merge, --squash o --rebase según prefieras)
+          set -euo pipefail
+
+          PR_URL=$(gh pr list \
+            --head "$SOURCE_BRANCH" \
+            --base "$TARGET_BRANCH" \
+            --state open \
+            --json url \
+            --jq '.[0].url // empty')
+
+          if [ -z "$PR_URL" ]; then
+            PR_URL=$(gh pr create \
+              --base "$TARGET_BRANCH" \
+              --head "$SOURCE_BRANCH" \
+              --title "Merge automático: Developed → main" \
+              --body "Este PR se fusionará automáticamente cuando cumpla los requisitos de revisión y CI." \
+              --reviewer "$REVIEWER")
+          else
+            gh pr edit "$PR_URL" --add-reviewer "$REVIEWER"
+          fi
+
           gh pr merge "$PR_URL" --auto --merge
