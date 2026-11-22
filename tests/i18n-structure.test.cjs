@@ -17,7 +17,7 @@ const pages = [
   { id: "contacto", html: "pages/contacto.html", script: "../js/i18n/contacto/i18n.js", file: "js/i18n/contacto/i18n.js" }
 ];
 
-const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
 
 function loadI18n(pageId) {
   const page = pages.find((item) => item.id === pageId);
@@ -51,7 +51,7 @@ test("cada pagina carga solo su propio archivo i18n especifico", () => {
   }
 });
 
-test("los archivos i18n de pagina amplian window.I18N en los nueve idiomas", () => {
+test("los archivos i18n de pagina amplian window.I18N en los diez idiomas", () => {
   for (const page of pages) {
     const i18n = loadI18n(page.id);
     assert.deepEqual(Object.keys(i18n).sort(), [...languages].sort(), page.id);

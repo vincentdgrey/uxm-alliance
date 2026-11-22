@@ -7,6 +7,7 @@
     "en": "Rules",
     "pt": "Regras",
     "it": "Regole",
+    "de": "Regeln",
     "fr": "Règles",
     "ja": "ルール",
     "ru": "Правила",
@@ -18,6 +19,7 @@
     "en": "",
     "pt": "",
     "it": "",
+    "de": "",
     "fr": "",
     "ja": "",
     "ru": "",
@@ -29,6 +31,7 @@
     "en": [],
     "pt": [],
     "it": [],
+    "de": [],
     "fr": [],
     "ja": [],
     "ru": [],
@@ -42,6 +45,7 @@
         "en": "Rules for new members",
         "pt": "Regras para novos membros",
         "it": "Regole per i nuovi membri",
+        "de": "Regeln für neue Mitglieder",
         "fr": "Règles pour les nouveaux membres",
         "ja": "新規メンバーのルール",
         "ru": "Правила для новых участников",
@@ -72,6 +76,12 @@
           "Il dettaglio delle regole è disponibile sul sito https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html",
           "La regola fondamentale del Regno è: NON rubare o saccheggiare sul nostro Server.",
           "Le regole fondamentali dell'Alleanza sono: Donare Erbe all'Alleanza, Studiare i Video Tutorial (https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html) e partecipare al Duello di Alleanze ogni settimana seguendo la Guida delle Attività (https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html)."
+        ],
+        "de": [
+          "Jedes neue Mitglied muss die Regeln des Königreichs 277 und der UXM-Allianz einhalten.",
+          "Die Einzelheiten der Regeln stehen auf der Website <a target='_blank' href='https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html'>UXM-Regeln</a>.",
+          "Die grundlegende Regel des Königreichs lautet: Auf unserem Server NICHT stehlen und NICHT plündern.",
+          "Die grundlegenden Regeln der Allianz lauten: Kräuter an die Allianz spenden, die <a target='_blank' href='https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html'>Video-Tutorials</a> ansehen und jede Woche am Allianz-Duell teilnehmen, gefolgt vom <a target='_blank' href='https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html'>Aktivitätsleitfaden</a>."
         ],
         "fr": [
           "Toute nouvelle personne doit respecter les règles du Royaume 277 et de l'Alliance UXM.",

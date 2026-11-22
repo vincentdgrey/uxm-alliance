@@ -7,6 +7,7 @@
     "en": "Caravans",
     "pt": "Caravanas",
     "it": "Carovane",
+    "de": "Karawanen",
     "fr": "Caravanes",
     "ja": "キャラバン",
     "ru": "Караваны",
@@ -18,6 +19,7 @@
     "en": "How to send caravans without losing rewards and how to take advantage of the best ones.",
     "pt": "Como enviar caravanas sem perder recompensas e aproveitar as de melhor qualidade.",
     "it": "Come inviare carovane senza perdere ricompense e come sfruttare quelle migliori.",
+    "de": "Wie man Karawanen sendet, ohne Belohnungen zu verlieren, und wie man die besten davon nutzt.",
     "fr": "Comment envoyer des caravanes sans perdre de récompenses et comment profiter des meilleures.",
     "ja": "報酬を取りこぼさず、より良いキャラバンをうまく利用するための方法。",
     "ru": "Как отправлять караваны, не теряя награды, и как использовать лучшие из них.",
@@ -64,6 +66,16 @@
       "frammenti UR",
       "curiosità SSR",
       "risorse rare"
+    ],
+    "de": [
+      "karawane",
+      "karawanen",
+      "trupp",
+      "belohnung",
+      "belohnungen",
+      "UR-fragmente",
+      "SSR-kuriositäten",
+      "seltene ressourcen"
     ],
     "fr": [
       "caravane",
@@ -119,6 +131,7 @@
         "en": "Caravans",
         "pt": "Caravanas",
         "it": "Carovane",
+        "de": "Karawanen",
         "fr": "Caravanes",
         "ja": "キャラバン",
         "ru": "Караваны",
@@ -145,6 +158,11 @@
           "Per evitare di perdere ricompense con ogni carovana, scegli di inviare una sola carovana alla volta con la tua squadra più forte.",
           "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
           "Preferisci le Carovane SSR o UR: è la tua occasione per ricevere risorse strane o difficili da ottenere come Frammenti UR (dorati) o Curiosità SSR (violette)."
+        ],
+        "de": [
+          "Um bei jeder Karawane keine Belohnung zu verlieren, solltest du jeweils nur eine Karawane mit deinem stärksten Trupp senden.",
+          "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
+          "Bevorzuge SSR- oder UR-Karawanen: Das ist deine Chance auf seltene oder schwer zu erhaltende Ressourcen wie UR-Fragmente (golden) oder SSR-Kuriositäten (lila)."
         ],
         "fr": [
           "Pour ne pas perdre de récompenses avec chaque caravane, choisissez d'envoyer une seule caravane à la fois avec votre escadron le plus fort.",

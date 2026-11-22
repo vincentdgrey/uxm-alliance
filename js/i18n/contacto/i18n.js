@@ -31,6 +31,13 @@ pageContactLead:"Scrivici per condividere la tua opinione o segnalarci i saccheg
 contactFormOpen:"Apri il modulo in una nuova scheda",
 contactFormFrameTitle:"Modulo di contatto UXM",
     },
+    de: {
+        pageContactTitle:"Kontakt",
+ pageContactLead:"Schreib uns, um deine Meinung zu teilen oder uns über Plünderungen zu informieren, und teile unseren YouTube-Kanal @VincentDantesGrey.",
+        contactFormTitle:"Kontaktformular",
+        contactFormOpen:"Formular in einem neuen Tab öffnen",
+        contactFormFrameTitle:"UXM Kontaktformular",
+    },
     fr: {
         pageContactTitle:"Contact",
 pageContactLead:"Écrivez-nous pour partager votre avis ou nous signaler des razzias, et partagez notre chaîne YouTube @VincentDantesGrey.",

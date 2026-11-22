@@ -60,7 +60,7 @@ test("la sección informativa incluye botones de YouTube, Normas UXM y Actividad
   assert.equal(i18n.es.youtubeLabel, "YouTube");
   assert.equal(i18n.es.rulesLabel, "Normas UXM");
   assert.equal(i18n.es.navDaily, "Actividades Diarias");
-  for (const language of ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"]) {
+  for (const language of ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"]) {
     assert.equal(typeof i18n[language].navDaily, "string", language);
   }
 });
@@ -195,7 +195,7 @@ test("las descripciones de las tarjetas se traducen con data-i18n-text", () => {
   ];
   for (const key of keys) {
     const found = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
-    assert.equal(found.length, 9, key + " debe existir en los 9 idiomas");
+    assert.equal(found.length, 10, key + " debe existir en los 10 idiomas");
   }
 });
 
@@ -207,7 +207,7 @@ test("los encabezados de tutoriales se traducen con claves propias", () => {
   assert.match(html, /id="events" data-i18n="tutorialEventsTitle"/);
   for (const key of ["tutorialLearningPriorityTitle", "tutorialTipsTitle", "tutorialEventsTitle"]) {
     const found = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
-    assert.equal(found.length, 9, key + " debe existir en los 9 idiomas");
+    assert.equal(found.length, 10, key + " debe existir en los 10 idiomas");
   }
   assert.match(i18n, /tutorialLearningPriorityTitle:"Aprendizaje Prioritario"/);
   assert.match(i18n, /tutorialTipsTitle:"Dato Práctico"/);
@@ -428,10 +428,10 @@ test("las traducciones del calendario viven en el archivo i18n de actividades", 
   assert.match(js, /T\.bsCurrent/);
   assert.match(js, /T\.bsNext/);
   const headers = i18n.match(/bsHeaders:\[/g) || [];
-  assert.equal(headers.length, 9);
+  assert.equal(headers.length, 10);
   for (const key of ["bsPast", "bsCurrent", "bsNext"]) {
     const found = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
-    assert.equal(found.length, 9, key + " debe existir en los 9 idiomas");
+    assert.equal(found.length, 10, key + " debe existir en los 10 idiomas");
   }
 });
 
@@ -443,7 +443,7 @@ test("los mensajes de supervivencia y de duelo de alianzas se traducen en todos 
   assert.match(html, /id="allianceMessage" data-i18n-text="allianceMessage"/);
   for (const key of ["survivalMessage", "allianceMessage"]) {
     const matches = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
-    assert.equal(matches.length, 9, key + " debe existir en los 9 idiomas");
+    assert.equal(matches.length, 10, key + " debe existir en los 10 idiomas");
   }
   assert.match(i18n, /survivalMessage:"Ciclo automático de actividades, calculado según el horario del navegador web, indicando el tiempo transcurrido del evento actual y cuanto falta para terminar\."/);
   assert.match(i18n, /allianceMessage:"Listado de actividades basadas en el Duelo de Alianzas, te permitirá realizar las actividades del dia actual y futuro/);
@@ -543,7 +543,7 @@ test("el encabezado del cronograma de batalla se traduce en todos los idiomas", 
   assert.match(js, /applySectionTitles\(\);/);
   assert.match(js, /initial\.className = "info-initial"/);
   const matches = i18n.match(/scheduleBattleSurvival:"[^"]+"/g) || [];
-  assert.equal(matches.length, 9);
+  assert.equal(matches.length, 10);
   assert.match(i18n, /scheduleBattleSurvival:"Cronograma Batalla Supervivencia"/);
 });
 
@@ -721,7 +721,7 @@ test("el encabezado y las tablas del duelo de alianzas se traducen en todos los 
   assert.match(html, /id="textAD" data-i18n="scheduleAllianceDuel"/);
   assert.match(html, />Duelo de Alianzas<\/h3>/);
 
-  const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+  const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
   for (const language of languages) {
     const texts = i18n[language];
     assert.equal(typeof texts.scheduleAllianceDuel, "string", language);
@@ -737,9 +737,9 @@ test("el encabezado y las tablas del duelo de alianzas se traducen en todos los 
   for (const language of languages) assert.ok(!i18n[language].adHeaders.includes("Fase"), language);
 });
 
-test("los encabezados del duelo de alianzas tienen cinco columnas en los 9 idiomas", () => {
+test("los encabezados del duelo de alianzas tienen cinco columnas en los 10 idiomas", () => {
   const i18n = loadI18n("js/i18n.js", pageI18n.daily);
-  const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+  const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
 
   for (const language of languages) {
     const values = i18n[language].adHeaders;
@@ -840,7 +840,7 @@ test("el duelo de alianzas ordena por evento y muestra iconos de tarea", () => {
 test("los eventos de battle survival se traducen y los resaltados no dependen del idioma", () => {
   const js = read("js/activities-daily.js");
   const i18n = loadI18n("js/i18n.js", pageI18n.daily);
-  const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+  const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
 
   for (const language of languages) {
     const events = i18n[language].bsEvents;
@@ -878,7 +878,7 @@ test("los estilos manuales del titulo del duelo de alianzas se conservan", () =>
 test("el texto introductorio de actividades diarias explica el contenido de la pagina", () => {
   const i18n = readI18n(pageI18n.daily);
   const matches = i18n.match(/pageDailyLead:"[^"]+"/g) || [];
-  assert.equal(matches.length, 9);
+  assert.equal(matches.length, 10);
   assert.match(i18n, /pageDailyLead:"Detalles de las actividades diarias que te ayudaran a mejorar diariamente\."/);
 });
 
@@ -1051,7 +1051,7 @@ test("el menú lateral incluye el enlace localizado de inicio", () => {
   assert.match(js, /navHome/);
   assert.match(js, /basePath\(\)\s*\+\s*"index\.html"/);
   assert.equal(i18n.es.navHome, "Inicio");
-  for (const language of ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"]) {
+  for (const language of ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"]) {
     assert.equal(typeof i18n[language].navHome, "string", language);
   }
 });
@@ -1158,7 +1158,7 @@ test("las secciones de portada traducidas están conectadas en todos los idiomas
   for (const id of ["warCryTitle", "warCryMessage", "tutoTitle", "allianceTitle", "allianceMessage"]) {
     assert.match(html, new RegExp(`id="${id}"`));
     assert.match(js, new RegExp(`setText\\("${id}", T\\.${id}\\)`));
-    assert.ok((i18n.match(new RegExp(`\\b${id}:"`, "g")) || []).length === 9);
+    assert.ok((i18n.match(new RegExp(`\\b${id}:"`, "g")) || []).length === 10);
   }
 
   assert.match(i18n, /warCryMessage:"Bajo las llamas más aplastantes,/);
@@ -1166,7 +1166,7 @@ test("las secciones de portada traducidas están conectadas en todos los idiomas
   assert.equal((i18n.match(/allianceMessage:""/g) || []).length, 0);
 });
 
-test("el bloque de bonos de la alianza se genera desde los datos y se localiza en los 9 idiomas", () => {
+test("el bloque de bonos de la alianza se genera desde los datos y se localiza en los 10 idiomas", () => {
   const html = read("index.html");
   const js = read("js/app.js");
   const css = read("css/style.css");
@@ -1195,7 +1195,7 @@ test("el bloque de bonos de la alianza se genera desde los datos y se localiza e
   for (const id of bonusIds) {
     if (id !== "bonusAlliance") {
       assert.match(data, new RegExp(`"key": "${id}"`));
-      assert.ok((i18n.match(new RegExp(`\\b${id}:"`, "g")) || []).length === 9);
+      assert.ok((i18n.match(new RegExp(`\\b${id}:"`, "g")) || []).length === 10);
     }
   }
   assert.match(js, /setText\("bonusAlliance", T\.bonusAlliance\)/);
@@ -1203,7 +1203,7 @@ test("el bloque de bonos de la alianza se genera desde los datos y se localiza e
 
   assert.match(i18n, /bonusAlliance:"Bonos Tecnología de la Alianza"/);
   assert.match(i18n, /bonusInProgress:"Donación En curso"/);
-  assert.equal((i18n.match(/\bbonusInProgress:"/g) || []).length, 9);
+  assert.equal((i18n.match(/\bbonusInProgress:"/g) || []).length, 10);
 
   /* El estado "en curso" se localiza mediante el atributo data-progress. */
   assert.match(js, /name\.className = "in-progress"/);
@@ -1263,7 +1263,7 @@ test("las introducciones de subpágina anuncian el contenido real de cada págin
   for (const [page, [text, file]] of Object.entries(leads)) {
     const i18n = loadI18n("js/i18n.js", file);
     const key = keyByPage[page];
-    for (const language of ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"]) {
+    for (const language of ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"]) {
       assert.equal(typeof i18n[language][key], "string", language + "/" + key);
     }
     assert.equal(i18n.es[key], text, key + " debe conservar el texto español vigente");
@@ -1285,7 +1285,7 @@ test("los encabezados de las normas se traducen con claves propias", () => {
 
   for (const key of ["rulesKingdomTitle", "rulesAllianceTitle", "rulesPositionsTitle"]) {
     const found = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
-    assert.equal(found.length, 9, key + " debe existir en los 9 idiomas");
+    assert.equal(found.length, 10, key + " debe existir en los 10 idiomas");
   }
 
   assert.match(i18n, /rulesKingdomTitle:"Normas del Reino 277"/);
@@ -1324,7 +1324,7 @@ test("las reglas con enlaces se localizan con data-i18n-html y conservan sus enl
   for (const key of richKeys) {
     assert.match(html, new RegExp(`data-i18n-html="${key}"`));
     const found = i18n.match(new RegExp(`${key}:"[^"]*"`, "g")) || [];
-    assert.equal(found.length, 9, key + " debe existir en los 9 idiomas");
+    assert.equal(found.length, 10, key + " debe existir en los 10 idiomas");
   }
 
   /* El motor de traduccion reconoce el contenido con marcado. */
@@ -1344,7 +1344,7 @@ test("las reglas con enlaces se localizan con data-i18n-html y conservan sus enl
   assert.doesNotMatch(html, /href="\/pages\/video-tutoriales\.html"/);
 });
 
-test("las reglas y los roles se localizan en los 9 idiomas", () => {
+test("las reglas y los roles se localizan en los 10 idiomas", () => {
   const i18n = readI18n(pageI18n.rules);
 
   const keys = [
@@ -1361,7 +1361,7 @@ test("las reglas y los roles se localizan en los 9 idiomas", () => {
 
   for (const key of keys) {
     const found = i18n.match(new RegExp(`\\b${key}:"`, "g")) || [];
-    assert.equal(found.length, 9, key + " debe existir en los 9 idiomas");
+    assert.equal(found.length, 10, key + " debe existir en los 10 idiomas");
   }
 });
 
@@ -1387,7 +1387,7 @@ test("la página de contacto incrusta el formulario y ofrece el enlace alternati
 
   for (const key of ["contactFormTitle", "contactFormOpen", "contactFormFrameTitle"]) {
     const found = i18n.match(new RegExp(`${key}:"[^"]+"`, "g")) || [];
-    assert.equal(found.length, 9, key + " debe existir en los 9 idiomas");
+    assert.equal(found.length, 10, key + " debe existir en los 10 idiomas");
   }
 });
 
@@ -1412,7 +1412,7 @@ test("el titulo accesible del iframe se localiza con data-i18n-title", () => {
 
 /* ---------- Traducciones de la portada ---------- */
 
-test("los textos de tutoriales y estrategia de la portada se traducen en los 9 idiomas", () => {
+test("los textos de tutoriales y estrategia de la portada se traducen en los 10 idiomas", () => {
   const html = read("index.html");
   const i18n = readI18n(pageI18n.home);
 
@@ -1423,7 +1423,7 @@ test("los textos de tutoriales y estrategia de la portada se traducen en los 9 i
 
   for (const key of ["tutorialsMessage", "strategyTitle", "strategyMessage"]) {
     const found = i18n.match(new RegExp(`\\b${key}:"[^"]+"`, "g")) || [];
-    assert.equal(found.length, 9, key + " debe existir en los 9 idiomas");
+    assert.equal(found.length, 10, key + " debe existir en los 10 idiomas");
   }
 
   /* El texto español conserva la redaccion manual de index.html. */
@@ -1478,12 +1478,12 @@ test("los estilos de los marcadores centran el boton y la lista de grupos", () =
 
 /* ---------- Traducciones de actividades, fases y eventos ---------- */
 
-test("las actividades, fases y eventos del duelo de alianzas se traducen en los 9 idiomas", () => {
+test("las actividades, fases y eventos del duelo de alianzas se traducen en los 10 idiomas", () => {
   const js = read("js/activities-daily.js");
   const i18n = loadI18n("js/i18n.js", pageI18n.daily);
-  const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+  const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
 
-  /* El codigo de cada actividad debe estar en el mapa de los 9 idiomas. */
+  /* El codigo de cada actividad debe estar en el mapa de los 10 idiomas. */
   const activityCode = [...js.matchAll(/"code": "([A-Z0-9]+)"/g)].map((m) => m[1]);
   assert.equal(activityCode.length, 47);
 
@@ -1777,7 +1777,7 @@ test("las traducciones japonesas no contienen textos corruptos", () => {
 test("solo los japones y los chinos contienen caracteres CJK", () => {
   const i18n = loadI18n("js/i18n.js", pageI18n.daily, pageI18n.home, pageI18n.tutorials,
     pageI18n.rules, pageI18n.strategy, pageI18n.contact, pageI18n.kingdom);
-  const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+  const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
 
   for (const language of languages) {
     if (language === "ja" || language === "zh") continue;
@@ -1926,9 +1926,9 @@ test("la Ciudad Real tiene mas detalle que un bloque simple", () => {
   assert.ok((castleBlock[1].match(/edges\(new THREE\.BoxGeometry/g) || []).length >= 5, "debe tener varios volumenes");
 });
 
-test("los textos del plano 3D estan traducidos en los nueve idiomas", () => {
+test("los textos del plano 3D estan traducidos en los diez idiomas", () => {
   const i18n = loadI18n("js/i18n.js", pageI18n.kingdom);
-  const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+  const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
   const keys = [
     "kingdomCastleName",
     "kingdomTowerWest", "kingdomTowerNorth", "kingdomTowerEast", "kingdomTowerSouth",
@@ -1944,9 +1944,9 @@ test("los textos del plano 3D estan traducidos en los nueve idiomas", () => {
   }
 });
 
-test("los textos propios del reino estan traducidos en los nueve idiomas", () => {
+test("los textos propios del reino estan traducidos en los diez idiomas", () => {
   const i18n = loadI18n("js/i18n.js", pageI18n.kingdom);
-  const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+  const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
   const keys = [
     "pageKingdomTitle", "pageKingdomLead",
     "kingdomInfoTitle", "kingdomInfoMessage",
@@ -1967,10 +1967,10 @@ test("los textos propios del reino estan traducidos en los nueve idiomas", () =>
   }
 });
 
-test("el menu ofrece la entrada Reino y la Biblioteca Estrategica en los nueve idiomas", () => {
+test("el menu ofrece la entrada Reino y la Biblioteca Estrategica en los diez idiomas", () => {
   const js = read("js/app.js");
   const i18n = read("js/i18n.js");
-  const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+  const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
 
   assert.match(js, /\{ file: "reino\.html",\s*key: "navKingdom",\s*titleKey: "pageKingdomTitle" \}/);
   assert.match(js, /\{ file: "estrategia\.html",\s*key: "navStrategy",\s*titleKey: "pageStrategyTitle" \}/);

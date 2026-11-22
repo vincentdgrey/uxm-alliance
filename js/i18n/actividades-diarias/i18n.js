@@ -345,6 +345,105 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
         adPhases:{ P00:"Fase 0 : Raccolta e Riserva", P01:"Fase 1 : Migliora Corvo", P02:"Fase 2 : Sviluppo del Territorio", P03:"Fase 3 : Ricerca Tecnologica", P04:"Fase 4 : Crescita degli Eroi", P05:"Fase 5 : Preparazione alla Guerra", P06:"Fase 6 : Assalta il Nemico" },
         adEvents:{ DY:"Consiglio Giornaliero", AD:"Duello delle Alleanze", KVK:"Guerra tra Regni", ROY:"Tumulto della Città Reale", BS:"Calendario Battle Survival", EQ:"Miglioramento Equipaggiamento", BEX:"Battaglia dell'Elisir", CUM:"Valle dei Cumulo di Cristallo", CHE:"Trappola del Formaggio" }
     },
+    de: {
+        scheduleBattleSurvival:"Battle Survival Zeitplan",
+        survivalMessage:"Automatischer Aktivitätszyklus, berechnet anhand der Zeitzone des Webbrowsers, mit Angabe der verstrichenen Zeit des aktuellen Events und der verbleibenden Dauer bis zu seinem Ende.",
+        allianceMessage:"Liste der Aktivitäten auf Basis des Allianz-Duels, mit der du die Aktivitäten des heutigen und der kommenden Tage ausführen kannst. Zähler zeigen an, wann du sie durchführen sollst, sofern sie einen festen Zeitplan haben oder mit Battle Survival verknüpft sind.",
+        bsHeaders:["Countdown", "Status", "Battle Survival Event", "Aktivitäten", "Server"],
+        bsPast:"Beendet",
+        bsCurrent:"Läuft",
+        bsNext:"Nächste",
+        bsEvents:{ BUILD:"Gebiet bauen", HEROE:"Helden verbessern", RAVEN:"Rabe verbessern", SOLDIER:"Soldaten trainieren", TECH:"Technologie-Forschung", STANDBY:"Bereitschaft" },
+        scheduleAllianceDuel:"Allianz-Duell",
+        adHeaders:["Countdown", "", "Aufgabe", "Ressource", "Event"],
+        pageDailyTitle:"Tägliche Aktivitäten",
+        pageDailyLead:"Details der täglichen Aktivitäten, die dir helfen, jeden Tag besser zu werden.",
+        adActivities:{
+          ANTX:{ objective:"Verbrauche 660 Antitoxine",resource:"Antidot-Vorräte"},
+
+          STMN: { objective:"Verbrauche Energie/Ausdauer, kaufe 24 Flaschen im VIP-Shop",resource:"Energie-/Ausdauerflasche"},
+          DYBOTT: {objective:"Bewahre Energie-/Ausdauerflaschen für die nächste Rabenphase auf",resource:"Energie-/Ausdauerflasche"},
+          DYBOTWAR: {objective:"Bewahre Energie-/Ausdauerflaschen für die Kriegsphase auf",resource:"Energie-/Ausdauerflasche"},
+
+          FALCON: { objective:"Erledige Falkenmissionen, 10 oder 11 alle 6 Stunden",resource:"Falkenturm"},
+          DYFALCON: {objective:"Starte Falkenmissionen, aber schließe sie nicht ab, halte 35 oder 40 offen",resource:"Falkenturm"},
+
+          DYHERBS: {objective:"Beginne Kräuter zu sammeln",resource:"Kräutergarten Lv.10, 8H, 1.1M"},
+          HERBS: {objective:"Sammle x60 Kräuter, den ganzen Tag",resource:"Kräutergarten Lv.10, 8H, 1.1M"},
+          GRAIN: {objective:"Sammle x100 Getreide/Holz",resource:"Farm Lv.10, 6.5H, 2.2M"},
+
+          EPIUR: {objective:"Erhalte UR-Inschrift-Fragmente, nutze jede Art von Inschriftentruhe",resource:"Inschriftentruhen"},
+          RAVESS:{objective:"Verbrauche Rabenessenz, Priorität",resource:"Rabenessenz"},
+          RAVFRT:{objective:"Verbrauche Rabenfrucht",resource:"Rabenfrucht"},
+          RAVCH1:{objective:"Öffne Raben-Ausrüstungstruhe",resource:"Rabentruhe"},
+
+          CON1SP:{objective:"Nutze Beschleunigung des Baus, aktiviere Bauministerium",resource:"Bau-Beschleunigung"},
+          CONMGH:{objective:"Erhöhe die Stärke eines Gebäudes, kürzere Bauzeiten bevorzugt",resource:"Gebäude aufwerten"},
+
+          STDSCR:{objective:"Nutze die Studierrolle in der Forschung",resource:"Belohnung des Allianz-Duels"},
+          TCH1SP:{objective:"Nutze Forschungsbeschleunigung, aktiviere Forschungsministerium",resource:"Forschungsbeschleunigung"},
+          TCHMGH:{objective:"Erhöhe die Technologiestärke, suche Forschung mit Studierrollen",resource:"Studierrolle"},
+
+          CRVNUR:{objective:"Entsende UR-Karawanen",resource:"4 Karawanen"},
+          OPENUR:{objective:"Führe UR-Geheime Operationen aus, mindestens 6, die letzte ist schwieriger",resource:"7 Geheime Operationen"},
+
+          TCKSUR:{objective:"Rekrutiere Überlebende, mit ALLEN Überlebenden-Tickets",resource:"Überlebenden-Ticket"},
+          SAVETS:{objective:"BEWAHRE ALLE Überlebenden-Tickets auf",resource:"Überlebenden-Ticket"},
+          FREETS:{objective:"Nutze NUR 1 KOSTENLOSES Überlebenden-Ticket",resource:"Überlebenden-Ticket"},
+
+          TCKHER:{objective:"Rekrutiere Helden, mit ALLEN Helden-Tickets, +50 erhältst du einen UR-Helden",resource:"Helden-Ticket"},
+          SAVETH:{objective:"BEWAHRE ALLE Helden-Tickets auf",resource:"Helden-Ticket"},
+          FREETH:{objective:"Nutze NUR 1 KOSTENLOSES Helden-Ticket",resource:"Helden-Ticket"},
+
+          SHRDSR:{objective:"Verbrauche SR-Heldenfragment", resource:"Heiligtum-Shop"},
+          SHRDSS:{objective:"Verbrauche SSR-Heldenfragment", resource:"Heiligtum-Shop"},
+          SHRDUR:{objective:"Verbrauche UR-Heldenfragment", resource:"Heiligtum-Shop"},
+          SKILLB:{objective:"Nutze das Fähigkeitsabzeichen, Priorität UR-Heldenfähigkeit erhöhen",resource:"Fähigkeitsabzeichen"},
+
+          SOLD1TRN:{objective:"Nutze Trainingsbeschleunigung, aktiviere Kriegsministerium",resource:"Trainingsbeschleunigung"},
+          SOLDT10:{objective:"Trainiere Soldaten, Priorität T7 zu T8 befördern",resource:"Soldaten T6 > T7 > T8"},
+          SOLDDFT:{objective:"Besiege Soldaten, Allianz-Duell",resource:"Angriff"},
+          SOLDLST:{objective:"Verliere Soldaten, Allianz-Duell",resource:"Verteidigung"},
+          SOLDMTC:{objective:"Besiege Soldaten (bestimmtes Match)",resource:"T8 vs T8"},
+          DYSOLDIER:{objective:"Trainiere T6- oder T7-Soldaten; am Vorkriegstag befördern",resource:"Soldat T7"},
+          DYWALL:{objective:"Ziehe deine Soldaten von der Mauer zurück; Kriegstag",resource:"Heiligtums-Mauer"},
+
+          HEA1SP:{objective:"Nutze Heilungsbeschleunigung, Heilungsbuff +150%",resource:"Heilungsbeschleunigung"},
+          DYHOSPITAL:{objective:"Heile KEINE Soldaten; im Krankenhaus lassen, um am Kriegstag Heilungsbeschleuniger zu nutzen",resource:"Krankenhaus"},
+
+          DYELITE:{objective:"Elite-Monster der Pest, erhalte Helden-Ticket und Antitoxin",resource:"Monster"},
+
+          EQGEAR:{objective:"Nutze Ausrüstungsstein, Priorität bei UR-Ausrüstung",resource:"Ausrüstungsstein"},
+          EQBPRN:{objective:"Nutze Ausrüstungsbauplan, befördere UR-Zusatzwerte",resource:"Ausrüstungsbauplan"},
+
+          SHIELD:{objective:"Aktiviere 24H-Schilde, kaufe kostenlosen 8H-Schild im Allianz-Shop",resource:"Schild"},
+          ELIXIR:{objective:"Erzeuge Punkte durch Erobern von Gebäuden",resource:"Elixierburg"},
+          SCRAMBLE:{objective:"100K Ehrenpunkte, eroberte/verteidige eine Farm im Schlamm",resource:"Farmen der Königsstadt"},
+          KWAR:{objective:"1.5M Ehrenpunkte, Soldaten besiegen/verlieren/heilen",resource:"Königreichskrieg (KvK)"},
+          CUMULUS:{objective:"Sammle gereinigten Kristall in Kristallhaufen, 30min Dauer",resource:"Kristallhaufen"},
+          CHEESE7:{objective:"335M Schaden am Käse-Dieb Lv.7, 30min Dauer, 1.4B Schaden für den MVP1",resource:"Käsefalle"}
+        },
+        adPhases:{
+          P00:"Phase 0 : Sammeln und Lagern",
+          P01:"Phase 1 : Rabe verbessern",
+          P02:"Phase 2 : Gebietsentwicklung",
+          P03:"Phase 3 : Technologie-Forschung",
+          P04:"Phase 4 : Heldenwachstum",
+          P05:"Phase 5 : Kriegsvorbereitung",
+          P06:"Phase 6 : Angriff auf den Feind"
+        },
+        adEvents:{
+          DY:"Täglicher Tipp",
+          AD:"Allianz-Duell",
+          KVK:"Königreichskrieg",
+          ROY:"Aufruhr um die Königsstadt",
+          BS:"Battle Survival",
+          EQ:"Ausrüstungsaufwertung",
+          BEX:"Elixier-Schlacht",
+          CUM:"Tal der Kristallhaufen",
+          CHE:"Käsefalle"
+        }
+    },
     fr: {
         scheduleBattleSurvival:"Calendrier Battle Survival",
         survivalMessage:"Cycle automatique des activités calculé selon le fuseau horaire du navigateur web, indiquant le temps écoulé de l'événement actuel et le temps restant avant sa fin.",

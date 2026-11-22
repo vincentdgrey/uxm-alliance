@@ -7,6 +7,7 @@
     "en": "Incursions",
     "pt": "Incursões",
     "it": "Incursioni",
+    "de": "Einmarsche",
     "fr": "Incursions",
     "ja": "インカージョン",
     "ru": "Вторжения",
@@ -18,6 +19,7 @@
     "en": "Learn how to jump between kingdoms to attack our rivals in the Alliance Duel.",
     "pt": "Aprenda a saltar entre reinos para atacar nossos rivais no Duelo de Alianças.",
     "it": "Impara a saltare tra i regni per attaccare i nostri rivali nel Duello di Alleanze.",
+    "de": "Erfahre, wie man zwischen Königreichen wechselt, um unsere Rivalen im Allianz-Duell anzugreifen.",
     "fr": "Apprenez à sauter d'un royaume à l'autre pour attaquer nos rivaux lors du Duel des Alliances.",
     "ja": "連合決闘でライバルを攻撃するために、王国間を移動する方法を学びましょう。",
     "ru": "Научитесь перемещаться между королевствами, чтобы атаковать соперников в Дуэли Альянсов.",
@@ -69,6 +71,17 @@
       "giorno di guerra",
       "banner",
       "stella",
+      "link"
+    ],
+    "de": [
+      "einmarsch",
+      "einmärsche",
+      "sprung",
+      "königreich",
+      "königreiche",
+      "kriegstag",
+      "banner",
+      "stern",
       "link"
     ],
     "fr": [
@@ -129,6 +142,7 @@
         "en": "Jumping between Kingdoms",
         "pt": "Saltar entre Reinos",
         "it": "Saltare tra i Regni",
+        "de": "Zwischen Königreichen wechseln",
         "fr": "Sauter d'un Royaume à l'autre",
         "ja": "王国間を移動する",
         "ru": "Перемещение между Королевствами",
@@ -162,6 +176,13 @@
           "I salti di questo tipo sono gratuiti e hanno un tempo di attesa: spostandoti in un altro regno comparirà un banner in alto, di colore giallo, che indica il regno che stai percorrendo, e una freccia che ti permetterà di tornare.",
           "È anche possibile tornare: visitare il proprio regno tramite un link verso una certa posizione è un altro modo pratico.",
           "Una volta abilitato il Giorno di Guerra, un altro elemento che ti aiuterà sono i link creati per l'alleanza, presenti sulla mappa del regno: hanno un'icona a stella e il leader aggiungerà quelli necessari in altri regni, il che aiuta a saccheggiare.",
+          "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
+        ],
+        "de": [
+          "Jeden Samstag oder am Kriegstag wechseln wir in ein anderes Königreich, um unsere Rivalen im Allianz-Duell anzugreifen, deshalb ist es wichtig zu lernen, wie man zwischen Königreichen wechselt.",
+          "Solche Sprünge sind kostenlos und haben eine Wartezeit: Wenn du in ein anderes Königreich wechselst, erscheint oben ein gelbes Banner, das das besuchte Königreich anzeigt, dazu ein Pfeil, mit dem du zurückkehren kannst.",
+          "Eine Rückkehr ist ebenfalls möglich: Dein eigenes Königreich über einen Link zu einem bestimmten Ort zu besuchen, ist eine weitere praktische Möglichkeit.",
+          "Sobald der Kriegstag aktiviert ist, hilft dir ein weiteres Element: die für die Allianz erstellten Links auf der Königreichskarte. Sie tragen ein Sternsymbol, und der Anführer ergänzt die nötigen Links in anderen Königreichen, was das Plündern erleichtert.",
           "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
         ],
         "fr": [

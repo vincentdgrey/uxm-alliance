@@ -7,6 +7,7 @@
     "en": "Treasure Seeker",
     "pt": "Caçador de Tesouros",
     "it": "Cacciatore di Tesori",
+    "de": "Schatzsucher",
     "fr": "Chasseur de Trésors",
     "ja": "トレ|ISBNハンター",
     "ru": "Искатель Сокровищ",
@@ -18,6 +19,7 @@
     "en": "How to use Secret Operations and daily chests to get fragments and UR rarity rewards.",
     "pt": "Como usar as Operações Secretas e os cofres diários para conseguir fragmentos e recompensas de raridade UR.",
     "it": "Come usare le Operazioni Segrete e i cofri giornalieri per ottenere frammenti e ricompense di rarità UR.",
+    "de": "Wie du Geheime Operationen und tägliche Truhen nutzt, um Fragmente und Belohnungen der Seltenheit UR zu erhalten.",
     "fr": "Comment utiliser les Opérations Secrètes et les coffres quotidiens pour obtenir des fragments et des récompenses de rareté UR.",
     "ja": "秘密作戦とデイチェストを使って、欠片とURレアリティの報酬を得る方法です。",
     "ru": "Как использовать Секретные Операции и ежедневные сундуки, чтобы получить фрагменты и награды редкости UR.",
@@ -83,6 +85,21 @@
       "UR",
       "SSR",
       "diamanti",
+      "ShardExchangeBank"
+    ],
+    "de": [
+      "schatzsucher",
+      "schätze",
+      "geheime operation",
+      "geheime operationen",
+      "truhe",
+      "truhen",
+      "fragmente",
+      "schatzkarte",
+      "heiligtum",
+      "UR",
+      "SSR",
+      "diamanten",
       "ShardExchangeBank"
     ],
     "fr": [
@@ -166,6 +183,7 @@
         "en": "Secret Operations and Chests",
         "pt": "Operações Secretas e Cofres",
         "it": "Operazioni Segrete e Cofri",
+        "de": "Geheime Operationen und Truhen",
         "fr": "Opérations Secrètes et Coffres",
         "ja": "秘密作戦とチェスト",
         "ru": "Секретные Операции и Сундуки",
@@ -200,6 +218,13 @@
           "Se hai 7 operazioni segrete, ottenere 6 di rarità UR sarà più facile dell'ultima; l'ultima è di grande difficoltà, probabilmente perché tu consumi molti diamanti, ma per la tattica è meglio che l'ultima sia di rarità SSR.",
           "Ottenendo 2 cofri giornalieri, riuscirai nella settimana a ottenere un cofre UR; a tal proposito, nella nostra alleanza abbiamo un giocatore di supporto `ShardExchangeBank` che si occupa di scambiare i frammenti che ti servono; avendo un giocatore per questa funzione, tutti i frammenti vengono scambiati in modo pratico con tutta l'alleanza.",
           "Le ricompense dei cofri sono eccellenti per farti migliorare: ricevi acceleratori preziosi, pietre di equipaggiamento, distintivi per aumentare le abilità e altro."
+        ],
+        "de": [
+          "Jedes Mal, wenn du eine Mission Geheime Operation der Seltenheit UR oder SSR wählst, erhältst du Fragmente der Schatzkarte.",
+          "Wenn du dich anstrengst, 6 Geheime Operationen der Seltenheit UR und 1 der Seltenheit SSR abzuschließen, erhältst du 2 tägliche Truhen mit allen gesammelten Fragmenten. Sollte dein Heiligtum unter Lv.27 liegen, gibt es für die Höheren 8 Geheime Operationen.",
+          "Wenn du 7 Geheime Operationen hast, sind die 6 der Seltenheit UR leichter zu bekommen als die letzte; die letzte ist sehr schwierig, vermutlich damit du viele Diamanten ausgibst, taktisch ist es aber besser, wenn die letzte die Seltenheit SSR hat.",
+          "Mit 2 täglichen Truhen erreichst du in der Woche eine UR-Truhe; dafür gibt es in unserer Allianz einen Support-Spieler `ShardExchangeBank`, der die benötigten Fragmente für dich eintauscht; mit einem Spieler für diese Funktion werden alle Fragmente praktisch mit der ganzen Allianz getauscht.",
+          "Die Truhenbelohnungen sind hervorragend, damit du dich verbessern kannst: Du erhältst wertvolle Beschleuniger, Ausrüstungssteine, Abzeichen zum Aufwerten von Fähigkeiten und mehr."
         ],
         "fr": [
           "Chaque fois que vous choisissez une Mission Opération Secrète de rareté UR ou SSR, vous recevez des fragments de la carte au trésor.",

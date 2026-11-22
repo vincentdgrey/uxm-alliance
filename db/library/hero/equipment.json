@@ -7,6 +7,7 @@
     "en": "Equipment",
     "pt": "Equipamento",
     "it": "Equipaggiamento",
+    "de": "Ausrüstung",
     "fr": "Équipement",
     "ja": "装備",
     "ru": "Снаряжение",
@@ -18,6 +19,7 @@
     "en": "Which equipment to implement first for each class and how to improve it in each Faction.",
     "pt": "Qual equipamento implementar primeiro em cada classe e como melhorá-lo em cada Facção.",
     "it": "Quale equipaggiamento implementare per primo in ogni classe e come migliorarlo in ogni Fazione.",
+    "de": "Welche Ausrüstung du zuerst in jeder Klasse einsetzen solltest und wie du sie in jeder Fraktion verbesserst.",
     "fr": "Quel équipement mettre en place en priorité pour chaque classe et comment l'améliorer dans chaque Faction.",
     "ja": "クラスごとに最初に導入すべき装備と、Factionごとの強化方法を説明します。",
     "ru": "Какое снаряжение внедрить в первую очередь для каждого класса и как улучшать его в каждой Фракции.",
@@ -104,6 +106,26 @@
       "ATT",
       "DIF",
       "fazioni"
+    ],
+    "de": [
+      "ausrüstung",
+      "ausrüstung",
+      "UR",
+      "SSR",
+      "seltenheit",
+      "schwert",
+      "handschuh",
+      "rüstung",
+      "stiefel",
+      "carry",
+      "DPS",
+      "tank",
+      "support",
+      "monster",
+      "RES",
+      "ATK",
+      "DEF",
+      "fraktionen"
     ],
     "fr": [
       "équipement",
@@ -213,6 +235,7 @@
         "en": "Rarity Priorities",
         "pt": "Prioridades de Rareza",
         "it": "Priorità di Rarità",
+        "de": "Seltenheits-Prioritäten",
         "fr": "Priorités de Rareté",
         "ja": "レアリティの優先度",
         "ru": "Приоритеты редкости",
@@ -247,6 +270,13 @@
           "L'equipaggiamento SSR, per i suoi attributi, è ideale per le battaglie contro i mostri, ad esempio la Peste Vagante, il Ladro del Formaggio o il Re Demonio.",
           "Per attaccare i Mostri è consigliato mantenere un Guantaglio SSR Lv.30, per sfruttare al meglio il Bonus Attacco Mostri.",
           "Dato le Fazioni, si consiglia di migliorare per fazione i livelli dell'equipaggiamento e quello necessario, concentrandosi solo sull'Equipaggiamento UR."
+        ],
+        "de": [
+          "Die beste Ausrüstung zum Einsetzen ist die Seltenheit UR (Ultra Rare), die Helden deutlich stärker macht.",
+          "Um UR-Ausrüstung herzustellen, brauchst du die Ausrüstungswerkstatt auf Lv.20, und als Voraussetzung muss das Heiligtum auf Lv.20 aufgerüstet sein.",
+          "SSR-Ausrüstung ist wegen ihrer Attribute ideal für Kämpfe gegen Monster, zum Beispiel die Umherziehende Pest, den Käse-Dieb oder den Dämonenkönig.",
+          "Für Angriffe gegen Monster empfiehlt es sich, einen SSR-Handschuh auf Lv.30 zu halten, um den Angriffsbonus gegen Monster bestmöglich zu nutzen.",
+          "Angesichts der Fraktionen empfiehlt es sich, die Ausrüstungsstufen und die nötige Ausrüstung je Fraktion zu verbessern und sich dabei nur auf UR-Ausrüstung zu konzentrieren."
         ],
         "fr": [
           "Le meilleur équipement à mettre en place est celui de rareté UR (Ultra Rare), qui renforce notablement les héros.",
@@ -291,6 +321,7 @@
         "en": "Equipment by Class",
         "pt": "Equipamento por Classe",
         "it": "Equipaggiamento per Classe",
+        "de": "Ausrüstung nach Klasse",
         "fr": "Équipement par Classe",
         "ja": "クラス別の装備",
         "ru": "Снаряжение по классам",
@@ -317,6 +348,11 @@
           "Classe Carry/DPS (2): la prima cosa da implementare è una spada UR per massimizzare il suo attacco, alzarla nella prima fase al livello 40 (500 Attacco e 5% Probabilità di Critico) e accompagnarla con guantagli UR al livello 30 (500 ATT Attacco e 2% RES Resistenza al Danno); la priorità per il tuo Carry principale è alzare la sua spada al livello 60 o 50.",
           "Classe Carro (2): hanno sicuramente bisogno di un'ottima difesa, con Stivali UR al livello 40 (1000 DIF Difesa e 20% RES Resistenza al Danno Energetico); la seconda opzione è aumentare la tua Armatura UR al livello 40 (136K HP Punti Vita dell'Eroe e 20% RES Resistenza al Danno Fisico).",
           "Classe Supporto (1): è colui che fornisce i bonus essenziali per la fazione guerrieri/rangers/warlocks, ed è per questo che deve sopravvivere il più a lungo possibile con un'Armatura UR livello 40 (136K HP Punti Vita dell'Eroe e 20% RES Resistenza al Danno Fisico); dopo ci concentreremo su un Guantaglio UR livello 40 (500 ATT Attacco e 4% RES Resistenza al Danno); poiché i supporti hanno un attacco notevole, è consigliabile affidare loro una Spada UR di Livello 30."
+        ],
+        "de": [
+          "Carry/DPS-Klasse (2): Zuerst solltest du ein UR-Schwert einsetzen, um den Angriff zu maximieren, es in der ersten Stufe auf Stufe 40 bringen (500 Angriff und 5% Kritikchance) und es mit UR-Handschuhen auf Stufe 30 begleiten (500 ATQ Angriff und 2% RES Schadensresistenz); die Priorität für deinen Haupt-Carry ist, sein Schwert auf Stufe 60 oder 50 zu bringen.",
+          "Tank-Klasse (2): Sie brauchen definitiv eine ausgezeichnete Verteidigung, mit UR-Stiefeln auf Stufe 40 (1000 DEF Verteidigung und 20% RES Resistenz gegen Energieschaden); die zweite Option ist, deine UR-Rüstung auf Stufe 40 zu erhöhen (136K HP Helden-Lebenspunkte und 20% RES Resistenz gegen physischen Schaden).",
+          "Support-Klasse (1): Sie liefert die entscheidenden Boni für die Fraktion Krieger/Ranger/Warlocks, deshalb muss sie so lange wie möglich überleben, mit UR-Rüstung auf Stufe 40 (136K HP Helden-Lebenspunkte und 20% RES Resistenz gegen physischen Schaden); danach konzentrieren wir uns auf einen UR-Handschuh auf Stufe 40 (500 ATQ Angriff und 4% RES Schadensresistenz); da Supports einen beachtlichen Angriff haben, empfiehlt es sich, ihnen ein UR-Schwert auf Stufe 30 zu geben."
         ],
         "fr": [
           "Classe Carry/DPS (2) : la première chose à mettre en place est une épée UR pour maximiser ses attaques, la monter dès la première étape au niveau 40 (500 Attaque et 5% de probabilité de coup critique) et l'accompagner de manchons UR au niveau 30 (500 ATQ Attaque et 2% RES Résistance aux dégâts) ; la priorité pour votre Carry principal est de monter son épée au niveau 60 ou 50.",
