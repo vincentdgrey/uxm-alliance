@@ -1,0 +1,235 @@
+[
+  {
+    "id": 1,
+    "nombre": "VıиceитÐGяey",
+    "universal":319,
+    "inventario": [
+      {
+        "rareza": "UR",
+        "item": "Pluma Dorada",
+        "nivel": 2,
+        "stats": {
+          "hp": { "current": 34000.0, "upgrade": 68000.0 },
+          "def": { "current": 117.0, "upgrade": 239.0 }
+        },
+        "curio": {
+          "universal": 840,
+          "ornament": "2/6"
+        }
+      },
+      {
+        "rareza": "UR",
+        "item": "Dado Estelar",
+        "nivel": 3,
+        "stats": {
+          "hp": null,
+          "def": { "current": 239.0, "upgrade": 423.0 },
+          "atq": { "current": 485.0, "upgrade": 849.0 }
+        },
+        "curio": {
+          "universal": 2520,
+          "ornament": "4/18"
+        }
+      },
+      {
+        "rareza": "UR",
+        "item": "Sello de Guerrero",
+        "nivel": 3,
+        "stats": {
+          "hp": { "current": 102000.0, "upgrade": 178500.0 }
+        },
+        "curio": {
+          "universal": 2520,
+          "ornament": "2/18"
+        }
+      },
+      {
+        "rareza": "UR",
+        "item": "Sello de Montaraz",
+        "nivel": 2,
+        "stats": {
+          "def": { "current": 362.0, "upgrade": 724.0 }
+        },
+        "curio": {
+          "universal": 840,
+          "ornament": "1/6"
+        }
+      },
+      {
+        "rareza": "UR",
+        "item": "Sello de Brujo",
+        "nivel": 3,
+        "stats": {
+          "atq": { "current": 728.0, "upgrade": 1275.0 }
+        },
+        "curio": {
+          "universal": 2520,
+          "ornament": "0/18"
+        }
+      },
+      {
+        "rareza": "UR",
+        "item": "Carta de Profecía",
+        "nivel": 3,
+        "stats": {
+          "hp": { "current": 17000.0, "upgrade": 29750.0 },
+          "atq": { "current": 121.0, "upgrade": 212.0 },
+          "def": { "current": 475.0, "upgrade": 830.0 }
+        },
+        "curio": {
+          "universal": 2520,
+          "ornament": "3/18"
+        }
+      },
+      {
+        "rareza": "UR",
+        "item": "Pergamino Perdido",
+        "nivel": 3,
+        "stats": {
+          "hp": { "current": 51000.0, "upgrade": 89250.0 },
+          "atq": { "current": 364.0, "upgrade": 637.0 }
+        },
+        "curio": {
+          "universal": 2179,
+          "ornament": "4/18"
+        }
+      },
+      {
+        "rareza": "UR",
+        "item": "Reloj de Bolsillo",
+        "nivel": 3,
+        "stats": {
+          "blackops_queque": { "current": 3, "upgrade": 3 },
+          "blackops_rewards": { "current": 5, "upgrade": 7 }
+        },
+        "curio": {
+          "ornament": "6/18"
+        }
+      },
+      {
+        "rareza": "UR",
+        "item": "Panacea",
+        "nivel": 3,
+        "stats": {
+          "def": { "current": 1020.0, "upgrade": 2040.0 },
+          "def_monsters": { "current": 1.0, "upgrade": 1.5 }
+        },
+        "curio": {
+          "ornament": "7/18"
+        }
+      },
+      {
+        "rareza": "SSR",
+        "item": "Hombrera de Guerrero",
+        "nivel": 4,
+        "stats": {
+          "hp": { "current": 40970.0, "upgrade": 40970.0 },
+          "star": { "current": 21, "upgrade": 54 }
+        },
+        "curio": {
+          "universal": 1050,
+          "ornament": "0/15"
+        }
+      },
+      {
+        "rareza": "SSR",
+        "item": "Hombrera de Montaraz",
+        "nivel": 4,
+        "stats": {
+          "def": { "current": 253.0, "upgrade": 253.0 },
+          "star": { "current": 7, "upgrade": 54 }
+        },
+        "curio": {
+          "universal": 770,
+          "ornament": "0/11"
+        }
+      },
+      {
+        "rareza": "SSR",
+        "item": "Hombrera de Brujo",
+        "nivel": 4,
+        "stats": {
+          "atq": { "current": 295.0, "upgrade": 295.0 },
+          "star": { "current": 23, "upgrade": 54 }
+        },
+        "curio": {
+          "universal": 910,
+          "ornament": "0/13"
+        }
+      },
+      {
+        "rareza": "SSR",
+        "item": "Dientes de Bestia",
+        "nivel": 4,
+        "stats": {
+          "hp": { "current": 37116.0, "upgrade": 37116.0 },
+          "star": { "current": 11, "upgrade": 54 }
+        },
+        "curio": {
+          "universal": 490,
+          "ornament": "0/7"
+        }
+      },
+      {
+        "rareza": "SSR",
+        "item": "Fantasma de Calabaza",
+        "nivel": 2,
+        "stats": {
+          "atq": { "current": 200.0, "upgrade": 300.0 }
+        },
+        "curio": {
+          "universal": 420,
+          "ornament": "0/6"
+        }
+      },
+      {
+        "rareza": "SR",
+        "item": "Caliz Sagrado",
+        "nivel": 3,
+        "stats": {
+          "hp": { "current": 10200.0, "upgrade": 13600.0 }
+        },
+        "curio": {
+          "universal": 2000,
+          "ornament": "39/100"
+        }
+      },
+      {
+        "rareza": "SR",
+        "item": "Piedra de Guerrero",
+        "nivel": 3,
+        "stats": {
+          "hp": { "current": 10200.0, "upgrade": 13600.0 }
+        },
+        "curio": {
+          "universal": 2000,
+          "ornament": "38/100"
+        }
+      },
+      {
+        "rareza": "SR",
+        "item": "Piedra de Montaraz",
+        "nivel": 3,
+        "stats": {
+          "def": { "current": 71.0, "upgrade": 96.0 }
+        },
+        "curio": {
+          "universal": 2000,
+          "ornament": "22/100"
+        }
+      },
+      {
+        "rareza": "SR",
+        "item": "Piedra de Brujo",
+        "nivel": 3,
+        "stats": {
+          "atq": { "current": 72.0, "upgrade": 96.0 }
+        },
+        "curio": {
+          "universal": 2000,
+          "ornament": "36/100"
+        }
+      }
+    ]
+  }
+]
