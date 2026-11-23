@@ -38,8 +38,18 @@ function makeEl(tag) {
     set(v) { this._cls = new Set(String(v).split(/\s+/).filter(Boolean)); }
   });
   Object.defineProperty(el, "textContent", {
-    get() { return this._text; },
-    set(v) { this._text = String(v); }
+    /* Como en el DOM real, textContent concatena el texto propio y el de
+       los nodos hijos, y al asignarlo elimina los hijos existentes. */
+    get() {
+      if (this.children.length) {
+        return this.children.map((child) => child.textContent).join("") + this._text;
+      }
+      return this._text;
+    },
+    set(v) {
+      this._text = String(v);
+      if (v === "") this.children.length = 0;
+    }
   });
   Object.defineProperty(el, "offsetWidth", { get() { return 100; } });
   return el;

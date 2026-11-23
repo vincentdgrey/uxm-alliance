@@ -729,6 +729,7 @@ test("el encabezado y las tablas del duelo de alianzas se traducen en todos los 
     assert.equal(texts.adHeaders.length, 5, language);
     assert.ok(texts.adHeaders[0] && texts.adHeaders[2] && texts.adHeaders[3] && texts.adHeaders[4], language);
     assert.equal(texts.adHeaders[1], "", language);
+    assert.equal(typeof texts.adPointsNote, "string", language + " debe declarar adPointsNote");
   }
   assert.equal(i18n.es.scheduleAllianceDuel, "Duelo de Alianzas");
   assert.deepEqual([...i18n.es.adHeaders], ["Contador", "", "Tarea", "Recurso", "Evento"]);
@@ -753,6 +754,9 @@ test("los encabezados del duelo de alianzas tienen cinco columnas en los 10 idio
     assert.notEqual(values[3], "");
     assert.notEqual(values[4], "");
   }
+
+  /* La columna de Puntos se integro en la celda de Tarea. */
+  for (const language of languages) assert.ok(!i18n[language].adHeaders.includes("Puntos"), language);
 });
 
 test("la tabla del duelo de alianzas usa cinco columnas con la imagen de la tarea", () => {
@@ -762,9 +766,14 @@ test("la tabla del duelo de alianzas usa cinco columnas con la imagen de la tare
   /* Orden de las columnas: hora, icono, tarea, recurso, evento. */
   assert.match(js, /appendCell\(tr, timeTxt, "ad-time"\)/);
   assert.match(js, /appendIconCell\(tr, "ad-task-icon", r\.code_task\)/);
-  assert.match(js, /appendCell\(tr, a \? \(activityText\(r\.code_task, "objective"\) \|\| r\.code_task\) : r\.code_task, "ad-objective"\)/);
+  assert.match(js, /var taskCell = appendCell\(tr, objectiveText, "ad-objective"\)/);
   assert.match(js, /appendCell\(tr, a \? activityText\(r\.code_task, "resource"\) : "", "ad-resource"\)/);
   assert.match(js, /appendCell\(tr, eventLabel\(r\), "ad-event"\)/);
+
+  /* Los puntos ya no ocupan una columna propia. */
+  assert.doesNotMatch(js, /"ad-point"/);
+  assert.doesNotMatch(js, /ad-col-point/);
+  assert.doesNotMatch(css, /\.ad-col-point/);
 
   /* La columna reservada para los iconos de recurso ya no se renderiza. */
   assert.doesNotMatch(js, /ad-resource-icon/);
@@ -776,6 +785,95 @@ test("la tabla del duelo de alianzas usa cinco columnas con la imagen de la tare
 
   /* El recurso se toma de la traduccion con respaldo canonico en español. */
   assert.match(js, /activityText\(r\.code_task, "resource"\)/);
+});
+
+test("los puntos se integran en la columna Tarea con la nota minima", () => {
+  const js = read("js/activities-daily.js");
+  const css = read("css/activities-daily.css");
+  const html = read("pages/actividades-diarias.html");
+  const i18n = loadI18n("js/i18n.js", pageI18n.daily);
+
+  /* Signo "+", un decimal y separador de miles "'" agregado al renderizar.
+     El dato fuente se almacena sin separadores. */
+  assert.match(js, /function formatPoint\(value\)/);
+  assert.match(js, /if \(!\/\^\[\+\-\]\?\\d\+\(\\\.\\d\+\)\?\$\/\.test\(raw\)\) return "";/);
+  assert.match(js, /var parts = Math\.abs\(num\)\.toFixed\(1\)\.split\("\."\)/);
+  assert.match(js, new RegExp("parts\\[0\\] = parts\\[0\\]\\.replace\\(/\\\\B\\(\\?=\\(\\\\d\\{3\\}\\)\\+\\(\\?!\\\\d\\)\\)/g, \"'\"\\)"));
+  assert.match(js, /return sign \+ parts\.join\("\."\)/);
+
+  /* El dato fuente ya no lleva separador de miles ni signo. */
+  assert.doesNotMatch(js, new RegExp("raw\\.replace\\(/'/g"));
+
+  /* El punto se anade al final de la celda de Tarea, en posicion absoluta. */
+  assert.match(js, /pointEl\.className = "ad-task-point"/);
+  assert.match(js, /taskCell\.appendChild\(pointEl\)/);
+  assert.match(js, /taskCell\.classList\.add\("ad-has-point"\)/);
+  assert.match(css, /\.ad-objective \{[^}]*position:\s*relative/s);
+  assert.match(css, /\.ad-task-point \{[^}]*position:\s*absolute[^}]*right:\s*5px[^}]*bottom:\s*1px/s);
+  assert.match(css, /\.ad-task-point \{[^}]*color:\s*#999[^}]*font-weight:\s*100[^}]*font-size:\s*0\.6rem/s);
+
+  /* La nota referencial se muestra una sola vez, bajo las tablas. */
+  assert.match(html, /class="ad-points-note"[^>]*data-i18n-text="adPointsNote"/);
+  assert.match(css, /\.ad-points-note \{[^}]*font-size:\s*0\.8rem/s);
+  assert.equal(
+    i18n.es.adPointsNote,
+    "Los Puntos mostrados son referencia a un jugador con VIP 9 e Investigación del Duelo de Alianza en , estos aumentaran, según tu nivel de investigación en el Duelo de Alianza."
+  );
+  for (const language of ["en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"]) {
+    assert.equal(typeof i18n[language].adPointsNote, "string", language);
+  }
+});
+
+test("las actividades BS solo se muestran en la tabla del dia actual y en estado de progreso", () => {
+  const js = read("js/activities-daily.js");
+  const css = read("css/activities-daily.css");
+
+  /* Solo las actividades cuyo codigo empieza con BS se agregan. */
+  assert.match(js, /var BS_CODE_PREFIX = "BS"/);
+  assert.match(js, /a\.code\.indexOf\(BS_CODE_PREFIX\) === 0/);
+
+  /* Se agregan unicamente al dia actual (k === 0). */
+  assert.match(js, /if \(k === 0\) \{[\s\S]*?buildRow\(bsRow\(bsActivities\[b\], noday\), k, startDayMs, nowSec\)/);
+
+  /* El estado PROGRESS habilita la fila; cualquier otro estado la oculta. */
+  assert.match(js, /function applyBsVisibility\(tr, state\)/);
+  assert.match(js, /tr\.classList\.toggle\("ad-bs-hidden", state !== STATE_PROGRESS\)/);
+  assert.match(css, /\.ad-schedule tbody tr\.ad-bs-hidden \{[^}]*display:\s*none/s);
+});
+
+test("el grupo Battle Survival se separa con la clase de separador de eventos", () => {
+  const js = read("js/activities-daily.js");
+
+  /* La ultima fila del grupo anterior al de Battle Survival lleva separador. */
+  assert.match(js, /!nextRow && k === 0 && bsActivities\.length && rows\.length/);
+  assert.match(js, /row\.className \+= " ad-event-separator"/);
+});
+
+test("el contador BS muestra el tiempo restante de la duracion de cuatro horas", () => {
+  const js = read("js/activities-daily.js");
+  const css = read("css/activities-daily.css");
+
+  /* El estado vinculado expone el tiempo restante de la duracion. */
+  assert.match(js, /remainingSec: LINKED_DEFAULT_DURATION - elapsed/);
+
+  /* El contador BS se compone de dos nodos actualizados en cada tick. */
+  assert.match(js, /elapsedEl\.className = "ad-bs-elapsed"/);
+  assert.match(js, /remainingEl\.className = "ad-bs-remaining"/);
+  assert.match(js, /counter\.remainingEl\.textContent = result\.state === STATE_PROGRESS \? fmtCounter\(result\.remainingSec\) : ""/);
+
+  /* Estilo del tiempo restante, bajo el contador. */
+  assert.match(css, /\.ad-bs-remaining \{[^}]*display:\s*block[^}]*font-size:\s*10px[^}]*color:\s*#666/s);
+});
+
+test("la estrella de las tareas de Battle Survival se pinta en rojo", () => {
+  const js = read("js/activities-daily.js");
+  const css = read("css/activities-daily.css");
+
+  assert.match(js, /var BS_STAR = "★"/);
+  assert.match(js, /function appendStars\(cell, text\)/);
+  assert.match(js, /star\.className = "ad-bs-star"/);
+  assert.match(js, /if \(r\.isBs\) appendStars\(taskCell, objectiveText\)/);
+  assert.match(css, /\.ad-bs-task \.ad-bs-star \{[^}]*color:\s*#df1b1b/s);
 });
 
 test("las tablas del duelo de alianzas comparten ancho y anchos de columna", () => {
@@ -1485,11 +1583,11 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
 
   /* El codigo de cada actividad debe estar en el mapa de los 10 idiomas. */
   const activityCode = [...js.matchAll(/"code": "([A-Z0-9]+)"/g)].map((m) => m[1]);
-  assert.equal(activityCode.length, 47);
+  assert.equal(activityCode.length, 52);
 
   /* El español es la fuente de verdad: define el orden canonico de las traducciones. */
   const canonicalCodes = Object.keys(i18n.es.adActivities);
-  assert.equal(canonicalCodes.length, 48);
+  assert.equal(canonicalCodes.length, 53);
   for (const code of activityCode) {
     assert.ok(canonicalCodes.includes(code), "el canon debe traducir " + code);
   }

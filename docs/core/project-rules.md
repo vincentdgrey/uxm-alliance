@@ -345,10 +345,10 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 |---|---|---|
 | `ACTIVITIES` | 6 | Actividades y objetivos de Battle Survival |
 | `CALENDAR` | 42 | Calendario semanal de Battle Survival, 6 slots por día |
-| `ACTIVITY_CODE` | 46 | Datos estructurales de las actividades codificadas (group, icon, point, codebs) |
+| `ACTIVITY_CODE` | 52 | Datos estructurales de las actividades codificadas (group, icon, point, codebs) |
 | `EVENT_CODE` | 8 | Definición de eventos (es/en) |
 | `PHASES` | 7 | Fases del Duelo de Alianzas (P00-P06) |
-| `DAILY` | 80 | Actividades diarias del Duelo de Alianzas por día (noday, server_time, server_duration) |
+| `DAILY` | 82 | Actividades diarias del Duelo de Alianzas por día (noday, server_time, server_duration) |
 
 - Los archivos `db/*.json` son **obsoletos**: se conservan como histórico, no los carga el sitio y no deben editarse ni usarse como referencia.
 - Excepción activa: `db/library/` sí lo carga `js/strategy-library.js` y es la fuente de verdad de los temas de la Biblioteca Estratégica.
@@ -376,10 +376,10 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - La lógica vive en `initAllianceDuel()` de `js/activities-daily.js`.
 - Las traducciones del calendario viven exclusivamente en `js/i18n/actividades-diarias/i18n.js`: `scheduleAllianceDuel` (encabezado de sección) y `adHeaders` (cinco encabezados de tabla), presentes en los 10 idiomas. El calendario no mantiene una tabla de traducciones propia.
 - Los textos de las actividades, las fases y los eventos también se localizan en `js/i18n/actividades-diarias/i18n.js`, mediante tres mapas por idioma:
-  - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (47 registros activos), con los campos `objective` y `resource`. El mapa i18n declara **48 entradas**: las 47 activas más `CHEESE7`, traducción preparada y pendiente de integrar en los datos.
+  - `adActivities`: indexado por el `code` de `ACTIVITY_CODE` (52 registros activos), con los campos `objective` y `resource`. El mapa i18n declara **53 entradas**: las 52 activas más `CHEESE7`, traducción preparada y pendiente de integrar en los datos.
   - `adPhases`: indexado por la fase normalizada (`P00`-`P06`).
   - `adEvents`: indexado por el `event` de `EVENT_CODE` (`DY`, `AD`, `KVK`, `ROY`, `BS`, `EQ`, `BEX`, `CUM`), más `CHE` («Trampa del Queso»), igualmente pendiente de integrar en los datos.
-- **El orden canónico de `adActivities` y `adEvents` lo define el bloque español** (`texts.es`), no `ACTIVITY_CODE`. Los diez idiomas deben declarar las mismas claves en el mismo orden que el español; las pruebas comparan contra el canon español y verifican que los 47 `code` de `ACTIVITY_CODE` esten cubiertos.
+- **El orden canónico de `adActivities` y `adEvents` lo define el bloque español** (`texts.es`), no `ACTIVITY_CODE`. Los diez idiomas deben declarar las mismas claves en el mismo orden que el español; las pruebas comparan contra el canon español y verifican que los 52 `code` de `ACTIVITY_CODE` esten cubiertos.
 - La resolucion de cada texto sigue el orden **idioma activo → inglés → texto canónico en español**. `js/activities-daily.js` lo aplica con `activityText(code, field)`, `phaseText(phase)` y `eventLabel(r)`. El inglés se toma de `window.I18N.en` mediante la constante `T_EN` y el español canónico de `window.I18N.es` mediante `T_ES`.
 - Los códigos, `codebs`, `icon` y `point` **no se traducen**: son identificadores estables del juego. Los `resource` vacíos en el texto canónico en español permanecen vacíos en los 10 idiomas.
 - Las definiciones vigentes de las operaciones UR en `texts.es.adActivities` son: `CRVNUR` → `Envía Caravanas UR` con recurso `4 Caravanas`; `OPENUR` → `Ejecuta Operaciones Encubiertas UR, mínimo 6, la última es más difícil` con recurso `7 Operaciones Encubiertas`. Las traducciones de `adActivities` en los 10 idiomas se ajustan a esas definiciones, con el español como fuente.
@@ -389,9 +389,27 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - La tabla de cada día tiene **cinco columnas** en este orden:
   1. `Contador`.
   2. Columna de imagen de la tarea, cargada desde `media/glyph/<icon>.png` según el valor `icon` de `ACTIVITY_CODE`.
-  3. `Tarea`, con la traducción de `objective`.
+  3. `Tarea`, con la traducción de `objective` y, en su esquina inferior izquierda, el valor referencial de `ACTIVITY_CODE.point`.
   4. `Recurso`, con la traducción de `resource`.
   5. `Evento`, con la traducción del evento.
+- **El dato de Puntos ya no ocupa una columna propia**: se integra al final del texto de la columna `Tarea` mediante un elemento `<span class="ad-task-point">`, posicionado en la esquina inferior de la celda.
+  - El valor se obtiene del dato estructural `ACTIVITY_CODE.point` mediante `formatPoint()` de `js/activities-daily.js`.
+  - Si la actividad no declara `point`, o el valor está vacío o no es numérico, **no se añade ningún elemento**.
+  - Si el valor es numérico se muestra con un signo `+` literal, un decimal y el separador de miles `'`: `2.5` → `+2.5`, `145` → `+145.0`, `30000` → `+30'000.0`, `2812.5` → `+2'812.5`.
+  - **El dato fuente almacena `point` sin separador de miles y sin signo**: el `'` y el `+` los agrega el render, no los datos. El separador se aplica solo a la parte entera, después de fijar el decimal.
+  - La celda de Tarea recibe la clase `ad-has-point`, que reserva el espacio inferior necesario (`padding-bottom: 16px`), y `.ad-objective` es `position: relative` para que el punto se ubique respecto de la celda.
+  - El estilo vigente del punto es `position: absolute; right: 5px; bottom: 1px; color: #999; font-weight: 100; font-size: 0.6rem; white-space: nowrap;`.
+- Bajo las tablas del Duelo de Alianzas se muestra una nota única con la clase `.ad-points-note` y el atributo `data-i18n-text="adPointsNote"`, que aclara que los Puntos mostrados son la referencia de un jugador con VIP 9 e Investigación del Duelo de Alianza y que aumentarán según el nivel de investigación del jugador. La nota se declara en los 10 idiomas y usa un estilo minimalista de `0.8rem`.
+- **Las actividades de Batalla de Supervivencia (`BS...`) se agregan únicamente a la tabla del día actual** (el panel con las clases `ad-item ad-today ad-open`), y solo cuando su código de `ACTIVITY_CODE` comienza por `BS`:
+  - Los códigos `BSBUILD`, `BSHERO`, `BSRAVEN`, `BSSOLDIER` y `BSTECH` se declaran en `ACTIVITY_CODE` con `group: "BS"` y su `codebs` de vínculo. No están en `DAILY`: sus filas se generan en tiempo de render a partir de `ACTIVITY_CODE`.
+  - Su contador es el del horario vinculado de Battle Survival (`linkedCounterState()`), igual que el de cualquier tarea con `codebs`.
+  - La fila **solo es visible cuando el contador está en estado `[PROGRESS]`**. En cualquier otro estado (cuenta atrás, finalizado o sin horario) la fila queda oculta mediante la clase `.ad-bs-hidden`, que aplica `display: none`.
+  - La visibilidad se recalcula en cada tick del temporizador compartido de un segundo, sin reconstruir la tabla, para que las filas aparezcan y desaparezcan con el cambio de horario.
+  - Las filas `BS` se añaden **al final** del grupo de tareas del día actual, con el orden de declaración de `ACTIVITY_CODE` (`BSBUILD`, `BSHERO`, `BSRAVEN`, `BSSOLDIER`, `BSTECH`), sin alterar el orden de los demás grupos de eventos.
+  - El grupo `BS` **se separa de los demás eventos**: la última fila del grupo anterior recibe la clase `ad-event-separator`. Las filas `BS` no llevan separador entre sí, porque todas pertenecen al mismo evento.
+  - La celda de Tarea de estas actividades **no muestra puntos**, porque sus entradas `BS` declaran `point` vacío.
+  - **El símbolo `★` de la estrella de habilidad se pinta en rojo** (`#df1b1b`, el rojo `alert` de la paleta estándar). Para lograrlo, `appendStars()` reconstruye el texto de la celda separando cada `★` en un `<span class="ad-bs-star">`, sin modificar las traducciones. Solo las actividades `BS` reciben ese tratamiento. El estilo vigente es `color: #df1b1b; font-size: 16px;`.
+  - **Bajo el contador, en estado `[PROGRESS]`, se muestra el tiempo restante de la duración de cuatro horas**: por ejemplo, si el contador indica `+ 02:47:39`, debajo aparece `01:12:21`. El valor se obtiene de `linkedCounterState()`, que expone `remainingSec` como `LINKED_DEFAULT_DURATION - elapsed`, y solo se muestra en estado de progreso. La celda de contador de estas filas se compone de dos nodos, `<span class="ad-bs-elapsed">` y `<span class="ad-bs-remaining">`, que se actualizan en cada tick. El estilo vigente del tiempo restante es `display: block; font-size: 10px; color: #666; white-space: nowrap; text-align: right;`.
 - La columna de imagen del recurso se retiró por obsoleta: ya no se genera la celda `<td class="ad-icon ad-resource-icon" data-code=""></td>` ni su columna equivalente en `AD_COLUMNS`.
 - La columna `Fase` se retiró de la tabla: la fase solo se muestra en el título del día.
 - La columna `Contador` muestra cuatro estados posibles, solo en la tabla del día actual (`ad-today`):

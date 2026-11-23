@@ -70,7 +70,7 @@ test("los codigos de actividades coinciden con ACTIVITY_CODE", () => {
   vm.createContext(context);
   vm.runInContext("var ACTIVITY_CODE = " + match[1], context);
   const rows = context.ACTIVITY_CODE;
-  assert.equal(rows.length, 47);
+  assert.equal(rows.length, 52);
 
   const i18n = loadI18n("actividades-diarias");
   const canonicalCodes = Object.keys(i18n.es.adActivities);
@@ -142,7 +142,12 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
     SHIELD: { objective: "Activa Escudos 24H, Compra Escudo Gratis 8H en Tienda de la Alianza", resource: "Escudo" },
     DYSOLDIER: { objective: "Entrena Soldados T6 o T7; Promover el Día de Preparación de Guerra", resource: "Soldado T7" },
     DYWALL: { objective: "Retira tus soldados del Muro; Día de Guerra", resource: "Muro Santuario" },
-    CHEESE7: { objective: "335M de Daño al Ladrón del Queso Lv.7, 30min duración, 1.4B de daño para el MVP1", resource: "Trampa del Queso" }
+    CHEESE7: { objective: "335M de Daño al Ladrón del Queso Lv.7, 30min duración, 1.4B de daño para el MVP1", resource: "Trampa del Queso" },
+    BSBUILD: { objective: "Insignias de Habilidad ★, Oportunidad al Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H]", resource: "Edificios" },
+    BSHERO: { objective: "Insignias de Habilidad ★, Oportunidad al Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe", resource: "Heroes" },
+    BSRAVEN: { objective: "Insignias de Habilidad ★, Oportunidad de usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo", resource: "Cuervo" },
+    BSSOLDIER: { objective: "Insignias de Habilidad ★, Oportunidad de entrenar [2.800] Soldados ó Acelerar Entrenamiento [17H]", resource: "Soldados" },
+    BSTECH: { objective: "Insignias de Habilidad ★, Oportunidad al Terminar Investigación [subir 30.000 poder] ó Acelerar [50H]", resource: "Investigación" }
   };
 
   for (const [code, values] of Object.entries(expected)) {
@@ -153,7 +158,7 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
 test("todas las traducciones de actividades cubren los codigos canonicos", () => {
   const i18n = loadI18n("actividades-diarias");
   const canonicalCodes = Object.keys(i18n.es.adActivities);
-  assert.equal(canonicalCodes.length, 48);
+  assert.equal(canonicalCodes.length, 53);
 
   for (const lang of languages) {
     const activities = i18n[lang].adActivities;
