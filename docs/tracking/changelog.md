@@ -1,5 +1,51 @@
 # Changelog
 
+## [261123c] - 2026-11-23
+
+### Changed
+- `formatPoint()` ya no limpia apóstrofos: **el dato fuente `ACTIVITY_CODE.point` se almacena sin separador de miles y sin signo**, y el render agrega el separador `'` únicamente para mostrarlo. El valor se valida directamente y la parte entera se agrupa tras fijar el decimal: `2.5` → `+2.5`, `145` → `+145.0`, `30000` → `+30'000.0`, `2812.5` → `+2'812.5`, `290000` → `+290'000.0`.
+- `ACTIVITY_CODE.point` admite números y cadenas: el render normaliza con `String(value).trim()` antes de validar.
+- Se adoptan los ajustes manuales del CSS vigente: `.ad-task-point` usa `right: 5px; bottom: 1px; color: #999;`, `.ad-bs-remaining` usa `font-size: 10px; color: #666; text-align: right;` y `.ad-bs-star` suma `font-size: 16px;`.
+- `docs/core/project-rules.md` documenta el almacenamiento sin separador en el dato fuente, la agrupación visual del separador `'` y los estilos manuales vigentes del punto, del tiempo restante y de la estrella.
+
+### Changed (tests)
+- `tests/activity-points.test.cjs` actualiza los valores esperados al dato fuente vigente y añade un caso que comprueba la agrupación de miles en la parte entera (`+30'000.0`, `+2'812.5`, `+6'250.0`, `+23'500.0`, `+290'000.0`, `+4'350.0`) y la ausencia de separador con tres dígitos (`+705.0`).
+- `tests/ui-contract.test.cjs` valida la nueva agrupación del separador de miles y la ausencia de la limpieza de apóstrofos, y ajusta las comprobaciones de estilo a los valores manuales vigentes.
+
+## [261123b] - 2026-11-23
+
+### Changed
+- **El dato de Puntos deja de ocupar columna propia y se integra al final del texto de la columna `Tarea`**, en la esquina inferior izquierda de la celda. El valor se mantiene con `formatPoint()` y el patrón `"+"#0.0` (`2.4` → `+2.4`, `145` → `+145.0`, `29'000.0` → `+29000.0`). Se elimina la columna `Puntos` de `AD_COLUMNS` y de `adHeaders` en los diez idiomas: las tablas vuelven a cinco columnas (contador, imagen, tarea, recurso, evento). El nuevo elemento usa la clase `.ad-task-point` con `position: absolute; left: 10px; bottom: 2px;` y conserva el estilo manual vigente (`#777`, peso `100`, `0.6rem`); la celda de Tarea recibe `ad-has-point` (`padding-bottom: 16px`) y `.ad-objective` pasa a `position: relative`.
+- El **grupo `Battle Survival` se separa de los demás eventos**: la última fila del grupo anterior al de las actividades `BS...` recibe la clase `ad-event-separator`. Las filas `BS` no llevan separador entre sí, porque todas pertenecen al mismo evento.
+- **Bajo el contador de la actividad `BS` en estado `[PROGRESS]` se muestra el tiempo restante de la duración de cuatro horas**: si el contador indica `+ 02:47:39`, debajo aparece `01:12:21`. `linkedCounterState()` expone ahora `remainingSec` (`LINKED_DEFAULT_DURATION - elapsed`) y la celda de contador de estas filas se compone de dos nodos, `.ad-bs-elapsed` y `.ad-bs-remaining`, actualizados en cada tick. El estilo del restante es `display: block; font-size: 8px; color: #bbb; white-space: nowrap;`.
+- **El símbolo `★` de la estrella de habilidad se pinta en rojo** (`#df1b1b`, rojo `alert` de la paleta estándar) en las actividades de Battle Survival. `appendStars()` reconstruye el texto de la celda separando cada `★` en un `<span class="ad-bs-star">`, sin modificar las traducciones. Solo las actividades `BS` reciben ese tratamiento.
+- La nota `adPointsNote` adopta la redacción manual del usuario («Los Puntos mostrados son referencia a un jugador con VIP 9 e Investigación del Duelo de Alianza en , estos aumentaran, según tu nivel de investigación en el Duelo de Alianza.») y se propaga a los otros nueve idiomas.
+- `js/i18n/actividades-diarias/i18n.js`: `adHeaders` vuelve a cinco columnas en los 10 idiomas, sin la entrada `Puntos`.
+
+### Added
+- `tests/activity-points.test.cjs` amplía su cobertura con la ausencia de la columna `Puntos`, el punto como último elemento de la celda de Tarea, el separador del grupo `BS`, el tiempo restante bajo el contador (`+ 02:47:39` → `01:12:21`, con recálculo en cada tick), la presencia del tiempo restante solo en progreso y el marcado de las estrellas.
+- `tests/ui-contract.test.cjs` incorpora los contratos del punto integrado en Tarea, del separador del grupo `BS`, del tiempo restante y del color rojo de la estrella.
+- `docs/core/project-rules.md` documenta la ubicación del punto en la celda de Tarea, la separación del grupo `BS`, el tiempo restante bajo el contador y el estilo de la estrella.
+
+### Fixed
+- `tests/activity-flags.test.cjs` hace que el doble `textContent` del mock se comporte como en el DOM real: concatena el texto de los nodos hijos y, al asignarlo, elimina los hijos existentes. Sin este ajuste, las filas `BS` con contador en cuenta atrás aparecían como celdas vacías en las comprobaciones.
+
+## [261123a] - 2026-11-23
+
+### Added
+- La tabla del Duelo de Alianzas incorpora una columna **Puntos** entre `Tarea` y `Recurso`. El valor procede del dato estructural `ACTIVITY_CODE.point` y se formatea en `js/activities-daily.js` con la función `formatPoint()`, que aplica el patrón de Excel `"+"#0.0` (`2.4` → `+2.4`, `145` → `+145.0`, `29'000.0` → `+29000.0`, sin separador de miles). Cuando la actividad no declara `point`, o el valor está vacío o no es numérico, la celda queda en blanco. La celda usa la clase `.ad-point` con el estilo `color: #bbb; font-weight: 100; font-size: 8px`.
+- Bajo las tablas del Duelo de Alianzas se muestra una nota única (`.ad-points-note`, `data-i18n-text="adPointsNote"`) con el texto «Los Puntos mostrados son solo referenciales, estos aumentaran, según tu nivel de investigación en el Duelo de Alianza.», traducida en los 10 idiomas y con estilo minimalista de `8px`.
+- Las actividades de Batalla de Supervivencia, cuyos códigos de `ACTIVITY_CODE` comienzan por `BS` (`BSBUILD`, `BSHERO`, `BSRAVEN`, `BSSOLDIER`, `BSTECH`), se agregan **únicamente a la tabla del día actual** (panel `ad-item ad-today ad-open`). Su contador es el del horario vinculado de Battle Survival y la fila **solo es visible en estado `[PROGRESS]`**; en cualquier otro estado queda oculta mediante la clase `.ad-bs-hidden` (`display: none`). La visibilidad se recalcula en cada tick de un segundo sin reconstruir la tabla. Las filas `BS` se añaden al final del grupo de tareas del día actual, respetando el orden de `ACTIVITY_CODE` y sin alterar el orden de los demás grupos de eventos.
+- Nueva prueba `tests/activity-points.test.cjs` con ocho casos: posición de la columna Puntos entre Tarea y Recurso, formato numérico con un decimal, celdas vacías sin valor numérico, encabezado `Puntos`, existencia y orden de las filas `BS`, y visibilidad de una actividad `BS` solo mientras su contador está en progreso.
+
+### Changed
+- `js/activities-daily.js` añade `formatPoint()`, la clase de celda `.ad-point`, la entrada `ad-col-point` en `AD_COLUMNS` y el bloque de actividades `BS` (`BS_CODE_PREFIX`, `bsRow()`, `applyBsVisibility()`).
+- `css/activities-daily.css` añade `.ad-point`, `.ad-col-point` (48 px), la regla `.ad-schedule tbody tr.ad-bs-hidden` y `.ad-points-note`.
+- `js/i18n/actividades-diarias/i18n.js`: `adHeaders` pasa de cinco a seis columnas en los 10 idiomas, con `Puntos` entre `Tarea` y `Recurso`; se añade la clave `adPointsNote` en los 10 idiomas; y se traducen a los otros nueve idiomas las cinco entradas `BS*` añadidas manualmente por el usuario en `texts.es.adActivities`, cuyo texto español se conserva sin cambios.
+- `tests/ui-contract.test.cjs` actualiza el contrato de columnas (seis columnas, `ad-col-point` incluido) y los conteos (52 registros en `ACTIVITY_CODE`, 53 claves canónicas), y añade comprobaciones del formato de puntos, del estilo `.ad-point`, de la nota referencial y de la visibilidad de las actividades `BS`.
+- `tests/i18n-structure.test.cjs` actualiza los conteos (52 y 53) e incorpora `BSBUILD`, `BSHERO`, `BSRAVEN`, `BSSOLDIER` y `BSTECH` a la lista de redacciones españolas protegidas.
+- `docs/core/project-rules.md` documenta la columna Puntos, su formato y estilo, la nota referencial, el comportamiento de las actividades `BS` y los conteos vigentes.
+
 ## [261121a] - 2026-11-21
 
 ### Added

@@ -7,7 +7,7 @@ const root = path.resolve(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const readJson = (file) => JSON.parse(read(file));
 
-const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
 const libraryRoot = path.join(root, "db/library");
 const groupFiles = fs
   .readdirSync(libraryRoot)
@@ -189,11 +189,11 @@ test("el render muestra la fecha de actualizacion como elemento time", () => {
   assert.match(js, /renderUpdated\(group, "search-engine-updated search-engine-tree-group-updated"\)/);
 });
 
-test("la etiqueta de la fecha de actualizacion esta traducida en los nueve idiomas", () => {
+test("la etiqueta de la fecha de actualizacion esta traducida en los diez idiomas", () => {
   const i18n = read("js/i18n/estrategia/i18n.js");
   const found = i18n.match(/searchEngineUpdated:"[^"]*"/g) || [];
 
-  assert.equal(found.length, 9, "searchEngineUpdated debe existir en los 9 idiomas");
+  assert.equal(found.length, 10, "searchEngineUpdated debe existir en los 10 idiomas");
 });
 
 test("la biblioteca strategies declara los estilos de la fecha", () => {
@@ -268,7 +268,7 @@ test("la localizacion admite cadenas y listas en los mapas por idioma", () => {
   assert.match(js, /return value\.map\(String\)/);
 });
 
-test("los textos de la biblioteca estan traducidos en los nueve idiomas", () => {
+test("los textos de la biblioteca estan traducidos en los diez idiomas", () => {
   const i18n = read("js/i18n/estrategia/i18n.js");
   const keys = [
     "searchEngineTitle",
@@ -287,7 +287,7 @@ test("los textos de la biblioteca estan traducidos en los nueve idiomas", () => 
 
   for (const key of keys) {
     const found = i18n.match(new RegExp(`${key}:"[^"]*"`, "g")) || [];
-    assert.equal(found.length, 9, `${key} debe existir en los 9 idiomas`);
+    assert.equal(found.length, 10, `${key} debe existir en los 10 idiomas`);
   }
 
   assert.match(i18n, /pageStrategyTitle:"Biblioteca Estratégica"/);

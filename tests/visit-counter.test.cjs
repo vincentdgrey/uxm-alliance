@@ -17,7 +17,7 @@ const htmlFiles = [
   "pages/contacto.html"
 ];
 
-const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
 
 test("todas las paginas incluyen el contador de visitas en el footer", () => {
   for (const file of htmlFiles) {
@@ -49,10 +49,10 @@ test("el contador se ubica en la columna central del footer, bajo el copyright",
   assert.match(css, /@media\s*\(max-width:\s*620px\)\s*\{[^@]*\.visit-counter\s*\{[^}]*grid-column:\s*1[^}]*grid-row:\s*auto/s);
 });
 
-test("el texto del contador esta traducido en los nueve idiomas", () => {
+test("el texto del contador esta traducido en los diez idiomas", () => {
   const i18n = read("js/i18n.js");
   const matches = i18n.match(/visitCounter:"[^"]+"/g) || [];
-  assert.equal(matches.length, 9);
+  assert.equal(matches.length, 10);
   for (const value of matches) {
     assert.match(value, /\{n\}/, value);
   }

@@ -14,6 +14,7 @@
         bsEvents:{ BUILD:"Construir Territorio", HEROE:"Mejorar Héroes", RAVEN:"Mejorar Cuervo", SOLDIER:"Entrenar Soldados", TECH:"Investigación Tecnológica", STANDBY:"En Espera" },
         scheduleAllianceDuel:"Duelo de Alianzas",
         adHeaders:["Contador", "", "Tarea", "Recurso", "Evento"],
+        adPointsNote:"Los Puntos mostrados son referencia a un jugador con VIP 9 e Investigación del Duelo de Alianza en , estos aumentaran, según tu nivel de investigación en el Duelo de Alianza.",
         pageDailyTitle:"Actividades Diarias",
         pageDailyLead:"Detalles de las actividades diarias que te ayudaran a mejorar diariamente.",
         adActivities:{
@@ -79,7 +80,13 @@
           SCRAMBLE:{objective:"100K Puntos de Honor, Captura/Defiende una Granja en el lodo",resource:"Granjas de la Ciudad Real"},
           KWAR:{objective:"1.5M Puntos de Honor, Derrota/Pierde/Cura Soldados",resource:"Guerra de Reinos (KvK)"},
           CUMULUS:{objective:"Recolecta Cristal Purificado en Cúmulos, 30min duración",resource:"Cúmulos de Cristal"},
-          CHEESE7:{objective:"335M de Daño al Ladrón del Queso Lv.7, 30min duración, 1.4B de daño para el MVP1",resource:"Trampa del Queso"}
+          CHEESE7:{objective:"335M de Daño al Ladrón del Queso Lv.7, 30min duración, 1.4B de daño para el MVP1",resource:"Trampa del Queso"},
+
+          BSBUILD:{objective:"Insignias de Habilidad ★, Oportunidad al Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H]",resource:"Edificios"},
+          BSHERO:{objective:"Insignias de Habilidad ★, Oportunidad al Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe",resource:"Heroes"},
+          BSRAVEN:{objective:"Insignias de Habilidad ★, Oportunidad de usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo",resource:"Cuervo"},
+          BSSOLDIER:{objective:"Insignias de Habilidad ★, Oportunidad de entrenar [2.800] Soldados ó Acelerar Entrenamiento [17H]",resource:"Soldados"},
+          BSTECH:{objective:"Insignias de Habilidad ★, Oportunidad al Terminar Investigación [subir 30.000 poder] ó Acelerar [50H]",resource:"Investigación"},
         },
         adPhases:{
           P00:"Fase 0 : Recolección y Reserva",
@@ -113,6 +120,7 @@ bsNext:"Upcoming",
         bsEvents:{ BUILD:"Build Territory", HEROE:"Enhance Heroes", RAVEN:"Enhance Raven", SOLDIER:"Train Soldiers", TECH:"Technology Research", STANDBY:"Stand by" },
         scheduleAllianceDuel:"Alliance Duel",
         adHeaders:["Counter", "", "Task", "Resource", "Event"],
+        adPointsNote:"The Points shown are a reference to a player with VIP 9 and Alliance Duel Research, they will increase according to your research level in the Alliance Duel.",
         pageDailyTitle:"Daily Activities",
 pageDailyLead:"Details of the daily activities that will help you improve every day.",
         adActivities:{
@@ -178,7 +186,13 @@ pageDailyLead:"Details of the daily activities that will help you improve every 
           SCRAMBLE:{objective:"100K Honor Points, Capture/Defend a Farm in the mud",resource:"Royal City Farms"},
           KWAR:{objective:"1.5M Honor Points, Defeat/Lose/Heal Soldiers",resource:"Kingdom War (KvK)"},
           CUMULUS:{objective:"Gather Purified Crystal in Cumulus, 30min duration",resource:"Cumulus Crystal"},
-          CHEESE7:{objective:"335M Damage to the Cheese Thief Lv.7, 30min duration, 1.4B damage for MVP1",resource:"Cheese Trap"}
+          CHEESE7:{objective:"335M Damage to the Cheese Thief Lv.7, 30min duration, 1.4B damage for MVP1",resource:"Cheese Trap"},
+
+          BSBUILD:{objective:"Skill Badges ★, Opportunity when finishing Constructions [raise 30.000 might] or Speed up [50H]",resource:"Buildings"},
+          BSHERO:{objective:"Skill Badges ★, Opportunity when using [23.4M] Antitoxins or [30] Hero Tickets",resource:"Heroes"},
+          BSRAVEN:{objective:"Skill Badges ★, Opportunity to use Stamina/Energy in [15] Rallys or Raven Fruit",resource:"Raven"},
+          BSSOLDIER:{objective:"Skill Badges ★, Opportunity to train [2.800] Soldiers or Speed up Training [17H]",resource:"Soldiers"},
+          BSTECH:{objective:"Skill Badges ★, Opportunity when finishing Research [raise 30.000 might] or Speed up [50H]",resource:"Research"}
         },
         adPhases:{ P00:"Phase 0 : Gathering and Stockpiling", P01:"Phase 1 : Enhance Raven", P02:"Phase 2 : Territory Development", P03:"Phase 3 : Tech Research", P04:"Phase 4 : Hero Growth", P05:"Phase 5 : War Preparation", P06:"Phase 6 : Raid the Enemy" },
         adEvents:{ DY:"Tips Daily", AD:"Alliance Duel", KVK:"Kingdoms War", ROY:"Scramble Royal City", BS:"Battle Survival", EQ:"Gear Upgrade", BEX:"Elixir Scramble", CUM:"Cristal Cruster Valley", CHE:"Cheese Trap" }
@@ -194,6 +208,7 @@ bsNext:"Próximo",
         bsEvents:{ BUILD:"Construir Território", HEROE:"Melhorar Heróis", RAVEN:"Melhorar Corvo", SOLDIER:"Treinar Soldados", TECH:"Pesquisa Tecnológica", STANDBY:"Em Espera" },
         scheduleAllianceDuel:"Duelo de Alianças",
         adHeaders:["Contador", "", "Tarefa", "Recurso", "Evento"],
+        adPointsNote:"Os Pontos mostrados são uma referência para um jogador com VIP 9 e Pesquisa do Duelo de Alianças, eles aumentarão conforme seu nível de pesquisa no Duelo de Alianças.",
         pageDailyTitle:"Atividades Diárias",
 pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos os dias.",
         adActivities:{
@@ -259,7 +274,13 @@ pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos
           SCRAMBLE:{objective:"100K Pontos de Honra, Capture/Defenda uma Fazenda na Lama",resource:"Fazendas da Cidade Real"},
           KWAR:{objective:"1.5M Pontos de Honra, Derrote/Perca/Cure Soldados",resource:"Guerra de Reinos (KvK)"},
           CUMULUS:{objective:"Colete Cristal Purificado nos Cúmulos, 30min de duração",resource:"Cúmulos de Cristal"},
-          CHEESE7:{objective:"335M de Dano ao Ladrão de Queijo Lv.7, 30min de duração, 1.4B de dano para o MVP1",resource:"Armadilha de Queijo"}
+          CHEESE7:{objective:"335M de Dano ao Ladrão de Queijo Lv.7, 30min de duração, 1.4B de dano para o MVP1",resource:"Armadilha de Queijo"},
+
+          BSBUILD:{objective:"Emblemas de Habilidade ★, Oportunidade ao Terminar Construções [aumentar 30.000 poder] ou Acelerar [50H]",resource:"Edifícios"},
+          BSHERO:{objective:"Emblemas de Habilidade ★, Oportunidade ao Usar [23.4M] Antitoxinas ou [30] Tickets de Herói",resource:"Heróis"},
+          BSRAVEN:{objective:"Emblemas de Habilidade ★, Oportunidade de usar Stamina/Energia em [15] Rallys ou Fruta de Corvo",resource:"Corvo"},
+          BSSOLDIER:{objective:"Emblemas de Habilidade ★, Oportunidade de treinar [2.800] Soldados ou Acelerar Treinamento [17H]",resource:"Soldados"},
+          BSTECH:{objective:"Emblemas de Habilidade ★, Oportunidade ao Terminar Pesquisa [aumentar 30.000 poder] ou Acelerar [50H]",resource:"Pesquisa"}
         },
         adPhases:{ P00:"Fase 0 : Coleta e Reserva", P01:"Fase 1 : Melhorar Corvo", P02:"Fase 2 : Desenvolvimento do Território", P03:"Fase 3 : Pesquisa Tecnológica", P04:"Fase 4 : Crescimento de Heróis", P05:"Fase 5 : Preparação para a Guerra", P06:"Fase 6 : Assaltar o Inimigo" },
         adEvents:{ DY:"Dica Diária", AD:"Duelo de Alianças", KVK:"Guerra de Reinos", ROY:"Tumulto na Cidade Real", BS:"Cronograma Battle Survival", EQ:"Melhoria de Equipamento", BEX:"Batalha do Elixir", CUM:"Vale dos Cumulos de Cristal", CHE:"Armadilha de Queijo" }
@@ -275,6 +296,7 @@ bsNext:"Prossimo",
         bsEvents:{ BUILD:"Costruisci Territorio", HEROE:"Migliora Eroi", RAVEN:"Migliora Corvo", SOLDIER:"Addestra Soldati", TECH:"Ricerca Tecnologica", STANDBY:"In Attesa" },
         scheduleAllianceDuel:"Duello di Alleanze",
         adHeaders:["Contatore", "", "Attività", "Risorsa", "Evento"],
+        adPointsNote:"I Punti mostrati sono un riferimento per un giocatore con VIP 9 e Ricerca del Duello di Alleanze, aumenteranno in base al tuo livello di ricerca nel Duello di Alleanze.",
         pageDailyTitle:"Attività Giornaliere",
 pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliorare ogni giorno.",
         adActivities:{
@@ -340,10 +362,122 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           SCRAMBLE:{objective:"100K Punti di Onore, Cattura/Defendi una Fattoria nel Fango",resource:"Fattorie della Città Reale"},
           KWAR:{objective:"1.5M Punti di Onore, Sconfiggi/Perdi/Cura Soldati",resource:"Guerra dei Regni (KvK)"},
           CUMULUS:{objective:"Raccogli Cristallo Purificato nei Cumuli, 30min di durata",resource:"Cumuli di Cristallo"},
-          CHEESE7:{objective:"335M di Danno al Ladro di Formaggio Lv.7, 30min di durata, 1.4B di danno per l'MVP1",resource:"Trappola del Formaggio"}
+          CHEESE7:{objective:"335M di Danno al Ladro di Formaggio Lv.7, 30min di durata, 1.4B di danno per l'MVP1",resource:"Trappola del Formaggio"},
+
+          BSBUILD:{objective:"Distintivi di Abilità ★, Opportunità al Termine delle Costruzioni [aumentare 30.000 potenza] o Accelerare [50H]",resource:"Edifici"},
+          BSHERO:{objective:"Distintivi di Abilità ★, Opportunità all'Uso [23.4M] Antitossine o [30] Ticket dell'Eroe",resource:"Eroi"},
+          BSRAVEN:{objective:"Distintivi di Abilità ★, Opportunità di usare Stamina/Energia in [15] Rally o Frutto di Corvo",resource:"Corvo"},
+          BSSOLDIER:{objective:"Distintivi di Abilità ★, Opportunità di addestrare [2.800] Soldati o Accelerare Addestramento [17H]",resource:"Soldati"},
+          BSTECH:{objective:"Distintivi di Abilità ★, Opportunità al Termine della Ricerca [aumentare 30.000 potenza] o Accelerare [50H]",resource:"Ricerca"}
         },
         adPhases:{ P00:"Fase 0 : Raccolta e Riserva", P01:"Fase 1 : Migliora Corvo", P02:"Fase 2 : Sviluppo del Territorio", P03:"Fase 3 : Ricerca Tecnologica", P04:"Fase 4 : Crescita degli Eroi", P05:"Fase 5 : Preparazione alla Guerra", P06:"Fase 6 : Assalta il Nemico" },
         adEvents:{ DY:"Consiglio Giornaliero", AD:"Duello delle Alleanze", KVK:"Guerra tra Regni", ROY:"Tumulto della Città Reale", BS:"Calendario Battle Survival", EQ:"Miglioramento Equipaggiamento", BEX:"Battaglia dell'Elisir", CUM:"Valle dei Cumulo di Cristallo", CHE:"Trappola del Formaggio" }
+    },
+    de: {
+        scheduleBattleSurvival:"Battle Survival Zeitplan",
+        survivalMessage:"Automatischer Aktivitätszyklus, berechnet anhand der Zeitzone des Webbrowsers, mit Angabe der verstrichenen Zeit des aktuellen Events und der verbleibenden Dauer bis zu seinem Ende.",
+        allianceMessage:"Liste der Aktivitäten auf Basis des Allianz-Duels, mit der du die Aktivitäten des heutigen und der kommenden Tage ausführen kannst. Zähler zeigen an, wann du sie durchführen sollst, sofern sie einen festen Zeitplan haben oder mit Battle Survival verknüpft sind.",
+        bsHeaders:["Countdown", "Status", "Battle Survival Event", "Aktivitäten", "Server"],
+        bsPast:"Beendet",
+        bsCurrent:"Läuft",
+        bsNext:"Nächste",
+        bsEvents:{ BUILD:"Gebiet bauen", HEROE:"Helden verbessern", RAVEN:"Rabe verbessern", SOLDIER:"Soldaten trainieren", TECH:"Technologie-Forschung", STANDBY:"Bereitschaft" },
+        scheduleAllianceDuel:"Allianz-Duell",
+        adHeaders:["Countdown", "", "Aufgabe", "Ressource", "Event"],
+        adPointsNote:"Die angezeigten Punkte sind ein Richtwert für einen Spieler mit VIP 9 und Allianz-Duell-Forschung, sie steigen mit deinem Forschungslevel im Allianz-Duell.",
+        pageDailyTitle:"Tägliche Aktivitäten",
+        pageDailyLead:"Details der täglichen Aktivitäten, die dir helfen, jeden Tag besser zu werden.",
+        adActivities:{
+          ANTX:{ objective:"Verbrauche 660 Antitoxine",resource:"Antidot-Vorräte"},
+
+          STMN: { objective:"Verbrauche Energie/Ausdauer, kaufe 24 Flaschen im VIP-Shop",resource:"Energie-/Ausdauerflasche"},
+          DYBOTT: {objective:"Bewahre Energie-/Ausdauerflaschen für die nächste Rabenphase auf",resource:"Energie-/Ausdauerflasche"},
+          DYBOTWAR: {objective:"Bewahre Energie-/Ausdauerflaschen für die Kriegsphase auf",resource:"Energie-/Ausdauerflasche"},
+
+          FALCON: { objective:"Erledige Falkenmissionen, 10 oder 11 alle 6 Stunden",resource:"Falkenturm"},
+          DYFALCON: {objective:"Starte Falkenmissionen, aber schließe sie nicht ab, halte 35 oder 40 offen",resource:"Falkenturm"},
+
+          DYHERBS: {objective:"Beginne Kräuter zu sammeln",resource:"Kräutergarten Lv.10, 8H, 1.1M"},
+          HERBS: {objective:"Sammle x60 Kräuter, den ganzen Tag",resource:"Kräutergarten Lv.10, 8H, 1.1M"},
+          GRAIN: {objective:"Sammle x100 Getreide/Holz",resource:"Farm Lv.10, 6.5H, 2.2M"},
+
+          EPIUR: {objective:"Erhalte UR-Inschrift-Fragmente, nutze jede Art von Inschriftentruhe",resource:"Inschriftentruhen"},
+          RAVESS:{objective:"Verbrauche Rabenessenz, Priorität",resource:"Rabenessenz"},
+          RAVFRT:{objective:"Verbrauche Rabenfrucht",resource:"Rabenfrucht"},
+          RAVCH1:{objective:"Öffne Raben-Ausrüstungstruhe",resource:"Rabentruhe"},
+
+          CON1SP:{objective:"Nutze Beschleunigung des Baus, aktiviere Bauministerium",resource:"Bau-Beschleunigung"},
+          CONMGH:{objective:"Erhöhe die Stärke eines Gebäudes, kürzere Bauzeiten bevorzugt",resource:"Gebäude aufwerten"},
+
+          STDSCR:{objective:"Nutze die Studierrolle in der Forschung",resource:"Belohnung des Allianz-Duels"},
+          TCH1SP:{objective:"Nutze Forschungsbeschleunigung, aktiviere Forschungsministerium",resource:"Forschungsbeschleunigung"},
+          TCHMGH:{objective:"Erhöhe die Technologiestärke, suche Forschung mit Studierrollen",resource:"Studierrolle"},
+
+          CRVNUR:{objective:"Entsende UR-Karawanen",resource:"4 Karawanen"},
+          OPENUR:{objective:"Führe UR-Geheime Operationen aus, mindestens 6, die letzte ist schwieriger",resource:"7 Geheime Operationen"},
+
+          TCKSUR:{objective:"Rekrutiere Überlebende, mit ALLEN Überlebenden-Tickets",resource:"Überlebenden-Ticket"},
+          SAVETS:{objective:"BEWAHRE ALLE Überlebenden-Tickets auf",resource:"Überlebenden-Ticket"},
+          FREETS:{objective:"Nutze NUR 1 KOSTENLOSES Überlebenden-Ticket",resource:"Überlebenden-Ticket"},
+
+          TCKHER:{objective:"Rekrutiere Helden, mit ALLEN Helden-Tickets, +50 erhältst du einen UR-Helden",resource:"Helden-Ticket"},
+          SAVETH:{objective:"BEWAHRE ALLE Helden-Tickets auf",resource:"Helden-Ticket"},
+          FREETH:{objective:"Nutze NUR 1 KOSTENLOSES Helden-Ticket",resource:"Helden-Ticket"},
+
+          SHRDSR:{objective:"Verbrauche SR-Heldenfragment", resource:"Heiligtum-Shop"},
+          SHRDSS:{objective:"Verbrauche SSR-Heldenfragment", resource:"Heiligtum-Shop"},
+          SHRDUR:{objective:"Verbrauche UR-Heldenfragment", resource:"Heiligtum-Shop"},
+          SKILLB:{objective:"Nutze das Fähigkeitsabzeichen, Priorität UR-Heldenfähigkeit erhöhen",resource:"Fähigkeitsabzeichen"},
+
+          SOLD1TRN:{objective:"Nutze Trainingsbeschleunigung, aktiviere Kriegsministerium",resource:"Trainingsbeschleunigung"},
+          SOLDT10:{objective:"Trainiere Soldaten, Priorität T7 zu T8 befördern",resource:"Soldaten T6 > T7 > T8"},
+          SOLDDFT:{objective:"Besiege Soldaten, Allianz-Duell",resource:"Angriff"},
+          SOLDLST:{objective:"Verliere Soldaten, Allianz-Duell",resource:"Verteidigung"},
+          SOLDMTC:{objective:"Besiege Soldaten (bestimmtes Match)",resource:"T8 vs T8"},
+          DYSOLDIER:{objective:"Trainiere T6- oder T7-Soldaten; am Vorkriegstag befördern",resource:"Soldat T7"},
+          DYWALL:{objective:"Ziehe deine Soldaten von der Mauer zurück; Kriegstag",resource:"Heiligtums-Mauer"},
+
+          HEA1SP:{objective:"Nutze Heilungsbeschleunigung, Heilungsbuff +150%",resource:"Heilungsbeschleunigung"},
+          DYHOSPITAL:{objective:"Heile KEINE Soldaten; im Krankenhaus lassen, um am Kriegstag Heilungsbeschleuniger zu nutzen",resource:"Krankenhaus"},
+
+          DYELITE:{objective:"Elite-Monster der Pest, erhalte Helden-Ticket und Antitoxin",resource:"Monster"},
+
+          EQGEAR:{objective:"Nutze Ausrüstungsstein, Priorität bei UR-Ausrüstung",resource:"Ausrüstungsstein"},
+          EQBPRN:{objective:"Nutze Ausrüstungsbauplan, befördere UR-Zusatzwerte",resource:"Ausrüstungsbauplan"},
+
+          SHIELD:{objective:"Aktiviere 24H-Schilde, kaufe kostenlosen 8H-Schild im Allianz-Shop",resource:"Schild"},
+          ELIXIR:{objective:"Erzeuge Punkte durch Erobern von Gebäuden",resource:"Elixierburg"},
+          SCRAMBLE:{objective:"100K Ehrenpunkte, eroberte/verteidige eine Farm im Schlamm",resource:"Farmen der Königsstadt"},
+          KWAR:{objective:"1.5M Ehrenpunkte, Soldaten besiegen/verlieren/heilen",resource:"Königreichskrieg (KvK)"},
+          CUMULUS:{objective:"Sammle gereinigten Kristall in Kristallhaufen, 30min Dauer",resource:"Kristallhaufen"},
+          CHEESE7:{objective:"335M Schaden am Käse-Dieb Lv.7, 30min Dauer, 1.4B Schaden für den MVP1",resource:"Käsefalle"},
+
+          BSBUILD:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Fertigstellen von Bauten [Stärke um 30.000 erhöhen] oder Beschleunigen [50H]",resource:"Gebäude"},
+          BSHERO:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Verwenden [23.4M] Antitoxinen oder [30] Helden-Tickets",resource:"Helden"},
+          BSRAVEN:{objective:"Fähigkeitsabzeichen ★, Gelegenheit, Ausdauer/Energie in [15] Rallys oder Rabenfrucht zu nutzen",resource:"Rabe"},
+          BSSOLDIER:{objective:"Fähigkeitsabzeichen ★, Gelegenheit, [2.800] Soldaten zu trainieren oder Training zu beschleunigen [17H]",resource:"Soldaten"},
+          BSTECH:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Fertigstellen der Forschung [Stärke um 30.000 erhöhen] oder Beschleunigen [50H]",resource:"Forschung"}
+        },
+        adPhases:{
+          P00:"Phase 0 : Sammeln und Lagern",
+          P01:"Phase 1 : Rabe verbessern",
+          P02:"Phase 2 : Gebietsentwicklung",
+          P03:"Phase 3 : Technologie-Forschung",
+          P04:"Phase 4 : Heldenwachstum",
+          P05:"Phase 5 : Kriegsvorbereitung",
+          P06:"Phase 6 : Angriff auf den Feind"
+        },
+        adEvents:{
+          DY:"Täglicher Tipp",
+          AD:"Allianz-Duell",
+          KVK:"Königreichskrieg",
+          ROY:"Aufruhr um die Königsstadt",
+          BS:"Battle Survival",
+          EQ:"Ausrüstungsaufwertung",
+          BEX:"Elixier-Schlacht",
+          CUM:"Tal der Kristallhaufen",
+          CHE:"Käsefalle"
+        }
     },
     fr: {
         scheduleBattleSurvival:"Calendrier Battle Survival",
@@ -356,6 +490,7 @@ bsNext:"Prochaine",
         bsEvents:{ BUILD:"Construire le Territoire", HEROE:"Améliorer les Héros", RAVEN:"Améliorer Corbeau", SOLDIER:"Entraîner les Soldats", TECH:"Recherche Technologique", STANDBY:"En Attente" },
         scheduleAllianceDuel:"Duel d’Alliance",
         adHeaders:["Compteur", "", "Tâche", "Ressource", "Événement"],
+        adPointsNote:"Les Points affichés sont une référence pour un joueur VIP 9 avec une Recherche du Duel d'Alliance, ils augmenteront selon votre niveau de recherche dans le Duel d'Alliance.",
         pageDailyTitle:"Activités Quotidiennes",
 pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous améliorer chaque jour.",
         adActivities:{
@@ -421,7 +556,13 @@ pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous am
           SCRAMBLE:{objective:"100K Points d'Honneur, Capturez/Défendez une Ferme dans la Boue",resource:"Fermes de la Cité Royale"},
           KWAR:{objective:"1.5M Points d'Honneur, Vaincre/Perdre/Soigner des Soldats",resource:"Guerre des Royaumes (KvK)"},
           CUMULUS:{objective:"Récoltez du Cristal Purifié dans les Cumuls, 30min de durée",resource:"Cumuls de Cristal"},
-          CHEESE7:{objective:"335M de Dégâts au Voleur de Fromage Nv.7, 30min de durée, 1.4B de dégâts pour le MVP1",resource:"Piège à Fromage"}
+          CHEESE7:{objective:"335M de Dégâts au Voleur de Fromage Nv.7, 30min de durée, 1.4B de dégâts pour le MVP1",resource:"Piège à Fromage"},
+
+          BSBUILD:{objective:"Badges de Compétence ★, Opportunité à la fin des Constructions [augmenter la Puissance de 30.000] ou Accélérer [50H]",resource:"Bâtiments"},
+          BSHERO:{objective:"Badges de Compétence ★, Opportunité lors de l'Utilisation [23.4M] Antitoxines ou [30] Tickets de Héros",resource:"Héros"},
+          BSRAVEN:{objective:"Badges de Compétence ★, Opportunité d'utiliser de l'Énergie/Endurance lors de [15] Rallys ou du Fruit de Corbeau",resource:"Corbeau"},
+          BSSOLDIER:{objective:"Badges de Compétence ★, Opportunité d'entraîner [2.800] Soldats ou d'Accélérer l'Entraînement [17H]",resource:"Soldats"},
+          BSTECH:{objective:"Badges de Compétence ★, Opportunité à la fin de la Recherche [augmenter la Puissance de 30.000] ou Accélérer [50H]",resource:"Recherche"}
         },
         adPhases:{ P00:"Phase 0 : Collecte et Réserve", P01:"Phase 1 : Améliorer le Corbeau", P02:"Phase 2 : Développement du Territoire", P03:"Phase 3 : Recherche Technologique", P04:"Phase 4 : Croissance des Héros", P05:"Phase 5 : Préparation à la Guerre", P06:"Phase 6 : Attaquer l'Ennemi" },
         adEvents:{ DY:"Conseil Quotidien", AD:"Duelo d'Alliance", KVK:"Guerre des Royaumes", ROY:"Émeute de la Cité Royale", BS:"Calendrier Battle Survival", EQ:"Amélioration d'Équipement", BEX:"Bataille de l'Élixir", CUM:"Vallée des Amas de Cristal", CHE:"Piège à Fromage" }
@@ -437,6 +578,7 @@ bsNext:"次回",
         bsEvents:{ BUILD:"領土の建設", HEROE:"英雄の強化", RAVEN:"カラスを改善する", SOLDIER:"兵士の訓練", TECH:"技術の研究", STANDBY:"待機" },
         scheduleAllianceDuel:"アライアンスデュエル",
         adHeaders:["カウンター", "", "タスク", "リソース", "イベント"],
+        adPointsNote:"表示されたポイントはVIP9かつ同盟デュエル研究を持つプレイヤー基準の参考値であり、同盟デュエルでの研究レベルに応じて増加します。",
         pageDailyTitle:"デイリー活動",
 pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
         adActivities:{
@@ -502,7 +644,13 @@ pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
           SCRAMBLE:{objective:"100K Honorポイント、泥の農園を占領/防衛",resource:"王都農園"},
           KWAR:{objective:"1.5M Honorポイント、兵士を撃破/失う/回復",resource:"王国戦争 (KvK)"},
           CUMULUS:{objective:"30分間クリスタルの山で精製クリスタルを採取する",resource:"クリスタルの山"},
-          CHEESE7:{objective:"チーズ泥棒 Lv.7 に335Mダメージ、30分間、1.4BダメージでMVP1",resource:"チーズの罠"}
+          CHEESE7:{objective:"チーズ泥棒 Lv.7 に335Mダメージ、30分間、1.4BダメージでMVP1",resource:"チーズの罠"},
+
+          BSBUILD:{objective:"スキルバッジ ★、建設完了時の機会 [威力を30.000上昇] または加速 [50H]",resource:"建物"},
+          BSHERO:{objective:"スキルバッジ ★、使用時の機会 [23.4M] 解毒剤 または [30] 英雄チケット",resource:"英雄"},
+          BSRAVEN:{objective:"スキルバッジ ★、エネルギー/スタミナを [15] 集结で使用 または レイベンの果物 を使う機会",resource:"レイベン"},
+          BSSOLDIER:{objective:"スキルバッジ ★、兵士 [2.800] を訓練 または 訓練を加速 [17H] する機会",resource:"兵士"},
+          BSTECH:{objective:"スキルバッジ ★、研究完了時の機会 [威力を30.000上昇] または加速 [50H]",resource:"研究"}
         },
         adPhases:{ P00:"フェーズ0：収集と備蓄", P01:"フェーズ1：レイベンの強化", P02:"フェーズ2：領土の開発", P03:"フェーズ3：技術の研究", P04:"フェーズ4：英雄の成長", P05:"フェーズ5：戦争の準備", P06:"フェーズ6：敵の襲撃" },
         adEvents:{ DY:"デイリーアドバイス", AD:"アライアンスデュエル", KVK:"王国戦", ROY:"王都の騒動", BS:"Battle Survival スケジュール", EQ:"装備の強化", BEX:"エリキシルの戦い", CUM:"クリスタル堆積の谷", CHE:"チーズの罠" }
@@ -518,6 +666,7 @@ bsNext:"Следующее",
         bsEvents:{ BUILD:"Построить территорию", HEROE:"Улучшить героев", RAVEN:"Улучшить Ворону", SOLDIER:"Обучить солдат", TECH:"Технологические исследования", STANDBY:"Ожидание" },
         scheduleAllianceDuel:"Дуэль Альянсов",
         adHeaders:["Счётчик", "", "Задача", "Ресурс", "Событие"],
+        adPointsNote:"Показанные Очки являются ориентиром для игрока с VIP 9 и Исследованием Дуэли Альянсов, они увеличатся в зависимости от вашего уровня исследований в Дуэли Альянсов.",
         pageDailyTitle:"Ежедневные активности",
 pageDailyLead:"Подробности ежедневных активностей, которые помогут вам постоянно совершенствоваться.",
         adActivities:{
@@ -583,7 +732,13 @@ pageDailyLead:"Подробности ежедневных активносте�
           SCRAMBLE:{objective:"100K Очков Чести, Захватить/Защитить Ферму в Грязи",resource:"Фермы Королевского Города"},
           KWAR:{objective:"1.5M Очков Чести, Победить/Потерять/Вылечить Солдат",resource:"Война Королевств (KvK)"},
           CUMULUS:{objective:"Собирать Очищенный Кристалл в Кристальных Холмах, 30мин",resource:"Кристальные Холмы"},
-          CHEESE7:{objective:"Нанести 335M урона Вору Сыра Ур.7, 30мин, 1.4B урона для MVP1",resource:"Сырная Ловушка"}
+          CHEESE7:{objective:"Нанести 335M урона Вору Сыра Ур.7, 30мин, 1.4B урона для MVP1",resource:"Сырная Ловушка"},
+
+          BSBUILD:{objective:"Значки Навыка ★, Возможность при завершении Строительств [повысить Мощь на 30.000] или Ускорить [50H]",resource:"Здания"},
+          BSHERO:{objective:"Значки Навыка ★, Возможность при Использовании [23.4M] Антитоксинов или [30] Билетов Героя",resource:"Герои"},
+          BSRAVEN:{objective:"Значки Навыка ★, Возможность использовать Энергию/Стамину в [15] Ралли или Плод Ворона",resource:"Ворона"},
+          BSSOLDIER:{objective:"Значки Навыка ★, Возможность обучить [2.800] Солдат или Ускорить Обучение [17H]",resource:"Солдаты"},
+          BSTECH:{objective:"Значки Навыка ★, Возможность при завершении Исследований [повысить Мощь на 30.000] или Ускорить [50H]",resource:"Исследования"}
         },
         adPhases:{ P00:"Фаза 0 : Сбор и Резерв", P01:"Фаза 1 : Улучшение Ворона", P02:"Фаза 2 : Развитие Территории", P03:"Фаза 3 : Технологические Исследования", P04:"Фаза 4 : Рост Героев", P05:"Фаза 5 : Подготовка к Войне", P06:"Фаза 6 : Поход на Врага" },
         adEvents:{ DY:"Совет Дня", AD:"Дуэль Альянсов", KVK:"Война Королевств", ROY:"Мятеж в Королевском Городе", BS:"Расписание Battle Survival", EQ:"Улучшение Снаряжения", BEX:"Битва Эликсира", CUM:"Долина Кристаллических Наносов", CHE:"Сырная Ловушка" }
@@ -599,6 +754,7 @@ bsNext:"即将开始",
         bsEvents:{ BUILD:"建造领地", HEROE:"强化英雄", RAVEN:"强化渡鸦", SOLDIER:"训练士兵", TECH:"科技研究", STANDBY:"待命" },
         scheduleAllianceDuel:"联盟对决",
         adHeaders:["计数器", "", "任务", "资源", "活动"],
+        adPointsNote:"显示的点数是拥有VIP9和联盟对决研究的玩家的参考值，会根据你在联盟对决中的研究等级而增加。",
         pageDailyTitle:"每日活动",
 pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
         adActivities:{
@@ -664,7 +820,13 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           SCRAMBLE:{objective:"100K 荣誉点数，占领/防守泥泞中的农场",resource:"王都农场"},
           KWAR:{objective:"1.5M 荣誉点数，击败/失去/治疗士兵",resource:"王国战争 (KvK)"},
           CUMULUS:{objective:"从水晶堆中采集30分钟纯化水晶",resource:"水晶堆"},
-          CHEESE7:{objective:"对奶酪小偷 7 级造成335M伤害，持续30分钟，1.4B伤害达成MVP1",resource:"奶酪陷阱"}
+          CHEESE7:{objective:"对奶酪小偷 7 级造成335M伤害，持续30分钟，1.4B伤害达成MVP1",resource:"奶酪陷阱"},
+
+          BSBUILD:{objective:"技能徽章 ★，完成建造时的机会 [提升 30.000 战力] 或加速 [50H]",resource:"建筑"},
+          BSHERO:{objective:"技能徽章 ★，使用时的机会 [23.4M] 解毒剂 或 [30] 英雄票券",resource:"英雄"},
+          BSRAVEN:{objective:"技能徽章 ★，在 [15] 次集结中使用体力/能量 或 渡鸦果实 的机会",resource:"渡鸦"},
+          BSSOLDIER:{objective:"技能徽章 ★，训练 [2.800] 名士兵 或 加速训练 [17H] 的机会",resource:"士兵"},
+          BSTECH:{objective:"技能徽章 ★，完成研究时的机会 [提升 30.000 战力] 或加速 [50H]",resource:"研究"}
         },
         adPhases:{ P00:"阶段 0：收集与储备", P01:"阶段 1：强化渡鸦", P02:"阶段 2：领地发展", P03:"阶段 3：科技研究", P04:"阶段 4：英雄成长", P05:"阶段 5：战前准备", P06:"阶段 6：突袭敌人" },
         adEvents:{ DY:"每日提示", AD:"联盟对决", KVK:"王国战争", ROY:"王都骚乱", BS:"Battle Survival 日程", EQ:"装备升级", BEX:"灵药争夺战", CUM:"水晶堆谷", CHE:"奶酪陷阱" }
@@ -687,6 +849,7 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
         },
         scheduleAllianceDuel:"İttifak Düellosu",
         adHeaders:["Geri Sayım", "", "Görev", "Kaynak", "Etkinlik"],
+        adPointsNote:"Gösterilen Puanlar, VIP 9 ve İttifak Düellosu Araştırmasına sahip bir oyuncuyu referans alır, İttifak Düellosu'ndaki araştırma seviyenize göre artacaktır.",
         pageDailyTitle:"Günlük Etkinlikler",
         pageDailyLead:"Her gün gelişmene yardımcı olacak günlük etkinliklerin ayrıntıları.",
         adPhases:{
@@ -906,6 +1069,27 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           CHEESE7:{
             objective:"Peynir Hırsızı Sv.7'ye 335M Hasar, 30 dakika süre, MVP1 için 1.4B hasar",
             resource:"Peynir Tuzağı"
+          },
+
+          BSBUILD:{
+            objective:"Yetenek Rozeti ★, İnşaatları Bitirdiğinizde Fırsat [30.000 güç artır] veya Hızlandır [50H]",
+            resource:"Binalar"
+          },
+          BSHERO:{
+            objective:"Yetenek Rozeti ★, Kullanma Fırsatı [23.4M] Antitoksin veya [30] Kahraman Bileti",
+            resource:"Kahramanlar"
+          },
+          BSRAVEN:{
+            objective:"Yetenek Rozeti ★, Enerji/Dayanıklılığı [15] Rally'de Kullanma veya Karga Meyvesi Fırsatı",
+            resource:"Karga"
+          },
+          BSSOLDIER:{
+            objective:"Yetenek Rozeti ★, [2.800] Asker Eğitme veya Eğitimi Hızlandırma [17H] Fırsatı",
+            resource:"Askerler"
+          },
+          BSTECH:{
+            objective:"Yetenek Rozeti ★, Araştırmayı Bitirdiğinizde Fırsat [30.000 güç artır] veya Hızlandır [50H]",
+            resource:"Araştırma"
           }
         }
       }

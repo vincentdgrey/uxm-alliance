@@ -7,6 +7,7 @@
     "en": "Onboarding",
     "pt": "Onboarding",
     "it": "Onboarding",
+    "de": "Onboarding",
     "fr": "Onboarding",
     "ja": "オンボーディング",
     "ru": "Онбординг",
@@ -18,6 +19,7 @@
     "en": "Welcome for the new player and the main rules of the UXM Alliance.",
     "pt": "Boas-vindas ao novo jogador e as normas principais da Aliança UXM.",
     "it": "Benvenuto per il nuovo giocatore e le regole principali dell'Alleanza UXM.",
+    "de": "Willkommen für neue Spieler und die wichtigsten Regeln der UXM-Allianz.",
     "fr": "Bienvenue pour le nouveau joueur et les règles principales de l'Alliance UXM.",
     "ja": "新規プレイヤーへの歓迎とUXM連合の主要ルール。",
     "ru": "Приветствие нового игрока и основные правила Альянса UXM.",
@@ -63,6 +65,16 @@
       "regole",
       "regole dell'alleanza",
       "accettare le regole",
+      "R1"
+    ],
+    "de": [
+      "onboarding",
+      "willkommen",
+      "neuer spieler",
+      "neuling",
+      "regeln",
+      "allianzregeln",
+      "regeln akzeptieren",
       "R1"
     ],
     "fr": [
@@ -123,6 +135,7 @@
         "en": "Welcome",
         "pt": "Boas-vindas",
         "it": "Benvenuto",
+        "de": "Willkommen",
         "fr": "Bienvenue",
         "ja": "歓迎",
         "ru": "Приветствие",
@@ -145,6 +158,10 @@
         "it": [
           "Ciao @Nuovo Giocatore!! Benvenuto nella nostra Alleanza UXM! Speriamo che partecipi ai nostri eventi e alle sfide del Duello di Alleanze.",
           "Ogni Evento ti darà ricompense sufficienti per progredire nel gioco. I nostri Bonus di crescita garantiranno che sali in fretta: 20% di costruzione, 15% di ricerca e altri."
+        ],
+        "de": [
+          "Hallo @Neuer Spieler!! Willkommen in unserer UXM-Allianz! Wir hoffen, dass du an unseren Events und den Herausforderungen des Allianz-Duels teilnimmst.",
+          "Jedes Event bringt dir genug Belohnungen, um im Spiel voranzukommen. Unsere Wachstumsboni sorgen dafür, dass du schnell aufsteigst: 20% Bau, 15% Forschung und mehr."
         ],
         "fr": [
           "Bonjour @Nouveau Joueur !! Bienvenue dans notre Alliance UXM ! Nous espérons que vous participerez à nos événements et aux défis du Duel des Alliances.",
@@ -175,6 +192,7 @@
         "en": "Alliance Rules Update",
         "pt": "Atualização das Normas da Aliança",
         "it": "Aggiornamento delle Regole dell'Alleanza",
+        "de": "Aktualisierung der Allianz-Regeln",
         "fr": "Mise à jour des Règles de l'Alliance",
         "ja": "連合ルールの更新",
         "ru": "Обновление правил Альянса",
@@ -193,6 +211,9 @@
         ],
         "it": [
           "Regole principali dell'Alleanza:"
+        ],
+        "de": [
+          "Hauptregeln der Allianz:"
         ],
         "fr": [
           "Règles principales de l'Alliance :"
@@ -250,6 +271,16 @@
           "Segui la Guida delle Attività Daily per risparmiare risorse e attivarle nel giorno giusto: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
           "Preferisci creare Rally con l'evento del giorno, non più lunghi di 1 minuto. Guadagnerai la ricompensa del Rally, il regalo dell'Alleanza e quella dell'evento.",
           "Dona Erbe ogni giorno per aumentare la Ricerca dell'Alleanza; il leader definisce il percorso di priorità per una crescita rapida."
+        ],
+        "de": [
+          "Jeder Name, der mit «Doctor...» beginnt, muss in einen eindeutigen Namen geändert werden (Pflicht), damit wir uns korrekt verständigen und teilen können.",
+          "Stehle nicht im Königreich 277. Die Links des Königreichs, das wir plündern werden, werden täglich geteilt: https://youtu.be/dSniK89OYKk?si=5BhgIkoZlNzaHLyj",
+          "Wenn du jemanden aus dem Königreich plünderst oder bestiehlst, werden dich bei vorherigen Beweisen DU geplündert.",
+          "Lerne, an jedem Kriegstag (Samstag) Schilde zu aktivieren: https://youtu.be/0InXLpMJIvg?si=9gmZsxN0xRmHiMsN",
+          "Lerne, an jedem Kriegstag (Samstag) die Soldaten von der Mauer zurückzuziehen: https://youtu.be/gq-YtFJryok?si=oL7LNUpXEJ_p-Jwa",
+          "Folge dem Leitfaden für tägliche Aktivitäten, um Ressourcen zu sparen und am richtigen Tag zu aktivieren: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
+          "Erstelle Rallies lieber passend zum Event des Tages, nicht länger als 1 Minute. Du erhältst die Rally-Belohnung, das Allianzgeschenk und die Event-Belohnung.",
+          "Spende jeden Tag Kräuter, um die Forschung der Allianz zu erhöhen; der Anführer legt die Prioritätsroute für schnelles Wachstum fest."
         ],
         "fr": [
           "Tout nom commençant par « Doctor... » doit être remplacé par un nom unique (obligatoire), afin de pouvoir communiquer et partager correctement.",
@@ -309,6 +340,7 @@
         "en": "Confirmation and Support",
         "pt": "Confirmação e Acompanhamento",
         "it": "Conferma e Supporto",
+        "de": "Bestätigung und Unterstützung",
         "fr": "Confirmation et Accompagnement",
         "ja": "確認とサポート",
         "ru": "Подтверждение и Поддержка",
@@ -331,6 +363,10 @@
         "it": [
           "Ti chiediamo cortesemente di indicarci che accetti e comprendi le Regole dell'Alleanza, così da aggiornare la tua posizione a R1. 👍😉",
           "Come sempre, saremo disponibili a spiegarti come migliorare e ad aiutarti con i tuoi dubbi. 👍😉"
+        ],
+        "de": [
+          "Bitte bestätige uns, dass du die Allianz-Regeln akzeptierst und verstanden hast, damit wir deine Position auf R1 aktualisieren können. 👍😉",
+          "Wie immer sind wir bereit, dir zu erklären, wie du dich verbesserst, und dir bei deinen Fragen zu helfen. 👍😉"
         ],
         "fr": [
           "Merci de nous indiquer que vous acceptez et comprenez les Règles de l'Alliance, afin que nous puissions mettre à jour votre position à R1. 👍😉",

@@ -15,7 +15,7 @@ const pageFiles = [
   "js/i18n/estrategia/i18n.js",
   "js/i18n/contacto/i18n.js"
 ];
-const languages = ["es", "en", "pt", "it", "fr", "ja", "ru", "zh", "tr"];
+const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr"];
 
 function loadAllI18n() {
   const context = { window: {} };
