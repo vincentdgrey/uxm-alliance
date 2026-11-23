@@ -73,53 +73,71 @@
   ];
 
   var ACTIVITY_CODE = [
-    { "code": "ANTX",   "group":"FOCUS", "icon":"antitoxin",      "point": "+2.4",      "codebs": "HEROE" },
-    { "code": "FALCON",   "group":"FOCUS", "icon":"falcon-mission", "point": "+29'000.0", "codebs": "" },
-    { "code": "EPIUR",  "group":"RAVEN", "icon":"epigraf-chest",  "point": "+2'700.0",  "codebs": "" },
-    { "code": "HERBS",  "group":"FARM",  "icon":"garden",         "point": "+12.0",     "codebs": "" },
-    { "code": "GRAIN",  "group":"FARM",  "icon":"farm",           "point": "+12.0",     "codebs": "" },
-    { "code": "RAVESS", "group":"RAVEN", "icon":"raven-essence",  "point": "+6'000.0",  "codebs": "" },
-    { "code": "RAVFRT", "group":"RAVEN", "icon":"raven-fruit",    "point": "+7.2",      "codebs": "RAVEN" },
-    { "code": "STMN",   "group":"FOCUS", "icon":"stamina-bottle", "point": "+360.0",    "codebs": "RAVEN" },
-    { "code": "CON1SP", "group":"BUILD", "icon":"speedup-build",  "point": "+147.5",    "codebs": "BUILD" },
-    { "code": "CONMGH", "group":"BUILD", "icon":"might-building", "point": "+27.5",     "codebs": "BUILD" },
-    { "code": "CRVNUR", "group":"OPER",  "icon":"caravan",        "point": "+290'000",  "codebs": "" },
-    { "code": "OPENUR", "group":"OPER",  "icon":"black-ops-swag", "point": "+217'500",  "codebs": "" },
-    { "code": "TCKSUR", "group":"TAVERN", "icon":"ticket-survivor", "point": "+4'350",  "codebs": "" },
-    { "code": "SAVETS", "group":"TAVERN", "icon":"lock",          "point": "",          "codebs": "" },
-    { "code": "FREETS", "group":"TAVERN", "icon":"free",          "point": "",          "codebs": "" },
-    { "code": "RAVCH1", "group":"RAVEN", "icon":"raven-chest",    "point": "+2'585.0",  "codebs": "" },
-    { "code": "STDSCR", "group":"TECH",  "icon":"study-scroll",   "point": "+705.0",    "codebs": "" },
-    { "code": "TCH1SP", "group":"TECH",  "icon":"speedup-tech",   "point": "+145.0",    "codebs": "TECH" },
-    { "code": "TCHMGH", "group":"TECH",  "icon":"might-research", "point": "+27.0",     "codebs": "TECH" },
-    { "code": "SHRDSR", "group":"HERO",  "icon":"shard-sr",       "point": "+2'350.0",  "codebs": "" },
-    { "code": "SHRDSS", "group":"HERO",  "icon":"shard-ssr",      "point": "+8'225.0",  "codebs": "" },
-    { "code": "SHRDUR", "group":"HERO",  "icon":"shard-ur",       "point": "+23'500.0", "codebs": "" },
-    { "code": "SKILLB", "group":"HERO",  "icon":"skill-badge",    "point": "+23.5",     "codebs": "" },
-    { "code": "TCKHER", "group":"TAVERN", "icon":"ticket-hero",   "point": "+4'275.0",  "codebs": "HEROE" },
-    { "code": "SAVETH", "group":"TAVERN", "icon":"lock",          "point": "",          "codebs": "" },
-    { "code": "FREETH",  "group":"TAVERN", "icon":"free",         "point": "",          "codebs": "" },
-    { "code": "SOLD1TRN", "group":"SOLDIER", "icon":"boost-training", "point": "+145",  "codebs": "SOLDIER" },
-    { "code": "SOLDT10",  "group":"SOLDIER", "icon":"soldier-t8", "point": "+297.0",    "codebs": "SOLDIER" },
-    { "code": "HEA1SP",  "group":"HEAL", "icon":"speedup-healing", "point": "+145.0",   "codebs": "" },
-    { "code": "SOLDDFT", "group":"SOLDIER", "icon":"soldier-defeat", "point": "+24.3",  "codebs": "" },
-    { "code": "SOLDLST", "group":"SOLDIER", "icon":"soldier-lost", "point": "+21.6",    "codebs": "" },
-    { "code": "SOLDMTC", "group":"SOLDIER", "icon":"soldier-attack", "point": "+117.0", "codebs": "" },
-    { "code": "DYFALCON", "group":"FOCUS",  "icon":"falcon-mission-lock", "point": "",  "codebs": "" },
-    { "code": "DYELITE",  "group":"MONSTER", "icon":"elite-blight", "point": "",        "codebs": "RAVEN" },
-    { "code": "DYBOTT",   "group":"FOCUS",  "icon":"stamina-bottle", "point": "",       "codebs": "" },
-    { "code": "DYBOTWAR", "group":"FOCUS",  "icon":"stamina-bottle", "point": "",       "codebs": "" },
-    { "code": "DYHERBS",  "group":"FOCUS",  "icon":"garden",      "point": "",          "codebs": "" },
-    { "code": "DYSOLDIER", "group":"FOCUS", "icon":"soldier-t7",  "point": "",          "codebs": "SOLDIER" },
-    { "code": "DYHOSPITAL", "group":"FOCUS", "icon":"speedup-healing", "point": "",     "codebs": "" },
-    { "code": "EQGEAR",  "group":"GEAR",  "icon":"gearstone",     "point": "",          "codebs": "" },
-    { "code": "EQBPRN",  "group":"GEAR",  "icon":"gear-blueprint-ur", "point": "",      "codebs": "" },
-    { "code": "ELIXIR",  "group":"FOCUS", "icon":"",              "point": "",          "codebs": "" },
-    { "code": "SCRAMBLE", "group":"FOCUS", "icon":"medall-fame",  "point": "",          "codebs": "" },
-    { "code": "KWAR",    "group":"FOCUS", "icon":"medall-fame",   "point": "",          "codebs": "" },
-    { "code": "SHIELD",  "group":"FOCUS", "icon":"",              "point": "",          "codebs": "" },
-    { "code": "DYWALL",  "group":"FOCUS", "icon":"",              "point": "",          "codebs": "" },
-    { "code": "CUMULUS", "group":"FOCUS", "icon":"cumulus-cristal", "point": "",        "codebs": "" },
+    { "code": "ANTX",   "group":"FOCUS", "icon":"antitoxin",      "point": 2.5,    "codebs": "HEROE" },
+
+    { "code": "FALCON", "group":"FOCUS", "icon":"falcon-mission", "point": 30000,  "codebs": "" },
+    { "code": "DYFALCON", "group":"FOCUS", "icon":"falcon-mission-lock", "point": "", "codebs": "" },
+    { "code": "STMN",   "group":"FOCUS", "icon":"stamina-bottle", "point": 375,    "codebs": "RAVEN" },
+
+    { "code": "EPIUR",  "group":"RAVEN", "icon":"epigraf-chest",  "point": 2812.5, "codebs": "" },
+    { "code": "RAVESS", "group":"RAVEN", "icon":"raven-essence",  "point": 6250,   "codebs": "" },
+    { "code": "RAVFRT", "group":"RAVEN", "icon":"raven-fruit",    "point": 7.5,    "codebs": "RAVEN" },
+    { "code": "RAVCH1", "group":"RAVEN", "icon":"raven-chest",    "point": 2750,   "codebs": "" },
+
+    { "code": "HERBS",  "group":"FARM",  "icon":"garden",         "point": 12.5,   "codebs": "" },
+    { "code": "GRAIN",  "group":"FARM",  "icon":"farm",           "point": 12.5,   "codebs": "" },
+
+    { "code": "CON1SP", "group":"BUILD", "icon":"speedup-build",  "point": 150,    "codebs": "BUILD" },
+    { "code": "CONMGH", "group":"BUILD", "icon":"might-building", "point": 29,     "codebs": "BUILD" },
+
+    { "code": "CRVNUR", "group":"OPER",  "icon":"caravan",        "point": 300000, "codebs": "" },
+    { "code": "OPENUR", "group":"OPER",  "icon":"black-ops-swag", "point": 225000, "codebs": "" },
+
+    { "code": "TCKSUR", "group":"TAVERN", "icon":"ticket-survivor", "point": 4500, "codebs": "" },
+    { "code": "SAVETS", "group":"TAVERN", "icon":"lock",          "point": "",     "codebs": "" },
+    { "code": "FREETS", "group":"TAVERN", "icon":"free",          "point": "",     "codebs": "" },
+    
+    { "code": "STDSCR", "group":"TECH",  "icon":"study-scroll",   "point": 750,    "codebs": "" },
+    { "code": "TCH1SP", "group":"TECH",  "icon":"speedup-tech",   "point": 150,    "codebs": "TECH" },
+    { "code": "TCHMGH", "group":"TECH",  "icon":"might-research", "point": 30,     "codebs": "TECH" },
+
+    { "code": "SHRDSR", "group":"HERO",  "icon":"shard-sr",       "point": 2500,   "codebs": "" },
+    { "code": "SHRDSS", "group":"HERO",  "icon":"shard-ssr",      "point": 8750,   "codebs": "" },
+    { "code": "SHRDUR", "group":"HERO",  "icon":"shard-ur",       "point": 25000,  "codebs": "" },
+    { "code": "SKILLB", "group":"HERO",  "icon":"skill-badge",    "point": 25,     "codebs": "" },
+
+    { "code": "TCKHER", "group":"TAVERN", "icon":"ticket-hero",   "point": 4500,   "codebs": "HEROE" },
+    { "code": "SAVETH", "group":"TAVERN", "icon":"lock",          "point": "",     "codebs": "" },
+    { "code": "FREETH",  "group":"TAVERN", "icon":"free",         "point": "",     "codebs": "" },
+
+    { "code": "SOLD1TRN", "group":"SOLDIER", "icon":"boost-training", "point": 150, "codebs": "SOLDIER" },
+    { "code": "SOLDT10",  "group":"SOLDIER", "icon":"soldier-t8", "point": 240,    "codebs": "SOLDIER" },
+
+    { "code": "HEA1SP",  "group":"HEAL", "icon":"speedup-healing", "point": 150,   "codebs": "" },
+    { "code": "SOLDDFT", "group":"SOLDIER", "icon":"soldier-defeat", "point": 23.6, "codebs": "" },
+    { "code": "SOLDLST", "group":"SOLDIER", "icon":"soldier-lost", "point": 20,    "codebs": "" },
+    { "code": "SOLDMTC", "group":"SOLDIER", "icon":"soldier-attack", "point": 118, "codebs": "" },
+    
+    { "code": "DYELITE",  "group":"MONSTER", "icon":"elite-blight", "point": "",   "codebs": "RAVEN" },
+    { "code": "DYBOTT",   "group":"FOCUS",  "icon":"stamina-bottle", "point": "",  "codebs": "" },
+    { "code": "DYBOTWAR", "group":"FOCUS",  "icon":"stamina-bottle", "point": "",  "codebs": "" },
+    { "code": "DYHERBS",  "group":"FOCUS",  "icon":"garden",        "point": "",   "codebs": "" },
+    { "code": "DYSOLDIER", "group":"FOCUS", "icon":"soldier-t7",    "point": "",   "codebs": "SOLDIER" },
+    { "code": "DYHOSPITAL", "group":"FOCUS", "icon":"speedup-healing", "point": "", "codebs": "" },
+    { "code": "EQGEAR",  "group":"GEAR",  "icon":"gearstone",       "point": "",   "codebs": "" },
+    { "code": "EQBPRN",  "group":"GEAR",  "icon":"gear-blueprint-ur", "point": "", "codebs": "" },
+    { "code": "ELIXIR",  "group":"FOCUS", "icon":"",                "point": "",   "codebs": "" },
+    { "code": "SCRAMBLE", "group":"FOCUS", "icon":"medall-fame",    "point": "",   "codebs": "" },
+    { "code": "KWAR",    "group":"FOCUS", "icon":"medall-fame",     "point": "",   "codebs": "" },
+    { "code": "SHIELD",  "group":"FOCUS", "icon":"",                "point": "",   "codebs": "" },
+    { "code": "DYWALL",  "group":"FOCUS", "icon":"",                "point": "",   "codebs": "" },
+    { "code": "CUMULUS", "group":"FOCUS", "icon":"cumulus-cristal", "point": "",   "codebs": "" },
+    
+    { "code": "BSBUILD",   "group":"BS", "icon":"", "point": "", "codebs": "BUILD" },
+    { "code": "BSHERO",    "group":"BS", "icon":"", "point": "", "codebs": "HEROE" },
+    { "code": "BSRAVEN",   "group":"BS", "icon":"", "point": "", "codebs": "RAVEN" },
+    { "code": "BSSOLDIER", "group":"BS", "icon":"", "point": "", "codebs": "SOLDIER" },
+    { "code": "BSTECH",    "group":"BS", "icon":"", "point": "", "codebs": "TECH" },
   ];
 
   var EVENT_CODE = [
@@ -271,6 +289,25 @@
   function byId(id) { return document.getElementById(id); }
 
   function pad(n) { return (n < 10 ? "0" : "") + n; }
+
+  /* ---------- Puntos referenciales ----------
+     El valor vive en ACTIVITY_CODE.point y se almacena sin separadores.
+     Se muestra con el signo "+", un decimal y el separador de miles "'"
+     agregado solo al renderizar. Cuando la actividad no declara un
+     valor numerico no se muestra nada. */
+  function formatPoint(value) {
+    if (value === undefined || value === null) return "";
+    var raw = String(value).trim();
+    if (!raw) return "";
+    if (!/^[+-]?\d+(\.\d+)?$/.test(raw)) return "";
+    var num = Number(raw);
+    if (!Number.isFinite(num)) return "";
+    var sign = num < 0 ? "-" : "+";
+    var parts = Math.abs(num).toFixed(1).split(".");
+    /* El separador de miles se aplica a la parte entera. */
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+    return sign + parts.join(".");
+  }
 
   function appendCell(tr, text, cls) {
     var td = document.createElement("td");
@@ -639,9 +676,13 @@
         var elapsed = nowSec - currentSlot.sec;
         /* La duracion predeterminada de una tarea vinculada es de 4 horas. */
         if (elapsed >= LINKED_DEFAULT_DURATION) {
-          return { state: STATE_FINISHED, text: FINISHED_LABEL };
+          return { state: STATE_FINISHED, text: FINISHED_LABEL, remainingSec: 0 };
         }
-        return { state: STATE_PROGRESS, text: "+ " + fmtCounter(elapsed) };
+        return {
+          state: STATE_PROGRESS,
+          text: "+ " + fmtCounter(elapsed),
+          remainingSec: LINKED_DEFAULT_DURATION - elapsed
+        };
       }
       if (nextSlot) {
         return { state: STATE_COUNTDOWN, text: "T-" + fmtCounter(nextSlot.sec - nowSec) };
@@ -660,6 +701,60 @@
     function dayDateLabel(startDayMs, offset) {
       var loc = new Date(startDayMs + offset * 86400000);
       return pad(loc.getUTCMonth() + 1) + "/" + pad(loc.getUTCDate());
+    }
+
+    /* ---------- Actividades de Batalla de Supervivencia (codigos BS...) ----------
+       Las actividades cuyo codigo comienza con "BS" se agregan unicamente a
+       la tabla del dia actual. Su contador es el del horario vinculado de
+       Battle Survival y solo son visibles cuando ese contador esta en
+       estado [PROGRESS]; en cualquier otro estado permanecen ocultas. */
+
+    var BS_CODE_PREFIX = "BS";
+    /* Simbolo de estrella de habilidad, pintado en rojo en estas tareas. */
+    var BS_STAR = "★";
+
+    var bsActivities = ACTIVITY_CODE.filter(function (a) {
+      return a.code.indexOf(BS_CODE_PREFIX) === 0;
+    });
+
+    /* Fila de actividad BS para el dia actual. */
+    function bsRow(a, noday) {
+      return {
+        noday: noday,
+        day: DAY_ABBR[noday],
+        event: "BS",
+        phase: "",
+        code_task: a.code,
+        server_time: "",
+        isBs: true
+      };
+    }
+
+    /* Aplica la visibilidad de una fila BS segun el estado de su contador. */
+    function applyBsVisibility(tr, state) {
+      tr.classList.toggle("ad-bs-hidden", state !== STATE_PROGRESS);
+    }
+
+    /* Reconstruye el texto de la tarea separando cada estrella para poder
+       colorearla. Solo se usa en las actividades de Battle Survival. */
+    function appendStars(cell, text) {
+      if (!text || text.indexOf(BS_STAR) < 0) return;
+      cell.textContent = "";
+      var parts = String(text).split(BS_STAR);
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i]) {
+          var textEl = document.createElement("span");
+          textEl.className = "ad-task-text";
+          textEl.textContent = parts[i];
+          cell.appendChild(textEl);
+        }
+        if (i < parts.length - 1) {
+          var star = document.createElement("span");
+          star.className = "ad-bs-star";
+          star.textContent = BS_STAR;
+          cell.appendChild(star);
+        }
+      }
     }
 
     function buildRow(r, offset, startDayMs, nowSec) {
@@ -687,13 +782,34 @@
         var linked = linkedCounterState(codebs, r.noday, nowSec);
         state = linked.state;
         timeTxt = linked.text;
-        timeCell = appendCell(tr, timeTxt, "ad-time");
-        counters.push({ td: timeCell, tr: tr, codebs: codebs, noday: r.noday });
+        if (r.isBs) {
+          /* Las actividades BS muestran el contador y, debajo, el tiempo
+             restante de la duracion de cuatro horas. */
+          timeCell = appendCell(tr, "", "ad-time");
+          var elapsedEl = document.createElement("span");
+          elapsedEl.className = "ad-bs-elapsed";
+          elapsedEl.textContent = timeTxt;
+          timeCell.appendChild(elapsedEl);
+          var remainingEl = document.createElement("span");
+          remainingEl.className = "ad-bs-remaining";
+          remainingEl.textContent = linked.state === STATE_PROGRESS ? fmtCounter(linked.remainingSec) : "";
+          timeCell.appendChild(remainingEl);
+          counters.push({
+            td: timeCell, tr: tr, codebs: codebs, noday: r.noday, isBs: true,
+            elapsedEl: elapsedEl, remainingEl: remainingEl
+          });
+        } else {
+          timeCell = appendCell(tr, timeTxt, "ad-time");
+          counters.push({ td: timeCell, tr: tr, codebs: codebs, noday: r.noday });
+        }
       } else if (offset > 0 && hasSchedule) {
         /* Los dias futuros muestran la fecha de la tarea, sin contadores. */
         state = STATE_NORMAL;
         timeTxt = dayDateLabel(startDayMs, offset);
       }
+
+      /* Las actividades BS solo se muestran con el contador en progreso. */
+      if (r.isBs) applyBsVisibility(tr, state);
 
       /* 1. Contador */
       if (!timeCell) timeCell = appendCell(tr, timeTxt, "ad-time");
@@ -703,13 +819,27 @@
       appendIconCell(tr, "ad-task-icon", r.code_task);
 
       /* 3. Tarea: el indicador flag solo afecta a esta columna. */
-      var taskCell = appendCell(tr, a ? (activityText(r.code_task, "objective") || r.code_task) : r.code_task, "ad-objective");
+      var objectiveText = a ? (activityText(r.code_task, "objective") || r.code_task) : r.code_task;
+      var taskCell = appendCell(tr, objectiveText, "ad-objective");
       if (flag) taskCell.classList.add("ad-task-flag-" + flag);
+      /* En las actividades BS la estrella de habilidad se pinta en rojo. */
+      if (r.isBs) appendStars(taskCell, objectiveText);
 
-      /* 4. Recurso */
+      /* 4. Puntos: valor referencial de la actividad, al final del texto
+         de la columna Tarea y en la posicion inferior izquierda. */
+      var pointText = a ? formatPoint(a.point) : "";
+      if (pointText) {
+        var pointEl = document.createElement("span");
+        pointEl.className = "ad-task-point";
+        pointEl.textContent = pointText;
+        taskCell.appendChild(pointEl);
+        taskCell.classList.add("ad-has-point");
+      }
+
+      /* 5. Recurso */
       appendCell(tr, a ? activityText(r.code_task, "resource") : "", "ad-resource");
 
-      /* 5. Evento */
+      /* 6. Evento */
       appendCell(tr, eventLabel(r), "ad-event");
 
       /* La animacion del contador solo se aplica en la tabla del dia actual. */
@@ -833,8 +963,21 @@
           var nextRow = rows[i + 1];
           if (nextRow && rows[i].event !== nextRow.event) {
             row.className += " ad-event-separator";
+          } else if (!nextRow && k === 0 && bsActivities.length && rows.length) {
+            /* El grupo de Battle Survival se separa de los demas eventos. */
+            row.className += " ad-event-separator";
           }
           tbody.appendChild(row);
+        }
+
+        /* Las actividades BS se agregan solo al dia actual, al final del
+           grupo de tareas para no alterar el orden de los demas grupos. */
+        if (k === 0) {
+          for (var b = 0; b < bsActivities.length; b++) {
+            var bsRowEl = buildRow(bsRow(bsActivities[b], noday), k, startDayMs, nowSec);
+            bsRowEl.classList.add("ad-bs-task");
+            tbody.appendChild(bsRowEl);
+          }
         }
         table.appendChild(tbody);
 
@@ -872,8 +1015,17 @@
         } else {
           result = linkedCounterState(counter.codebs, counter.noday, nowSec);
         }
-        counter.td.textContent = result.text;
+        if (counter.isBs) {
+          /* El contador BS se compone de dos nodos: el tiempo transcurrido
+             y el tiempo restante de la duracion de cuatro horas. */
+          counter.elapsedEl.textContent = result.text;
+          counter.remainingEl.textContent = result.state === STATE_PROGRESS ? fmtCounter(result.remainingSec) : "";
+        } else {
+          counter.td.textContent = result.text;
+        }
         applyCounterState(counter.tr, result.state);
+        /* Las actividades BS solo son visibles con el contador en progreso. */
+        if (counter.isBs) applyBsVisibility(counter.tr, result.state);
       }
     }
 

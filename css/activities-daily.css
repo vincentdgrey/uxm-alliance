@@ -221,7 +221,7 @@ tr.bs-current td.bs-event::after {
   color: #333;
   font-family: 'JetBrainsMono', system-ui, -apple-system, 'Segoe UI', sans-serif;
   font-size: 0.75rem;
-  line-height: 1;
+  line-height: 1.3;
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1, "cv05" 1; /* tnum = tabular numbers */
   letter-spacing: 0.03em;
@@ -377,6 +377,49 @@ tr.bs-current td.bs-event::after {
 }
 .ad-event {
   font-weight: 700;
+}
+/* Columna de puntos referenciales: se muestran al final del texto de la
+   columna Tarea, en la posicion inferior izquierda de la celda. */
+.ad-objective {
+  position: relative;
+}
+.ad-has-point {
+  padding-bottom: 16px;
+}
+.ad-task-point {
+  position: absolute;
+  right: 5px;
+  bottom: 1px;
+  color: #999;
+  font-weight: 100;
+  font-size: 0.6rem;
+  white-space: nowrap;
+}
+/* Estrella de habilidad de las actividades de Battle Survival. */
+.ad-bs-task .ad-bs-star {
+  color: #df1b1b;
+  font-size: 16px;
+}
+/* Tiempo restante de la duracion de cuatro horas, bajo el contador BS. */
+.ad-bs-remaining {
+  display: block;
+  font-size: 10px;
+  color: #666;
+  white-space: nowrap;
+  text-align: right;
+}
+/* Actividades de Batalla de Supervivencia: ocultas salvo en progreso. */
+.ad-schedule tbody tr.ad-bs-hidden {
+  display: none;
+}
+/* Nota sobre el caracter referencial de los puntos. */
+.ad-points-note {
+  font-size: 0.8rem;
+  font-weight: 100;
+  color: #777;
+  line-height: 1.4;
+  margin: 0;
+  padding: 6px 10px 0 10px;
 }
 /* Columna de imágenes de la tarea. */
 .ad-icon {
