@@ -12,7 +12,8 @@
     "ja": "技術研究",
     "ru": "Технологические исследования",
     "zh": "技术研究",
-    "tr": "Teknolojik Araştırma"
+    "tr": "Teknolojik Araştırma",
+    "pl": "Badania Technologiczne"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": []
 }

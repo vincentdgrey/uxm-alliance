@@ -182,6 +182,24 @@ pageStrategyLead:"Etkinliklerde ve kahramanlarının gelişim projesinde sana ya
         searchEngineTopicEmpty:"Bu temada henüz yüklenmiş bilgi yok.",
         searchEngineTopicAll:"Tüm temayı gör",
         searchEngineUpdated:"Güncellenme:",
+    },
+    pl: {
+        pageStrategyTitle:"Biblioteka strategiczna",
+pageStrategyLead:"Taktyczne instrukcje, które pomogą Ci podczas wydarzeń i w planowaniu rozwoju bohaterów.",
+        searchEngineTitle:"Wyszukiwarka",
+        searchEngineTopicsLabel:"Tematy:",
+        searchEngineSearchLabel:"Szukaj w bibliotece",
+        searchEngineSearchPlaceholder:"Wpisz słowo lub frazę",
+        searchEngineClear:"Wyczyść wyszukiwanie",
+        searchEngineTreeTitle:"Drzewo tematów",
+        searchEngineInitial:"Wybierz temat z drzewa lub wpisz wyszukiwanie, aby zobaczyć jego informacje.",
+        searchEngineLoading:"Wczytywanie biblioteki…",
+        searchEngineLoadError:"Nie udało się wczytać biblioteki informacji.",
+        searchEngineNoResults:"Brak informacji pasujących do wyszukiwania.",
+        searchEngineResults:"Dopasowania: {count}",
+        searchEngineTopicEmpty:"Ten temat nie ma jeszcze wczytanych informacji.",
+        searchEngineTopicAll:"Zobacz cały temat",
+        searchEngineUpdated:"Zaktualizowano:",
     }
   };
 

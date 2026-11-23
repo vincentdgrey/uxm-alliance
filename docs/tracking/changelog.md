@@ -1,5 +1,21 @@
 # Changelog
 
+## [261123d] - 2026-11-23
+
+### Added
+- **Se integra el idioma polaco (`pl`) en el sitio completo**, con detección automática por navegador y traducción íntegra:
+  - `js/i18n.js` incorpora el bloque `pl` del núcleo común, con `name: "Polski"`.
+  - Los siete archivos de página (`index`, `actividades-diarias`, `normas-uxm`, `video-tutoriales`, `estrategia`, `contacto`, `reino`) declaran su bloque `pl` con las mismas claves que el español. En Actividades Diarias se traducen las 53 actividades, los 9 eventos, las 7 fases y los 6 nombres de Battle Survival, con el mismo orden canónico.
+  - Los 25 archivos de `db/library/` (4 grupos y 21 temas) incluyen el bloque `pl` en cada mapa de idioma: títulos, resúmenes, palabras clave, títulos de sección, párrafos y listas. El polaco se declara siempre después de `tr` para no alterar el orden de los bloques existentes.
+  - `tests/i18n-polish.test.cjs` (nuevo, 12 casos) verifica el bloque del núcleo, la cobertura de las siete páginas, el orden canónico, las actividades `BS`, la detección por navegador, el parámetro `?lang=`, el selector automático, la cobertura de la Biblioteca, la normalización de `ł` y la ausencia de CJK y cirílico.
+- La detección por navegador admite el polaco **sin modificar `resolveLang()`**: el idioma se reduce a su código de dos letras (`pl-PL` → `pl`) y se valida contra `window.I18N`. El selector enumera `Object.keys(window.I18N)`, por lo que «Polski» aparece automáticamente.
+
+### Changed
+- `js/strategy-library.js` normaliza la letra polaca `ł` a `l` antes de la descomposición Unicode NFD, que no la separa. Así, una búsqueda por `lodz` encuentra `Łódź`.
+- Las listas `languages` de las pruebas (`i18n-structure`, `i18n-unicode`, `strategy-library`, `visit-counter`, `ui-contract`) pasan de diez a once idiomas, con sus conteos de traducciones por idioma actualizados.
+- `AGENTS.md` enumera el polaco entre los idiomas disponibles del sitio.
+- `docs/core/project-rules.md` documenta el núcleo de once idiomas, el comportamiento de la detección con el polaco, la normalización de `ł`, el orden de los bloques de idioma en la Biblioteca y la lista de nombres propios del selector.
+
 ## [261123c] - 2026-11-23
 
 ### Changed

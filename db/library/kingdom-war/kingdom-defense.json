@@ -12,7 +12,8 @@
     "ja": "王国防衛",
     "ru": "Оборона королевства",
     "zh": "王国防御",
-    "tr": "Krallık Savunması"
+    "tr": "Krallık Savunması",
+    "pl": "Obrona Królestwa"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": []
 }

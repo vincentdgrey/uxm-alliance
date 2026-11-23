@@ -12,7 +12,8 @@
     "ja": "トレ|ISBNハンター",
     "ru": "Искатель Сокровищ",
     "zh": "寻宝者",
-    "tr": "Hazine Avcısı"
+    "tr": "Hazine Avcısı",
+    "pl": "Łowca Skarbów"
   },
   "summary": {
     "es": "Cómo usar las Operaciones Secretas y los cofres diarios para conseguir fragmentos y recompensas de rareza UR.",
@@ -24,7 +25,8 @@
     "ja": "秘密作戦とデイチェストを使って、欠片とURレアリティの報酬を得る方法です。",
     "ru": "Как использовать Секретные Операции и ежедневные сундуки, чтобы получить фрагменты и награды редкости UR.",
     "zh": "如何使用秘密行动和每日宝箱获取碎片与 UR 稀有度奖励。",
-    "tr": "Gizli Operasyonlar ve günlük sandıklar ile nasıl parça ve UR nadirlik ödülleri elde edeceğiniz."
+    "tr": "Gizli Operasyonlar ve günlük sandıklar ile nasıl parça ve UR nadirlik ödülleri elde edeceğiniz.",
+    "pl": "Jak zdobywać skarby z Tajnych Operacji i skrzyń, aby nie marnować swoich odłamków."
   },
   "keywords": {
     "es": [
@@ -174,6 +176,21 @@
       "SSR",
       "elmas",
       "ShardExchangeBank"
+    ],
+    "pl": [
+      "łowca skarbów",
+      "skarb",
+      "tajna operacja",
+      "tajne operacje",
+      "skrzynia",
+      "skrzynie",
+      "odłamek",
+      "mapa skarbów",
+      "sanktuarium",
+      "UR",
+      "SSR",
+      "diamenty",
+      "ShardExchangeBank"
     ]
   },
   "sections": [
@@ -188,7 +205,8 @@
         "ja": "秘密作戦とチェスト",
         "ru": "Секретные Операции и Сундуки",
         "zh": "秘密行动与宝箱",
-        "tr": "Gizli Operasyonlar ve Sandıklar"
+        "tr": "Gizli Operasyonlar ve Sandıklar",
+        "pl": "Tajne Operacje i Skrzynie"
       },
       "items": {
         "es": [
@@ -260,6 +278,13 @@
           "7 gizli operasyonunuz varsa UR nadirlikte 6 tanesini almak sonuncusundan daha kolaydır; sonuncusu çok zordur, muhtemelen çok elmas harcanmanız için böyle tasarlanmıştır, ancak taktik açıdan sonuncusunun SSR nadirlikte olması daha iyidir.",
           "2 günlük sandık elde ederek hafta içinde bir UR sandık elde edebilirsiniz; bunun için ittifakımızda ihtiyacınız olan parçaları takas etmekle görevli bir destek oyuncumuz `ShardExchangeBank` bulunur; bu işlevi üstlenen bir oyuncu olduğunda tüm parçalar ittifak genelinde pratik şekilde takas edilir.",
           "Sandık ödülleri gelişiminiz için mükemmeldir: değerli hızlandırıcılar, ekipman taşları, beceri yükseltme rozetleri ve daha fazlası verilir."
+        ],
+        "pl": [
+          "Za każdym razem, gdy wybierzesz misję Tajnej Operacji o rzadkości UR lub SSR, otrzymujesz fragmenty mapy skarbów.",
+          "Jeśli postarasz się wykonać 6 Tajnych Operacji UR i 1 SSR, uzyskasz 2 codzienne skrzynie ze wszystkimi zdobytymi fragmentami. Jeśli Twoje sanktuarium jest poniżej Lv.27, wyżsi rangą mają do dyspozycji 8 tajnych operacji.",
+          "Jeśli masz 7 tajnych operacji, zdobycie 6 o rzadkości UR będzie łatwiejsze niż ostatnia; ostatnia jest bardzo trudna, prawdopodobnie po to, byś wydał wiele diamentów, ale taktycznie lepiej, aby ostatnia była o rzadkości SSR.",
+          "Zdobywając 2 codzienne skrzynie, w tygodniu uda Ci się zdobyć skrzynię UR; w tym celu w naszym sojuszu mamy gracza wsparcia `ShardExchangeBank`, który zajmuje się wymianą potrzebnych Ci odłamków; mając gracza w tej roli, wszystkie odłamki są wymieniane w praktyczny sposób z całym sojuszem.",
+          "Nagrody ze skrzyń są doskonałe, abyś mógł się rozwijać: otrzymujesz cenne przyspieszenia, kamienie ekwipunku, odznaki do podnoszenia umiejętności i wiele więcej."
         ]
       }
     }

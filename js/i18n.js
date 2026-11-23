@@ -229,5 +229,28 @@ visitTitle:"访问我们的联盟",
       navContact:"İletişim",
       visitTitle:"İttifakımızı Ziyaret Edin",
       visitCounter:"Bu tarayıcıdaki ziyaretler: {n}"
+    },
+  pl: {
+      name:"Polski",
+      now:"Teraz",
+      shard:"Skarby tajnych operacji, których potrzebujesz",
+      rules:"Zasady",
+      activities:"Aktywności",
+      tutorials:"Samouczki wideo",
+      contact:"Aby się z nami skontaktować, odwiedź kanał samouczków",
+      menu:"Menu",
+      close:"Zamknij menu",
+      language:"Język",
+      copyright:"© 2026 UXM – Under Xtreme Madness Alliance",
+      youtube:"Kanał YouTube",
+      navHome:"Strona główna",
+      navDaily:"Codzienne aktywności",
+      navKingdom:"Królestwo",
+      navRules:"Zasady UXM",
+      navTutorials:"Samouczki wideo",
+      navStrategy:"Biblioteka strategiczna",
+      navContact:"Kontakt",
+      visitTitle:"Odwiedź nasz Sojusz",
+      visitCounter:"Wizyty w tej przeglądarce: {n}"
     }
 };

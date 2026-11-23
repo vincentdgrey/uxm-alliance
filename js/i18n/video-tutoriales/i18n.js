@@ -172,6 +172,23 @@ pageTutorialsLead:"在游戏中生存并战斗的最佳视觉指南！",
         videoTutorialEvent4:"Krallık İttifakı Etkinliği, Krallığın Kral Şehri Karışıklığı. 100K Onur Puanı hedefi; ekinleri ele geçirerek veya savunarak, asker kazanarak veya kaybederek elde edilir (Cuma).",
         pageTutorialsTitle:"Video Eğitimleri",
         pageTutorialsLead:"Oyunda hayatta kalmak ve geri dövmek için en iyi görsel rehberin!"
+      },
+    pl: {
+        tutorialLearningPriorityTitle:"Nauka Priorytetowa",
+        tutorialTipsTitle:"Praktyczna Wskazówka",
+        tutorialEventsTitle:"Wydarzenia",
+        videoTutorialPriority1:"Proste kroki, aby wycofać żołnierzy z Muru w naszym Sanktuarium, skuteczny sposób, aby NIE tracić żołnierzy i UNIKNĄ dawania punktów wrogu w Dniu Wojny (sobota).",
+        videoTutorialPriority2:"Kroki, aby kupić i aktywować osłonę 24H lub użyć darmowych osłon 8H.",
+        videoTutorialPriority3:"Napadaj na Karawany i Tajne Operacje innych Królestw, unikaj kradzieży zasobów w naszym królestwie 277.",
+        videoTutorialTip1:"Zdobądź oficjalny urząd Ministra na Dworze Królewskim, bonusy od 25% do 60% w przyspieszeniach, najważniejsze przy Budowie i Badaniach.",
+        videoTutorialTip2:"Wysyłaj po 1 karawanie z naszym najsilniejszym oddziałem, to minimalizuje napady, lepiej wysyłać rzadkość SSR lub UR.",
+        videoTutorialTip3:"Sobota dnia Wojen Królestw lub Pojedynków Sojuszy, kroki, aby przeskoczyć do innego królestwa i wrócić za darmo.",
+        videoTutorialEvent1:"Wydarzenie Sojuszu, Złodziej Ser Lv.6. Cel 225M obrażeń na gracza, co najmniej 1 gracz musi osiągnąć 990M obrażeń, aby pomnożyć nagrody przez 10 (MVP 1).",
+        videoTutorialEvent2:"Wydarzenie Królestw, Dolina Kryształowych Skał. Cel wydobycia 150K kryształów, zajmij i wydobywaj kopczyki kryształu, kilka minut przed końcem ruszaj do Świętej Jaski.",
+        videoTutorialEvent3:"Wydarzenie Królestw, Wojna Królestw o Królewskie Miasto. Cel 1.5M Punktów Honoru, zdobywanych przez atakowanie lub tracenie żołnierzy, w Dniu Wojny (sobota) potrzeba wielu butelek energii.",
+        videoTutorialEvent4:"Wydarzenie Sojuszy Królestw, Zamieszanie w Królewskim Mieście Królestwa. Cel 150K Punktów Honoru, zdobywanych przez zajmowanie lub obronę plonów, wygrana lub strata żołnierzy również daje punkty w tym spokojnym sposobie podczas Zamieszania (piątek).",
+        pageTutorialsTitle:"Samouczki wideo",
+        pageTutorialsLead:"Najlepszy wizualny przewodnik, jak przetrwać w grze i odpowiadać ogniem!"
       }
   };
 

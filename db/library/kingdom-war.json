@@ -12,7 +12,8 @@
     "ja": "キングダムウォー",
     "ru": "Война Королевств",
     "zh": "王国战争",
-    "tr": "Krallık Savaşı"
+    "tr": "Krallık Savaşı",
+    "pl": "Wojna Królestw"
   },
   "topics": [
     "kingdom-war/shields.json",

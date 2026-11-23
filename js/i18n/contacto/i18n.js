@@ -72,6 +72,13 @@ contactFormFrameTitle:"UXM 联系表单",
         contactFormTitle:"İletişim Formu",
         contactFormOpen:"Formu yeni sekmede aç",
         contactFormFrameTitle:"UXM iletişim formu"
+      },
+    pl: {
+        pageContactTitle:"Kontakt",
+        pageContactLead:"Napisz do nas, aby podzielić się opinią lub poinformować o napadach, i udostępnij nasz kanał YouTube @VincentDantesGrey.",
+        contactFormTitle:"Formularz kontaktowy",
+        contactFormOpen:"Otwórz formularz w nowej karcie",
+        contactFormFrameTitle:"Formularz kontaktowy UXM"
       }
   };
 

@@ -1092,6 +1092,102 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
             resource:"Araştırma"
           }
         }
+      },
+    pl: {
+        scheduleBattleSurvival:"Harmonogram Battle Survival",
+        survivalMessage:"Automatyczny cykl aktywności, obliczany według strefy czasowej przeglądarki, wskazujący czas, jaki upłynął od rozpoczęcia bieżącego wydarzenia, oraz ile pozostało do jego końca.",
+        allianceMessage:"Lista aktywności oparta na Pojedynku Sojuszy, która pozwala wykonać zadania na dziś i w przyszłości, z licznikami wskazującymi, kiedy je wykonać, jeśli mają ustalony termin albo są powiązane z Battle Survival.",
+        bsHeaders:["Licznik", "Status", "Wydarzenie Battle Survival", "Aktywności", "Serwer"],
+        bsPast:"Zakończona",
+        bsCurrent:"W toku",
+        bsNext:"Następna",
+        bsEvents:{ BUILD:"Buduj Terytorium", HEROE:"Ulepsz Bohaterów", RAVEN:"Ulepsz Kruka", SOLDIER:"Szkol Żołnierzy", TECH:"Badania Technologiczne", STANDBY:"Czekaj" },
+        scheduleAllianceDuel:"Pojedynek Sojuszy",
+        adHeaders:["Licznik", "", "Zadanie", "Zasób", "Wydarzenie"],
+        adPointsNote:"Punkty są odniesieniem dla gracza z VIP 9 i badaniami Pojedynku Sojuszy; wzrosną zgodnie z Twoim poziomem badań w Pojedynku Sojuszy.",
+        pageDailyTitle:"Codzienne aktywności",
+        pageDailyLead:"Szczegóły codziennych aktywności, które pomogą Ci codziennie się rozwijać.",
+        adPhases:{
+          P00:"Faza 0 : Zbieranie i Zapasy",
+          P01:"Faza 1 : Ulepsz Kruka",
+          P02:"Faza 2 : Rozwój Terytorium",
+          P03:"Faza 3 : Badania Technologiczne",
+          P04:"Faza 4 : Rozwój Bohaterów",
+          P05:"Faza 5 : Przygotowanie do Wojny",
+          P06:"Faza 6 : Napad na Wroga"
+        },
+        adEvents:{ DY:"Codzienna Wskazówka", AD:"Pojedynek Sojuszy", KVK:"Wojna Królestw", ROY:"Zamieszanie w Królewskim Mieście", BS:"Battle Survival", EQ:"Ulepszanie Ekwipunku", BEX:"Bitwa o Eliksir", CUM:"Dolina Kryształowych Skał", CHE:"Pułapka na Ser" },
+        adActivities:{
+          ANTX:{ objective:"Zużyj 660 Antidotów",resource:"Zapasy Antydotów"},
+
+          STMN: { objective:"Zużyj energię/wytrzymałość, kup 24 butelki w Sklepie VIP",resource:"Butelka Energii/Wytrzymałości"},
+          DYBOTT: {objective:"Zachowaj butelki energii/wytrzymałości na Następną Fazę Kruka",resource:"Butelka Energii/Wytrzymałości"},
+          DYBOTWAR: {objective:"Zachowaj butelki energii/wytrzymałości na Fazę Wojenną",resource:"Butelka Energii/Wytrzymałości"},
+
+          FALCON: { objective:"Ukończ Misje Sokoła, 10 lub 11 co 6 Godzin",resource:"Wieża Sokoła"},
+          DYFALCON: {objective:"Rozpocznij Misje Sokoła, ale ich nie kończ, trzymaj 35 lub 40 w oczekiwaniu",resource:"Wieża Sokoła"},
+
+          DYHERBS: {objective:"Rozpocznij Zbieranie Ziół",resource:"Ogród Ziołowy Lv.10, 8H, 1.1M"},
+          HERBS: {objective:"Zbierz x60 Ziół, cały dzień",resource:"Ogród Ziołowy Lv.10, 8H, 1.1M"},
+          GRAIN: {objective:"Zbierz x100 Zboża/Drewna",resource:"Farma Lv.10, 6.5H, 2.2M"},
+
+          EPIUR: {objective:"Zdobądź Fragmenty Epigrafu UR, użyj każdego rodzaju Skrzyni Epigrafu",resource:"Skrzynie Epigrafów"},
+          RAVESS:{objective:"Zużyj Esencję Kruka, Priorytet",resource:"Esencja Kruka"},
+          RAVFRT:{objective:"Zużyj Owoc Kruka",resource:"Owoc Kruka"},
+          RAVCH1:{objective:"Otwórz Skrzynię Wyposażenia Kruka",resource:"Skrzynia Kruka"},
+
+          CON1SP:{objective:"Użyj Przyspieszenia Budowy, aktywuj Ministerstwo Budowy",resource:"Przyspieszenie Budowy"},
+          CONMGH:{objective:"Zwiększ Moc Budynku, preferuj krótsze czasy budowy",resource:"Ulepsz Budynek"},
+
+          STDSCR:{objective:"Użyj Zwijki Nauki w badaniach",resource:"Nagroda Pojedynku Sojuszy"},
+          TCH1SP:{objective:"Użyj Przyspieszenia Badań, aktywuj Ministerstwo Badań",resource:"Przyspieszenie Badań"},
+          TCHMGH:{objective:"Zwiększ Moc Technologii, szukaj badań ze Zwijkami Nauki",resource:"Zwijka Nauki"},
+
+          CRVNUR:{objective:"Wyślij 4 Karawany UR",resource:"4 Karawany"},
+          OPENUR:{objective:"Wykonaj Tajne Operacje UR, minimum 6, ostatnia trudniejsza",resource:"7 Tajnych Operacji"},
+
+          TCKSUR:{objective:"Zatrudnij Ocalałych, używając WSZYSTKICH Biletów Ocalałego",resource:"Bilet Ocalałego"},
+          SAVETS:{objective:"ZACHOWAJ WSZYSTKIE Bilety Ocalałego",resource:"Bilet Ocalałego"},
+          FREETS:{objective:"Użyj TYLKO 1 DARMOWEGO Biletu Ocalałego",resource:"Bilet Ocalałego"},
+
+          TCKHER:{objective:"Zatrudnij Bohaterów, używając WSZYSTKICH Biletów Bohatera, +50 zdobędziesz Bohatera UR",resource:"Bilet Bohatera"},
+          SAVETH:{objective:"ZACHOWAJ WSZYSTKIE Bilety Bohatera",resource:"Bilet Bohatera"},
+          FREETH:{objective:"Użyj TYLKO 1 DARMOWEGO Biletu Bohatera",resource:"Bilet Bohatera"},
+
+          SHRDSR:{objective:"Zużyj Fragment Bohatera SR",resource:"Sklep Sanktuarium"},
+          SHRDSS:{objective:"Zużyj Fragment Bohatera SSR",resource:"Sklep Sanktuarium"},
+          SHRDUR:{objective:"Zużyj Fragment Bohatera UR",resource:"Sklep Sanktuarium"},
+          SKILLB:{objective:"Użyj Odznaki Umiejętności, Priorytet: Zwiększ Umiejętność Bohatera UR",resource:"Odznaka Umiejętności"},
+
+          SOLD1TRN:{objective:"Użyj Przyspieszenia Szkolenia, aktywuj Ministerstwo Wojny",resource:"Przyspieszenie Szkolenia"},
+          SOLDT10:{objective:"Wyszkol Żołnierza, Priorytet: Awansuj T7 do T8",resource:"Żołnierze T6 > T7 > T8"},
+          SOLDDFT:{objective:"Pokonaj Żołnierzy, Pojedynek Sojuszy",resource:"Atak"},
+          SOLDLST:{objective:"Strac żołnierzy, Pojedynek Sojuszy",resource:"Obrona"},
+          SOLDMTC:{objective:"Pokonaj Żołnierzy (wybrane starcie)",resource:"T8 vs T8"},
+          DYSOLDIER:{objective:"Wyszkol żołnierzy T6 lub T7; awansuj w Dniu Przygotowania do Wojny",resource:"Żołnierz T7"},
+          DYWALL:{objective:"Wycofaj swoich żołnierzy z Muru; Dzień Wojny",resource:"Mur Sanktuarium"},
+
+          HEA1SP:{objective:"Użyj Przyspieszenia Leczenia, Bonus Leczenia +150%",resource:"Przyspieszenie Leczenia"},
+          DYHOSPITAL:{objective:"NIE lecz żołnierzy; zostaw ich w Szpitalu, aby użyć przyspieszeń leczenia w Dniu Wojny",resource:"Szpital"},
+
+          DYELITE:{objective:"Elitarna Zaraza Potworów, zdobądź Bilet Bohatera i Antidot",resource:"Potwory"},
+
+          EQGEAR:{objective:"Użyj Kamienia Ekwipunku, Priorytet: Ekwipunek UR",resource:"Kamień Ekwipunku"},
+          EQBPRN:{objective:"Użyj Planu Ekwipunku, awansuj dodatkowe statystyki UR",resource:"Plan Ekwipunku"},
+
+          SHIELD:{objective:"Aktywuj Osłony 24H, kup darmową Osłonę 8H w Sklepie Sojuszu",resource:"Osłona"},
+          ELIXIR:{objective:"Zdobywaj Punkty przez zajmowanie Budynków",resource:"Zamek Eliksiru"},
+          SCRAMBLE:{objective:"100K Punktów Honoru, zajmij/obroń farmę w błocie",resource:"Farmy Królewskiego Miasta"},
+          KWAR:{objective:"1.5M Punktów Honoru, pokonaj/strac/ulecz żołnierzy",resource:"Wojna Królestw (KvK)"},
+          CUMULUS:{objective:"Zbieraj oczyszczony Kryształ ze Skał, 30min czasu",resource:"Kryształowe Skały"},
+          CHEESE7:{objective:"Zadaj 335M obrażeń Złodziejowi Ser Lv.7, 30min czasu, 1.4B obrażeń dla MVP1",resource:"Pułapka na Ser"},
+
+          BSBUILD:{objective:"Odznaka Umiejętności ★, okazja po zakończeniu budowy [zwiększ moc o 30.000] lub przyspiesz [50H]",resource:"Budynki"},
+          BSHERO:{objective:"Odznaka Umiejętności ★, okazja przy użyciu [23.4M] Antydotów lub [30] Biletów Bohatera",resource:"Bohaterowie"},
+          BSRAVEN:{objective:"Odznaka Umiejętności ★, okazja na zużycie energii/wytrzymałości w [15] Rajdach lub Owocu Kruka",resource:"Kruk"},
+          BSSOLDIER:{objective:"Odznaka Umiejętności ★, okazja na wyszkolenie [2.800] Żołnierzy lub przyspieszenie szkolenia [17H]",resource:"Żołnierze"},
+          BSTECH:{objective:"Odznaka Umiejętności ★, okazja po zakończeniu badań [zwiększ moc o 30.000] lub przyspiesz [50H]",resource:"Badania"}
+        }
       }
   };
 

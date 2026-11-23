@@ -272,6 +272,33 @@ events:"活动",
         learningPriority:"Öncelikli",
         tips:"İpuçları",
         events:"Etkinlikler"
+      },
+    pl: {
+        scrollCue:"Przewijaj dalej w dół",
+        welcome:"Witaj",
+        welcomeTitle:"Witaj",
+        welcomeMessage:"Jesteśmy sojuszem w grze Last Asylum Plague, obecnym na serwerze 277 w przyjaznej atmosferze, i rośniemy z każdą trudną bitwą. Nasza grupa przyjaciół codziennie pracuje nad rozwojem, śmiejemy się ze wszystkiego, co możemy, i popełniamy błędy, staramy się organizować wydarzenia na naszym poziomie, aby każdy zdobył nagrody, a w tych trudnych (na śmierć!) po zażartej walce śmiejemy się z tego, czy wygraliśmy, czy nie. Lubimy epickie bitwy i wspominamy ostatnie 30 minut szaleństwa, dając z siebie wszystko do końca.",
+        youtubeLabel:"YouTube",
+        rulesLabel:"Zasady UXM",
+        warCryTitle:"Okrzyk Bojowy",
+        warCryMessage:"Pod najcięższymi płomieniami,\nktóre przygaszają naszą noc i sanktuarium,\nwokół mnie krążą potwory.\nprzyjmniemy nasz strach, zrobimy to, co słuszne...\n\nWybieram to królestwo, wybieram tę walkę po raz kolejny...\nPrzyjmę swój los, bo chcę wierzyć w światło naszego Sojuszu!\nBędę nosić w sobie nadzieję...\n\nDla uciszonych!,\ndla tych, którzy spędzili tydzień w ciosach!\ndla rannych przez ogień!\ndla tych, którzy nie chcą powtarzać tego dnia!\nusłyszą zbliżający się mój bęben...\n\nBracia, nie traćcie odwagi! Wy jesteście siłą!\nWy jesteście krwią gniewu, która porusza moich żołnierzy,\nto ty, mój przyjaciel, mój sojusznik, uderzymy razem!\ni poczujecie żelazo mojego miecza!!!\ndla Puppy i Dzikich Kotów!",
+        tutoTitle:"Samouczki wideo",
+        tutorialsMessage:"Filmy poradnikowe i pomocnicze dla nowych graczy oraz kilka pomysłów, jak ulepszyć swoich bohaterów lub uderzać mocniej hahaha.",
+        strategyTitle:"Biblioteka strategiczna",
+        strategyMessage:"Będziemy szukać różnych sposobów pomocy; w tej sekcji zbierzemy taktyki, których uczymy się codziennie, uporządkowane według tematów dopasowanych do Twoich potrzeb.",
+        allianceTitle:"Odwiedź nasz Sojusz",
+        allianceMessage:"Poznaj nasz Sojusz, chcemy pomóc wszystkim w królestwie 277, możesz nawet odwiedzać nas w niedziele i korzystać z naszych bonusów budowy i badań, rozwijajmy się razem!!",
+        bonusAlliance:"Bonusy technologiczne Sojuszu",
+        bonusFastBuild:"Szybka budowa",
+        bonusResearchSpeedup:"Przyspieszenie badań",
+        bonusCraftingSpeedup:"Przyspieszenie wytwarzania",
+        bonusFastTraining:"Szybkie szkolenie",
+        bonusRallyStats:"Rally HP/ATK/DEF",
+        bonusShardExchange:"Bank wymiany odłamek: na skarby potrzebne w tajnych operacjach.",
+        bonusInProgress:"W toku",
+        learningPriority:"Priorytet",
+        tips:"Wskazówki",
+        events:"Wydarzenia"
       }
   };
 

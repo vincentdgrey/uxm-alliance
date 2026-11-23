@@ -12,7 +12,8 @@
     "ja": "盾",
     "ru": "Щиты",
     "zh": "盾牌",
-    "tr": "Kalkanlar"
+    "tr": "Kalkanlar",
+    "pl": "Osłony"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": []
 }

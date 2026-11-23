@@ -12,7 +12,8 @@
     "ja": "収集と備蓄",
     "ru": "Сбор и Резерв",
     "zh": "收集与储备",
-    "tr": "Toplama ve Rezerv"
+    "tr": "Toplama ve Rezerv",
+    "pl": "Zbieranie i Rezerwa"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": []
 }

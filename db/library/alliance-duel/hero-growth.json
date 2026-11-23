@@ -12,7 +12,8 @@
     "ja": "英雄の成長",
     "ru": "Рост героев",
     "zh": "英雄成长",
-    "tr": "Kahraman Gelişimi"
+    "tr": "Kahraman Gelişimi",
+    "pl": "Rozwój Bohaterów"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": []
 }

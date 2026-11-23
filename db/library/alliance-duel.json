@@ -12,7 +12,8 @@
     "ja": "アライアンス決闘",
     "ru": "Дуэль Альянсов",
     "zh": "联盟对决",
-    "tr": "İttifak Düellosu"
+    "tr": "İttifak Düellosu",
+    "pl": "Pojedynek Sojuszy"
   },
   "topics": [
     "alliance-duel/reserve.json",

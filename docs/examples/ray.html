@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Rayo Canvas</title>
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #060612;
+    overflow: hidden;
+  }
+  canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+  }
+</style>
+</head>
+<body>
+<canvas id="rayo"></canvas>
+
+<script>
+const canvas = document.getElementById('rayo');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// Genera puntos de un rayo entre dos puntos
+function generarRayo(x1, y1, x2, y2, desplazamiento) {
+  const puntos = [{x: x1, y: y1}];
+  const segmentos = 12;
+  for (let i = 1; i < segmentos; i++) {
+    const t = i / segmentos;
+    const x = x1 + (x2 - x1) * t + (Math.random() - 0.5) * desplazamiento;
+    const y = y1 + (y2 - y1) * t + (Math.random() - 0.5) * desplazamiento;
+    puntos.push({x, y});
+  }
+  puntos.push({x: x2, y: y2});
+  return puntos;
+}
+
+function dibujarRayo(puntos, color, grosor, glow) {
+  ctx.save();
+  ctx.shadowBlur = glow;
+  ctx.shadowColor = color;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = grosor;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  ctx.moveTo(puntos[0].x, puntos[0].y);
+  for (let i = 1; i < puntos.length; i++) {
+    ctx.lineTo(puntos[i].x, puntos[i].y);
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
+// Estado del rayo
+let rayoActual = null;
+let framesVida = 0;
+const VIDA_MAX = 20;
+
+function crearRayoPantalla() {
+  const h = canvas.height;
+  const w = canvas.width;
+
+  // Rayo principal de arriba a abajo con desplazamiento horizontal
+  const xInicio = Math.random() * w;
+  const xFin = xInicio + (Math.random() - 0.5) * w * 0.8;
+
+  const principal = generarRayo(xInicio, 0, xFin, h, 120);
+
+  // Ramas secundarias
+  const ramas = [];
+  const numRamas = 2 + Math.floor(Math.random() * 3);
+  for (let i = 0; i < numRamas; i++) {
+    const idx = 1 + Math.floor(Math.random() * (principal.length - 2));
+    const base = principal[idx];
+    const largo = 100 + Math.random() * 150;
+    const angulo = (Math.random() - 0.5) * Math.PI;
+    const finX = base.x + Math.cos(angulo) * largo;
+    const finY = base.y + Math.abs(Math.sin(angulo)) * largo;
+    ramas.push(generarRayo(base.x, base.y, finX, finY, 60));
+  }
+
+  rayoActual = {principal, ramas};
+  framesVida = VIDA_MAX;
+
+  // Destello de fondo
+  destello = 0.35 + Math.random() * 0.3;
+}
+
+let destello = 0;
+
+function loop() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Fondo con destello
+  if (destello > 0) {
+    ctx.fillStyle = `rgba(80, 180, 255, ${destello})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    destello *= 0.85;
+    if (destello < 0.01) destello = 0;
+  }
+
+  // Dibujar rayo si está activo
+  if (rayoActual && framesVida > 0) {
+    const alpha = framesVida / VIDA_MAX;
+    ctx.globalAlpha = alpha;
+
+    // Halo exterior
+    dibujarRayo(rayoActual.principal, '#4fc3f7', 6, 30);
+    // Núcleo blanco
+    dibujarRayo(rayoActual.principal, '#ffffff', 2, 15);
+
+    // Ramas
+    rayoActual.ramas.forEach(rama => {
+      dibujarRayo(rama, '#4fc3f7', 3, 20);
+      dibujarRayo(rama, '#ffffff', 1, 10);
+    });
+
+    ctx.globalAlpha = 1;
+    framesVida--;
+  }
+
+  // Regenerar rayo aleatoriamente
+  if (!rayoActual || framesVida <= 0) {
+    if (Math.random() < 0.015) {
+      crearRayoPantalla();
+    }
+  }
+
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+</html>

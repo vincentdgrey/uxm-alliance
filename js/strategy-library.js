@@ -68,10 +68,13 @@
     return String(value).split("\n");
   }
 
-  /* Normaliza el texto para comparar: minusculas y sin diacriticos latinos. */
+  /* Normaliza el texto para comparar: minusculas y sin diacriticos latinos.
+     La letra polaca "l" con crossed (l) no se descompone con Unicode NFD,
+     asi que se sustituye de forma explicita. */
   function normalize(value) {
     return String(value || "")
       .toLowerCase()
+      .replace(/ł/g, "l")
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
   }

@@ -12,7 +12,8 @@
     "ja": "ルール",
     "ru": "Правила",
     "zh": "规则",
-    "tr": "Kurallar"
+    "tr": "Kurallar",
+    "pl": "Zasady"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": [
     {
@@ -50,7 +53,8 @@
         "ja": "新規メンバーのルール",
         "ru": "Правила для новых участников",
         "zh": "新成员规则",
-        "tr": "Yeni üyeler için kurallar"
+        "tr": "Yeni üyeler için kurallar",
+        "pl": "Zasady dla nowych członków"
       },
       "items": {
         "es": [
@@ -112,6 +116,12 @@
           "Kuralların ayrıntıları web sitesinde bulunabilir https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html",
           "Krallığın temel kuralı şudur: Sunucumuzda hırsızlık yapma ya da yağma.",
           "İttifakın temel kuralları şunlardır: İttifaka otlar bağışla, Video Derslerini izle (https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html) ve Etkinlik Rehberini takip ederek haftalık İttifak Düellosu'na katıl (https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html)."
+        ],
+        "pl": [
+          "Każda nowa osoba musi przestrzegać zasad Królestwa 277 oraz Sojuszu UXM.",
+          "Szczegóły zasad są dostępne w witrynie <a target='_blank' href='https://vincentdgrey.github.io/uxm-alliance/pages/normas-uxm.html'>Zasady UXM</a>.",
+          "Fundamentalna zasada Królestwa brzmi: NIE kradnij ani nie łup na naszym Serwerze.",
+          "Fundamentalne zasady Sojuszu to: Wesprzyj ziołami Sojusz, obejrzyj <a target='_blank' href='https://vincentdgrey.github.io/uxm-alliance/pages/video-tutoriales.html'>Samouczki wideo</a> i weź udział w Pojedynku Sojuszy co tydzień, kierując się <a target='_blank' href='https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html'>Przewodnikiem Aktywności</a>."
         ]
       }
     }

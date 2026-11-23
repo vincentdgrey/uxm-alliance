@@ -12,7 +12,8 @@
     "ja": "ヒーロー",
     "ru": "Герой",
     "zh": "英雄",
-    "tr": "Kahraman"
+    "tr": "Kahraman",
+    "pl": "Bohaterowie"
   },
   "topics": [
     "hero/factions.json",

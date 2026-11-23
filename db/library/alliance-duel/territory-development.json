@@ -12,7 +12,8 @@
     "ja": "領土開発",
     "ru": "Развитие территории",
     "zh": "领土发展",
-    "tr": "Bölge Geliştirme"
+    "tr": "Bölge Geliştirme",
+    "pl": "Rozwój Terytorium"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": []
 }

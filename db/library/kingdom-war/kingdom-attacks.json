@@ -12,7 +12,8 @@
     "ja": "王国攻撃",
     "ru": "Атака на королевства",
     "zh": "王国攻击",
-    "tr": "Krallık Saldırıları"
+    "tr": "Krallık Saldırıları",
+    "pl": "Ataki na Królestwa"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": []
 }

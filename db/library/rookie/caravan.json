@@ -12,7 +12,8 @@
     "ja": "キャラバン",
     "ru": "Караваны",
     "zh": "商队",
-    "tr": "Kervanlar"
+    "tr": "Kervanlar",
+    "pl": "Karawany"
   },
   "summary": {
     "es": "Cómo enviar caravanas para no perder recompensas y aprovechar las de mayor calidad.",
@@ -24,7 +25,8 @@
     "ja": "報酬を取りこぼさず、より良いキャラバンをうまく利用するための方法。",
     "ru": "Как отправлять караваны, не теряя награды, и как использовать лучшие из них.",
     "zh": "如何派出商队而不损失奖励，以及如何利用最优质的车队。",
-    "tr": "Ödülleri kaybetmeden kervan gönderme ve en kaliteli kervanlardan yararlanma yolları."
+    "tr": "Ödülleri kaybetmeden kervan gönderme ve en kaliteli kervanlardan yararlanma yolları.",
+    "pl": "Jak wysyłać karawany, nie tracąc nagród, i jak wykorzystywać te najlepsze."
   },
   "keywords": {
     "es": [
@@ -122,6 +124,16 @@
       "UR parçaları",
       "SSR merakları",
       "nadir kaynaklar"
+    ],
+    "pl": [
+      "karawana",
+      "karawany",
+      "oddział",
+      "nagroda",
+      "nagrody",
+      "fragmenty UR",
+      "kuriosytety SSR",
+      "rzadkie zasoby"
     ]
   },
   "sections": [
@@ -136,7 +148,8 @@
         "ja": "キャラバン",
         "ru": "Караваны",
         "zh": "商队",
-        "tr": "Kervanlar"
+        "tr": "Kervanlar",
+        "pl": "Karawany"
       },
       "paragraphs": {
         "es": [
@@ -188,6 +201,11 @@
           "Her kervanda ödül kaybetmemek için, en güçlü birliğinle aynı anda tek bir kervan göndermeyi seçin.",
           "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
           "SSR veya UR kervanları tercih edin: nadir ya da zor elde edilen kaynaklar, örneğin UR Parçaları (altın) veya SSR Merakları (mor) almak için fırsatınız."
+        ],
+        "pl": [
+          "Aby nie tracić nagród z każdej karawany, wybieraj wysyłanie tylko jednej karawany na raz z najsilniejszym oddziałem.",
+          "https://youtu.be/3UWXy1Rl4V0?si=fzsj2m10TtKRrBWn",
+          "Preferuj Karawany SSR lub UR: to Twoja szansa na otrzymanie rzadkich lub trudnych do zdobycia zasobów, takich jak Fragmenty UR (złote) czy Kuriosytety SSR (fioletowe)."
         ]
       }
     }

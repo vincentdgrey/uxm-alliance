@@ -12,7 +12,8 @@
     "ja": "オンボーディング",
     "ru": "Онбординг",
     "zh": "新手引导",
-    "tr": "Onboarding"
+    "tr": "Onboarding",
+    "pl": "Onboarding"
   },
   "summary": {
     "es": "Bienvenida al nuevo jugador y normas principales de la Alianza UXM.",
@@ -24,7 +25,8 @@
     "ja": "新規プレイヤーへの歓迎とUXM連合の主要ルール。",
     "ru": "Приветствие нового игрока и основные правила Альянса UXM.",
     "zh": "欢迎新玩家及UXM联盟的主要规则。",
-    "tr": "Yeni oyuncuya hoş geldiniz ve UXM İttifakının ana kuralları."
+    "tr": "Yeni oyuncuya hoş geldiniz ve UXM İttifakının ana kuralları.",
+    "pl": "Powitanie nowego gracza i główne zasady Sojuszu UXM."
   },
   "keywords": {
     "es": [
@@ -126,6 +128,16 @@
       "ittifak kuralları",
       "kuralları kabul et",
       "R1"
+    ],
+    "pl": [
+      "onboarding",
+      "powitanie",
+      "nowy gracz",
+      "nowicjusz",
+      "zasady",
+      "zasady sojuszu",
+      "akceptacja zasad",
+      "R1"
     ]
   },
   "sections": [
@@ -140,7 +152,8 @@
         "ja": "歓迎",
         "ru": "Приветствие",
         "zh": "欢迎",
-        "tr": "Hoş geldiniz"
+        "tr": "Hoş geldiniz",
+        "pl": "Powitanie"
       },
       "paragraphs": {
         "es": [
@@ -170,7 +183,6 @@
         "ja": [
           "こんにちは @新規プレイヤー ！！ UXM連合へようこそ！ 各イベントと連合決闘のチャレンジに参加できることを期待しています。",
           "各イベントでは、ゲームを進めるのに十分な報酬が与えられます。成長ボーナス（建設20%、研究15%など）により、あなたの成長が確実に速まります。"
-
         ],
         "ru": [
           "Здравствуйте, @Новый Игрок!! Добро пожаловать в наш Альянс UXM! Надеемся, что вы будете участвовать в наших событиях и в испытаниях Дуэли Альянсов.",
@@ -183,6 +195,10 @@
         "tr": [
           "Merhaba @Yeni Oyuncu !! UXM İttifakımıza hoş geldiniz! Etkinliklerimize ve İttifak Düellosu challenge'larına katılmanızı umuyoruz.",
           "Her Etkinlik size oyunda ilerlemeniz için yeterli ödüller sunacak. Büyüme bonuslarımız (inşaat %20, araştırma %15 ve diğerleri) hızlı yükselmenizi sağlayacak."
+        ],
+        "pl": [
+          "Cześć @Nowy Gracz!! Witamy w naszym Sojuszu UXM! Mamy nadzieję, że weźmiesz udział w naszych wydarzeniach i wyzwaniach Pojedynku Sojuszy.",
+          "Każde Wydarzenie da Ci wystarczająco nagród, by postępować w grze. Nasze bonusy rozwoju (20% budowa, 15% badania i inne) sprawią, że będziesz szybko rosnąć."
         ]
       }
     },
@@ -197,7 +213,8 @@
         "ja": "連合ルールの更新",
         "ru": "Обновление правил Альянса",
         "zh": "联盟规则更新",
-        "tr": "İttifak Kuralları Güncellemesi"
+        "tr": "İttifak Kuralları Güncellemesi",
+        "pl": "Aktualizacja Zasad Sojuszu"
       },
       "paragraphs": {
         "es": [
@@ -229,6 +246,9 @@
         ],
         "tr": [
           "İttifakın ana kuralları:"
+        ],
+        "pl": [
+          "Główne zasady Sojuszu:"
         ]
       },
       "items": {
@@ -331,6 +351,16 @@
           "Kaynaklarını biriktirmek ve doğru günde etkinleştirmek için Günlük Etkinlik Rehberini takip edin: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
           "Günün etkinliğiyle Rally oluşturmayı tercih edin, 1 dakikadan uzun olmasın. Rally ödülü, İttifak hediyesi ve etkinlik ödülü kazanırsınız.",
           "İttifak Araştırmasını artırmak için her gün ot bağışlayın; hızlı büyüme için öncelik rotasını lider belirler."
+        ],
+        "pl": [
+          "Każde imię zaczynające się od «Doctor...» musi zostać zmienione na unikalne (obowiązkowe), abyśmy mogli się poprawnie komunikować i dzielić.",
+          "Nie kradnij w Królestwie 277. Odnośniki do królestwa, na które wyruszymy, są udostępniane codziennie: https://youtu.be/dSniK89OYKk?si=5BhgIkoZlNzaHLyj",
+          "Jeśli złupiesz lub okradniesz kogoś z Królestwa, przy wcześniejszych dowodach to TY zostaniesz złupiony.",
+          "Naucz się aktywować Osłony w każdy dzień wojny (sobota): https://youtu.be/0InXLpMJIvg?si=9gmZsxN0xRmHiMsN",
+          "Naucz się wycofywać Żołnierzy z Muru w każdy dzień wojny (sobota): https://youtu.be/gq-YtFJryok?si=oL7LNUpXEJ_p-Jwa",
+          "Kieruj się Przewodnikiem Codziennych Aktywności, aby oszczędzać zasoby i aktywować je w odpowiednim dniu: https://vincentdgrey.github.io/uxm-alliance/pages/actividades-diarias.html",
+          "Wolno tworzyć Rally z wydarzeniem dnia, nie dłuższe niż 1 minuta. Zdobędziesz nagrodę za Rally, prezent od Sojuszu i nagrodę za wydarzenie.",
+          "Wesprzyj ziołami każdego dnia, aby zwiększyć Badania Sojuszu; lider ustala trasę priorytetową dla szybkiego rozwoju."
         ]
       }
     },
@@ -345,7 +375,8 @@
         "ja": "確認とサポート",
         "ru": "Подтверждение и Поддержка",
         "zh": "确认与支持",
-        "tr": "Onay ve Destek"
+        "tr": "Onay ve Destek",
+        "pl": "Potwierdzenie iWsparcie"
       },
       "paragraphs": {
         "es": [
@@ -387,6 +418,10 @@
         "tr": [
           "Lütfen İttifak Kuralları'nı kabul ettiğinizi ve anladığınızı bize bildirin, böylece konumunuzu R1 olarak güncelleyebilelim. 👍😉",
           "Her zaman olduğu gibi, nasıl gelişeceğinizi anlatmak ve sorularınızda size yardımcı olmak için buradayız. 👍😉"
+        ],
+        "pl": [
+          "Prosimy, daj nam znać, że akceptujesz i rozumiesz Zasady Sojuszu, abyśmy mogli zaktualizować Twoją pozycję do R1. 👍😉",
+          "Jak zawsze, będziemy dostępni, aby wyjaśnić, jak się rozwijać, i pomóc Ci z pytaniami. 👍😉"
         ]
       }
     }

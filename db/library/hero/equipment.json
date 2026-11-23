@@ -12,7 +12,8 @@
     "ja": "装備",
     "ru": "Снаряжение",
     "zh": "装备",
-    "tr": "Ekipman"
+    "tr": "Ekipman",
+    "pl": "Ekwipunek"
   },
   "summary": {
     "es": "Qué equipo implementar primero para cada clase y cómo mejorarlo en cada Facción.",
@@ -24,7 +25,8 @@
     "ja": "クラスごとに最初に導入すべき装備と、Factionごとの強化方法を説明します。",
     "ru": "Какое снаряжение внедрить в первую очередь для каждого класса и как улучшать его в каждой Фракции.",
     "zh": "每个职业优先装备什么，以及在各阵营中如何强化装备。",
-    "tr": "Her sınıf için önce hangi ekipmanın alınacağı ve her Faction içinde nasıl geliştirileceği."
+    "tr": "Her sınıf için önce hangi ekipmanın alınacağı ve her Faction içinde nasıl geliştirileceği.",
+    "pl": "Jak wyposażać bohaterów, aby maksymalizować ich siłę i przetrwać najtrudniejsze walki."
   },
   "keywords": {
     "es": [
@@ -226,6 +228,26 @@
       "ATK",
       "DEF",
       "factions"
+    ],
+    "pl": [
+      "ekwipunek",
+      "wyposażenie",
+      "UR",
+      "SSR",
+      "rzadkość",
+      "miecz",
+      "rękawica",
+      "zbroja",
+      "buty",
+      "carry",
+      "DPS",
+      "tank",
+      "wsparcie",
+      "potwory",
+      "RES",
+      "ATK",
+      "DEF",
+      "frakcje"
     ]
   },
   "sections": [
@@ -240,7 +262,8 @@
         "ja": "レアリティの優先度",
         "ru": "Приоритеты редкости",
         "zh": "稀有度优先级",
-        "tr": "Nadirlik Öncelikleri"
+        "tr": "Nadirlik Öncelikleri",
+        "pl": "Priorytety rzadkości"
       },
       "items": {
         "es": [
@@ -312,6 +335,13 @@
           "SSR ekipman, özellikleri sayesinde canavarlarla savaşlar için idealdir; örneğin Gezgin Veba, Peynir Hırsızı veya Şeytan Kralı.",
           "Canavarlara saldırırken Canavar Atak Bonusu'ndan en iyi şekilde yararlanmak için SSR Eldiveni Lv.30 seviyesinde tutmak tavsiye edilir.",
           "Faction'lar göz önüne alındığında, her faction için ekipman seviyelerinin ve gerekli ekipmanın yükseltilmesi, yalnızca UR Ekipmana odaklanarak önerilir."
+        ],
+        "pl": [
+          "Najlepszym ekwipunkiem do wdrożenia jest ten o rzadkości UR (Ultra Rare), który zauważalnie wzmacnia bohaterów.",
+          "Do wytworzenia ekwipunku UR potrzebny jest Warsztat Ekwipunku na Lv.20, a jako warunek wcześniejszy Sanktuarium musi zostać ulepszone do Lv.20.",
+          "Ekwipunek SSR, ze względu na swoje atrybuty, jest idealny do walk z potworami, na przykład z Wędrowąną Zarazą, Złodziejem Ser lub Królem Demonów.",
+          "Do atakowania Potworów zaleca się utrzymywać Rękawicę SSR Lv.30, aby jak najlepiej wykorzystać Bonus Ataku na Potwory.",
+          "Biorąc pod uwagę Frakcje, zaleca się podnosić poziomy ekwipunku i niezbędny ekwipunek dla każdej frakcji, koncentrując się wyłącznie na ekwipunku UR."
         ]
       }
     },
@@ -326,7 +356,8 @@
         "ja": "クラス別の装備",
         "ru": "Снаряжение по классам",
         "zh": "各职业装备",
-        "tr": "Sınıfa Göre Ekipman"
+        "tr": "Sınıfa Göre Ekipman",
+        "pl": "Ekwipunek według klasy"
       },
       "items": {
         "es": [
@@ -378,6 +409,11 @@
           "Carry/DPS Sınıfı (2): ilk olarak uygulanması gereken, saldırıyı en üst düzeye çıkarmak için bir UR kılıçtır; ilk aşamada seviye 40'a (500 Saldırı ve %5 Kritik İhtimali) çıkarın ve yanına seviye 30 UR eldiven ekleyin (500 ATQ Saldırı ve %2 RES Hasar Direnci); ana Carry'niz için öncelik kılıcını seviye 60 veya 50'ye çıkarmaktır.",
           "Tank Sınıfı (2): kesinlikle mükemmel bir savunmaya ihtiyaçları var; seviye 40 UR Ayakkabı ile (1000 DEF Savunma ve %20 RES Enerji Hasarı Direnci); ikinci seçenek UR Zırhınızı seviye 40'a çıkarmaktır (136K HP Kahraman Can Puanı ve %20 RES Fiziksel Hasar Direnci).",
           "Support Sınıfı (1): savaşçılar/rangers/warlocks faction'ı için esas bonusları sağlayan kişidir; bu nedenle seviye 40 UR Zırh ile (136K HP Kahraman Can Puanı ve %20 RES Fiziksel Hasar Direnci) mümkün olduğunca uzun hayatta kalmalıdır; ardından seviye 40 UR Eldivene (500 ATQ Saldırı ve %4 RES Hasar Direnci) odaklanırız; desteklerin saldırısı kayda değer olduğundan onlara seviye 30 UR Kılıç vermek tavsiye edilir."
+        ],
+        "pl": [
+          "Klasa Carry/DPS (2): pierwszym elementem do wdrożenia jest miecz UR, aby zmaksymalizować atak; w pierwszym etapie podnieś go do poziomu 40 (500 Atak i 5% Szansa na Krytyka) i uzupełnij go rękawicami UR na poziomie 30 (500 ATK Atak i 2% RES Odporność na Obrażenia); priorytetem dla głównego Carry jest podniesienie jego miecza do poziomu 60 lub 50.",
+          "Klasa Tank (2): zdecydowanie potrzebują doskonałej obrony, z Butami UR na poziomie 40 (1000 DEF Obrona i 20% RES Odporność na Obrażenia Energetyczne); drugą opcją jest podniesienie Pancerza UR do poziomu 40 (136K HP Punktów Życia Bohatera i 20% RES Odporność na Obrażenia Fizyczne).",
+          "Klasa Wsparcie (1): to ona dostarcza kluczowych bonusów frakcji wojowników/rangers/warlocks, dlatego musi przetrwać jak najdłużej z Pancerzem UR na poziomie 40 (136K HP Punktów Życia Bohatera i 20% RES Odporność na Obrażenia Fizyczne); następnie skupimy się na Rękawicy UR na poziomie 40 (500 ATK Atak i 4% RES Odporność na Obrażenia); ponieważ wsparcie mają zauważalny atak, zalecamy dać im Miecz UR poziomu 30."
         ]
       }
     }

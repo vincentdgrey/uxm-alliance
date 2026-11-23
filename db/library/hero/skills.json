@@ -12,7 +12,8 @@
     "ja": "スキル",
     "ru": "Навыки",
     "zh": "技能",
-    "tr": "Yetenekler"
+    "tr": "Yetenekler",
+    "pl": "Umiejętności"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": []
 }

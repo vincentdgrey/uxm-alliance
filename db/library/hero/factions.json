@@ -12,7 +12,8 @@
     "ja": "勢力",
     "ru": "Фракции",
     "zh": "阵营",
-    "tr": "Fraksiyonlar"
+    "tr": "Fraksiyonlar",
+    "pl": "Frakcje"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": []
 }

@@ -12,7 +12,8 @@
     "ja": "ルーキー",
     "ru": "Новички",
     "zh": "新手",
-    "tr": "Yeni Başlayanlar"
+    "tr": "Yeni Başlayanlar",
+    "pl": "Nowicjusze"
   },
   "topics": [
     "rookie/onboarding.json",

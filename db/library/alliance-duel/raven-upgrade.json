@@ -12,7 +12,8 @@
     "ja": "カラベンの強化",
     "ru": "Улучшение Вороны",
     "zh": "乌鸦升级",
-    "tr": "Karga Yukseltme"
+    "tr": "Karga Yukseltme",
+    "pl": "Ulepszanie Kruka"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": []
 }

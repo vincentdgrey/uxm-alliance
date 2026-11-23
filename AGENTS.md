@@ -9,7 +9,7 @@ Configuración para agentes de IA. Este archivo garantiza continuidad del proyec
 1. Pagina web pura, alojamiento final cloud en Github Pages, carpeta root del website `./`.
 2. archivos en `src/` obsoletos.
 3. sin dependencias de red (sin fetch/CORS), en lo posible.
-4. Determinando el lenguaje del navegador (navigator.language + ?lang=es) cambiar el texto según el idioma disponible: español, ingles, portugués, italiano, francés, ruso, chino, japones,turco. default:ingles.
+4. Determinando el lenguaje del navegador (navigator.language + ?lang=es) cambiar el texto según el idioma disponible: español, ingles, portugués, italiano, francés, ruso, chino, japones, turco, polaco. default:ingles.
 5. Include Bootstrap’s CSS and JavaScript files via CDN. CDNs (Content Delivery Networks) are services that provides copies of libraries for your website.
 6. usar como base de conocimiento para implementar elementos html https://getbootstrap.com/docs/6.0/components/accordion/
 

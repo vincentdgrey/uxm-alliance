@@ -12,7 +12,8 @@
     "ja": "インカージョン",
     "ru": "Вторжения",
     "zh": "突袭",
-    "tr": "Akınlar"
+    "tr": "Akınlar",
+    "pl": "Napady na Królestwa"
   },
   "summary": {
     "es": "Aprende a saltar entre reinos para atacar a nuestros contrincantes en el Duelo de Alianzas.",
@@ -24,7 +25,8 @@
     "ja": "連合決闘でライバルを攻撃するために、王国間を移動する方法を学びましょう。",
     "ru": "Научитесь перемещаться между королевствами, чтобы атаковать соперников в Дуэли Альянсов.",
     "zh": "学会在王国之间跳转，以便在联盟对决中攻击我们的对手。",
-    "tr": "İttifak Düellosu'nda rakiplerimize saldırmak için krallıklar arasında geçiş yapmayı öğrenin."
+    "tr": "İttifak Düellosu'nda rakiplerimize saldırmak için krallıklar arasında geçiş yapmayı öğrenin.",
+    "pl": "Jak przeskakiwać między królestwami podczas wojny, aby zaatakować rywali w Pojedynku Sojuszy."
   },
   "keywords": {
     "es": [
@@ -133,6 +135,18 @@
       "banner",
       "yıldız",
       "bağlantı"
+    ],
+    "pl": [
+      "napad",
+      "napady",
+      "skok",
+      "przeskakiwanie",
+      "królestwo",
+      "królestwa",
+      "dzień wojny",
+      "banner",
+      "gwiazda",
+      "link"
     ]
   },
   "sections": [
@@ -147,7 +161,8 @@
         "ja": "王国間を移動する",
         "ru": "Перемещение между Королевствами",
         "zh": "在王国之间跳转",
-        "tr": "Krallıklar Arasında Geçiş"
+        "tr": "Krallıklar Arasında Geçiş",
+        "pl": "Przeskakiwanie między Królestwami"
       },
       "paragraphs": {
         "es": [
@@ -218,6 +233,13 @@
           "Bu tür geçişler ücretsizdir ve bir bekleme süresi vardır: başka bir krallığa geçtiğinizde ekranın üst kısmında sarı bir banner belirir; ziyaret ettiğiniz krallığı gösterir ve geri dönmenizi sağlayan bir ok sunar.",
           "Geri dönmek de mümkündür: belirli bir konuma giden bir bağlantı üzerinden kendi krallığınızı ziyaret etmek de pratik bir yöntemdir.",
           "Savaş günü etkinleştirildikten sonra size yardımcı olan başka bir unsur, krallık haritasında bulunan ittifak için oluşturulan bağlantılardır: yıldız simgeleri vardır ve lider diğer krallıklara gereken bağlantıları ekleyerek yağmaya yardımcı olur.",
+          "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
+        ],
+        "pl": [
+          "W każdą sobotę, czyli w dzień wojny, przechodzimy do innego królestwa, aby zaatakować rywali w Pojedynku Sojuszy, dlatego ważne jest nauczenie się przeskakiwania między królestwami.",
+          "Takie przeskoki są bezpłatne i mają czas oczekiwania: po przejściu do innego królestwa na górze pojawi się żółty banner wskazujący odwiedzane królestwo oraz strzałka pozwalająca wrócić.",
+          "Można też wrócić: odwiedzenie własnego królestwa przez odnośnik do jakiegoś miejsca to kolejny praktyczny sposób.",
+          "Po włączeniu Dnia Wojny kolejnym elementem, który Ci pomoże, są odnośniki stworzone dla sojuszu, umieszczone na mapie królestwa: mają ikonę gwiazdy, a lider doda potrzebne w innych królestwach, co ułatwia łupienie.",
           "https://youtu.be/QNzA2eoRbTw?si=oN9iXGb5X4iBtNZR"
         ]
       }

@@ -12,7 +12,8 @@
     "ja": "敵への襲撃",
     "ru": "Штурм врага",
     "zh": "袭击敌人",
-    "tr": "Düşman Baskısı"
+    "tr": "Düşman Baskısı",
+    "pl": "Napad na Wroga"
   },
   "summary": {
     "es": "",
@@ -24,7 +25,8 @@
     "ja": "",
     "ru": "",
     "zh": "",
-    "tr": ""
+    "tr": "",
+    "pl": ""
   },
   "keywords": {
     "es": [],
@@ -36,7 +38,8 @@
     "ja": [],
     "ru": [],
     "zh": [],
-    "tr": []
+    "tr": [],
+    "pl": []
   },
   "sections": []
 }
