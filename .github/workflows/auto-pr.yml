@@ -1,16 +1,20 @@
-name: PR de Developed a main
+name: PR de develop a main
 
+# Al hacer push a `develop` se crea (o reutiliza) un PR hacia `main`.
+# El merge automático sólo se ejecuta cuando el PR es aprobado por
+# @edwin-coder-arquitech o @vincentdgrey y se cumplen las reglas
+# de protección de rama de `main`.
 on:
   push:
     branches:
-      - Developed
+      - develop
 
 permissions:
   contents: read
   pull-requests: write
 
 concurrency:
-  group: pr-developed-to-main
+  group: pr-develop-to-main
   cancel-in-progress: false
 
 jobs:
@@ -21,9 +25,11 @@ jobs:
       - name: Crear o reutilizar el PR y activar auto-merge
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_BRANCH: Developed
+          SOURCE_BRANCH: develop
           TARGET_BRANCH: main
-          REVIEWER: edwin-coder-arquitech
+          # Revisores solicitados (basta la aprobación de uno de ellos,
+          # siempre que cumpla las reglas de protección de `main`)
+          REVIEWERS: edwin-coder-arquitech vincentdgrey
         run: |
           set -euo pipefail
 
@@ -35,14 +41,32 @@ jobs:
             --jq '.[0].url // empty')
 
           if [ -z "$PR_URL" ]; then
-            PR_URL=$(gh pr create \
-              --base "$TARGET_BRANCH" \
-              --head "$SOURCE_BRANCH" \
-              --title "Merge automático: Developed → main" \
-              --body "Este PR se fusionará automáticamente cuando cumpla los requisitos de revisión y CI." \
-              --reviewer "$REVIEWER")
+            PR_ARGS=(
+              --base "$TARGET_BRANCH"
+              --head "$SOURCE_BRANCH"
+              --title "Merge automático: develop → main"
+              --body "Este PR se fusionará automáticamente a \`main\` cuando sea aprobado por @edwin-coder-arquitech o @vincentdgrey y cumpla los requisitos de revisión y CI."
+            )
+            for reviewer in $REVIEWERS; do
+              PR_ARGS+=(--reviewer "$reviewer")
+            done
+            PR_URL=$(gh pr create "${PR_ARGS[@]}")
           else
-            gh pr edit "$PR_URL" --add-reviewer "$REVIEWER"
+            # Volver a solicitar revisión en cada push (las revisiones
+            # quedan obsoletas si la rama cambia tras el último commit).
+            for reviewer in $REVIEWERS; do
+              gh pr edit "$PR_URL" --add-reviewer "$reviewer" || true
+            done
           fi
 
-          gh pr merge "$PR_URL" --auto --merge
+          echo "PR gestionado: $PR_URL"
+
+          # Auto-merge: GitHub sólo fusionará cuando el PR tenga la
+          # aprobación requerida y pasen las comprobaciones obligatorias.
+          gh pr merge "$PR_URL" --auto --merge || {
+            echo "No se pudo activar el auto-merge. Verificar:"
+            echo "  1) Settings -> General -> Allow merge committing -> 'Allow auto-merge'"
+            echo "  2) Branch protection de 'main' con 'Require a pull request before merging'"
+            echo "     y revisiones obligatorias (1 aprobación)."
+            exit 1
+          }

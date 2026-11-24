@@ -1,1 +1,4 @@
-* @edwin-coder-arquitech
+# Los propietarios revisores de todo el repositorio.
+# La aprobación de CUALQUIERA de ellos satisface el requisito de
+# revisión para el merge automático de `develop` → `main`.
+* @edwin-coder-arquitech @vincentdgrey
