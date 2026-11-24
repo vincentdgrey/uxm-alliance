@@ -533,21 +533,25 @@
   var LIGHTNING_FIRST_DELAY = 300;
   /* Desvanecimiento coordinado: el grupo se apaga en bloque. */
   var LIGHTNING_GROUP_FADE_MS = 320;
+  /* Las ramas aceleran cuando el principal ya termino. */
+  var LIGHTNING_BRANCH_FINISH_BOOST = 0.5;
   /* Separacion minima entre los quiebres de bifurcacion. */
   var LIGHTNING_BRANCH_MIN_GAP = 3;
   /* Las ramas se dibujan mas finas que el rayo principal. */
   var LIGHTNING_BRANCH_WIDTH_SCALE = 0.72;
-  /* Cono de las ramificaciones: mas estrecho que el del rayo principal. */
+  /* Apertura propia de las ramas: menor que la del relampago principal. */
   var LIGHTNING_BRANCH_CONE_MIN_ANGLE = 4;
-  var LIGHTNING_BRANCH_CONE_MAX_ANGLE = 14;
-  /* Margen angular entre conos para que no se superpongan. */
-  var LIGHTNING_CONE_SEPARATION_MARGIN = 5;
-  /* Las ramas pueden inclinarse mas que el rayo principal. */
-  var LIGHTNING_BRANCH_MAX_TILT_DEGREES = 72;
-  /* Distancia minima entre los extremos de dos ramificaciones. */
-  var LIGHTNING_BRANCH_END_MIN_DISTANCE = 70;
-  /* Longitudes relativas de las ramificaciones: cortas, medias y largas. */
-  var LIGHTNING_BRANCH_LENGTH_RATIOS = [0.55, 0.85, 1.15];
+  var LIGHTNING_BRANCH_CONE_MAX_ANGLE = 12;
+  /* Separacion angular minima entre el cono principal y el de la rama. */
+  var LIGHTNING_BRANCH_ANGLE_MARGIN = 4;
+  /* Inclinacion maxima de una rama: puede apartarse mas que el principal. */
+  var LIGHTNING_BRANCH_MAX_TILT = 82;
+  /* Las ramas nunca se inclinan tanto que dejen de descender. */
+  var LIGHTNING_BRANCH_MAX_VERTICAL_TILT = 62;
+  /* Apertura minima de una rama cuando el espacio angular es escaso. */
+  var LIGHTNING_BRANCH_CONE_FLOOR = 2;
+  /* Distancia minima entre los extremos de dos ramas de la misma descarga. */
+  var LIGHTNING_BRANCH_END_GAP = 70;
   var LIGHTNING_FLASH_COLOR = "rgba(80, 180, 255, ";
   var LIGHTNING_HALO_COLOR = "#4fc3f7";
   var LIGHTNING_CORE_COLOR = "#ffffff";
@@ -564,13 +568,6 @@
     if (value < min) return min;
     if (value > max) return max;
     return value;
-  }
-
-  /* Diferencia angular absoluta entre dos ejes, en grados. */
-  function angleBetweenDegrees(a, b) {
-    var diff = Math.abs(a - b) * 180 / Math.PI;
-    if (diff > 180) diff = 360 - diff;
-    return diff;
   }
 
   /* Un rayo nace en el borde superior y crece con el tiempo. Cada segmento
@@ -669,11 +666,11 @@
        seccion valida del triangulo. El avance vertical nunca se invierte. */
     var attempts = 0;
     while (
-      attempts < 12 &&
+      attempts < 24 &&
       (next.x < bolt.minX || next.x > bolt.maxX || next.y > bolt.maxY || next.y <= last.y)
     ) {
       attempts++;
-      depth = bolt.depth + step * randomBetween(0.5, 1);
+      depth = bolt.depth + step * randomBetween(0.4, 1);
       halfWidth = lightningConeWidth({ depth: depth, coneAngle: bolt.coneAngle });
       offset = clamp(
         randomBetween(-halfWidth, halfWidth),
@@ -683,25 +680,30 @@
       next = lightningLocalToScreen(bolt, depth, offset);
     }
 
-    /* Si la inclinacion Consigue que el descento sea nulo, el rayo avanza
-       sobre el eje: el recorrido nunca retrocede verticalmente. */
-    if (next.y <= last.y) {
-      depth = bolt.depth + step;
-      next = lightningLocalToScreen(bolt, depth, 0);
-    }
-    if (next.y <= last.y) {
-      return false;
-    }
+    /* Si el punto sigue siendo invalido, se reduce el desplazamiento lateral
+       hasta encontrar una posicion valida dentro del cono y del cover. El
+       recorrido nunca sale del triangulo ni retrocede verticalmente. */
+    if (next.x < bolt.minX || next.x > bolt.maxX || next.y > bolt.maxY || next.y <= last.y) {
+      var valid = false;
+      for (var shrink = 1; shrink >= 0 && !valid; shrink -= 0.25) {
+        depth = bolt.depth + step * randomBetween(0.4, 1);
+        halfWidth = lightningConeWidth({ depth: depth, coneAngle: bolt.coneAngle });
+        offset = clamp(
+          randomBetween(-halfWidth, halfWidth),
+          -halfWidth,
+          halfWidth
+        ) * shrink;
+        next = lightningLocalToScreen(bolt, depth, offset);
 
-    /* Si no se ha encontrado un punto valido dentro del cover, el rayo
-       termina aqui: nunca se dibuja fuera de sus limites. */
-    if (next.x < bolt.minX || next.x > bolt.maxX || next.y > bolt.maxY) {
-      return false;
-    }
+        valid = next.x >= bolt.minX && next.x <= bolt.maxX &&
+          next.y <= bolt.maxY && next.y > last.y;
+      }
 
-    /* Ultimo recurso: el punto se recorta al cover para que ninguna
-       inclinacion lo deje fuera. */
-    next.x = clamp(next.x, bolt.minX, bolt.maxX);
+      /* Sin posicion valida dentro del cono, el rayo termina aqui. */
+      if (!valid) {
+        return false;
+      }
+    }
 
     bolt.depth = depth;
     bolt.path.push({ x: next.x, y: next.y });
@@ -793,7 +795,6 @@
     var density = Math.min(window.devicePixelRatio || 1, LIGHTNING_MAX_DENSITY);
     var bolts = [];
     var groups = [];
-    var groupCounter = 0;
     var flash = 0;
     var frameId = 0;
     var visible = true;
@@ -865,27 +866,12 @@
       };
     }
 
-    /* Reparte las longitudes de las ramificaciones. Cada una recibe una
-       recorrido distinto: corta, media o larga, sin repetir. */
-    function chooseLengthRatios(count) {
-      var pool = LIGHTNING_BRANCH_LENGTH_RATIOS.slice(0, count);
-      /* Se mezcla el orden para que no siempre sean cortas, medias y largas. */
-      for (var i = pool.length - 1; i > 0; i--) {
-        var j = randomInt(0, i);
-        var swap = pool[i];
-        pool[i] = pool[j];
-        pool[j] = swap;
-      }
-      return pool;
-    }
-
     /* Elige los quiebres donde nacen las ramificaciones. Se reparten en
        zonas a lo largo del recorrido y con una separacion minima, para que
        no salgan juntas ni se superpongan entre si. */
-    function chooseBranchPoints(segmentLimit, count) {
-      /* La primera ramificacion nace pronto: la descarga debe mostrar al
-         menos una aunque el rayo principal se detenga antes de tiempo. */
-      var first = Math.max(2, Math.round(segmentLimit * 0.15));
+    function chooseBranchPoints(segmentLimit) {
+      var count = randomInt(LIGHTNING_MIN_BRANCHES, LIGHTNING_MAX_BRANCHES);
+      var first = Math.max(3, Math.round(segmentLimit * 0.2));
       var last = Math.max(first + 1, Math.round(segmentLimit * 0.8));
       var span = last - first;
       var points = [];
@@ -933,7 +919,7 @@
         maxX: size.width,
         minX: 0,
         maxY: size.height,
-        branchPoints: [],
+        branchPoints: chooseBranchPoints(options.segmentLimit),
         energy: energy
       });
 
@@ -944,24 +930,12 @@
       var group = {
         main: bolt,
         bolts: [bolt],
-        coneGroupId: ++groupCounter,
         fade: 1,
         fading: false,
         elapsed: 0,
-        mainDone: false,
-        branchSides: [],
-        branchTilts: [],
-        branchEnds: [],
-        lengthRatios: []
+        branchSides: []
       };
       bolt.group = group;
-
-      /* El numero de ramificaciones se decide una vez y lo comparten los
-         puntos de bifurcacion y las longitudes. */
-      var branchCount = randomInt(LIGHTNING_MIN_BRANCHES, LIGHTNING_MAX_BRANCHES);
-      bolt.branchPoints = chooseBranchPoints(options.segmentLimit, branchCount);
-      group.lengthRatios = chooseLengthRatios(branchCount);
-
       groups.push(group);
 
       /* Destello inicial azul: el rayo aparece de golpe sobre el cover. */
@@ -969,138 +943,160 @@
     }
 
     /* Crea la ramificacion de un rayo: sale de un quiebre del recorrido y
-       avanza hacia abajo con un recorrido corto y mas fino. La orientacion
-       alterna para que las ramas no se crucen entre si. */
-    function spawnBranch(bolt, size, side, lengthRatio) {
+       avanza con su propio cono de propagacion. El cono de la rama se separa
+       angularmente del cono principal para que los recorridos no se
+       superpongan, y su extremo se aleja de los extremos de las ramas
+       anteriores. */
+    function spawnBranch(bolt, size, side) {
       var origin = bolt.path[bolt.path.length - 1];
-      var group = bolt.group || null;
 
-      /* La rama es un relampago completo con su propio cono. Su cono se
-         separa del cono principal: ambos solo comparten el punto de
-         bifurcacion y no se superponen. */
-      var branchCone = randomBetween(
-        LIGHTNING_BRANCH_CONE_MIN_ANGLE,
-        LIGHTNING_BRANCH_CONE_MAX_ANGLE
-      ) * Math.PI / 180;
-
-      /* Angulo necesario para que los conos no se pisen. */
-      var needed = bolt.coneAngle + branchCone + LIGHTNING_CONE_SEPARATION_MARGIN * Math.PI / 180;
-
-      /* Se prueban los dos lados y se elige el que mas se aleja del cono
-         principal, del cono de las ramas anteriores y del borde del cover. */
-      var verticalRoom = Math.max(40, size.height - origin.y);
-      var candidates = [];
-      for (var direction = -1; direction <= 1; direction += 2) {
-        var tilt = bolt.tilt + direction * (needed + randomBetween(0, 0.25));
-        var limit = LIGHTNING_BRANCH_MAX_TILT_DEGREES * Math.PI / 180;
-
-        /* El tilt se acota al espacio que hay hacia ese lado. */
-        var room = direction > 0 ? size.width - origin.x : origin.x;
-        var sideLimit = Math.min(
-          limit,
-          Math.atan2(Math.max(0, room), verticalRoom)
-        );
-        var limited = clamp(tilt, -sideLimit, sideLimit);
-
-        /* La separacion respecto al cono principal se mide con el tilt
-           acotado: es la que evita la superposicion real. */
-        var separation = angleBetweenDegrees(limited, bolt.tilt) -
-          (bolt.coneAngle * 180 / Math.PI) - (branchCone * 180 / Math.PI);
-
-        /* No se reutiliza la direccion de una rama anterior. */
-        var apart = 0;
-        if (group) {
-          for (var i = 0; i < group.branchTilts.length; i++) {
-            apart = Math.max(apart, angleBetweenDegrees(limited, group.branchTilts[i]));
-          }
-        }
-        candidates.push({
-          tilt: limited,
-          separation: separation,
-          apart: apart,
-          direction: direction
-        });
-      }
-
-      if (!candidates.length) {
-        candidates.push({
-          tilt: clamp(
-            bolt.tilt + side * needed,
-            -LIGHTNING_BRANCH_MAX_TILT_DEGREES * Math.PI / 180,
-            LIGHTNING_BRANCH_MAX_TILT_DEGREES * Math.PI / 180
-          ),
-          separation: 0,
-          direction: side
-        });
-      }
-
-      /* Se prefiere el cono que conserva la separacion con el principal y
-         que mas se aparta de las ramas ya existentes. */
-      candidates.sort(function (a, b) {
-        if (Math.abs(b.separation - a.separation) > 0.001) return b.separation - a.separation;
-        return b.apart - a.apart;
-      });
-      var chosen = candidates[0];
-
-      /* Longitud propia: corta, media o larga segun la descarga. */
-      var remaining = Math.max(40, size.height - origin.y);
-      var ratio = lengthRatio || randomBetween(0.55, 1.15);
-      var length = remaining * ratio;
-
-      /* El cono ya viene acotado por el espacio disponible. Cuando el
-         borde del cover impide separar la rama del cono principal, se
-         prefiere el lado con mas espacio. */
-      var chosenTilt = chosen.tilt;
-
-      /* El extremo de la rama debe separarse de los extremos de las ramas
-         ya existentes: dos o tres ramificaciones no terminan en el mismo
-         punto. La distancia minima se ajusta al tamano del cover. */
-      var minEndDistance = Math.min(
-        LIGHTNING_BRANCH_END_MIN_DISTANCE,
-        Math.max(24, size.width * 0.06)
+      /* Apertura propia de la rama: nunca mas abierta que la del principal
+         y siempre dentro de su propio rango. */
+      var coneAngle = Math.min(
+        bolt.coneAngle,
+        randomBetween(LIGHTNING_BRANCH_CONE_MIN_ANGLE, LIGHTNING_BRANCH_CONE_MAX_ANGLE) * Math.PI / 180
       );
-      if (group && group.branchEnds.length) {
-        var attempts = 0;
-        while (attempts < 10) {
-          attempts++;
-          var candidate = lightningLocalToScreen({
-            apexX: origin.x,
-            apexY: origin.y,
-            axisX: Math.sin(chosenTilt),
-            axisY: Math.cos(chosenTilt)
-          }, length, 0);
 
-          var tooClose = false;
-          for (var e = 0; e < group.branchEnds.length; e++) {
-            var other = group.branchEnds[e];
-            var distance = Math.sqrt(
-              Math.pow(candidate.x - other.x, 2) + Math.pow(candidate.y - other.y, 2)
-            );
-            if (distance < minEndDistance) tooClose = true;
-          }
+      /* Direccion de la rama: se separa del cono principal el angulo
+         suficiente para que ambos conos solo compartan el vértice. */
+      var margin = LIGHTNING_BRANCH_ANGLE_MARGIN * Math.PI / 180;
+      var maxTilt = LIGHTNING_BRANCH_MAX_TILT * Math.PI / 180;
+      var candidates = [side, -side];
+      var best = null;
+      var bestSeparation = -1;
 
-          if (!tooClose) break;
+      for (var c = 0; c < candidates.length; c++) {
+        var direction = candidates[c];
 
-          /* Se ajustan la longitud y la inclinacion para alejar el
-             extremo de los ya existentes. */
-          length = length * randomBetween(0.75, 1.3);
-          var adjust = chosen.direction * randomBetween(4, 14) * Math.PI / 180;
-          chosenTilt = clamp(
-            chosenTilt + adjust,
-            -LIGHTNING_BRANCH_MAX_TILT_DEGREES * Math.PI / 180,
-            LIGHTNING_BRANCH_MAX_TILT_DEGREES * Math.PI / 180
+        /* La apertura de la rama se ajusta al espacio angular disponible:
+           el cono debe quedar separado del cono principal. */
+        var room = direction > 0
+          ? maxTilt - bolt.tilt
+          : bolt.tilt + maxTilt;
+        var available = room - margin;
+        var angle = Math.min(coneAngle, available - bolt.coneAngle);
+
+        if (angle < LIGHTNING_BRANCH_CONE_FLOOR * Math.PI / 180) {
+          /* Sin espacio suficiente: se reduce la apertura de la rama. */
+          angle = Math.max(
+            LIGHTNING_BRANCH_CONE_FLOOR * Math.PI / 180,
+            available - bolt.coneAngle
           );
         }
+
+        var tilt = clamp(
+          bolt.tilt + direction * (bolt.coneAngle + angle + margin) + randomBetween(-0.08, 0.08),
+          -maxTilt,
+          maxTilt
+        );
+
+        /* La rama no puede inclinarse tanto que salga horizontalmente del
+           cover: su cono debe seguir bajando. */
+        var verticalLimit = LIGHTNING_BRANCH_MAX_VERTICAL_TILT * Math.PI / 180;
+        tilt = clamp(tilt, -verticalLimit, verticalLimit);
+
+        /* El sector debe quedar libre respecto a las ramas anteriores. */
+        if (isBranchSectorFree(bolt, tilt, angle)) {
+          bolt.group.usedTilt = bolt.group.usedTilt || [];
+          bolt.group.usedTilt.push({ tilt: tilt, coneAngle: angle });
+          return buildBranch(bolt, size, origin, tilt, angle, side);
+        }
+
+        /* Si el sector esta ocupado, se guarda el mas separado. */
+        var separation = Math.abs(tilt - bolt.tilt) - angle - bolt.coneAngle;
+        if (separation > bestSeparation) {
+          bestSeparation = separation;
+          best = { tilt: tilt, coneAngle: angle };
+        }
       }
+
+      /* Si ningun sector queda libre, se estrecha la apertura de la rama
+         para poder separarla del cono principal. */
+      if (best) {
+        var narrowed = Math.max(
+          LIGHTNING_BRANCH_CONE_FLOOR * Math.PI / 180,
+          Math.min(best.coneAngle, bestSeparation, bolt.coneAngle)
+        );
+        best.coneAngle = narrowed;
+        best.tilt = clamp(
+          bolt.tilt + side * (bolt.coneAngle + narrowed + margin),
+          -maxTilt,
+          maxTilt
+        );
+        bolt.group.usedTilt = bolt.group.usedTilt || [];
+        bolt.group.usedTilt.push({ tilt: best.tilt, coneAngle: best.coneAngle });
+        return buildBranch(bolt, size, origin, best.tilt, best.coneAngle, side);
+      }
+
+      /* Ultimo recurso: la direccion mas alejada posible. */
+      var fallbackCone = Math.min(coneAngle, bolt.coneAngle);
+      var fallback = clamp(
+        bolt.tilt + side * (bolt.coneAngle + fallbackCone + margin),
+        -maxTilt,
+        maxTilt
+      );
+      bolt.group.usedTilt = bolt.group.usedTilt || [];
+      bolt.group.usedTilt.push({ tilt: fallback, coneAngle: fallbackCone });
+      return buildBranch(bolt, size, origin, fallback, fallbackCone, side);
+    }
+
+    /* Comprueba que un cono de rama no se solapa con los conos ya usados. */
+    function isBranchSectorFree(bolt, tilt, coneAngle) {
+      var used = (bolt.group && bolt.group.usedTilt) || [];
+      for (var i = 0; i < used.length; i++) {
+        var separation = Math.abs(tilt - used[i].tilt);
+        if (separation < coneAngle + used[i].coneAngle) return false;
+      }
+      return true;
+    }
+
+    /* Construye la rama con su cono, longitud y extremo propio. */
+    function buildBranch(bolt, size, origin, tilt, coneAngle, side) {
+      /* El recorrido restante se reparte en tramos cortos, medios y largos
+         para que dos ramas no terminen en el mismo lugar. */
+      var remaining = Math.max(40, size.height - origin.y);
+      var usedEnds = (bolt.group && bolt.group.usedEnds) || [];
+      var best = null;
+      var bestDistance = -1;
+
+      for (var attempt = 0; attempt < 12; attempt++) {
+        var length = randomBetween(remaining * 0.45, remaining * 1.25);
+        var end = lightningLocalToScreen(
+          { apexX: origin.x, apexY: origin.y, axisX: Math.sin(tilt), axisY: Math.cos(tilt),
+            normalX: Math.cos(tilt), normalY: -Math.sin(tilt) },
+          length,
+          0
+        );
+
+        var distance = Infinity;
+        for (var i = 0; i < usedEnds.length; i++) {
+          var dx = end.x - usedEnds[i].x;
+          var dy = end.y - usedEnds[i].y;
+          distance = Math.min(distance, Math.sqrt(dx * dx + dy * dy));
+        }
+        if (usedEnds.length === 0) distance = Infinity;
+
+        if (distance >= LIGHTNING_BRANCH_END_GAP) {
+          best = { length: length, end: end };
+          break;
+        }
+        if (distance > bestDistance) {
+          bestDistance = distance;
+          best = { length: length, end: end };
+        }
+      }
+
+      var length = best.length;
+      var segmentLimit = Math.round(
+        clamp(length / LIGHTNING_SEGMENT_LENGTH, LIGHTNING_MIN_SEGMENTS, LIGHTNING_MAX_SEGMENTS)
+      );
 
       var branch = createLightningBolt(origin.x, origin.y, {
         height: length,
-        stepRange: Math.max(5, length / 10),
+        stepRange: length / segmentLimit,
         stepMs: randomInt(LIGHTNING_BRANCH_MIN_STEP_MS, LIGHTNING_BRANCH_MAX_STEP_MS),
         speedScale: randomBetween(LIGHTNING_MIN_SPEED_SCALE, LIGHTNING_MAX_SPEED_SCALE),
-        segmentLimit: Math.round(
-          clamp(length / LIGHTNING_SEGMENT_LENGTH, LIGHTNING_MIN_SEGMENTS, LIGHTNING_MAX_SEGMENTS)
-        ),
+        segmentLimit: segmentLimit,
         maxX: size.width,
         minX: 0,
         maxY: size.height,
@@ -1108,38 +1104,32 @@
         energy: bolt.energy * 0.7
       });
 
-      /* Se adopta el cono separado elegido, acotado al cover. */
-      branch.tilt = chosenTilt;
-      branch.coneAngle = branchCone;
-      branch.axisX = Math.sin(branch.tilt);
-      branch.axisY = Math.cos(branch.tilt);
-      branch.normalX = Math.cos(branch.tilt);
-      branch.normalY = -Math.sin(branch.tilt);
-      branch.side = chosen.direction;
+      /* La rama adopta el cono asignado. */
+      branch.tilt = tilt;
+      branch.coneAngle = coneAngle;
+      branch.axisX = Math.sin(tilt);
+      branch.axisY = Math.cos(tilt);
+      branch.normalX = Math.cos(tilt);
+      branch.normalY = -Math.sin(tilt);
+      branch.side = side;
       branch.widthScale = LIGHTNING_BRANCH_WIDTH_SCALE;
 
       /* La rama pertenece al grupo de su rayo principal: comparte con el
          el mismo desvanecimiento. */
-      branch.group = group;
-
-      /* El extremo previsto de la rama: debe separarse de los extremos
-         de las ramas ya existentes de esta descarga. */
-      var end = lightningLocalToScreen(branch, branch.height, 0);
-      branch.endX = end.x;
-      branch.endY = end.y;
-
-      if (group) {
-        group.bolts.push(branch);
-        group.branchTilts.push(branch.tilt);
-        group.branchEnds.push({ x: branch.endX, y: branch.endY });
-      }
+      branch.group = bolt.group || null;
 
       bolts.push(branch);
+
+      if (bolt.group) {
+        bolt.group.bolts.push(branch);
+        bolt.group.usedEnds = bolt.group.usedEnds || [];
+        bolt.group.usedEnds.push(best.end);
+      }
     }
 
     /* Actualiza el crecimiento de los rayos y genera sus ramificaciones.
-       El grupo de descarga se apaga en bloque: cuando el rayo principal
-       termina, sus ramificaciones dejan de crecer y se desvanecen con el. */
+       El relampago principal permanece visible mientras sus ramificaciones
+       completan su recorrido; despues todo el grupo se apaga a la vez. */
     function updateLightning(delta) {
       var size = coverSize();
 
@@ -1151,12 +1141,16 @@
            es comun a toda la descarga. */
         if (bolt.group && bolt.group.fading) continue;
 
-        /* Un rayo que ya termino su recorrido no vuelve a crecer. */
-        if (bolt.completed) continue;
+        /* Cuando el principal ya termino, las ramas terminan antes para que
+           la descarga no se prolongue en el tiempo. */
+        var stepMs = bolt.stepMs;
+        if (bolt.group && bolt.group.mainComplete && bolt.isBranch) {
+          stepMs = Math.max(8, stepMs * LIGHTNING_BRANCH_FINISH_BOOST);
+        }
 
         bolt.grower += delta;
-        while (bolt.grower >= bolt.stepMs) {
-          bolt.grower -= bolt.stepMs;
+        while (bolt.grower >= stepMs) {
+          bolt.grower -= stepMs;
           if (!growLightningBolt(bolt)) {
             finished = true;
             break;
@@ -1181,66 +1175,54 @@
             /* No se crean ramas si el grupo ya se esta desvanecendo: la
                descarga se apaga completa. */
             if (!bolt.group || !bolt.group.fading) {
-              var ratio = 0;
-              if (bolt.group && bolt.group.lengthRatios.length) {
-                ratio = bolt.group.lengthRatios.shift();
-              }
-              spawnBranch(bolt, size, side, ratio);
+              spawnBranch(bolt, size, side);
             }
           }
         }
 
-        /* El rayo principal marca el final de su crecimiento, pero permanece
-           visible: el grupo se apaga cuando sus ramificaciones terminen. */
-        if (finished && !bolt.isBranch) {
+        /* El rayo principal marca el final de su crecimiento: sus ramas
+           terminan su recorrido y despues el grupo se apaga en bloque. */
+        if (finished) {
           bolt.completed = true;
-          var group = bolt.group;
-          if (group) {
-            group.mainDone = true;
-            group.elapsed = 0;
-            /* No se crean mas ramificaciones. */
-            bolt.branchPoints = [];
+          if (!bolt.isBranch) {
+            var group = bolt.group;
+            if (group) {
+              group.mainComplete = true;
+
+              /* Los quiebres que no se alcanzaron generan su rama ahora: la
+                 descarga mantiene el numero de ramificaciones previsto. */
+              while (bolt.branchPoints.length) {
+                var pending = bolt.branchPoints.shift();
+                var pendingOrigin = bolt.path[Math.min(pending, bolt.path.length - 1)];
+                var pendingSide = pendingOrigin.x > size.width * 0.5 ? -1 : 1;
+                if (group.branchSides.length % 2 !== 0) pendingSide = -pendingSide;
+                group.branchSides.push(pendingSide);
+                spawnBranch(bolt, size, pendingSide);
+              }
+            }
           }
-        }
-
-        /* Una rama terminada ya no crece. */
-        if (finished && bolt.isBranch) {
-          bolt.completed = true;
-        }
-      }
-
-      /* El grupo se apaga cuando no queda ningun rayo en crecimiento y el
-         principal ya termino: ninguno sobrevive a otro. */
-      for (var g = groups.length - 1; g >= 0; g--) {
-        var current = groups[g];
-        if (!current.mainDone) continue;
-
-        var growing = false;
-        for (var b = 0; b < current.bolts.length; b++) {
-          if (!current.bolts[b].completed) growing = true;
-        }
-
-        if (growing) {
-          /* Las ramas terminan su recorrido antes de que se apague el
-             grupo: se acelera su crecimiento para no alargar la descarga. */
-          current.elapsed += delta;
-          for (var c = 0; c < current.bolts.length; c++) {
-            var member = current.bolts[c];
-            if (member.isBranch && !member.completed) member.grower += delta * 2;
-          }
-          continue;
-        }
-
-        if (!current.fading) {
-          current.fading = true;
-          current.elapsed = 0;
         }
       }
 
       /* Avance del desvanecimiento de cada grupo. */
-      for (var f = groups.length - 1; f >= 0; f--) {
-        var current = groups[f];
-        if (!current.fading) continue;
+      for (var g = groups.length - 1; g >= 0; g--) {
+        var current = groups[g];
+
+        /* El grupo se apaga cuando el principal y todas sus ramas han
+           terminado su recorrido. */
+        if (!current.fading) {
+          if (!current.mainComplete) continue;
+          var pending = false;
+          for (var p = 0; p < current.bolts.length; p++) {
+            if (!current.bolts[p].completed) {
+              pending = true;
+              break;
+            }
+          }
+          if (pending) continue;
+          current.fading = true;
+          current.elapsed = 0;
+        }
 
         current.elapsed += delta;
         current.fade = Math.max(0, 1 - current.elapsed / LIGHTNING_GROUP_FADE_MS);
@@ -1251,7 +1233,7 @@
             var index = bolts.indexOf(current.bolts[b]);
             if (index >= 0) bolts.splice(index, 1);
           }
-          groups.splice(f, 1);
+          groups.splice(g, 1);
         }
       }
     }

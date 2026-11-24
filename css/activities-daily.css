@@ -272,6 +272,7 @@ tr.bs-current td.bs-event::after {
 }
 .ad-schedule td.ad-time {
   padding: 6px 4px;
+  text-align: right;
 }
 /* ---------- Indicadores flag y animaciones ani ----------
    El indicador flag de la fuente de verdad se aplica a la columna Tarea

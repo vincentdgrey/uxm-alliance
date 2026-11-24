@@ -1,4 +1,4 @@
-name: PR branch develop to main
+name: PR Develop Merge Main
 
 # Al hacer push a `develop` se crea (o reutiliza) un PR hacia `main`.
 # El merge automático sólo se ejecuta cuando el PR es aprobado por

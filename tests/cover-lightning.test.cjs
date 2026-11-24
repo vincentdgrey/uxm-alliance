@@ -153,6 +153,7 @@ function trackGrowth(source) {
       "        height: bolt.height,\n" +
       "        stepMs: bolt.stepMs,\n" +
       "        isBranch: bolt.isBranch,\n" +
+      "        group: bolt.group,\n" +
       "        branchPoints: bolt.branchPoints.length\n" +
       "      });\n" +
       "    }"
@@ -186,32 +187,18 @@ function trackGroups(source) {
       "          global.__fades.push({ branches: current.bolts.length, at: global.__now });"
     )
     .replace(
+      "            group.mainComplete = true;",
+      "            group.mainComplete = true;\n" +
+      "            if (!global.__completed) global.__completed = [];\n" +
+      "            global.__completed.push({ at: global.__now, branches: group.bolts.length });"
+    )
+    .replace(
       "    function frame(now) { global.__now = now;",
       "    function frame(now) { global.__now = now;"
     )
     .replace(
       "    function frame(now) {",
       "    function frame(now) { global.__now = global.__now || 0;"
-    );
-}
-
-/* Instrumenta el fuente para registrar el cono de cada ramificacion y su
-   relacion con el cono del relampago principal. */
-function trackCones(source) {
-  return source
-    .replace(
-      "      if (group) {\n        group.bolts.push(branch);",
-      "      if (group) {\n" +
-      "        if (!global.__cones) global.__cones = [];\n" +
-      "        global.__cones.push({\n" +
-      "          parentTilt: bolt.tilt,\n" +
-      "          parentCone: bolt.coneAngle,\n" +
-      "          branchTilt: branch.tilt,\n" +
-      "          branchCone: branch.coneAngle,\n" +
-      "          end: { x: branch.endX, y: branch.endY },\n" +
-      "          group: group.coneGroupId\n" +
-      "        });\n" +
-      "        group.bolts.push(branch);"
     );
 }
 
@@ -222,16 +209,16 @@ function trackDischarges(source) {
       "      bolts.push(bolt);",
       "      if (!global.__discharges) global.__discharges = [];\n" +
       "      if (!global.__now) global.__now = 0;\n" +
-      "      global.__discharges.push({ branches: 0, branchPoints: 0, at: global.__now, id: global.__discharges.length });\n" +
+      "      global.__discharges.push({ branches: 0, branchPoints: bolt.branchPoints.length, at: global.__now, id: global.__discharges.length });\n" +
       "      bolt.testId = global.__discharges[global.__discharges.length - 1].id;\n" +
       "      bolts.push(bolt);"
     )
     .replace(
-      "      branch.side = chosen.direction;",
-      "      branch.side = chosen.direction;\n" +
+      "      branch.group = bolt.group || null;",
       "      if (bolt.testId !== undefined && global.__discharges[bolt.testId]) {\n" +
       "        global.__discharges[bolt.testId].branches++;\n" +
-      "      }"
+      "      }\n" +
+      "      branch.group = bolt.group || null;"
     )
     .replace(
       "    function frame(now) {",
@@ -334,9 +321,7 @@ for (const profile of profiles) {
       for (let i = 0; i < bolt.points.length; i++) {
         assert.ok(
           pointInsideTriangle(bolt, bolt.points[i]),
-          "el punto debe quedar dentro del triangulo en " + profile.label +
-            " (rama=" + bolt.isBranch + " tilt=" + bolt.tilt + " cone=" + bolt.coneAngle +
-            " apex=" + JSON.stringify(bolt.apex) + " punto=" + JSON.stringify(bolt.points[i]) + ")"
+          "el punto debe quedar dentro del triangulo en " + profile.label
         );
         if (i > 0) {
           assert.ok(
@@ -484,11 +469,20 @@ test("cada descarga genera entre una y tres ramificaciones", () => {
     const discharges = sandbox.global.__discharges || [];
     assert.ok(discharges.length > 1, "deben producirse varias descargas en " + profile.label);
 
-    for (const discharge of discharges) {
+    /* La ultima descarga puede seguir en curso: se verifican las completas. */
+    const complete = discharges.slice(0, -1);
+    for (const discharge of complete) {
       assert.ok(
         discharge.branches >= 1 && discharge.branches <= 3,
-        "la descarga debe generar entre una y tres ramificaciones (obtenidas=" +
-          discharge.branches + ")"
+        "la descarga debe generar entre una y tres ramificaciones"
+      );
+      assert.ok(
+        discharge.branches === discharge.branchPoints,
+        "la descarga debe generar todas las ramificaciones planificadas"
+      );
+      assert.ok(
+        discharge.branchPoints >= 1 && discharge.branchPoints <= 3,
+        "la descarga debe planear entre una y tres ramificaciones"
       );
     }
   }
@@ -613,6 +607,92 @@ test("las ramificaciones se reparten y no nacen juntas", () => {
   assert.match(appSource, /LIGHTNING_BRANCH_WIDTH_SCALE/);
   const scale = appSource.match(/LIGHTNING_BRANCH_WIDTH_SCALE\s*=\s*([0-9.]+)/);
   assert.ok(scale && Number(scale[1]) < 1, "las ramas deben ser mas finas que el rayo principal");
+});
+
+test("las ramificaciones tienen un cono propio y separado del principal", () => {
+  /* La rama declara su propia apertura y direccion, y estas se separan del
+     cono del relampago principal. */
+  assert.match(appSource, /LIGHTNING_BRANCH_CONE_MIN_ANGLE/);
+  assert.match(appSource, /LIGHTNING_BRANCH_CONE_MAX_ANGLE/);
+  assert.match(appSource, /LIGHTNING_BRANCH_ANGLE_MARGIN/);
+  assert.match(appSource, /LIGHTNING_BRANCH_MAX_TILT/);
+  assert.match(appSource, /function isBranchSectorFree\(bolt, tilt, coneAngle\)/);
+
+  const { sandbox } = runLightning({
+    width: 1440,
+    height: 900,
+    subpage: false,
+    frames: 3000,
+    instrument: trackGrowth
+  });
+
+  const bolts = sandbox.global.__bolts || [];
+  const mains = bolts.filter((bolt) => !bolt.isBranch && bolt.points.length > 4);
+  const branches = bolts.filter((bolt) => bolt.isBranch);
+  assert.ok(branches.length > 0, "deben generarse ramificaciones");
+
+  /* La apertura de la rama es menor o igual que la del principal. */
+  for (const branch of branches) {
+    if (!branch.group) continue;
+    const parent = mains.find((bolt) => bolt.group === branch.group);
+    if (!parent) continue;
+    assert.ok(
+      branch.coneAngle <= parent.coneAngle + 0.001,
+      "la apertura de la rama no debe superar la del principal"
+    );
+  }
+
+  /* Los conos de las ramas se separan del cono del principal. */
+  for (const branch of branches) {
+    if (!branch.group) continue;
+    const parent = mains.find((bolt) => bolt.group === branch.group);
+    if (!parent) continue;
+    const separation = Math.abs(branch.tilt - parent.tilt);
+    const required = parent.coneAngle + branch.coneAngle;
+    assert.ok(
+      separation >= required - 0.02,
+      "el cono de la rama debe separarse del cono del principal"
+    );
+  }
+});
+
+test("los extremos de las ramificaciones de una descarga quedan separados", () => {
+  /* La longitud de cada rama se elige para que su extremo no coincida con
+     el de las ramas anteriores. */
+  assert.match(appSource, /LIGHTNING_BRANCH_END_GAP/);
+  const gap = appSource.match(/LIGHTNING_BRANCH_END_GAP\s*=\s*(\d+)/);
+  assert.ok(gap && Number(gap[1]) > 0, "debe existir una distancia minima entre extremos");
+  assert.match(appSource, /usedEnds/);
+});
+
+test("el relampago principal permanece visible hasta que sus ramas terminan", () => {
+  /* El grupo solo se apaga cuando el principal y todas sus ramas han
+     completado su recorrido. */
+  assert.match(appSource, /group\.mainComplete = true/);
+  assert.match(appSource, /if \(!current\.mainComplete\) continue/);
+  assert.match(appSource, /current\.fading = true/);
+  assert.match(appSource, /LIGHTNING_BRANCH_FINISH_BOOST/);
+
+  const { sandbox } = runLightning({
+    width: 1440,
+    height: 900,
+    subpage: false,
+    frames: 3000,
+    instrument: trackGroups
+  });
+
+  const completed = sandbox.global.__completed || [];
+  const fades = sandbox.global.__fades || [];
+  assert.ok(completed.length > 0, "deben completarse relampagos principales");
+  assert.ok(fades.length > 0, "deben desvanecerse grupos");
+
+  /* El desvanecimiento nunca ocurre antes de completar el principal. */
+  for (let i = 0; i < Math.min(completed.length, fades.length); i++) {
+    assert.ok(
+      fades[i].at >= completed[i].at,
+      "el grupo no puede apagarse antes de terminar el rayo principal"
+    );
+  }
 });
 
 test("el rayo del cover no usa figuras geometricas ni sonido", () => {

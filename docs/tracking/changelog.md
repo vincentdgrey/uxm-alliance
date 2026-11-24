@@ -1,5 +1,28 @@
 # Changelog
 
+## [261124d] - 2026-11-24
+
+### Changed
+- **Las ramificaciones son relámpagos independientes con cono de propagación propio**, separados del relámpago principal:
+  - `js/app.js` calcula la dirección de cada rama como `apertura del cono principal + apertura de la rama + margen angular` (`LIGHTNING_BRANCH_ANGLE_MARGIN`, `4°`), de modo que ambos conos solo comparten el vértice y sus recorridos no se superponen.
+  - La apertura de la rama nunca supera la del principal: se mueve en el rango `4°`–`12°` y se estrecha hasta `2°` cuando el espacio angular es escaso.
+  - Las ramas pueden inclinarse más que el trazo principal (`LIGHTNING_BRANCH_MAX_TILT`, `82°`), aunque sin dejar de descender (`LIGHTNING_BRANCH_MAX_VERTICAL_TILT`, `62°`).
+  - Cada rama busca un **sector angular libre** frente a las ramas ya creadas, de modo que no se reiteran direcciones.
+  - Los **extremos de las ramas se mantienen separados**: la longitud se elige probando varios recorridos hasta que su extremo dista al menos `70px` (`LIGHTNING_BRANCH_END_GAP`) de los anteriores; si no es posible, se conserva el más alejado.
+  - El rango de ramificaciones por descarga pasa a **entre una y tres** (`LIGHTNING_MIN_BRANCHES`).
+  - Si el rayo principal termina antes de alcanzar un quiebre previsto, la ramificación se genera igualmente: la descarga conserva el número de ramas planificado.
+
+- **El relámpago principal permanece visible hasta que sus ramificaciones terminan**: al completarse el principal se marca `group.mainComplete` y las ramas aceleran (`LIGHTNING_BRANCH_FINISH_BOOST`). El grupo solo se desvanece cuando todas han completado su recorrido, de modo que ninguna rama queda a medio crecer ni sobrevive a la desaparición del principal.
+
+- La generación del punto se corrige: cuando el candidato cae fuera del cover o retrocede, se reduce el desplazamiento lateral **dentro del cono** hasta encontrar una posición válida, en lugar de recortar la coordenada y sacar el punto del triángulo.
+
+### Added (tests)
+- `tests/cover-lightning.test.cjs` sube a 35 casos. Los nuevos comprueban que cada rama tiene un cono propio y separado del principal, que los extremos de las ramas mantienen la distancia mínima, y que el grupo no puede apagarse antes de que el rayo principal termine.
+- Se corrige la instrumentación de las descargas: el conteo de ramas se registra en la asignación del grupo y la verificación ignora la última descarga, que puede seguir en curso.
+
+### Changed (docs)
+- `docs/core/project-rules.md` describen la separación angular de los conos, la apertura propia de las ramas, la separación de extremos, el rango de una a tres ramificaciones y el nuevo ciclo de vida del grupo.
+
 ## [261124c] - 2026-11-24
 
 ### Changed

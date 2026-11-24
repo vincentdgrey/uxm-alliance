@@ -680,7 +680,7 @@
         }
         return {
           state: STATE_PROGRESS,
-          text: "+ " + fmtCounter(elapsed),
+          text: "+" + fmtCounter(elapsed),
           remainingSec: LINKED_DEFAULT_DURATION - elapsed
         };
       }
