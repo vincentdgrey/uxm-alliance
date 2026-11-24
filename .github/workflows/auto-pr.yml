@@ -1,4 +1,4 @@
-name: PR de develop a main
+name: PR branch develop to main
 
 # Al hacer push a `develop` se crea (o reutiliza) un PR hacia `main`.
 # El merge automático sólo se ejecuta cuando el PR es aprobado por
@@ -22,6 +22,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Necesario porque `gh pr create`/`gh pr merge` invocan git internamente
+      # y requieren un repositorio git en el directorio de trabajo.
+      - name: Checkout del código
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+
       - name: Crear o reutilizar el PR y activar auto-merge
         env:
           GH_TOKEN: ${{ github.token }}
@@ -30,6 +37,7 @@ jobs:
           # Revisores solicitados (basta la aprobación de uno de ellos,
           # siempre que cumpla las reglas de protección de `main`)
           REVIEWERS: edwin-coder-arquitech vincentdgrey
+
         run: |
           set -euo pipefail
 
