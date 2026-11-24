@@ -11,7 +11,7 @@ const appSource = read("js/app.js");
 /* Ejecuta js/app.js sobre un DOM simulado y devuelve los trazos del canvas.
    El cover se identifica por sus clases para que el modulo decida el perfil
    de rayo de la portada o de las subpaginas. */
-function runLightning({ width, height, subpage, frames = 420 }) {
+function runLightning({ width, height, subpage, frames = 420, instrument }) {
   const strokes = [];
   const fills = [];
   let current = null;
@@ -93,12 +93,22 @@ function runLightning({ width, height, subpage, frames = 420 }) {
     addEventListener() {}
   };
 
+  /* Se usa una secuencia pseudoaleatoria fija: las comprobaciones sobre la
+     forma del rayo no deben depender del azar real. */
+  let seed = 20260124;
+  const seededMath = Object.create(Math);
+  seededMath.random = function () {
+    seed = (seed * 1103515245 + 12345) % 2147483648;
+    return seed / 2147483648;
+  };
+
   const sandbox = {
+    global: {},
     window: win,
     document: documentStub,
     navigator: win.navigator,
     console,
-    Math,
+    Math: seededMath,
     Date,
     JSON,
     fetch() { return Promise.reject(new Error("sin red")); }
@@ -111,7 +121,7 @@ function runLightning({ width, height, subpage, frames = 420 }) {
   sandbox.window.localStorage = { getItem() { return null; }, setItem() { return true; } };
 
   vm.createContext(sandbox);
-  vm.runInContext(appSource, sandbox);
+  vm.runInContext(instrument ? instrument(appSource) : appSource, sandbox);
 
   let time = 0;
   for (let frame = 0; frame < frames; frame++) {
@@ -121,7 +131,126 @@ function runLightning({ width, height, subpage, frames = 420 }) {
     if (callback) callback(time);
   }
 
-  return { strokes, fills, cover, canvas };
+  return { strokes, fills, cover, canvas, sandbox };
+}
+
+/* Instrumenta el fuente para registrar cada rayo con su triangulo de
+   propagacion: vertice, inclinacion, apertura, altura y ritmo. */
+function trackGrowth(source) {
+  return source
+    .replace(
+      "  function growLightningBolt(bolt) {",
+      "  function growLightningBolt(bolt) {\n" +
+      "    if (!global.__bolts) global.__bolts = [];\n" +
+      "    if (!global.__index) global.__index = new Map();\n" +
+      "    if (!global.__index.has(bolt)) {\n" +
+      "      global.__index.set(bolt, global.__bolts.length);\n" +
+      "      global.__bolts.push({\n" +
+      "        points: [],\n" +
+      "        apex: { x: bolt.apexX, y: bolt.apexY },\n" +
+      "        tilt: bolt.tilt,\n" +
+      "        coneAngle: bolt.coneAngle,\n" +
+      "        height: bolt.height,\n" +
+      "        stepMs: bolt.stepMs,\n" +
+      "        isBranch: bolt.isBranch,\n" +
+      "        branchPoints: bolt.branchPoints.length\n" +
+      "      });\n" +
+      "    }"
+    )
+    .replace(
+      "    bolt.path.push({ x: next.x, y: next.y });",
+      "    bolt.path.push({ x: next.x, y: next.y });\n" +
+      "    global.__bolts[global.__index.get(bolt)].points.push({ x: next.x, y: next.y });"
+    );
+}
+
+/* Instrumenta el fuente para seguir los grupos de descarga y comprobar que
+   ninguna ramificacion sobrevive a su rayo principal. */
+function trackGroups(source) {
+  return source
+    .replace(
+      "    function frame(now) {",
+      "    function frame(now) {\n" +
+      "      if (!global.__orphans) global.__orphans = [];\n" +
+      "      var __orphan = 0;\n" +
+      "      for (var __i = 0; __i < bolts.length; __i++) {\n" +
+      "        var __bolt = bolts[__i];\n" +
+      "        if (__bolt.isBranch && (!__bolt.group || __bolt.group.fade <= 0)) __orphan++;\n" +
+      "      }\n" +
+      "      global.__orphans.push(__orphan);"
+    )
+    .replace(
+      "          current.fading = true;",
+      "          current.fading = true;\n" +
+      "          if (!global.__fades) global.__fades = [];\n" +
+      "          global.__fades.push({ branches: current.bolts.length, at: global.__now });"
+    )
+    .replace(
+      "    function frame(now) { global.__now = now;",
+      "    function frame(now) { global.__now = now;"
+    )
+    .replace(
+      "    function frame(now) {",
+      "    function frame(now) { global.__now = global.__now || 0;"
+    );
+}
+
+/* Instrumenta el fuente para registrar el cono de cada ramificacion y su
+   relacion con el cono del relampago principal. */
+function trackCones(source) {
+  return source
+    .replace(
+      "      if (group) {\n        group.bolts.push(branch);",
+      "      if (group) {\n" +
+      "        if (!global.__cones) global.__cones = [];\n" +
+      "        global.__cones.push({\n" +
+      "          parentTilt: bolt.tilt,\n" +
+      "          parentCone: bolt.coneAngle,\n" +
+      "          branchTilt: branch.tilt,\n" +
+      "          branchCone: branch.coneAngle,\n" +
+      "          end: { x: branch.endX, y: branch.endY },\n" +
+      "          group: group.coneGroupId\n" +
+      "        });\n" +
+      "        group.bolts.push(branch);"
+    );
+}
+
+/* Instrumenta el fuente para registrar las descargas y sus ramificaciones. */
+function trackDischarges(source) {
+  return source
+    .replace(
+      "      bolts.push(bolt);",
+      "      if (!global.__discharges) global.__discharges = [];\n" +
+      "      if (!global.__now) global.__now = 0;\n" +
+      "      global.__discharges.push({ branches: 0, branchPoints: 0, at: global.__now, id: global.__discharges.length });\n" +
+      "      bolt.testId = global.__discharges[global.__discharges.length - 1].id;\n" +
+      "      bolts.push(bolt);"
+    )
+    .replace(
+      "      branch.side = chosen.direction;",
+      "      branch.side = chosen.direction;\n" +
+      "      if (bolt.testId !== undefined && global.__discharges[bolt.testId]) {\n" +
+      "        global.__discharges[bolt.testId].branches++;\n" +
+      "      }"
+    )
+    .replace(
+      "    function frame(now) {",
+      "    function frame(now) { global.__now = now;"
+    );
+}
+
+/* Comprueba que un punto pertenece al triangulo de propagacion del rayo. */
+function pointInsideTriangle(bolt, point) {
+  const axisX = Math.sin(bolt.tilt);
+  const axisY = Math.cos(bolt.tilt);
+  const normalX = Math.cos(bolt.tilt);
+  const normalY = -Math.sin(bolt.tilt);
+  const dx = point.x - bolt.apex.x;
+  const dy = point.y - bolt.apex.y;
+  const depth = dx * axisX + dy * axisY;
+  const offset = dx * normalX + dy * normalY;
+  const halfWidth = depth * Math.tan(bolt.coneAngle);
+  return Math.abs(offset) <= halfWidth + 1;
 }
 
 const profiles = [
@@ -163,7 +292,6 @@ for (const profile of profiles) {
     assert.ok(Math.max(...widths) >= 3, "la base del rayo debe ser gruesa");
     assert.ok(Math.min(...widths) <= 1, "la punta del rayo debe ser fina");
 
-    /* El grosor del primer segmento supera al del ultimo. */
     const first = drawn[0].width;
     const last = drawn[drawn.length - 1].width;
     assert.ok(first > last, "el rayo debe adelgazar hacia su final");
@@ -189,7 +317,303 @@ for (const profile of profiles) {
 
     assert.ok(fades.length > 0, "las estelas deben desvanecerse con destination-out");
   });
+
+  test("los puntos del rayo de la " + profile.label + " permanecen dentro de su triangulo", () => {
+    const { sandbox } = runLightning({
+      width: profile.width,
+      height: profile.height,
+      subpage: profile.subpage,
+      frames: 1200,
+      instrument: trackGrowth
+    });
+
+    const bolts = (sandbox.global.__bolts || []).filter((bolt) => bolt.points.length > 4);
+    assert.ok(bolts.length > 0, "deben generarse rayos en " + profile.label);
+
+    for (const bolt of bolts) {
+      for (let i = 0; i < bolt.points.length; i++) {
+        assert.ok(
+          pointInsideTriangle(bolt, bolt.points[i]),
+          "el punto debe quedar dentro del triangulo en " + profile.label +
+            " (rama=" + bolt.isBranch + " tilt=" + bolt.tilt + " cone=" + bolt.coneAngle +
+            " apex=" + JSON.stringify(bolt.apex) + " punto=" + JSON.stringify(bolt.points[i]) + ")"
+        );
+        if (i > 0) {
+          assert.ok(
+            bolt.points[i].y > bolt.points[i - 1].y - 0.001,
+            "el rayo nunca retrocede verticalmente en " + profile.label
+          );
+        }
+      }
+    }
+  });
+
+  test("el triangulo de la " + profile.label + " se abre con la profundidad", () => {
+    const { sandbox } = runLightning({
+      width: profile.width,
+      height: profile.height,
+      subpage: profile.subpage,
+      frames: 1200,
+      instrument: trackGrowth
+    });
+
+    const bolts = (sandbox.global.__bolts || []).filter((bolt) => bolt.points.length > 6);
+    assert.ok(bolts.length > 0, "deben generarse rayos en " + profile.label);
+
+    for (const bolt of bolts) {
+      /* La apertura se mide en el sistema local del triangulo: es la
+         distancia del eje, que crece con la profundidad. */
+      const axisX = Math.sin(bolt.tilt);
+      const axisY = Math.cos(bolt.tilt);
+      const normalX = Math.cos(bolt.tilt);
+      const normalY = -Math.sin(bolt.tilt);
+      const local = bolt.points.map((point) => {
+        const dx = point.x - bolt.apex.x;
+        const dy = point.y - bolt.apex.y;
+        return { depth: dx * axisX + dy * axisY, offset: dx * normalX + dy * normalY };
+      });
+
+      const third = Math.max(1, Math.floor(local.length / 3));
+      const upper = local.slice(0, third);
+      const lower = local.slice(-third);
+      const upperDepth = Math.max(...upper.map((point) => point.depth));
+      const lowerDepth = Math.max(...lower.map((point) => point.depth));
+
+      assert.ok(
+        lowerDepth > upperDepth,
+        "la profundidad debe crecer a lo largo del recorrido en " + profile.label
+      );
+
+      /* El semiancho disponible crece con la profundidad, de modo que el
+         recorrido puede apartarse mas del eje en la parte baja. */
+      const lowerLimit = lowerDepth * Math.tan(bolt.coneAngle);
+      const upperLimit = upperDepth * Math.tan(bolt.coneAngle);
+      assert.ok(
+        lowerLimit > upperLimit,
+        "la seccion util debe abrirse con la profundidad en " + profile.label
+      );
+    }
+  });
 }
+
+test("cada rayo crece dentro de un triangulo de propagacion propio", () => {
+  /* El triangulo se define con vertice, altura, apertura e inclinacion. */
+  assert.match(appSource, /apexX:/);
+  assert.match(appSource, /apexY:/);
+  assert.match(appSource, /tilt:/);
+  assert.match(appSource, /coneAngle:/);
+  assert.match(appSource, /LIGHTNING_CONE_MIN_ANGLE/);
+  assert.match(appSource, /LIGHTNING_CONE_MAX_ANGLE/);
+  assert.match(appSource, /LIGHTNING_TILT_MAX_DEGREES/);
+
+  /* El desplazamiento lateral se limita al semiancho de la seccion. */
+  assert.match(appSource, /function lightningConeWidth\(bolt\)/);
+  assert.match(appSource, /function lightningLocalToScreen\(bolt, depth, offset\)/);
+
+  /* No debe quedar la oscilacion regular anterior. */
+  assert.doesNotMatch(appSource, /LIGHTNING_SPREAD_MIN_FACTOR/);
+  assert.doesNotMatch(appSource, /LIGHTNING_SPREAD_MAX_FACTOR/);
+  assert.doesNotMatch(appSource, /bolt\.side = -bolt\.side;\s*\n\s*\n\s*\/\* La linea central/);
+});
+
+test("cada rayo tiene una inclinacion y una apertura propias", () => {
+  const { sandbox } = runLightning({
+    width: 1440,
+    height: 900,
+    subpage: false,
+    frames: 2400,
+    instrument: trackGrowth
+  });
+
+  const bolts = (sandbox.global.__bolts || []).filter((bolt) => bolt.points.length > 4);
+  const tilts = new Set(bolts.map((bolt) => bolt.tilt.toFixed(4)));
+  const cones = new Set(bolts.map((bolt) => bolt.coneAngle.toFixed(4)));
+
+  assert.ok(tilts.size > 1, "los rayos deben inclinarse de forma distinta");
+  assert.ok(cones.size > 1, "los rayos deben tener aperturas distintas");
+});
+
+test("el trazado no mantiene una alternancia lateral regular", () => {
+  /* El patron de latido cardiaco aparecia cuando cada segmento cambiaba de
+     lado obligatoriamente. Ahora hay corridas de igual direccion. */
+  const { sandbox } = runLightning({
+    width: 1440,
+    height: 900,
+    subpage: false,
+    frames: 2400,
+    instrument: trackGrowth
+  });
+
+  const bolts = (sandbox.global.__bolts || []).filter((bolt) => bolt.points.length > 6);
+  let withRun = 0;
+
+  for (const bolt of bolts) {
+    const signs = [];
+    for (let i = 1; i < bolt.points.length; i++) {
+      signs.push(Math.sign(bolt.points[i].x - bolt.points[i - 1].x));
+    }
+    let run = 1;
+    let found = false;
+    for (let i = 1; i < signs.length; i++) {
+      if (signs[i] !== 0 && signs[i] === signs[i - 1]) {
+        run++;
+        if (run >= 2) found = true;
+      } else {
+        run = 1;
+      }
+    }
+    if (found) withRun++;
+  }
+
+  assert.ok(
+    withRun > 0,
+    "los rayos deben presentar tramos en la misma direccion"
+  );
+});
+
+test("cada descarga genera entre una y tres ramificaciones", () => {
+  for (const profile of profiles) {
+    const { sandbox } = runLightning({
+      width: profile.width,
+      height: profile.height,
+      subpage: profile.subpage,
+      frames: 2400,
+      instrument: trackDischarges
+    });
+
+    const discharges = sandbox.global.__discharges || [];
+    assert.ok(discharges.length > 1, "deben producirse varias descargas en " + profile.label);
+
+    for (const discharge of discharges) {
+      assert.ok(
+        discharge.branches >= 1 && discharge.branches <= 3,
+        "la descarga debe generar entre una y tres ramificaciones (obtenidas=" +
+          discharge.branches + ")"
+      );
+    }
+  }
+});
+
+test("las ramificaciones son relampagos independientes con su propio triangulo", () => {
+  const { sandbox } = runLightning({
+    width: 1440,
+    height: 900,
+    subpage: false,
+    frames: 2400,
+    instrument: trackGrowth
+  });
+
+  const bolts = sandbox.global.__bolts || [];
+  const mains = bolts.filter((bolt) => !bolt.isBranch && bolt.points.length > 4);
+  const branches = bolts.filter((bolt) => bolt.isBranch);
+
+  assert.ok(mains.length > 0, "deben generarse relampagos principales");
+  assert.ok(branches.length > 0, "deben generarse ramificaciones");
+
+  /* Cada rama nace en un quiebre del relampago principal. */
+  for (const branch of branches) {
+    const parent = mains.find(
+      (bolt) =>
+        branch.apex.y >= bolt.apex.y &&
+        branch.apex.y <= Math.max(...bolt.points.map((point) => point.y))
+    );
+    assert.ok(parent, "cada rama debe nacer dentro del recorrido de un rayo principal");
+  }
+
+  /* Las ramas tienen su propia inclinacion y su propio ritmo. */
+  const branchTilts = new Set(branches.map((branch) => branch.tilt.toFixed(4)));
+  const branchSteps = new Set(branches.map((branch) => branch.stepMs));
+  assert.ok(branchTilts.size > 1, "las ramas deben inclinarse de forma distinta");
+  assert.ok(branchSteps.size > 1, "las ramas deben crecer a distinta velocidad");
+});
+
+test("los relampagos nunca se inician al mismo tiempo", () => {
+  const { sandbox } = runLightning({
+    width: 1440,
+    height: 900,
+    subpage: false,
+    frames: 4000,
+    instrument: trackDischarges
+  });
+
+  const discharges = sandbox.global.__discharges || [];
+  assert.ok(discharges.length > 3, "deben repetirse las descargas");
+
+  for (let i = 1; i < discharges.length; i++) {
+    assert.ok(
+      discharges[i].at > discharges[i - 1].at,
+      "dos descargas nunca empiezan en el mismo instante"
+    );
+  }
+});
+
+test("ninguna ramificacion sobrevive a su relampago principal", () => {
+  /* El grupo de descarga se apaga en bloque: cuando el rayo principal
+     termina, sus ramificaciones dejan de crecer y se desvanecen con el. */
+  const { sandbox } = runLightning({
+    width: 1440,
+    height: 900,
+    subpage: false,
+    frames: 3000,
+    instrument: trackGroups
+  });
+
+  const orphans = sandbox.global.__orphans || [];
+  assert.ok(orphans.length > 0, "deben registrarse los frames de la simulacion");
+
+  const maxOrphans = Math.max(...orphans);
+  assert.equal(
+    maxOrphans,
+    0,
+    "ninguna ramificacion puede quedar visible cuando su grupo ya se apago"
+  );
+});
+
+test("el grupo de descarga se desvanece de forma coordinada", () => {
+  const { sandbox } = runLightning({
+    width: 1440,
+    height: 900,
+    subpage: false,
+    frames: 3000,
+    instrument: trackGroups
+  });
+
+  const fades = sandbox.global.__fades || [];
+  assert.ok(fades.length > 0, "deben producirse grupos que se apaguen");
+
+  /* Cada grupo que se apaga conserva sus ramificaciones hasta el final. */
+  for (const fade of fades) {
+    assert.ok(fade.branches >= 1, "el grupo debe conservar sus miembros al apagarse");
+  }
+
+  /* El desvanecimiento se aplica a todo el grupo por igual. */
+  assert.match(appSource, /LIGHTNING_GROUP_FADE_MS/);
+  assert.match(appSource, /current\.fade = Math\.max\(0, 1 - current\.elapsed \/ LIGHTNING_GROUP_FADE_MS\)/);
+  assert.match(appSource, /fade \*= bolt\.group\.fade/);
+});
+
+test("las ramificaciones se reparten y no nacen juntas", () => {
+  const { sandbox } = runLightning({
+    width: 1440,
+    height: 900,
+    subpage: false,
+    frames: 3000,
+    instrument: trackGrowth
+  });
+
+  const bolts = (sandbox.global.__bolts || []).filter((bolt) => !bolt.isBranch);
+  assert.ok(bolts.length > 0, "deben generarse relampagos principales");
+
+  /* La separacion minima entre quiebres esta declarada. */
+  assert.match(appSource, /LIGHTNING_BRANCH_MIN_GAP/);
+  const gap = appSource.match(/LIGHTNING_BRANCH_MIN_GAP\s*=\s*(\d+)/);
+  assert.ok(gap && Number(gap[1]) >= 2, "debe existir una separacion minima entre quiebres");
+
+  /* Las ramas se dibujan mas finas que el rayo principal. */
+  assert.match(appSource, /LIGHTNING_BRANCH_WIDTH_SCALE/);
+  const scale = appSource.match(/LIGHTNING_BRANCH_WIDTH_SCALE\s*=\s*([0-9.]+)/);
+  assert.ok(scale && Number(scale[1]) < 1, "las ramas deben ser mas finas que el rayo principal");
+});
 
 test("el rayo del cover no usa figuras geometricas ni sonido", () => {
   assert.doesNotMatch(appSource, /createRadialGradient/);

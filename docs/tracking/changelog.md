@@ -1,5 +1,44 @@
 # Changelog
 
+## [261124c] - 2026-11-24
+
+### Changed
+- **Cada relámpago crece dentro de su propio triángulo isósceles de propagación**, en lugar de un zigzag de amplitud fija:
+  - `js/app.js` sustituye el modelo de envolvente rectangular por un triángulo definido en coordenadas locales: **vértice** (punto de nacimiento), **altura** (longitud aleatoria), **apertura** (`6°`–`26°`) e **inclinación** aleatoria del eje (`±28°`). El triángulo se inclina alrededor de su vértice, por lo que el rayo puede caer en diagonal.
+  - El semiancho disponible en cada profundidad es `profundidad × tan(apertura)`: el rayo arranca contenido y **se abre horizontalmente mientras cae**.
+  - **Desaparece la alternancia obligatoria de lado**: el desplazamiento lateral mantiene la dirección durante corridas de uno a cuatro segmentos. Con ello se elimina el patrón regular que recordaba un latido cardiaco.
+  - Los **saltos laterales largos** son ocasionales (`22 %`) y pueden recorrer hasta el `50 %` del ancho del cover, siempre dentro de la sección válida del triángulo.
+  - Si el punto calculado se sale del cover o retrocede, se descarta y se busca otro dentro de la sección: **el recorrido nunca retrocede verticalmente**.
+  - Cada rayo y cada ramificación tienen su **propio ritmo de crecimiento** y su propia escala de velocidad, de modo que las líneas nunca avanzan al unísono.
+
+- **Las ramificaciones son relámpagos completos e independientes**: cada una tiene su propio triángulo de propagación, inclinación, apertura, ritmo, energía y afinado de punta. Nacen en un quiebre del rayo principal, su longitud se calcula sobre el recorrido restante y **pueden terminar más abajo que el rayo principal**. Siguen creciendo aunque el trazo principal haya terminado. Las ramificaciones ya no generan ramificaciones.
+
+- **El planificador permite hasta tres relámpagos visibles a la vez**, iniciados siempre de forma escalonada: la separación mínima entre inicios es aleatoria (`300`–`700` ms) y **nunca coinciden**. El ritmo alterna grupos de relámpagos cercanos con pausas más largas, para que las apariciones parezcan naturales.
+
+### Added (tests)
+- `tests/cover-lightning.test.cjs` crece hasta 29 casos. Los nuevos comprueban, transformando cada punto a las coordenadas locales del triángulo, que **todos los puntos quedan dentro de su triángulo**, que el recorrido nunca retrocede, que cada rayo tiene inclinación y apertura distintas, que el trazado no mantiene una alternancia lateral regular, que las ramificaciones tienen triángulo y ritmo propios y que dos descargas nunca se inician en el mismo instante.
+
+### Changed (docs)
+- `docs/core/project-rules.md` describe el triángulo de propagación, la eliminación de la alternancia regular, las ramificaciones como relámpagos independientes y el planificador de apariciones escalonadas.
+
+## [261124b] - 2026-11-24
+
+### Changed
+- **El rayo del cover abre su recorrido horizontal mientras cae** y aumenta su frecuencia de aparición:
+  - `js/app.js` reescribe el crecimiento del rayo: el trazado oscila alrededor de una **línea central que deriva con suavidad**, y la amplitud de la oscilación **crece con la profundidad** (`LIGHTNING_SPREAD_MIN_FACTOR` `0.6` → `LIGHTNING_SPREAD_MAX_FACTOR` `1.8`). La envolvente lateral llega a cerca de `1.85` veces su valor inicial en la parte baja del recorrido.
+  - La apertura lateral se calcula con el **ancho del cover** (`LIGHTNING_SPREAD_WIDTH_RATIO`, mínimo `14`, máximo `34`) y **ya no usa valores reducidos en las subpáginas**: los covers bajos dejaron de cerrarse al caer.
+  - El número de segmentos se deriva del alto recorrido (`LIGHTNING_SEGMENT_LENGTH` `16`), de modo que los covers bajos generan más segmentos y más pequeños. El recorrido **no se corta al alcanzar la altura objetivo**: la punta la fija el límite de segmentos y siempre se dibuja un zigzag completo.
+  - Las descargas aparecen ahora entre `1400` y `3800` ms, con la primera a los `300` ms.
+  - **Cada descarga genera entre una y tres ramificaciones**, elegidas al azar. Los puntos de bifurcación se reparten entre el `20 %` y el `80 %` del recorrido, nunca coinciden y cada rama nace al alcanzar su quiebre.
+  - Un rayo terminado **se retira del registro**: antes podía bloquear las siguientes descargas y el efecto solo se veía una vez.
+
+### Added (tests)
+- `tests/cover-lightning.test.cjs` crece hasta 22 casos: verifica la apertura de la envolvente lateral con la profundidad, que la apertura no dependa del alto del cover, que el recorrido no se corte antes de completar el zigzag, que cada descarga genere entre una y tres ramificaciones y que los rayos terminados no bloqueen las siguientes descargas.
+- Las pruebas usan una secuencia pseudoaleatoria fija, de modo que el resultado no depende del azar real.
+
+### Changed (docs)
+- `docs/core/project-rules.md` describe la apertura horizontal progresiva, el criterio de apertura por ancho, el reparto de las ramificaciones, la nueva frecuencia de descargas y la retirada de los rayos terminados.
+
 ## [261124a] - 2026-11-24
 
 ### Changed

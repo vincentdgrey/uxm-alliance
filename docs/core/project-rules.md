@@ -260,13 +260,27 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - Las capas del cover usan `isolation: isolate` para que el rayo no se escape de su contexto. El rayo queda sobre el fondo, el video y su capa de contraste, pero por debajo del título, el tag y el indicador de scroll: en la portada usa `z-index: 2` y en las subpáginas `z-index: 1`.
 - El rayo **nace siempre en el borde superior** del cover y su longitud es aleatoria: entre el `50 %` y el `115 %` de su alto en la portada, y un `62 %` en las subpáginas. Puede terminar a media altura o sobrepasar el borde inferior.
 - El recorrido avanza por segmentos de longitud variable y **siempre hacia abajo**: ningún segmento retrocede, de modo que el trazado no se cruza consigo mismo. Cada pocos segmentos se aplica un quiebre lateral más marcado.
+- Cada rayo crece dentro de un **triángulo isósceles de propagación** propio, definido en coordenadas locales y luego inclinado de forma aleatoria alrededor de su vértice:
+  - **Vértice:** punto donde nace el rayo.
+  - **Altura:** longitud total de propagación, aleatoria.
+  - **Apertura:** ángulo de la base (`LIGHTNING_CONE_MIN_ANGLE` `6°` → `LIGHTNING_CONE_MAX_ANGLE` `26°`).
+  - **Inclinación:** rotación aleatoria del eje respecto a la vertical (`LIGHTNING_TILT_MAX_DEGREES` `28°`).
+- El semiancho disponible en cada profundidad es `profundidad × tan(apertura)`, de modo que el rayo arranca contenido y **se abre horizontalmente mientras cae**.
+- El desplazamiento lateral se mantiene **dentro de la sección del triángulo** y **no hay alternancia obligatoria de lado**: el rayo conserva la dirección durante corridas de uno a cuatro segmentos (`LIGHTNING_RUN_MIN`/`LIGHTNING_RUN_MAX`), lo que evita el patrón regular de latido cardiaco.
+- Los **saltos laterales largos** son ocasionales (`LIGHTNING_LONG_JUMP_CHANCE` `0.22`) y pueden recorrer hasta el `50 %` del ancho del cover (`LIGHTNING_LONG_JUMP_RATIO`), siempre dentro de la sección válida del triángulo.
+- Si el punto calculado se sale del cover o produce un retroceso vertical, se descarta y se busca otro dentro de la sección. El **recorrido nunca retrocede verticalmente**.
+- El número de segmentos se deriva del alto recorrido (`LIGHTNING_SEGMENT_LENGTH` `16`), de modo que los covers bajos generan más segmentos y más pequeños. El recorrido no se interrumpe al alcanzar la altura objetivo: la punta la fija el límite de segmentos, de modo que siempre se dibuja un zigzag completo.
 - El rayo se dibuja **segmento a segmento** para poder afilar la punta: el grosor del halo cian (`#4fc3f7`) y del núcleo blanco disminuye progresivamente hasta un mínimo en el extremo final. Las ramificaciones son más cortas, más delgadas y también se afilan.
-- Las ramificaciones nacen en quiebres concretos, se dirigen hacia un lado y no puede haber más de una por rayo.
+- Cada descarga genera **entre dos y tres ramificaciones**, elegidas al azar. Los puntos de bifurcación se reparten a lo largo del recorrido entre el `20 %` y el `80 %` de sus segmentos, nunca en el mismo punto, y cada rama se genera al alcanzar su quiebre.
+- Cada ramificación es **un relámpago completo con parámetros independientes**: su propio triángulo de propagación (vértice, altura, apertura e inclinación), su propio ritmo de crecimiento, su energía y su afinado de punta. Nace en un quiebre del rayo principal, su longitud se calcula sobre el recorrido que resta y **puede terminar más abajo que el relámpago principal**. Continúa creciendo aunque el trazo principal ya haya terminado. Las ramificaciones no generan ramificaciones a su vez.
 - Los quiebres con más energía se destacan **redibujando sus propios segmentos** con mayor opacidad y `shadowBlur`. No se emplean figuras geométricas (`createRadialGradient` o similar): el brillo sigue siempre la forma irregular del trazado.
 - Al iniciarse cada descarga se emite un **destello azul** `rgba(80, 180, 255, ...)` con opacidad aleatoria entre `0.22` y `0.50`, que decae de forma exponencial (`× 0.85`). Es una única emisión por descarga, sin efecto estroboscópico.
 - Las estelas se desvanecen con `destination-out`; el canvas **no se limpia en cada frame**, por lo que el rastro persiste hasta desaparecer.
 - El canvas se dimensiona según el cover con una densidad de píxeles limitada a `2` y se reajusta con `ResizeObserver` (o con `resize` si no está disponible). Al redimensionar se descartan los recorridos calculados con las medidas anteriores.
-- Las descargas aparecen en intervalos aleatorios entre `2600` y `6400` ms, con energía variable.
+- Las descargas aparecen en intervalos aleatorios entre `1400` y `3800` ms, con energía variable. La primera aparece tras `300` ms.
+- El planificador permite **hasta tres relámpagos principales visibles a la vez** (`LIGHTNING_MAX_ACTIVE_BOLTS`). Cada uno nace escalonado, con una separación mínima aleatoria de `300` a `700` ms: **nunca se inician en el mismo instante**. El ritmo alterna grupos de relámpagos cercanos (`LIGHTNING_CLUSTER_CHANCE` `0.35`) con pausas más largas. Las ramificaciones no cuentan como descargas independientes.
+- Cada rayo y cada ramificación tienen su propio **ritmo de crecimiento** (`LIGHTNING_MIN_STEP_MS` `22` → `LIGHTNING_MAX_STEP_MS` `68`, y `16` → `46` para las ramas) y su propia escala de velocidad, de modo que las líneas nunca avanzan al unísono.
+- Un rayo terminado se retira del registro: de lo contrario bloquearía las siguientes descargas. La estela se desvanece sola con `destination-out`.
 - El dibujo se detiene cuando el cover sale de la pantalla (`IntersectionObserver`) o cuando la pestaña queda oculta (`visibilitychange`), para no competir con otras animaciones de la página.
 - Con `prefers-reduced-motion: reduce` no se crea el canvas y la regla CSS `.cover-lightning { display: none; }` lo mantiene oculto.
 - El efecto **no incluye sonido**: no hay `AudioContext`, ni archivos de audio, ni controles de reproducción.

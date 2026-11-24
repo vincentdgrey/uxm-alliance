@@ -1112,7 +1112,7 @@ test("el rayo del cover respeta las capas de la pagina y limita su consumo", () 
 
   /* El destello inicial usa el azul del ejemplo y decae de forma progresiva. */
   assert.match(js, /LIGHTNING_FLASH_COLOR\s*=\s*"rgba\(80,\s*180,\s*255,\s*"/);
-  assert.match(js, /flash\s*=\s*0\.22\s*\+\s*energy\s*\*\s*0\.28/);
+  assert.match(js, /flash\s*=\s*Math\.max\(flash,\s*0\.22\s*\+\s*energy\s*\*\s*0\.28\)/);
   assert.match(js, /flash\s*\*=\s*0\.85/);
 
   /* El dibujo se detiene cuando el cover no esta a la vista. */
