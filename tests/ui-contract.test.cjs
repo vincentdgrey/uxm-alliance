@@ -1051,66 +1051,74 @@ test("la navbar es fija y usa el acento caliente en la portada", () => {
   assert.match(css, /\.home-topbar\s+\.topbar-brand\s*\{[^}]*color:\s*var\(--hot\)/s);
 });
 
-test("el borde del boton de menu lo recorre un punto escarlata que se apaga", () => {
+test("el boton de menu ya no dibuja el punto que recorria el borde", () => {
   const css = read("css/style.css");
 
-  /* El punto se dibuja con un pseudoelemento, sin depender del HTML. */
-  assert.match(css, /\.nav-toggle::after\s*\{[^}]*content:\s*""/s);
-  assert.match(css, /\.nav-toggle::after\s*\{[^}]*border-radius:\s*50%/s);
-  assert.match(css, /\.nav-toggle::after\s*\{[^}]*background:\s*var\(--hot\)/s);
-  assert.match(css, /\.nav-toggle::after\s*\{[^}]*opacity:\s*0/s);
-  assert.match(css, /\.nav-toggle::after\s*\{[^}]*animation:\s*uxm-nav-border-dot\s+30s/s);
-  assert.match(css, /@keyframes\s+uxm-nav-border-dot/);
-
-  /* El recorrido apaga el punto al final del ciclo. */
-  const keyframes = css.match(/@keyframes\s+uxm-nav-border-dot\s*\{([\s\S]*?)\n\}/);
-  assert.ok(keyframes, "debe existir la animacion del punto");
-  assert.match(keyframes[1], /opacity:\s*0/);
-  assert.match(keyframes[1], /opacity:\s*1/);
-  assert.match(keyframes[1], /left:\s*calc\(100% \+ 2px\)/);
-  assert.match(keyframes[1], /top:\s*calc\(100% \+ 2px\)/);
+  /* Se elimino la animacion del punto y todos sus estilos asociados. */
+  assert.doesNotMatch(css, /uxm-nav-border-dot/);
+  assert.doesNotMatch(css, /\.nav-toggle::after\s*\{/s);
+  assert.doesNotMatch(css, /\.nav-open\s+\.nav-toggle::after/);
 
   /* Las barras ya no se desplazan: solo se mantiene el alargamiento de la tercera. */
   assert.doesNotMatch(css, /@keyframes\s+uxm-nav-line-one/);
   assert.doesNotMatch(css, /@keyframes\s+uxm-nav-line-two/);
   assert.doesNotMatch(css, /translateX\(20px\)/);
   assert.doesNotMatch(css, /translateX\(10px\)/);
-
-  /* Con el menu abierto el punto se oculta. */
-  assert.match(css, /\.nav-open\s+\.nav-toggle::after\s*\{[^}]*animation:\s*none/s);
-  assert.match(css, /\.nav-open\s+\.nav-toggle::after\s*\{[^}]*opacity:\s*0/s);
-
-  /* Con movimiento reducido el punto no se anima. */
-  const reducedMotion = css.match(/@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{([\s\S]*?)\n\}/);
-  assert.ok(reducedMotion, "debe existir el bloque de movimiento reducido");
-  assert.match(reducedMotion[1], /\.nav-toggle::after/);
-  assert.match(reducedMotion[1], /animation:\s*none/);
 });
 
 test("el boton de menu no conserva ningun efecto de cola de cometa", () => {
   const css = read("css/style.css");
 
-  /* Solo queda el punto: no debe existir cola ni sus keyframes. */
+  /* No queda cola ni sus keyframes. */
   assert.doesNotMatch(css, /\.nav-toggle::before\s*\{/s);
   assert.doesNotMatch(css, /@keyframes\s+uxm-nav-border-tail/);
   assert.doesNotMatch(css, /--nav-comet/);
   assert.doesNotMatch(css, /linear-gradient\(to right,\s*transparent,\s*var\(--hot\)\)/);
 });
 
-test("el punto recorre el borde derecho, el superior y el izquierdo antes de descender", () => {
+test("la portada y las subpaginas comparten el rayo electrico del cover", () => {
   const css = read("css/style.css");
-  const keyframes = css.match(/@keyframes\s+uxm-nav-border-dot\s*\{([\s\S]*?)\n\}/);
+  const js = read("js/app.js");
 
-  assert.ok(keyframes, "debe existir la animacion del punto");
+  /* El cover se localiza por las dos variantes de seccion. */
+  assert.match(js, /#content\.home-content,\s*#content\.subpage-content/);
+  assert.match(js, /function initCoverLightning\(\)/);
+  assert.match(js, /initCoverLightning\(\);/);
 
-  /* Inicia en la esquina inferior derecha y sube por el borde derecho. */
-  assert.match(keyframes[1], /0%,\s*88%\s*\{[^}]*top:\s*calc\(100% \+ 2px\)[^}]*left:\s*calc\(100% \+ 2px\)/s);
-  /* Continua por el borde superior hacia la izquierda. */
-  assert.match(keyframes[1], /92%\s*\{[^}]*top:\s*-2px[^}]*left:\s*calc\(100% \+ 2px\)/s);
-  assert.match(keyframes[1], /94%\s*\{[^}]*top:\s*-2px[^}]*left:\s*-2px/s);
-  /* Desciende por el borde izquierdo hasta el final del viewport. */
-  assert.match(keyframes[1], /96%\s*\{[^}]*top:\s*calc\(100% \+ 2px\)[^}]*left:\s*-2px/s);
-  assert.match(keyframes[1], /98\.5%\s*\{[^}]*top:\s*calc\(100vh - 40px\)[^}]*left:\s*-2px/s);
+  /* El canvas se crea por JavaScript y queda accesible como decoracion. */
+  assert.match(js, /document\.createElement\("canvas"\)/);
+  assert.match(js, /canvas\.className\s*=\s*"cover-lightning"/);
+  assert.match(js, /canvas\.setAttribute\("aria-hidden",\s*"true"\)/);
+  assert.match(js, /cover\.insertBefore\(canvas,\s*cover\.firstChild\)/);
+
+  /* El canvas se recorta al cover y no intercepta el puntero. */
+  assert.match(css, /\.cover-lightning\s*\{[^}]*position:\s*absolute/s);
+  assert.match(css, /\.cover-lightning\s*\{[^}]*pointer-events:\s*none/s);
+  assert.doesNotMatch(css, /\.cover-lightning\s*\{[^}]*position:\s*fixed/s);
+
+  /* Con movimiento reducido el rayo no se dibuja. */
+  assert.match(js, /prefers-reduced-motion:\s*reduce/);
+  const reducedMotion = css.match(/@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{([\s\S]*?)\n\}/);
+  assert.ok(reducedMotion, "debe existir el bloque de movimiento reducido");
+  assert.match(reducedMotion[1], /\.cover-lightning\s*\{[^}]*display:\s*none/s);
+});
+
+test("el rayo del cover respeta las capas de la pagina y limita su consumo", () => {
+  const css = read("css/style.css");
+  const js = read("js/app.js");
+
+  /* El rayo queda dentro del contexto local del cover. */
+  assert.match(css, /#content\.home-content,\s*#content\.subpage-content\s*\{[^}]*isolation:\s*isolate/s);
+
+  /* El destello inicial usa el azul del ejemplo y decae de forma progresiva. */
+  assert.match(js, /LIGHTNING_FLASH_COLOR\s*=\s*"rgba\(80,\s*180,\s*255,\s*"/);
+  assert.match(js, /flash\s*=\s*0\.22\s*\+\s*energy\s*\*\s*0\.28/);
+  assert.match(js, /flash\s*\*=\s*0\.85/);
+
+  /* El dibujo se detiene cuando el cover no esta a la vista. */
+  assert.match(js, /IntersectionObserver/);
+  assert.match(js, /visibilitychange/);
+  assert.match(js, /requestAnimationFrame/);
 });
 
 test("el boton de menu solo se pone escarlata al pasar el mouse con el menu cerrado", () => {
@@ -1123,24 +1131,22 @@ test("el boton de menu solo se pone escarlata al pasar el mouse con el menu cerr
   assert.match(css, /\.nav-open\s+\.nav-toggle\s*,[\s\S]*?\{[^}]*background-color:\s*transparent/s);
 });
 
-test("el texto UXM, las barras y el punto comparten color y sombra", () => {
+test("el texto UXM y las barras del menu comparten color y sombra", () => {
   const css = read("css/style.css");
 
   /* La sombra se declara una sola vez como variable compartida. */
   assert.match(css, /--nav-uxm-shadow:\s*0 1px 3px rgba\(8,\s*47,\s*58,\s*\.65\)/);
   assert.match(css, /\.home-topbar\s*\{[^}]*--nav-uxm-shadow:\s*0 1px 3px rgba\(8,\s*47,\s*58,\s*\.9\)/s);
 
-  /* El texto UXM, las barras y el punto la consumen. */
+  /* El texto UXM y las barras la consumen. */
   assert.match(css, /\.topbar-brand\s*\{[^}]*text-shadow:\s*var\(--nav-uxm-shadow\)/s);
   assert.match(css, /\.nav-toggle-bars i\s*\{[^}]*box-shadow:\s*var\(--nav-uxm-shadow\)/s);
-  assert.match(css, /\.nav-toggle::after\s*\{[^}]*box-shadow:\s*var\(--nav-uxm-shadow\)/s);
+
+  /* El punto que recorria el borde ya no existe. */
+  assert.doesNotMatch(css, /\.nav-toggle::after\s*\{/s);
 
   /* El punto comparte el rojo de UXM en la portada. */
   assert.match(css, /\.home-topbar\s+\.topbar-brand\s*\{[^}]*color:\s*var\(--hot\)/s);
-  assert.match(css, /\.nav-toggle::after\s*\{[^}]*background:\s*var\(--hot\)/s);
-
-  /* No queda ninguna sombra literal duplicada en esos tres elementos. */
-  assert.doesNotMatch(css, /\.nav-toggle::after\s*\{[^}]*rgba\(255,\s*36,\s*0/s);
 });
 
 test("el menú lateral incluye el enlace localizado de inicio", () => {

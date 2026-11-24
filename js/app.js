@@ -484,6 +484,400 @@
     }
   }
 
+  /* ---------- Rayo electrico sobre el cover ---------- */
+  /* El rayo se dibuja en un canvas propio del cover: la portada y las
+     subpaginas comparten la misma animacion. El canvas se crea por JavaScript
+     para no depender del HTML de cada pagina.
+     Combina los dos ejemplos de docs/examples: el crecimiento progresivo y
+     las estelas de docs/examples/lightning, con el halo, el destello inicial
+     y la punta afilada de docs/examples/ray.html. */
+  var LIGHTNING_MAX_DENSITY = 2;
+  var LIGHTNING_STEP_MS = 40;
+  var LIGHTNING_MIN_SEGMENTS = 10;
+  var LIGHTNING_MAX_SEGMENTS = 30;
+  var LIGHTNING_MIN_LENGTH_RATIO = 0.5;
+  var LIGHTNING_MAX_LENGTH_RATIO = 1.15;
+  var LIGHTNING_SUBPAGE_LENGTH_RATIO = 0.62;
+  var LIGHTNING_MIN_BRANCHES = 1;
+  var LIGHTNING_MAX_BRANCHES = 3;
+  var LIGHTNING_MIN_EDGE_MARGIN = 24;
+  var LIGHTNING_MAX_EDGE_MARGIN = 100;
+  var LIGHTNING_MIN_INTERVAL = 1400;
+  var LIGHTNING_MAX_INTERVAL = 3800;
+  var LIGHTNING_FIRST_DELAY = 300;
+  var LIGHTNING_FLASH_COLOR = "rgba(80, 180, 255, ";
+  var LIGHTNING_HALO_COLOR = "#4fc3f7";
+  var LIGHTNING_CORE_COLOR = "#ffffff";
+
+  function randomBetween(min, max) {
+    return min + Math.random() * (max - min);
+  }
+
+  function randomInt(min, max) {
+    return Math.floor(randomBetween(min, max + 1));
+  }
+
+  function clamp(value, min, max) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+  }
+
+  /* Un rayo nace en el borde superior y crece con el tiempo. Cada segmento
+     avanza hacia abajo y solo se desvia de lado, nunca hacia atras.
+     Los puntos de bifurcacion se fijan al crear el rayo: cada uno nace en un
+     quiebre distinto del recorrido principal. */
+  function createLightningBolt(x, y, options) {
+    return {
+      path: [{ x: x, y: y }],
+      stepRange: options.stepRange,
+      spreadRange: options.spreadRange,
+      kinkRange: options.kinkRange,
+      segmentLimit: options.segmentLimit,
+      targetY: options.targetY,
+      maxX: options.maxX,
+      branchPoints: options.branchPoints || [],
+      energy: options.energy || 0.6,
+      grower: 0
+    };
+  }
+
+  /* Anade un segmento al rayo. Devuelve false cuando el recorrido ya
+     alcanzo su limite de segmentos o su altura objetivo. */
+  function growLightningBolt(bolt) {
+    var last = bolt.path[bolt.path.length - 1];
+    var step = randomBetween(bolt.stepRange * 0.55, bolt.stepRange);
+    var spread = randomBetween(-bolt.spreadRange, bolt.spreadRange);
+
+    /* Cada pocos segmentos un quiebre mas marcado hace visible el cambio
+       de direccion, sin retroceder hacia atras. */
+    if (Math.random() < 0.25) {
+      spread += randomBetween(-bolt.kinkRange, bolt.kinkRange);
+    }
+
+    var nextX = clamp(last.x + spread, 0, bolt.maxX);
+    var nextY = Math.min(last.y + step, bolt.targetY);
+
+    bolt.path.push({ x: nextX, y: nextY });
+
+    return bolt.path.length < bolt.segmentLimit && nextY < bolt.targetY;
+  }
+
+  /* Grosor de un segmento segun su posicion en el recorrido: el rayo nace
+     ancho y se adelgaza hasta terminar en punta. */
+  function lightningSegmentWidths(progress) {
+    var taper = Math.pow(1 - progress, 1.35);
+    return {
+      halo: 0.6 + taper * 5.4,
+      core: 0.35 + taper * 2.65
+    };
+  }
+
+  /* Dibuja el recorrido de un rayo. Cada segmento se dibuja por separado con
+     su propio grosor para poder afilar la punta. Los quiebres destacados
+     reciben mas brillo siguiendo la forma del propio trazado. */
+  function drawLightningBolt(ctx, bolt, fade, energy) {
+    var total = bolt.path.length - 1;
+    if (total < 1) return;
+
+    for (var i = 0; i < total; i++) {
+      var from = bolt.path[i];
+      var to = bolt.path[i + 1];
+      var progress = i / total;
+      var widths = lightningSegmentWidths(progress);
+
+      /* Los quiebres con mas energia brilliancean sin anadir figuras:
+         el brillo se consigue con el mismo segmento, mas opaco y con halo. */
+      var kink = 1 + energy * randomBetween(0.1, 0.55);
+      var alpha = clamp(fade * randomBetween(0.65, 1) * kink, 0, 1);
+
+      /* Halo exterior cian. */
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, alpha * 0.75);
+      ctx.shadowBlur = 8 + energy * 22 * kink;
+      ctx.shadowColor = LIGHTNING_HALO_COLOR;
+      ctx.strokeStyle = LIGHTNING_HALO_COLOR;
+      ctx.lineWidth = widths.halo;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+      ctx.restore();
+
+      /* Nucleo blanco. */
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, alpha);
+      ctx.shadowBlur = 4 + energy * 10 * kink;
+      ctx.shadowColor = LIGHTNING_CORE_COLOR;
+      ctx.strokeStyle = LIGHTNING_CORE_COLOR;
+      ctx.lineWidth = widths.core;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  function initCoverLightning() {
+    var cover = document.querySelector("#content.home-content, #content.subpage-content");
+    if (!cover) return;
+
+    var reducedMotionQuery = window.matchMedia
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")
+      : null;
+    if (reducedMotionQuery && reducedMotionQuery.matches) return;
+
+    var canvas = document.createElement("canvas");
+    canvas.className = "cover-lightning";
+    canvas.setAttribute("aria-hidden", "true");
+    cover.insertBefore(canvas, cover.firstChild);
+
+    var ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    var isSubpage = cover.classList.contains("subpage-content");
+    var density = Math.min(window.devicePixelRatio || 1, LIGHTNING_MAX_DENSITY);
+    var bolts = [];
+    var flash = 0;
+    var frameId = 0;
+    var visible = true;
+    var lastTime = 0;
+    var elapsed = 0;
+    var nextBoltIn = LIGHTNING_FIRST_DELAY;
+
+    function coverSize() {
+      return { width: cover.clientWidth, height: cover.clientHeight };
+    }
+
+    function resizeCanvas() {
+      var size = coverSize();
+      if (!size.width || !size.height) return;
+      canvas.width = Math.round(size.width * density);
+      canvas.height = Math.round(size.height * density);
+      ctx.setTransform(density, 0, 0, density, 0, 0);
+      /* Los recorridos anteriores usan medidas previas: se descartan. */
+      bolts = [];
+      flash = 0;
+      ctx.clearRect(0, 0, size.width, size.height);
+    }
+
+    /* Prepara los parametros del rayo segun el alto disponible del cover.
+       El rayo empieza siempre en el borde superior y su longitud es
+       aleatoria: puede terminar a media altura o sobrepasar el borde. */
+    function boltOptions(size) {
+      var ratio = isSubpage
+        ? LIGHTNING_SUBPAGE_LENGTH_RATIO
+        : randomBetween(LIGHTNING_MIN_LENGTH_RATIO, LIGHTNING_MAX_LENGTH_RATIO);
+      var usableHeight = size.height * ratio;
+      var margin = clamp(size.width * 0.1, LIGHTNING_MIN_EDGE_MARGIN, LIGHTNING_MAX_EDGE_MARGIN);
+      var maxSegments = Math.round(
+        clamp(usableHeight / 26, LIGHTNING_MIN_SEGMENTS, LIGHTNING_MAX_SEGMENTS)
+      );
+
+      return {
+        margin: margin,
+        targetY: usableHeight,
+        segmentLimit: maxSegments,
+        stepRange: Math.max(7, usableHeight / maxSegments),
+        spreadRange: isSubpage ? 12 : 20,
+        kinkRange: isSubpage ? 16 : 26
+      };
+    }
+
+    /* Elige los quiebres donde nacen las ramificaciones. Se reparten a lo
+       largo del recorrido para que no salgan todas juntas ni del mismo punto. */
+    function chooseBranchPoints(segmentLimit) {
+      var count = randomInt(LIGHTNING_MIN_BRANCHES, LIGHTNING_MAX_BRANCHES);
+      var first = Math.max(3, Math.round(segmentLimit * 0.2));
+      var last = Math.max(first + 1, Math.round(segmentLimit * 0.8));
+      var points = [];
+
+      for (var i = 0; i < count; i++) {
+        var point = randomInt(first, last);
+        /* Ninguna ramificacion nace en el mismo quiebre que otra. */
+        while (points.indexOf(point) >= 0) {
+          point = randomInt(first, last);
+        }
+        points.push(point);
+      }
+
+      return points.sort(function (a, b) { return a - b; });
+    }
+
+    function spawnLightning() {
+      var size = coverSize();
+      if (!size.width || !size.height) return;
+
+      var options = boltOptions(size);
+      var startX = randomBetween(
+        options.margin,
+        Math.max(options.margin, size.width - options.margin)
+      );
+      var energy = randomBetween(0.45, 1);
+
+      bolts = [createLightningBolt(startX, 0, {
+        stepRange: options.stepRange,
+        spreadRange: options.spreadRange,
+        kinkRange: options.kinkRange,
+        segmentLimit: options.segmentLimit,
+        targetY: options.targetY,
+        maxX: size.width,
+        branchPoints: chooseBranchPoints(options.segmentLimit),
+        energy: energy
+      })];
+
+      /* Destello inicial azul: el rayo aparece de golpe sobre el cover. */
+      flash = 0.22 + energy * 0.28;
+    }
+
+    /* Crea la ramificacion de un rayo: sale de un quiebre del recorrido y
+       avanza hacia abajo con un recorrido corto y mas fino. La orientacion
+       alterna para que las ramas no se crucen entre si. */
+    function spawnBranch(bolt, size, side) {
+      var origin = bolt.path[bolt.path.length - 1];
+      var length = randomBetween(50, 120);
+
+      var branch = createLightningBolt(origin.x, origin.y, {
+        stepRange: Math.max(5, length / 6),
+        spreadRange: 9,
+        kinkRange: 12,
+        segmentLimit: 6,
+        targetY: Math.min(origin.y + length, size.height),
+        maxX: size.width,
+        energy: bolt.energy * 0.7
+      });
+      branch.side = side;
+      bolts.push(branch);
+    }
+
+    /* Actualiza el crecimiento de los rayos y genera sus ramificaciones. */
+    function updateLightning(delta) {
+      var size = coverSize();
+
+      for (var i = bolts.length - 1; i >= 0; i--) {
+        var bolt = bolts[i];
+        var finished = false;
+
+        bolt.grower += delta;
+        while (bolt.grower >= LIGHTNING_STEP_MS) {
+          bolt.grower -= LIGHTNING_STEP_MS;
+          if (!growLightningBolt(bolt)) {
+            finished = true;
+            break;
+          }
+
+          /* Cada quiebre marcado genera su ramificacion. */
+          if (bolt.branchPoints.length && bolt.path.length >= bolt.branchPoints[0]) {
+            var point = bolt.branchPoints.shift();
+            var origin = bolt.path[Math.min(point, bolt.path.length - 1)];
+            var side = origin.x > size.width * 0.5 ? -1 : 1;
+            if (bolt.side) side = -bolt.side;
+            bolt.side = side;
+            spawnBranch(bolt, size, side);
+          }
+        }
+
+        /* El rayo se retira al terminar: si no, bloquearia las siguientes
+           descargas. La estela se desvanece sola con destination-out. */
+        if (finished) {
+          bolts.splice(i, 1);
+        }
+      }
+    }
+
+    /* Dibuja los rayos y aplica el desvanecido de las estelas. */
+    function renderLightning() {
+      var size = coverSize();
+
+      if (flash > 0) {
+        ctx.save();
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = LIGHTNING_FLASH_COLOR + flash + ")";
+        ctx.fillRect(0, 0, size.width, size.height);
+        ctx.restore();
+        flash *= 0.85;
+        if (flash < 0.01) flash = 0;
+      }
+
+      for (var i = 0; i < bolts.length; i++) {
+        var bolt = bolts[i];
+        var fade = clamp(bolt.path.length / Math.max(1, bolt.segmentLimit), 0.25, 1);
+        drawLightningBolt(ctx, bolt, fade, bolt.energy || 0.6);
+      }
+
+      /* Las estelas se desvanecen poco a poco con destination-out. El canvas
+         no se limpia por frame: el rastro persiste hasta desaparecer. */
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.fillStyle = "rgba(0, 0, 0, " + randomBetween(0.05, 0.14) + ")";
+      ctx.fillRect(0, 0, size.width, size.height);
+      ctx.restore();
+    }
+
+    function frame(now) {
+      frameId = 0;
+      if (!visible) return;
+
+      if (!lastTime) lastTime = now;
+      /* El delta se acota para que la reanudacion no genere saltos. */
+      var delta = Math.min(now - lastTime, 100);
+      lastTime = now;
+      elapsed += delta;
+
+      if (elapsed >= nextBoltIn && bolts.length === 0) {
+        spawnLightning();
+        elapsed = 0;
+        nextBoltIn = randomBetween(LIGHTNING_MIN_INTERVAL, LIGHTNING_MAX_INTERVAL);
+      }
+
+      updateLightning(delta);
+      renderLightning();
+
+      frameId = window.requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (frameId) return;
+      lastTime = 0;
+      frameId = window.requestAnimationFrame(frame);
+    }
+
+    function stop() {
+      if (!frameId) return;
+      window.cancelAnimationFrame(frameId);
+      frameId = 0;
+    }
+
+    resizeCanvas();
+    start();
+
+    if (window.ResizeObserver) {
+      new window.ResizeObserver(resizeCanvas).observe(cover);
+    } else {
+      window.addEventListener("resize", resizeCanvas);
+    }
+
+    /* El rayo se detiene cuando el cover sale de la pantalla o la pestaña
+       queda oculta: evita gastar ciclos en contenido que no se ve. */
+    if (window.IntersectionObserver) {
+      new window.IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        if (visible) start();
+        else stop();
+      }).observe(cover);
+    }
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stop();
+      else if (visible) start();
+    });
+  }
+
   /* ---------- Menú lateral propio ---------- */
   var navPanel = byId("navPanel");
   var navList = byId("navList");
@@ -654,5 +1048,6 @@
   applyInfoContent();
   syncNavState();
   initHeroVideo();
+  initCoverLightning();
   renderVisitCounter();
 })();

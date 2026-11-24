@@ -215,11 +215,8 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - En la portada, la marca **UXM** y las líneas de la hamburguesa usan `var(--hot)` (`#df1b1b`).
 - Al abrir el menú, las tres líneas cambian a `var(--scarlet)` (`#ff2400`) y la tercera se alarga desde el origen hasta quedar a `10px` del borde derecho del panel.
 - El fondo escarlata del botón aparece **solo con el menú cerrado**: la regla es `body:not(.nav-open) .nav-toggle:hover`. Con el menú desplegado, `.nav-open .nav-toggle` fuerza `background-color: transparent`, de modo que el botón vuelve a su color transparente aunque el puntero siga encima.
-- El aviso periódico de navegación dura 30 segundos: un **punto** rojo recorre el contorno del botón y termina apagándose. Se suspende con el menú abierto y con `prefers-reduced-motion`.
-- El punto se dibuja con el pseudoelemento `.nav-toggle::after` (`border-radius: 50%`, fondo `var(--hot)`), por lo que no requiere cambios en el HTML. No hay cola ni efecto de cometa: solo se conserva el punto que recorre.
-- La trayectoria del punto es, en este orden: borde derecho de abajo hacia arriba, borde superior de derecha a izquierda, borde izquierdo de arriba hacia abajo y descenso final por el borde izquierdo hasta el final del viewport. Se resuelve solo con CSS: no se mide la posición real del footer y no interviene JavaScript.
-- Las barras 1 y 2 ya no se desplazan: los keyframes `uxm-nav-line-one` y `uxm-nav-line-two` se eliminaron.
-- El color y la sombra son **compartidos** entre el texto `UXM`, las tres barras del botón y el punto que recorre el borde. Se centralizan en la variable `--nav-uxm-shadow`, con un valor contextual: `0 1px 3px rgba(8, 47, 58, .65)` por defecto y `0 1px 3px rgba(8, 47, 58, .9)` en la portada, declarada en `.home-topbar`. El texto `UXM` la aplica como `text-shadow` y las barras y el punto como `box-shadow`.
+- El aviso periódico de navegación se ha eliminado: ya no hay ningún punto ni animación que recorra el contorno del botón.
+- El color y la sombra son **compartidos** entre el texto `UXM` y las tres barras del botón. Se centralizan en la variable `--nav-uxm-shadow`, con un valor contextual: `0 1px 3px rgba(8, 47, 58, .65)` por defecto y `0 1px 3px rgba(8, 47, 58, .9)` en la portada, declarada en `.home-topbar`. El texto `UXM` la aplica como `text-shadow` y las barras como `box-shadow`.
 - El efecto se aplica **en todo el sitio**: la regla vive en la hoja compartida `css/style.css`, de modo que la portada y las subpáginas muestran el mismo comportamiento. No debe duplicarse en hojas por página.
 - La marca usa en `hover` y `focus-visible` texto blanco y fondo `var(--hot)`, con anillo de foco `#ffbf47`.
 - No se muestra ningún icono «X»: el menú se cierra con backdrop, `Escape` o al pulsar un enlace.
@@ -253,6 +250,26 @@ El fondo del sitio es gris suave (`#e9ecef`). Por ese fondo claro, el texto usa 
 - El `<p class="tag">` aplica el mismo lenguaje de relieve, con una luz superior sin color de texto, extrusión y sombra proyectada.
 - En la parte inferior del cover se incluye `.hero-scroll-cue`: un mouse dibujado con CSS y rueda animada mediante `uxm-scroll-wheel`. Enlaza a `#infoTitle`, cambia a rojo escarlata en `hover` y `focus-visible` y mantiene un anillo de foco visible.
 - Con `prefers-reduced-motion: reduce`, el título queda estático, el video se pausa y se oculta, permanece visible el poster y el indicador de scroll deja de animarse.
+
+#### Rayo eléctrico del cover
+
+- La portada y todas las subpáginas comparten la misma animación de rayo. La lógica combina los dos ejemplos de `docs/examples/`: el crecimiento progresivo y las estelas de `docs/examples/lightning/`, con el halo, el destello inicial y la punta afilada de `docs/examples/ray.html`. Los ejemplos son solo referencia y no se cargan como páginas del sitio.
+- La lógica vive en `initCoverLightning()` de `js/app.js`, que se ejecuta en todas las páginas al cargar. El cover se localiza con `#content.home-content, #content.subpage-content`.
+- El `<canvas class="cover-lightning" aria-hidden="true">` lo crea JavaScript y lo inserta como primer hijo del cover, de modo que no hay cambios en el HTML de las páginas.
+- El canvas se posiciona de forma absoluta (`position: absolute; inset: 0`) recortado al cover, con `pointer-events: none` y sin `position: fixed`: nunca tapa la barra superior, el menú lateral ni el backdrop. Al ser absoluto, **no altera el alto ni el contenido del cover**.
+- Las capas del cover usan `isolation: isolate` para que el rayo no se escape de su contexto. El rayo queda sobre el fondo, el video y su capa de contraste, pero por debajo del título, el tag y el indicador de scroll: en la portada usa `z-index: 2` y en las subpáginas `z-index: 1`.
+- El rayo **nace siempre en el borde superior** del cover y su longitud es aleatoria: entre el `50 %` y el `115 %` de su alto en la portada, y un `62 %` en las subpáginas. Puede terminar a media altura o sobrepasar el borde inferior.
+- El recorrido avanza por segmentos de longitud variable y **siempre hacia abajo**: ningún segmento retrocede, de modo que el trazado no se cruza consigo mismo. Cada pocos segmentos se aplica un quiebre lateral más marcado.
+- El rayo se dibuja **segmento a segmento** para poder afilar la punta: el grosor del halo cian (`#4fc3f7`) y del núcleo blanco disminuye progresivamente hasta un mínimo en el extremo final. Las ramificaciones son más cortas, más delgadas y también se afilan.
+- Las ramificaciones nacen en quiebres concretos, se dirigen hacia un lado y no puede haber más de una por rayo.
+- Los quiebres con más energía se destacan **redibujando sus propios segmentos** con mayor opacidad y `shadowBlur`. No se emplean figuras geométricas (`createRadialGradient` o similar): el brillo sigue siempre la forma irregular del trazado.
+- Al iniciarse cada descarga se emite un **destello azul** `rgba(80, 180, 255, ...)` con opacidad aleatoria entre `0.22` y `0.50`, que decae de forma exponencial (`× 0.85`). Es una única emisión por descarga, sin efecto estroboscópico.
+- Las estelas se desvanecen con `destination-out`; el canvas **no se limpia en cada frame**, por lo que el rastro persiste hasta desaparecer.
+- El canvas se dimensiona según el cover con una densidad de píxeles limitada a `2` y se reajusta con `ResizeObserver` (o con `resize` si no está disponible). Al redimensionar se descartan los recorridos calculados con las medidas anteriores.
+- Las descargas aparecen en intervalos aleatorios entre `2600` y `6400` ms, con energía variable.
+- El dibujo se detiene cuando el cover sale de la pantalla (`IntersectionObserver`) o cuando la pestaña queda oculta (`visibilitychange`), para no competir con otras animaciones de la página.
+- Con `prefers-reduced-motion: reduce` no se crea el canvas y la regla CSS `.cover-lightning { display: none; }` lo mantiene oculto.
+- El efecto **no incluye sonido**: no hay `AudioContext`, ni archivos de audio, ni controles de reproducción.
 
 #### Bloque de video tutorial
 

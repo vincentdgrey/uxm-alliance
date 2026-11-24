@@ -1,5 +1,44 @@
 # Changelog
 
+## [261124a] - 2026-11-24
+
+### Changed
+- **El rayo del cover adopta un diseño más realista**, combinando los dos ejemplos de `docs/examples/`:
+  - `js/app.js` reescribe `initCoverLightning()`: el rayo **nace siempre en el borde superior** y crece por segmentos de longitud variable. Su longitud es aleatoria (entre el `50 %` y el `115 %` del alto en la portada y un `62 %` en las subpáginas), por lo que puede terminar a media altura o sobrepasar el borde inferior.
+  - El avance vertical es **siempre positivo**: ningún segmento retrocede y el trazado no se cruza consigo mismo. Cada pocos segmentos se aplica un quiebre lateral más marcado.
+  - El rayo se dibuja **segmento a segmento** para poder **afilar la punta**: el grosor del halo cian y del núcleo blanco disminuye de forma progresiva hasta un mínimo en el extremo final. Las ramificaciones son más cortas, más delgadas y también se afilan.
+  - Los quiebres con más energía se destacan redibujando sus propios segmentos con mayor opacidad y `shadowBlur`. **No se emplean figuras geométricas**: el brillo sigue la forma irregular del trazado.
+  - Al iniciarse cada descarga se emite el **destello azul** `rgba(80, 180, 255, ...)` del ejemplo `ray.html`, con opacidad aleatoria entre `0.22` y `0.50` y decaimiento exponencial (`× 0.85`). Es una única emisión por descarga, sin efecto estroboscópico.
+  - Las estelas se desvanecen con `destination-out` y el canvas **no se limpia en cada frame**, por lo que el rastro persiste hasta desaparecer.
+  - Las descargas aparecen en intervalos aleatorios entre `2600` y `6400` ms, con energía variable.
+  - El **sonido queda descartado**: no hay `AudioContext`, ni archivos de audio, ni controles de reproducción.
+  - El canvas sigue siendo absoluto, por lo que **no altera el alto ni el contenido del cover**.
+
+### Added (tests)
+- Nueva prueba `tests/cover-lightning.test.cjs` (17 casos) que ejecuta `js/app.js` sobre un DOM simulado y verifica, en portada, subpágina y subpágina móvil: el nacimiento en el borde superior, la ausencia de retrocesos verticales, el respeto de los límites del cover, el adelgazamiento hasta la punta, el destello azul inicial con decaimiento, la persistencia de las estelas y la ausencia de figuras geométricas y de sonido.
+
+### Changed (docs)
+- `docs/core/project-rules.md` describe el nuevo diseño del rayo del cover: recorrido, afinado de la punta, brillo sin figuras, destello inicial, estelas y ausencia de sonido.
+
+## [261123e] - 2026-11-23
+
+### Added
+- **Animación de rayo eléctrico sobre los covers**, adaptación de `docs/examples/ray.html`:
+  - `js/app.js` incorpora `initCoverLightning()`, que localiza el cover con `#content.home-content, #content.subpage-content` y crea un `<canvas class="cover-lightning" aria-hidden="true">` como primer hijo de la sección, sin necesidad de modificar el HTML de las páginas.
+  - El rayo dibuja un trazo principal irregular con halo cian (`#4fc3f7`) y núcleo blanco, entre dos y cuatro ramificaciones, desvanecido a lo largo de 20 frames, con un destello de fondo atenuado (`rgba(80, 180, 255, ...)` entre `0.12` y `0.22`).
+  - `css/style.css` añade las reglas `.cover-lightning` y el contexto `isolation: isolate` en los covers: el canvas se recorta a la sección, usa `pointer-events: none` y nunca tapa la barra superior, el menú lateral ni el backdrop.
+  - El canvas se dimensiona según el cover con densidad de píxeles limitada a `2` y se reajusta con `ResizeObserver`. El dibujo se detiene cuando el cover sale de la pantalla o la pestaña queda oculta.
+  - Con `prefers-reduced-motion: reduce` no se crea el canvas y la hoja de estilos lo mantiene oculto.
+
+### Removed
+- **La animación `uxm-nav-border-dot` y todos sus estilos asociados**: el punto rojo que recorría el contorno del botón hamburguesa se elimina de `css/style.css`, junto con el pseudoelemento `.nav-toggle::after`, su regla en `nav-open` y su variante de movimiento reducido. La variable `--nav-uxm-shadow` se conserva porque la siguen usando el texto `UXM` y las tres barras del menú.
+
+### Changed (tests)
+- `tests/ui-contract.test.cjs` sustituye las tres pruebas que exigían el punto por comprobaciones de su ausencia, ajusta la prueba de la sombra compartida al texto `UXM` y las barras, y añade dos casos nuevos sobre el rayo del cover: la creación del canvas por JavaScript, sus capas y el movimiento reducido, y el control del consumo con `IntersectionObserver` y `visibilitychange`.
+
+### Changed (docs)
+- `docs/core/project-rules.md` describe el rayo del cover (ubicación, capas, consumo y comportamiento con movimiento reducido) y corrige las reglas del navbar que describían el punto eliminado.
+
 ## [261123d] - 2026-11-23
 
 ### Added

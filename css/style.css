@@ -48,8 +48,8 @@ body {
   --nav-panel-width: min(100vw, 400px);
   --nav-toggle-line-origin: 25px;
   --nav-toggle-line-end: calc(var(--nav-panel-width) - var(--nav-toggle-line-origin) - 10px);
-  /* Sombra compartida por el texto UXM, las barras del menu y el punto
-     que recorre el borde. La portada la intensifica para el video. */
+  /* Sombra compartida por el texto UXM y las barras del menu.
+     La portada la intensifica para el video. */
   --nav-uxm-shadow: 0 1px 3px rgba(8, 47, 58, .65);
 }
 
@@ -216,42 +216,6 @@ body:not(.nav-open) .nav-toggle:hover nav-toggle-bars i {
   width: var(--nav-toggle-line-end);
 }
 
-/* Aviso periódico: un punto rojo recorre el borde del botón y se apaga.
-   El recorrido se hace con un pseudoelemento para no depender del HTML.
-   El punto comparte color y sombra con el texto UXM. */
-.nav-toggle::after {
-  content: "";
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--hot);
-  box-shadow: var(--nav-uxm-shadow);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 1;
-  animation: uxm-nav-border-dot 30s ease-in-out infinite;
-}
-.nav-open .nav-toggle::after {
-  animation: none;
-  opacity: 0;
-}
-/* Trayectoria: borde derecho de abajo hacia arriba, borde superior de
-   derecha a izquierda, borde izquierdo de arriba hacia abajo y descenso
-   final por el borde izquierdo hasta el final del viewport. */
-@keyframes uxm-nav-border-dot {
-  0%, 88% { opacity: 0; top: calc(100% + 2px); left: calc(100% + 2px); }
-  90% { opacity: 1; top: calc(100% + 2px); left: calc(100% + 2px); }
-  92% { opacity: 1; top: -2px; left: calc(100% + 2px); }
-  94% { opacity: 1; top: -2px; left: -2px; }
-  96% { opacity: 1; top: calc(100% + 2px); left: -2px; }
-  98.5% { opacity: 1; top: calc(100vh - 40px); left: -2px; }
-  99.5% { opacity: 0; top: calc(100vh - 30px); left: -2px; }
-  100% { opacity: 0; top: calc(100vh - 30px); left: -2px; }
-}
-
 /* ---------- Menú lateral propio (anclado a la izquierda) ---------- */
 .nav-panel {
   position: fixed;
@@ -350,6 +314,34 @@ body:not(.nav-open) .nav-toggle:hover nav-toggle-bars i {
   max-width: none;
   margin: 0;
   padding: 0;
+}
+
+/* ---------- Rayo electrico sobre el cover ---------- */
+/* El canvas se crea desde js/app.js como primer hijo del cover.
+   La portada necesita su propio contexto de posicion y recorte. */
+#content.home-content {
+  position: relative;
+  overflow: hidden;
+}
+#content.home-content,
+#content.subpage-content {
+  isolation: isolate;
+}
+#content.home-content .cover-lightning {
+  z-index: 2;
+}
+#content.subpage-content .cover-lightning {
+  z-index: 1;
+}
+.cover-lightning {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 900px;
+  pointer-events: none;
 }
 #infoTitle {
   scroll-margin-top: 72px;
@@ -543,13 +535,10 @@ body:not(.nav-open) .nav-toggle:hover nav-toggle-bars i {
     animation: none;
     transform: none;
   }
-  .nav-toggle::after {
-    animation: none;
-    opacity: 0;
-  }
   .nav-list a { transition: none; }
   .nav-panel, .nav-backdrop { transition: none; }
   .hero-scroll-wheel { animation: none; }
+  .cover-lightning { display: none; }
 }
 
 .welcome { color: var(--muted); }

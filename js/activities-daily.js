@@ -133,11 +133,11 @@
     { "code": "DYWALL",  "group":"FOCUS", "icon":"",                "point": "",   "codebs": "" },
     { "code": "CUMULUS", "group":"FOCUS", "icon":"cumulus-cristal", "point": "",   "codebs": "" },
     
-    { "code": "BSBUILD",   "group":"BS", "icon":"", "point": "", "codebs": "BUILD" },
-    { "code": "BSHERO",    "group":"BS", "icon":"", "point": "", "codebs": "HEROE" },
-    { "code": "BSRAVEN",   "group":"BS", "icon":"", "point": "", "codebs": "RAVEN" },
-    { "code": "BSSOLDIER", "group":"BS", "icon":"", "point": "", "codebs": "SOLDIER" },
-    { "code": "BSTECH",    "group":"BS", "icon":"", "point": "", "codebs": "TECH" },
+    { "code": "BSBUILD",   "group":"BS", "icon":"skill-badge", "point": "", "codebs": "BUILD" },
+    { "code": "BSHERO",    "group":"BS", "icon":"skill-badge", "point": "", "codebs": "HEROE" },
+    { "code": "BSRAVEN",   "group":"BS", "icon":"skill-badge", "point": "", "codebs": "RAVEN" },
+    { "code": "BSSOLDIER", "group":"BS", "icon":"skill-badge", "point": "", "codebs": "SOLDIER" },
+    { "code": "BSTECH",    "group":"BS", "icon":"skill-badge", "point": "", "codebs": "TECH" },
   ];
 
   var EVENT_CODE = [
@@ -1019,7 +1019,7 @@
           /* El contador BS se compone de dos nodos: el tiempo transcurrido
              y el tiempo restante de la duracion de cuatro horas. */
           counter.elapsedEl.textContent = result.text;
-          counter.remainingEl.textContent = result.state === STATE_PROGRESS ? fmtCounter(result.remainingSec) : "";
+          counter.remainingEl.textContent = result.state === STATE_PROGRESS ? "" + fmtCounter(result.remainingSec) : "";
         } else {
           counter.td.textContent = result.text;
         }
