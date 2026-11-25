@@ -299,7 +299,7 @@ tr.bs-current td.bs-event::after {
 }
 .ad-schedule td.ad-objective.ad-task-flag-s {
   background-color: #006d0030;
-  color: #fff;
+  color: #015c01;
   border-radius: 4px;
 }
 

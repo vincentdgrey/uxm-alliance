@@ -80,7 +80,11 @@
           SCRAMBLE:{objective:"100K Puntos de Honor, Captura/Defiende una Granja en el lodo",resource:"Granjas de la Ciudad Real"},
           KWAR:{objective:"1.5M Puntos de Honor, Derrota/Pierde/Cura Soldados",resource:"Guerra de Reinos (KvK)"},
           CUMULUS:{objective:"Recolecta Cristal Purificado en Cúmulos, 30min duración",resource:"Cúmulos de Cristal"},
+
           CHEESE7:{objective:"335M de Daño al Ladrón del Queso Lv.7, 30min duración, 1.4B de daño para el MVP1",resource:"Trampa del Queso"},
+          DEMONW:{objective:"Rey Demonio Guerrero, Daño Héroe Ranger +50%, 3 Damage Dealer + 1 Support",resource:"Rey Demonio"},
+          DEMONR:{objective:"Rey Demonio Montaraz, Daño Héroe Brujo +50%, 3 Damage Dealer + 1 Support",resource:"Rey Demonio"},
+          DEMONZ:{objective:"Rey Demonio Brujo, Daño Héroe Guerrero +50%, 3 Damage Dealer + 1 Support",resource:"Rey Demonio"},
 
           BSBUILD:{objective:"Insignias de Habilidad ★, Oportunidad al Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H]",resource:"Edificios"},
           BSHERO:{objective:"Insignias de Habilidad ★, Oportunidad al Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe",resource:"Heroes"},
@@ -187,6 +191,9 @@ pageDailyLead:"Details of the daily activities that will help you improve every 
           KWAR:{objective:"1.5M Honor Points, Defeat/Lose/Heal Soldiers",resource:"Kingdom War (KvK)"},
           CUMULUS:{objective:"Gather Purified Crystal in Cumulus, 30min duration",resource:"Cumulus Crystal"},
           CHEESE7:{objective:"335M Damage to the Cheese Thief Lv.7, 30min duration, 1.4B damage for MVP1",resource:"Cheese Trap"},
+          DEMONW:{objective:"Demon King Warrior, Ranger Hero Damage +50%, 3 Damage Dealer + 1 Support",resource:"Demon King"},
+          DEMONR:{objective:"Demon King Ranger, Wizard Hero Damage +50%, 3 Damage Dealer + 1 Support",resource:"Demon King"},
+          DEMONZ:{objective:"Demon King Wizard, Warrior Hero Damage +50%, 3 Damage Dealer + 1 Support",resource:"Demon King"},
 
           BSBUILD:{objective:"Skill Badges ★, Opportunity when finishing Constructions [raise 30.000 might] or Speed up [50H]",resource:"Buildings"},
           BSHERO:{objective:"Skill Badges ★, Opportunity when using [23.4M] Antitoxins or [30] Hero Tickets",resource:"Heroes"},
@@ -275,6 +282,9 @@ pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos
           KWAR:{objective:"1.5M Pontos de Honra, Derrote/Perca/Cure Soldados",resource:"Guerra de Reinos (KvK)"},
           CUMULUS:{objective:"Colete Cristal Purificado nos Cúmulos, 30min de duração",resource:"Cúmulos de Cristal"},
           CHEESE7:{objective:"335M de Dano ao Ladrão de Queijo Lv.7, 30min de duração, 1.4B de dano para o MVP1",resource:"Armadilha de Queijo"},
+          DEMONW:{objective:"Rei Demônio Guerreiro, Dano do Herói Ranger +50%, 3 Damage Dealer + 1 Support",resource:"Rei Demônio"},
+          DEMONR:{objective:"Rei Demônio Montaraz, Dano do Herói Bruxo +50%, 3 Damage Dealer + 1 Support",resource:"Rei Demônio"},
+          DEMONZ:{objective:"Rei Demônio Bruxo, Dano do Herói Guerreiro +50%, 3 Damage Dealer + 1 Support",resource:"Rei Demônio"},
 
           BSBUILD:{objective:"Emblemas de Habilidade ★, Oportunidade ao Terminar Construções [aumentar 30.000 poder] ou Acelerar [50H]",resource:"Edifícios"},
           BSHERO:{objective:"Emblemas de Habilidade ★, Oportunidade ao Usar [23.4M] Antitoxinas ou [30] Tickets de Herói",resource:"Heróis"},
@@ -363,6 +373,9 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           KWAR:{objective:"1.5M Punti di Onore, Sconfiggi/Perdi/Cura Soldati",resource:"Guerra dei Regni (KvK)"},
           CUMULUS:{objective:"Raccogli Cristallo Purificato nei Cumuli, 30min di durata",resource:"Cumuli di Cristallo"},
           CHEESE7:{objective:"335M di Danno al Ladro di Formaggio Lv.7, 30min di durata, 1.4B di danno per l'MVP1",resource:"Trappola del Formaggio"},
+          DEMONW:{objective:"Re Demone Guerriero, Danno Eroe Ranger +50%, 3 Damage Dealer + 1 Support",resource:"Re Demone"},
+          DEMONR:{objective:"Re Demone Montaraz, Danno Eroe Mago +50%, 3 Damage Dealer + 1 Support",resource:"Re Demone"},
+          DEMONZ:{objective:"Re Demone Mago, Danno Eroe Guerriero +50%, 3 Damage Dealer + 1 Support",resource:"Re Demone"},
 
           BSBUILD:{objective:"Distintivi di Abilità ★, Opportunità al Termine delle Costruzioni [aumentare 30.000 potenza] o Accelerare [50H]",resource:"Edifici"},
           BSHERO:{objective:"Distintivi di Abilità ★, Opportunità all'Uso [23.4M] Antitossine o [30] Ticket dell'Eroe",resource:"Eroi"},
@@ -451,6 +464,9 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           KWAR:{objective:"1.5M Ehrenpunkte, Soldaten besiegen/verlieren/heilen",resource:"Königreichskrieg (KvK)"},
           CUMULUS:{objective:"Sammle gereinigten Kristall in Kristallhaufen, 30min Dauer",resource:"Kristallhaufen"},
           CHEESE7:{objective:"335M Schaden am Käse-Dieb Lv.7, 30min Dauer, 1.4B Schaden für den MVP1",resource:"Käsefalle"},
+          DEMONW:{objective:"Dämonenkönig Krieger, Schaden des Helden Ranger +50%, 3 Damage Dealer + 1 Support",resource:"Dämonenkönig"},
+          DEMONR:{objective:"Dämonenkönig Montaraz, Schaden des Helden Magier +50%, 3 Damage Dealer + 1 Support",resource:"Dämonenkönig"},
+          DEMONZ:{objective:"Dämonenkönig Magier, Schaden des Helden Krieger +50%, 3 Damage Dealer + 1 Support",resource:"Dämonenkönig"},
 
           BSBUILD:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Fertigstellen von Bauten [Stärke um 30.000 erhöhen] oder Beschleunigen [50H]",resource:"Gebäude"},
           BSHERO:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Verwenden [23.4M] Antitoxinen oder [30] Helden-Tickets",resource:"Helden"},
@@ -557,6 +573,9 @@ pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous am
           KWAR:{objective:"1.5M Points d'Honneur, Vaincre/Perdre/Soigner des Soldats",resource:"Guerre des Royaumes (KvK)"},
           CUMULUS:{objective:"Récoltez du Cristal Purifié dans les Cumuls, 30min de durée",resource:"Cumuls de Cristal"},
           CHEESE7:{objective:"335M de Dégâts au Voleur de Fromage Nv.7, 30min de durée, 1.4B de dégâts pour le MVP1",resource:"Piège à Fromage"},
+          DEMONW:{objective:"Roi Démon Guerrier, Dégâts du Héros Rôdeur +50%, 3 Damage Dealer + 1 Support",resource:"Roi Démon"},
+          DEMONR:{objective:"Roi Démon Montaraz, Dégâts du Héros Mage +50%, 3 Damage Dealer + 1 Support",resource:"Roi Démon"},
+          DEMONZ:{objective:"Roi Démon Mage, Dégâts du Héros Guerrier +50%, 3 Damage Dealer + 1 Support",resource:"Roi Démon"},
 
           BSBUILD:{objective:"Badges de Compétence ★, Opportunité à la fin des Constructions [augmenter la Puissance de 30.000] ou Accélérer [50H]",resource:"Bâtiments"},
           BSHERO:{objective:"Badges de Compétence ★, Opportunité lors de l'Utilisation [23.4M] Antitoxines ou [30] Tickets de Héros",resource:"Héros"},
@@ -645,6 +664,9 @@ pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
           KWAR:{objective:"1.5M Honorポイント、兵士を撃破/失う/回復",resource:"王国戦争 (KvK)"},
           CUMULUS:{objective:"30分間クリスタルの山で精製クリスタルを採取する",resource:"クリスタルの山"},
           CHEESE7:{objective:"チーズ泥棒 Lv.7 に335Mダメージ、30分間、1.4BダメージでMVP1",resource:"チーズの罠"},
+          DEMONW:{objective:"デーモンキング ウォリアー、レンジャー英雄のダメージ +50%、3 Damage Dealer + 1 Support",resource:"デーモンキング"},
+          DEMONR:{objective:"デーモンキング モンタラーズ、ウィザード英雄のダメージ +50%、3 Damage Dealer + 1 Support",resource:"デーモンキング"},
+          DEMONZ:{objective:"デーモンキング ウィザード、ウォリアー英雄のダメージ +50%、3 Damage Dealer + 1 Support",resource:"デーモンキング"},
 
           BSBUILD:{objective:"スキルバッジ ★、建設完了時の機会 [威力を30.000上昇] または加速 [50H]",resource:"建物"},
           BSHERO:{objective:"スキルバッジ ★、使用時の機会 [23.4M] 解毒剤 または [30] 英雄チケット",resource:"英雄"},
@@ -733,6 +755,9 @@ pageDailyLead:"Подробности ежедневных активносте�
           KWAR:{objective:"1.5M Очков Чести, Победить/Потерять/Вылечить Солдат",resource:"Война Королевств (KvK)"},
           CUMULUS:{objective:"Собирать Очищенный Кристалл в Кристальных Холмах, 30мин",resource:"Кристальные Холмы"},
           CHEESE7:{objective:"Нанести 335M урона Вору Сыра Ур.7, 30мин, 1.4B урона для MVP1",resource:"Сырная Ловушка"},
+          DEMONW:{objective:"Король Демон Воин, Урон Героя Рейнджера +50%, 3 Damage Dealer + 1 Support",resource:"Король Демон"},
+          DEMONR:{objective:"Король Демон Монтараз, Урон Героя Волшебника +50%, 3 Damage Dealer + 1 Support",resource:"Король Демон"},
+          DEMONZ:{objective:"Король Демон Волшебник, Урон Героя Воина +50%, 3 Damage Dealer + 1 Support",resource:"Король Демон"},
 
           BSBUILD:{objective:"Значки Навыка ★, Возможность при завершении Строительств [повысить Мощь на 30.000] или Ускорить [50H]",resource:"Здания"},
           BSHERO:{objective:"Значки Навыка ★, Возможность при Использовании [23.4M] Антитоксинов или [30] Билетов Героя",resource:"Герои"},
@@ -821,6 +846,9 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           KWAR:{objective:"1.5M 荣誉点数，击败/失去/治疗士兵",resource:"王国战争 (KvK)"},
           CUMULUS:{objective:"从水晶堆中采集30分钟纯化水晶",resource:"水晶堆"},
           CHEESE7:{objective:"对奶酪小偷 7 级造成335M伤害，持续30分钟，1.4B伤害达成MVP1",resource:"奶酪陷阱"},
+          DEMONW:{objective:"恶魔王 战士，游侠英雄伤害 +50%，3 伤害输出 + 1 辅助",resource:"恶魔王"},
+          DEMONR:{objective:"恶魔王 山地人，巫师英雄伤害 +50%，3 伤害输出 + 1 辅助",resource:"恶魔王"},
+          DEMONZ:{objective:"恶魔王 巫师，战士英雄伤害 +50%，3 伤害输出 + 1 辅助",resource:"恶魔王"},
 
           BSBUILD:{objective:"技能徽章 ★，完成建造时的机会 [提升 30.000 战力] 或加速 [50H]",resource:"建筑"},
           BSHERO:{objective:"技能徽章 ★，使用时的机会 [23.4M] 解毒剂 或 [30] 英雄票券",resource:"英雄"},
@@ -1070,6 +1098,18 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
             objective:"Peynir Hırsızı Sv.7'ye 335M Hasar, 30 dakika süre, MVP1 için 1.4B hasar",
             resource:"Peynir Tuzağı"
           },
+          DEMONW:{
+            objective:"Şeytan Kralı Savaşçı, Ranger Kahraman Hasarı +50%, 3 Damage Dealer + 1 Support",
+            resource:"Şeytan Kralı"
+          },
+          DEMONR:{
+            objective:"Şeytan Kralı Montaraz, Büyücü Kahraman Hasarı +50%, 3 Damage Dealer + 1 Support",
+            resource:"Şeytan Kralı"
+          },
+          DEMONZ:{
+            objective:"Şeytan Kralı Büyücü, Savaşçı Kahraman Hasarı +50%, 3 Damage Dealer + 1 Support",
+            resource:"Şeytan Kralı"
+          },
 
           BSBUILD:{
             objective:"Yetenek Rozeti ★, İnşaatları Bitirdiğinizde Fırsat [30.000 güç artır] veya Hızlandır [50H]",
@@ -1181,6 +1221,9 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           KWAR:{objective:"1.5M Punktów Honoru, pokonaj/strac/ulecz żołnierzy",resource:"Wojna Królestw (KvK)"},
           CUMULUS:{objective:"Zbieraj oczyszczony Kryształ ze Skał, 30min czasu",resource:"Kryształowe Skały"},
           CHEESE7:{objective:"Zadaj 335M obrażeń Złodziejowi Ser Lv.7, 30min czasu, 1.4B obrażeń dla MVP1",resource:"Pułapka na Ser"},
+          DEMONW:{objective:"Król Demonów Wojownik, obrażenia Bohatera Rangera +50%, 3 Damage Dealer + 1 Support",resource:"Król Demonów"},
+          DEMONR:{objective:"Król Demonów Montaraz, obrażenia Bohatera Czarodzieja +50%, 3 Damage Dealer + 1 Support",resource:"Król Demonów"},
+          DEMONZ:{objective:"Król Demonów Czarodziej, obrażenia Bohatera Wojownika +50%, 3 Damage Dealer + 1 Support",resource:"Król Demonów"},
 
           BSBUILD:{objective:"Odznaka Umiejętności ★, okazja po zakończeniu budowy [zwiększ moc o 30.000] lub przyspiesz [50H]",resource:"Budynki"},
           BSHERO:{objective:"Odznaka Umiejętności ★, okazja przy użyciu [23.4M] Antydotów lub [30] Biletów Bohatera",resource:"Bohaterowie"},
