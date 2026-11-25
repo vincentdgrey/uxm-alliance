@@ -965,18 +965,18 @@ body:not(.nav-open) .nav-toggle:hover nav-toggle-bars i {
   position: relative;
   width: fit-content;
   margin: 15px 0 0 auto;
-  padding: 0 0 2px;
-  color: #7c7c7c;
+  padding: 0 0 2px 5%;
+  color: #888;
   font-style: italic;
+  text-align: right;
   text-align: right;
 }
 .ha-author::after {
-  content: "";
+  content: "..........";
   position: absolute;
   right: 0;
-  bottom: 0;
+  top: 30%;
   left: 0;
-  border-bottom: 1px solid #7c7c7c;
 }
 .line-divider-scarlet,
 .line-divider-grey {
