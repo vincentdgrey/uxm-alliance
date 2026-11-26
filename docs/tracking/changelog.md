@@ -1,5 +1,16 @@
 # Changelog
 
+## [261126a] - 2026-11-26
+
+### Changed (CI/CD)
+- `.github/workflows/pr-develop-merge-main.yml` se refuerza para resolver el bloqueo **"Merging is blocked — Cannot update this protected ref"** observado en el PR #5 (`develop → main`) pese a tener aprobación y checks en verde. Causa raíz: la branch protection de `main` no autoriza a escribir a la identidad que ejecuta el merge (`github-actions[bot]`, dueño del `GITHUB_TOKEN`).
+  - Se documenta la causa y el checklist de corrección en la cabecera del workflow y en `docs/github-branch-protection.md`.
+  - Nuevo job `merge-on-approval` (plan B): disparado por `pull_request_review` y `check_suite`, verifica aprobación de un revisor autorizado, checks completados sin fallos y estado de mergeabilidad; fusiona con `gh pr merge --merge` cuando es `CLEAN`, sincroniza `develop` desde `main` cuando es `BEHIND` y falla con log explicativo cuando sigue `BLOCKED`.
+  - El mensaje de error al activar auto-merge ahora incluye el paso 3 (autorizar a `github-actions[bot]` en *Restrict who can push to matching branches*).
+
+### Added (docs)
+- `docs/github-branch-protection.md`: diagnóstico del bloqueo del PR #5, checklist de configuración de branch protection/auto-merge en GitHub (Allow auto-merge, Allow auto-merges, restricción de push con bot autorizado, permisos de Actions) y descripción del flujo de respaldo del workflow.
+
 ## [261125a] - 2026-11-25
 
 ### Changed
