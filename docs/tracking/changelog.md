@@ -1,5 +1,23 @@
 # Changelog
 
+## [261126b] - 2026-11-26
+
+### Changed
+- **El grupo Battle Survival muestra cuatro actividades en lugar de tres**: `OFF_VISIBLE_COUNT` pasa de `2` a `3`, de modo que la actividad `BS...` en curso va seguida de tres actividades `OFF...` consecutivas, todas con contador en estado `[COUNTDOWN]` y la clase de fila `ad-off-task`.
+- **El grupo se aloja en un segundo cuerpo de tabla propio**, `<tbody class="ad-battle-body">`, creado únicamente en la tabla del día actual. El cuerpo principal conserva solo las tareas normales, y la renovación del grupo ya no requiere recorrer ni filtrar las filas de las tareas diarias.
+- `buildBattleTaskRows()` calcula primero la actividad en curso y las tres siguientes, y solo después **renueva por completo su contenedor**, retirando las filas anteriores y descartando sus contadores antes de escribir las nuevas. Se elimina el recorrido sobre la colección viva `tbody.children`, que podía dejar filas o contadores obsoletos al cambiar de franja.
+- Se retira la función `todayTbody()`, ya innecesaria tras la separación de los cuerpos de tabla.
+- **La tabla del día actual se distingue visualmente del resto**: su encabezado y su separador de eventos usan el verde `#1d6e12`, mediante `.ad-item.ad-today .ad-schedule thead th` y `.ad-item.ad-today .ad-schedule tr.ad-event-separator > td`. Las reglas generales conservan `#4d7799`, de modo que **las tablas de los demás días no cambian**.
+
+### Fixed
+- El grupo ya no se reduce al terminar un contador `[COUNTDOWN]`: mantiene sus cuatro actividades en todo el ciclo de cuatro horas, incluidos los cruces de medianoche y de semana.
+
+### Added (tests)
+- `tests/activity-points.test.cjs` comprueba que el grupo muestra exactamente cuatro filas, que vive en un segundo cuerpo de tabla, que el cuerpo principal no aloja filas `BS` y que el ciclo completo de cuatro horas mantiene una actividad en `[PROGRESS]` y tres en `[COUNTDOWN]` sin perder ni duplicar filas.
+- `tests/ui-contract.test.cjs` verifica el render de cuatro filas, el segundo cuerpo de tabla y los estilos verdes del día actual, y comprueba que las reglas generales de encabezado y separador conservan `#4d7799`.
+
+### Changed (docs)
+- `docs/core/project-rules.md` documenta las cuatro actividades del grupo, el segundo cuerpo de tabla `ad-battle-body`, la renovación completa del contenedor y los estilos verdes de la tabla del día actual.
 ## [261126a] - 2026-11-26
 
 ### Changed
