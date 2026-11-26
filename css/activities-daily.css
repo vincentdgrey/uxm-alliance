@@ -309,7 +309,7 @@ tr.bs-current td.bs-event::after {
 .ad-schedule tbody tr.ad-off-task > td.ad-objective,
 .ad-schedule tbody tr.ad-off-task > td.ad-resource,
 .ad-schedule tbody tr.ad-off-task > td.ad-event {
-  background-color: #727374;
+  background-color: #aaa;
   color: #fff;
 }
 
