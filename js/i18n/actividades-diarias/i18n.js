@@ -89,8 +89,14 @@
           BSBUILD:{objective:"Insignias de Habilidad ★, Oportunidad al Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H]",resource:"Edificios"},
           BSHERO:{objective:"Insignias de Habilidad ★, Oportunidad al Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe",resource:"Heroes"},
           BSRAVEN:{objective:"Insignias de Habilidad ★, Oportunidad de usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo",resource:"Cuervo"},
-          BSSOLDIER:{objective:"Insignias de Habilidad ★, Oportunidad de entrenar [2.800] Soldados ó Acelerar Entrenamiento [17H]",resource:"Soldados"},
+          BSSOLDIER:{objective:"Insignias de Habilidad ★, Oportunidad de entrenar [2.800] Soldados ó Acelerar [17H] Entrenamiento",resource:"Soldados"},
           BSTECH:{objective:"Insignias de Habilidad ★, Oportunidad al Terminar Investigación [subir 30.000 poder] ó Acelerar [50H]",resource:"Investigación"},
+
+          OFFBUILD:{objective:"Próxima Batalla Supervivencia, Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H] Construcción",resource:"Edificios"},
+          OFFHERO:{objective:"Próxima Batalla Supervivencia, Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe",resource:"Heroes"},
+          OFFRAVEN:{objective:"Próxima Batalla Supervivencia, Usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo",resource:"Cuervo"},
+          OFFSOLDIER:{objective:"Próxima Batalla Supervivencia, Entrenar [2.800] Soldados ó Acelerar [17H] Entrenamiento",resource:"Soldados"},
+          OFFTECH:{objective:"Próxima Batalla Supervivencia, Terminar Investigación [subir 30.000 poder] ó Acelerar [50H] Investigación",resource:"Investigación"},
         },
         adPhases:{
           P00:"Fase 0 : Recolección y Reserva",
@@ -198,8 +204,14 @@ pageDailyLead:"Details of the daily activities that will help you improve every 
           BSBUILD:{objective:"Skill Badges ★, Opportunity when finishing Constructions [raise 30.000 might] or Speed up [50H]",resource:"Buildings"},
           BSHERO:{objective:"Skill Badges ★, Opportunity when using [23.4M] Antitoxins or [30] Hero Tickets",resource:"Heroes"},
           BSRAVEN:{objective:"Skill Badges ★, Opportunity to use Stamina/Energy in [15] Rallys or Raven Fruit",resource:"Raven"},
-          BSSOLDIER:{objective:"Skill Badges ★, Opportunity to train [2.800] Soldiers or Speed up Training [17H]",resource:"Soldiers"},
-          BSTECH:{objective:"Skill Badges ★, Opportunity when finishing Research [raise 30.000 might] or Speed up [50H]",resource:"Research"}
+          BSSOLDIER:{objective:"Skill Badges ★, Opportunity to train [2.800] Soldiers or Speed up [17H] Training",resource:"Soldiers"},
+          BSTECH:{objective:"Skill Badges ★, Opportunity when finishing Research [raise 30.000 might] or Speed up [50H]",resource:"Research"},
+
+          OFFBUILD:{objective:"Next Battle Survival, Finish Constructions [raise 30.000 might] or Speed up [50H] Construction",resource:"Buildings"},
+          OFFHERO:{objective:"Next Battle Survival, Use [23.4M] Antitoxins or [30] Hero Tickets",resource:"Heroes"},
+          OFFRAVEN:{objective:"Next Battle Survival, Use Stamina/Energy in [15] Rallys or Raven Fruit",resource:"Raven"},
+          OFFSOLDIER:{objective:"Next Battle Survival, Train [2.800] Soldiers or Speed up [17H] Training",resource:"Soldiers"},
+          OFFTECH:{objective:"Next Battle Survival, Finish Research [raise 30.000 might] or Speed up [50H] Research",resource:"Research"}
         },
         adPhases:{ P00:"Phase 0 : Gathering and Stockpiling", P01:"Phase 1 : Enhance Raven", P02:"Phase 2 : Territory Development", P03:"Phase 3 : Tech Research", P04:"Phase 4 : Hero Growth", P05:"Phase 5 : War Preparation", P06:"Phase 6 : Raid the Enemy" },
         adEvents:{ DY:"Tips Daily", AD:"Alliance Duel", KVK:"Kingdoms War", ROY:"Scramble Royal City", BS:"Battle Survival", EQ:"Gear Upgrade", BEX:"Elixir Scramble", CUM:"Cristal Cruster Valley", CHE:"Cheese Trap" }
@@ -289,8 +301,14 @@ pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos
           BSBUILD:{objective:"Emblemas de Habilidade ★, Oportunidade ao Terminar Construções [aumentar 30.000 poder] ou Acelerar [50H]",resource:"Edifícios"},
           BSHERO:{objective:"Emblemas de Habilidade ★, Oportunidade ao Usar [23.4M] Antitoxinas ou [30] Tickets de Herói",resource:"Heróis"},
           BSRAVEN:{objective:"Emblemas de Habilidade ★, Oportunidade de usar Stamina/Energia em [15] Rallys ou Fruta de Corvo",resource:"Corvo"},
-          BSSOLDIER:{objective:"Emblemas de Habilidade ★, Oportunidade de treinar [2.800] Soldados ou Acelerar Treinamento [17H]",resource:"Soldados"},
-          BSTECH:{objective:"Emblemas de Habilidade ★, Oportunidade ao Terminar Pesquisa [aumentar 30.000 poder] ou Acelerar [50H]",resource:"Pesquisa"}
+          BSSOLDIER:{objective:"Emblemas de Habilidade ★, Oportunidade de treinar [2.800] Soldados ou Acelerar [17H] Treinamento",resource:"Soldados"},
+          BSTECH:{objective:"Emblemas de Habilidade ★, Oportunidade ao Terminar Pesquisa [aumentar 30.000 poder] ou Acelerar [50H]",resource:"Pesquisa"},
+
+          OFFBUILD:{objective:"Próxima Battle Survival, Terminar Construções [aumentar 30.000 poder] ou Acelerar [50H] Construção",resource:"Edifícios"},
+          OFFHERO:{objective:"Próxima Battle Survival, Usar [23.4M] Antitoxinas ou [30] Tickets de Herói",resource:"Heróis"},
+          OFFRAVEN:{objective:"Próxima Battle Survival, Usar Energia/Stamina em [15] Rallys ou Fruta de Corvo",resource:"Corvo"},
+          OFFSOLDIER:{objective:"Próxima Battle Survival, Treinar [2.800] Soldados ou Acelerar [17H] Treinamento",resource:"Soldados"},
+          OFFTECH:{objective:"Próxima Battle Survival, Terminar Pesquisa [aumentar 30.000 poder] ou Acelerar [50H] Pesquisa",resource:"Pesquisa"}
         },
         adPhases:{ P00:"Fase 0 : Coleta e Reserva", P01:"Fase 1 : Melhorar Corvo", P02:"Fase 2 : Desenvolvimento do Território", P03:"Fase 3 : Pesquisa Tecnológica", P04:"Fase 4 : Crescimento de Heróis", P05:"Fase 5 : Preparação para a Guerra", P06:"Fase 6 : Assaltar o Inimigo" },
         adEvents:{ DY:"Dica Diária", AD:"Duelo de Alianças", KVK:"Guerra de Reinos", ROY:"Tumulto na Cidade Real", BS:"Cronograma Battle Survival", EQ:"Melhoria de Equipamento", BEX:"Batalha do Elixir", CUM:"Vale dos Cumulos de Cristal", CHE:"Armadilha de Queijo" }
@@ -380,8 +398,14 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           BSBUILD:{objective:"Distintivi di Abilità ★, Opportunità al Termine delle Costruzioni [aumentare 30.000 potenza] o Accelerare [50H]",resource:"Edifici"},
           BSHERO:{objective:"Distintivi di Abilità ★, Opportunità all'Uso [23.4M] Antitossine o [30] Ticket dell'Eroe",resource:"Eroi"},
           BSRAVEN:{objective:"Distintivi di Abilità ★, Opportunità di usare Stamina/Energia in [15] Rally o Frutto di Corvo",resource:"Corvo"},
-          BSSOLDIER:{objective:"Distintivi di Abilità ★, Opportunità di addestrare [2.800] Soldati o Accelerare Addestramento [17H]",resource:"Soldati"},
-          BSTECH:{objective:"Distintivi di Abilità ★, Opportunità al Termine della Ricerca [aumentare 30.000 potenza] o Accelerare [50H]",resource:"Ricerca"}
+          BSSOLDIER:{objective:"Distintivi di Abilità ★, Opportunità di addestrare [2.800] Soldati o Accelerare [17H] Addestramento",resource:"Soldati"},
+          BSTECH:{objective:"Distintivi di Abilità ★, Opportunità al Termine della Ricerca [aumentare 30.000 potenza] o Accelerare [50H]",resource:"Ricerca"},
+
+          OFFBUILD:{objective:"Prossima Battle Survival, Termina le Costruzioni [aumenta 30.000 potenza] o Accelera [50H] Costruzione",resource:"Edifici"},
+          OFFHERO:{objective:"Prossima Battle Survival, Usa [23.4M] Antitossine o [30] Ticket Eroe",resource:"Eroi"},
+          OFFRAVEN:{objective:"Prossima Battle Survival, Usa Energia/Stamina in [15] Rally o Frutto del Corvo",resource:"Corvo"},
+          OFFSOLDIER:{objective:"Prossima Battle Survival, Addestra [2.800] Soldati o Accelera [17H] Addestramento",resource:"Soldati"},
+          OFFTECH:{objective:"Prossima Battle Survival, Termina la Ricerca [aumenta 30.000 potenza] o Accelera [50H] Ricerca",resource:"Ricerca"}
         },
         adPhases:{ P00:"Fase 0 : Raccolta e Riserva", P01:"Fase 1 : Migliora Corvo", P02:"Fase 2 : Sviluppo del Territorio", P03:"Fase 3 : Ricerca Tecnologica", P04:"Fase 4 : Crescita degli Eroi", P05:"Fase 5 : Preparazione alla Guerra", P06:"Fase 6 : Assalta il Nemico" },
         adEvents:{ DY:"Consiglio Giornaliero", AD:"Duello delle Alleanze", KVK:"Guerra tra Regni", ROY:"Tumulto della Città Reale", BS:"Calendario Battle Survival", EQ:"Miglioramento Equipaggiamento", BEX:"Battaglia dell'Elisir", CUM:"Valle dei Cumulo di Cristallo", CHE:"Trappola del Formaggio" }
@@ -471,8 +495,14 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           BSBUILD:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Fertigstellen von Bauten [Stärke um 30.000 erhöhen] oder Beschleunigen [50H]",resource:"Gebäude"},
           BSHERO:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Verwenden [23.4M] Antitoxinen oder [30] Helden-Tickets",resource:"Helden"},
           BSRAVEN:{objective:"Fähigkeitsabzeichen ★, Gelegenheit, Ausdauer/Energie in [15] Rallys oder Rabenfrucht zu nutzen",resource:"Rabe"},
-          BSSOLDIER:{objective:"Fähigkeitsabzeichen ★, Gelegenheit, [2.800] Soldaten zu trainieren oder Training zu beschleunigen [17H]",resource:"Soldaten"},
-          BSTECH:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Fertigstellen der Forschung [Stärke um 30.000 erhöhen] oder Beschleunigen [50H]",resource:"Forschung"}
+          BSSOLDIER:{objective:"Fähigkeitsabzeichen ★, Gelegenheit, [2.800] Soldaten zu trainieren oder [17H] Training zu beschleunigen",resource:"Soldaten"},
+          BSTECH:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Fertigstellen der Forschung [Stärke um 30.000 erhöhen] oder Beschleunigen [50H]",resource:"Forschung"},
+
+          OFFBUILD:{objective:"Nächste Battle Survival, Bauen abschließen [Stärke um 30.000 erhöhen] oder [50H] Construction beschleunigen",resource:"Gebäude"},
+          OFFHERO:{objective:"Nächste Battle Survival, [23.4M] Antitoxine oder [30] Heldentickets verwenden",resource:"Helden"},
+          OFFRAVEN:{objective:"Nächste Battle Survival, Energie/Ausdauer in [15] Rallies oder Ravenfrucht verwenden",resource:"Rabe"},
+          OFFSOLDIER:{objective:"Nächste Battle Survival, [2.800] Soldaten trainieren oder [17H] Training beschleunigen",resource:"Soldaten"},
+          OFFTECH:{objective:"Nächste Battle Survival, Forschung abschließen [Stärke um 30.000 erhöhen] oder [50H] Forschung beschleunigen",resource:"Forschung"}
         },
         adPhases:{
           P00:"Phase 0 : Sammeln und Lagern",
@@ -581,7 +611,13 @@ pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous am
           BSHERO:{objective:"Badges de Compétence ★, Opportunité lors de l'Utilisation [23.4M] Antitoxines ou [30] Tickets de Héros",resource:"Héros"},
           BSRAVEN:{objective:"Badges de Compétence ★, Opportunité d'utiliser de l'Énergie/Endurance lors de [15] Rallys ou du Fruit de Corbeau",resource:"Corbeau"},
           BSSOLDIER:{objective:"Badges de Compétence ★, Opportunité d'entraîner [2.800] Soldats ou d'Accélérer l'Entraînement [17H]",resource:"Soldats"},
-          BSTECH:{objective:"Badges de Compétence ★, Opportunité à la fin de la Recherche [augmenter la Puissance de 30.000] ou Accélérer [50H]",resource:"Recherche"}
+          BSTECH:{objective:"Badges de Compétence ★, Opportunité à la fin de la Recherche [augmenter la Puissance de 30.000] ou Accélérer [50H]",resource:"Recherche"},
+
+          OFFBUILD:{objective:"Prochaine Battle Survival, Terminer les Constructions [augmenter la Puissance de 30.000] ou Accélérer [50H] Construction",resource:"Bâtiments"},
+          OFFHERO:{objective:"Prochaine Battle Survival, Utiliser [23.4M] Antitoxines ou [30] Tickets de Héros",resource:"Héros"},
+          OFFRAVEN:{objective:"Prochaine Battle Survival, Utiliser Énergie/Endurance dans [15] Rallys ou Fruit du Corbeau",resource:"Corbeau"},
+          OFFSOLDIER:{objective:"Prochaine Battle Survival, Entraîner [2.800] Soldats ou Accélérer l'Entraînement [17H]",resource:"Soldats"},
+          OFFTECH:{objective:"Prochaine Battle Survival, Terminer la Recherche [augmenter la Puissance de 30.000] ou Accélérer [50H] Recherche",resource:"Recherche"}
         },
         adPhases:{ P00:"Phase 0 : Collecte et Réserve", P01:"Phase 1 : Améliorer le Corbeau", P02:"Phase 2 : Développement du Territoire", P03:"Phase 3 : Recherche Technologique", P04:"Phase 4 : Croissance des Héros", P05:"Phase 5 : Préparation à la Guerre", P06:"Phase 6 : Attaquer l'Ennemi" },
         adEvents:{ DY:"Conseil Quotidien", AD:"Duelo d'Alliance", KVK:"Guerre des Royaumes", ROY:"Émeute de la Cité Royale", BS:"Calendrier Battle Survival", EQ:"Amélioration d'Équipement", BEX:"Bataille de l'Élixir", CUM:"Vallée des Amas de Cristal", CHE:"Piège à Fromage" }
@@ -671,8 +707,14 @@ pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
           BSBUILD:{objective:"スキルバッジ ★、建設完了時の機会 [威力を30.000上昇] または加速 [50H]",resource:"建物"},
           BSHERO:{objective:"スキルバッジ ★、使用時の機会 [23.4M] 解毒剤 または [30] 英雄チケット",resource:"英雄"},
           BSRAVEN:{objective:"スキルバッジ ★、エネルギー/スタミナを [15] 集结で使用 または レイベンの果物 を使う機会",resource:"レイベン"},
-          BSSOLDIER:{objective:"スキルバッジ ★、兵士 [2.800] を訓練 または 訓練を加速 [17H] する機会",resource:"兵士"},
-          BSTECH:{objective:"スキルバッジ ★、研究完了時の機会 [威力を30.000上昇] または加速 [50H]",resource:"研究"}
+          BSSOLDIER:{objective:"スキルバッジ ★、兵士 [2.800] を訓練 または [17H] 訓練を加速 する機会",resource:"兵士"},
+          BSTECH:{objective:"スキルバッジ ★、研究完了時の機会 [威力を30.000上昇] または加速 [50H]",resource:"研究"},
+
+          OFFBUILD:{objective:"次の Battle Survival、建設完了 [威力を30.000上昇] または [50H] 建設を加速",resource:"建物"},
+          OFFHERO:{objective:"次の Battle Survival、解毒剤 [23.4M] または英雄チケット [30] 使用",resource:"英雄"},
+          OFFRAVEN:{objective:"次の Battle Survival、エネルギー/スタミナを [15] 集结で使用 またはレイベンの果物 を使う機会",resource:"レイベン"},
+          OFFSOLDIER:{objective:"次の Battle Survival、兵士 [2.800] を訓練 または [17H] 訓練を加速 する機会",resource:"兵士"},
+          OFFTECH:{objective:"次の Battle Survival、研究完了 [威力を30.000上昇] または [50H] 研究を加速",resource:"研究"}
         },
         adPhases:{ P00:"フェーズ0：収集と備蓄", P01:"フェーズ1：レイベンの強化", P02:"フェーズ2：領土の開発", P03:"フェーズ3：技術の研究", P04:"フェーズ4：英雄の成長", P05:"フェーズ5：戦争の準備", P06:"フェーズ6：敵の襲撃" },
         adEvents:{ DY:"デイリーアドバイス", AD:"アライアンスデュエル", KVK:"王国戦", ROY:"王都の騒動", BS:"Battle Survival スケジュール", EQ:"装備の強化", BEX:"エリキシルの戦い", CUM:"クリスタル堆積の谷", CHE:"チーズの罠" }
@@ -763,7 +805,13 @@ pageDailyLead:"Подробности ежедневных активносте�
           BSHERO:{objective:"Значки Навыка ★, Возможность при Использовании [23.4M] Антитоксинов или [30] Билетов Героя",resource:"Герои"},
           BSRAVEN:{objective:"Значки Навыка ★, Возможность использовать Энергию/Стамину в [15] Ралли или Плод Ворона",resource:"Ворона"},
           BSSOLDIER:{objective:"Значки Навыка ★, Возможность обучить [2.800] Солдат или Ускорить Обучение [17H]",resource:"Солдаты"},
-          BSTECH:{objective:"Значки Навыка ★, Возможность при завершении Исследований [повысить Мощь на 30.000] или Ускорить [50H]",resource:"Исследования"}
+          BSTECH:{objective:"Значки Навыка ★, Возможность при завершении Исследований [повысить Мощь на 30.000] или Ускорить [50H]",resource:"Исследования"},
+
+          OFFBUILD:{objective:"Следующая Battle Survival, Завершить Постройки [повысить Мощь на 30.000] или Ускорить [50H] Строительство",resource:"Здания"},
+          OFFHERO:{objective:"Следующая Battle Survival, Использовать [23.4M] Антитоксины или [30] Билетов Героя",resource:"Герои"},
+          OFFRAVEN:{objective:"Следующая Battle Survival, Использовать Энергию/Выносливость в [15] Ралли или Ягоду Ворона",resource:"Ворон"},
+          OFFSOLDIER:{objective:"Следующая Battle Survival, Обучить [2.800] Солдат или Ускорить Обучение [17H]",resource:"Солдаты"},
+          OFFTECH:{objective:"Следующая Battle Survival, Завершить Исследование [повысить Мощь на 30.000] или Ускорить [50H] Исследование",resource:"Исследования"}
         },
         adPhases:{ P00:"Фаза 0 : Сбор и Резерв", P01:"Фаза 1 : Улучшение Ворона", P02:"Фаза 2 : Развитие Территории", P03:"Фаза 3 : Технологические Исследования", P04:"Фаза 4 : Рост Героев", P05:"Фаза 5 : Подготовка к Войне", P06:"Фаза 6 : Поход на Врага" },
         adEvents:{ DY:"Совет Дня", AD:"Дуэль Альянсов", KVK:"Война Королевств", ROY:"Мятеж в Королевском Городе", BS:"Расписание Battle Survival", EQ:"Улучшение Снаряжения", BEX:"Битва Эликсира", CUM:"Долина Кристаллических Наносов", CHE:"Сырная Ловушка" }
@@ -853,8 +901,14 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           BSBUILD:{objective:"技能徽章 ★，完成建造时的机会 [提升 30.000 战力] 或加速 [50H]",resource:"建筑"},
           BSHERO:{objective:"技能徽章 ★，使用时的机会 [23.4M] 解毒剂 或 [30] 英雄票券",resource:"英雄"},
           BSRAVEN:{objective:"技能徽章 ★，在 [15] 次集结中使用体力/能量 或 渡鸦果实 的机会",resource:"渡鸦"},
-          BSSOLDIER:{objective:"技能徽章 ★，训练 [2.800] 名士兵 或 加速训练 [17H] 的机会",resource:"士兵"},
-          BSTECH:{objective:"技能徽章 ★，完成研究时的机会 [提升 30.000 战力] 或加速 [50H]",resource:"研究"}
+          BSSOLDIER:{objective:"技能徽章 ★，训练 [2.800] 名士兵 或 加速 [17H] 训练 的机会",resource:"士兵"},
+          BSTECH:{objective:"技能徽章 ★，完成研究时的机会 [提升 30.000 战力] 或加速 [50H]",resource:"研究"},
+
+          OFFBUILD:{objective:"下次 Battle Survival，完成建造 [提升 30.000 战力] 或加速 [50H] 建造",resource:"建筑"},
+          OFFHERO:{objective:"下次 Battle Survival，使用 [23.4M] 解毒剂 或 [30] 英雄券",resource:"英雄"},
+          OFFRAVEN:{objective:"下次 Battle Survival，在 [15] 次集结中使用 能量/耐力 或使用渡鸦果实",resource:"渡鸦"},
+          OFFSOLDIER:{objective:"下次 Battle Survival，训练 [2.800] 名士兵 或加速 [17H] 训练",resource:"士兵"},
+          OFFTECH:{objective:"下次 Battle Survival，完成研究 [提升 30.000 战力] 或加速 [50H] 研究",resource:"研究"}
         },
         adPhases:{ P00:"阶段 0：收集与储备", P01:"阶段 1：强化渡鸦", P02:"阶段 2：领地发展", P03:"阶段 3：科技研究", P04:"阶段 4：英雄成长", P05:"阶段 5：战前准备", P06:"阶段 6：突袭敌人" },
         adEvents:{ DY:"每日提示", AD:"联盟对决", KVK:"王国战争", ROY:"王都骚乱", BS:"Battle Survival 日程", EQ:"装备升级", BEX:"灵药争夺战", CUM:"水晶堆谷", CHE:"奶酪陷阱" }
@@ -1124,11 +1178,32 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
             resource:"Karga"
           },
           BSSOLDIER:{
-            objective:"Yetenek Rozeti ★, [2.800] Asker Eğitme veya Eğitimi Hızlandırma [17H] Fırsatı",
+            objective:"Yetenek Rozeti ★, [2.800] Asker Eğitme veya [17H] Eğitimi Hızlandırma Fırsatı",
             resource:"Askerler"
           },
           BSTECH:{
             objective:"Yetenek Rozeti ★, Araştırmayı Bitirdiğinizde Fırsat [30.000 güç artır] veya Hızlandır [50H]",
+            resource:"Araştırma"
+          },
+
+          OFFBUILD:{
+            objective:"Sıradaki Battle Survival, İnşaatları Bitir [30.000 güç artır] veya [50H] İnşaat Hızlandır",
+            resource:"Binalar"
+          },
+          OFFHERO:{
+            objective:"Sıradaki Battle Survival, [23.4M] Antitoksin veya [30] Kahraman Bileti Kullan",
+            resource:"Kahramanlar"
+          },
+          OFFRAVEN:{
+            objective:"Sıradaki Battle Survival, Enerji/Dayanıklılığı [15] Rally'de Kullan veya Karga Meyvesi Fırsatı",
+            resource:"Karga"
+          },
+          OFFSOLDIER:{
+            objective:"Sıradaki Battle Survival, [2.800] Asker Eğit veya [17H] Eğitimi Hızlandır",
+            resource:"Askerler"
+          },
+          OFFTECH:{
+            objective:"Sıradaki Battle Survival, Araştırmayı Bitir [30.000 güç artır] veya [50H] Araştırma Hızlandır",
             resource:"Araştırma"
           }
         }
@@ -1228,8 +1303,14 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           BSBUILD:{objective:"Odznaka Umiejętności ★, okazja po zakończeniu budowy [zwiększ moc o 30.000] lub przyspiesz [50H]",resource:"Budynki"},
           BSHERO:{objective:"Odznaka Umiejętności ★, okazja przy użyciu [23.4M] Antydotów lub [30] Biletów Bohatera",resource:"Bohaterowie"},
           BSRAVEN:{objective:"Odznaka Umiejętności ★, okazja na zużycie energii/wytrzymałości w [15] Rajdach lub Owocu Kruka",resource:"Kruk"},
-          BSSOLDIER:{objective:"Odznaka Umiejętności ★, okazja na wyszkolenie [2.800] Żołnierzy lub przyspieszenie szkolenia [17H]",resource:"Żołnierze"},
-          BSTECH:{objective:"Odznaka Umiejętności ★, okazja po zakończeniu badań [zwiększ moc o 30.000] lub przyspiesz [50H]",resource:"Badania"}
+          BSSOLDIER:{objective:"Odznaka Umiejętności ★, okazja na wyszkolenie [2.800] Żołnierzy lub przyspieszenie [17H] szkolenia",resource:"Żołnierze"},
+          BSTECH:{objective:"Odznaka Umiejętności ★, okazja po zakończeniu badań [zwiększ moc o 30.000] lub przyspiesz [50H]",resource:"Badania"},
+
+          OFFBUILD:{objective:"Następna Battle Survival, Zakończ budowy [zwiększ moc o 30.000] lub przyspiesz [50H] budowy",resource:"Budynki"},
+          OFFHERO:{objective:"Następna Battle Survival, Użyj [23.4M] Antydotów lub [30] Biletów Bohatera",resource:"Bohaterowie"},
+          OFFRAVEN:{objective:"Następna Battle Survival, Użyj energii/wytrzymałości w [15] Rajdach lub Owocu Kruka",resource:"Kruk"},
+          OFFSOLDIER:{objective:"Następna Battle Survival, Wyszkol [2.800] Żołnierzy lub przyspiesz [17H] szkolenia",resource:"Żołnierze"},
+          OFFTECH:{objective:"Następna Battle Survival, Zakończ badania [zwiększ moc o 30.000] lub przyspiesz [50H] badań",resource:"Badania"}
         }
       }
   };
