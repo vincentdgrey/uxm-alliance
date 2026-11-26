@@ -824,24 +824,43 @@ test("los puntos se integran en la columna Tarea con la nota minima", () => {
   }
 });
 
-test("el grupo Battle Survival escribe tres filas y no oculta ninguna", () => {
+test("el grupo Battle Survival escribe cuatro filas y no oculta ninguna", () => {
   const js = read("js/activities-daily.js");
   const css = read("css/activities-daily.css");
 
-  /* Solo las actividades cuyo codigo empieza con BS se agregan. */
+  /* Solo las actividades cuyo codigo empieza por BS se agregan. */
   assert.match(js, /var BS_CODE_PREFIX = "BS"/);
   assert.match(js, /a\.code\.indexOf\(BS_CODE_PREFIX\) === 0/);
 
-  /* Una sola funcion escribe la actividad BS en curso y las dos OFF. */
+  /* Una sola funcion escribe la actividad BS en curso y las tres OFF. */
   assert.match(js, /function buildBattleTaskRows\(noday, nowSec, startDayMs\)/);
   assert.match(js, /var currentAct = currentSlot \? bsByCodebs\[currentSlot\.codebs\] : null/);
   assert.match(js, /var nextSlots = nextScheduleSlots\(noday, nowSec, OFF_VISIBLE_COUNT\)/);
 
-  /* Las tres filas se escriben siempre: no hay logica de ocultacion. */
+  /* Tres actividades OFF: con la BS en curso, cuatro filas. */
+  assert.match(js, /var OFF_VISIBLE_COUNT = 3/);
+
+  /* El grupo vive en un segundo cuerpo de tabla propio. */
+  assert.match(js, /battleBodyEl = document\.createElement\("tbody"\)/);
+  assert.match(js, /battleBodyEl\.className = "ad-battle-body"/);
+
+  /* Las cuatro filas se escriben siempre: no hay logica de ocultacion. */
   assert.doesNotMatch(js, /ad-bs-hidden/);
   assert.doesNotMatch(js, /function applyBsVisibility/);
   assert.doesNotMatch(js, /function applyOffVisibility/);
   assert.doesNotMatch(css, /ad-bs-hidden/);
+});
+
+test("el encabezado y el separador del dia actual usan el verde de batalla", () => {
+  const css = read("css/activities-daily.css");
+
+  /* El dia actual pinta el encabezado y el separador con #1d6e12. */
+  assert.match(css, /\.ad-item\.ad-today \.ad-schedule thead th \{[^}]*background:\s*#1d6e12[^}]*border-bottom-color:\s*#1d6e12/s);
+  assert.match(css, /\.ad-item\.ad-today \.ad-schedule tr\.ad-event-separator > td \{[^}]*border-bottom-color:\s*#1d6e12/s);
+
+  /* Las reglas generales conservan el color #4d7799. */
+  assert.match(css, /\.ad-schedule th \{[^}]*background:\s*#4d7799/s);
+  assert.match(css, /\.ad-schedule tbody tr\.ad-event-separator td \{[^}]*border-bottom:\s*2px solid #4d7799/s);
 });
 
 test("el grupo Battle Survival se separa con la clase de separador de eventos", () => {
