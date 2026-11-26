@@ -728,17 +728,22 @@
     }
 
     /* ---------- Actividades de Batalla de Supervivencia (codigos BS...) ----------
-       Las actividades cuyo codigo comienza con "BS" se agregan unicamente a
-       la tabla del dia actual. Su contador es el del horario vinculado de
-       Battle Survival y solo son visibles cuando ese contador esta en
-       estado [PROGRESS]; en cualquier otro estado permanecen ocultas.
+       Las actividades cuyo codigo comienza con "BS" describen la franja de
+       Battle Survival en curso. Se muestran unicamente en la tabla del dia
+       actual y su contador es el del horario vinculado, en estado
+       [PROGRESS].
 
        Las actividades cuyo codigo comienza con "OFF" representan la
        oportunidad siguiente de cada tipo de Battle Survival. Se muestran
        las dos siguientes a la actividad en curso, en orden cronologico,
        con un contador unicamente en estado [COUNTDOWN]. La fila completa
        recibe la clase ad-off-task, que marca las celdas Tarea, Recurso y
-       Evento con el aspecto de actividad proxima. */
+       Evento con el aspecto de actividad proxima.
+
+       El grupo Battle Survival muestra siempre tres filas: la actividad BS
+       en curso y las dos OFF siguientes. No hay filas ocultas: cuando
+       cambia la franja en curso, JavaScript sobrescribe el contenido de
+       esas tres filas. */
 
     var BS_CODE_PREFIX = "BS";
     var OFF_CODE_PREFIX = "OFF";
@@ -755,6 +760,12 @@
 
     var offActivities = ACTIVITY_CODE.filter(function (a) {
       return a.code.indexOf(OFF_CODE_PREFIX) === 0;
+    });
+
+    /* Actividad BS asociada a cada codigo de horario de Battle Survival. */
+    var bsByCodebs = {};
+    bsActivities.forEach(function (a) {
+      if (a.codebs) bsByCodebs[a.codebs] = a;
     });
 
     /* Actividad OFF asociada a cada codigo de horario de Battle Survival. */
@@ -846,16 +857,6 @@
       };
     }
 
-    /* Aplica la visibilidad de una fila BS segun el estado de su contador. */
-    function applyBsVisibility(tr, state) {
-      tr.classList.toggle("ad-bs-hidden", state !== STATE_PROGRESS);
-    }
-
-    /* Una fila OFF solo es visible con su contador en cuenta regresiva. */
-    function applyOffVisibility(tr, state) {
-      tr.classList.toggle("ad-bs-hidden", state !== STATE_COUNTDOWN);
-    }
-
     /* Reconstruye el texto de la tarea separando cada estrella para poder
        colorearla. Solo se usa en las actividades de Battle Survival. */
     function appendStars(cell, text) {
@@ -937,11 +938,6 @@
         state = STATE_NORMAL;
         timeTxt = dayDateLabel(startDayMs, offset);
       }
-
-      /* Las actividades BS solo se muestran con el contador en progreso. */
-      if (r.isBs) applyBsVisibility(tr, state);
-      /* Las actividades OFF solo se muestran en cuenta regresiva. */
-      if (r.isOff) applyOffVisibility(tr, state);
 
       /* 1. Contador */
       if (!timeCell) timeCell = appendCell(tr, timeTxt, "ad-time");
@@ -1104,15 +1100,9 @@
           tbody.appendChild(row);
         }
 
-        /* Las actividades BS se agregan solo al dia actual, al final del
-           grupo de tareas para no alterar el orden de los demas grupos. */
-        if (k === 0) {
-          for (var b = 0; b < bsActivities.length; b++) {
-            var bsRowEl = buildRow(bsRow(bsActivities[b], noday), k, startDayMs, nowSec);
-            bsRowEl.classList.add("ad-bs-task");
-            tbody.appendChild(bsRowEl);
-          }
-        }
+        /* Las actividades BS se agregan al final del grupo de tareas del
+           dia actual, una vez construida la tabla, mediante
+           buildBattleTaskRows(). */
         table.appendChild(tbody);
 
         wrap.appendChild(table);
@@ -1129,14 +1119,15 @@
         })(item, title, baseCls);
       }
 
-      /* La franja en curso determina las dos oportunidades OFF que se
-         muestran bajo la actividad BS actual. */
+      /* La franja en curso determina la actividad BS visible y las dos
+         oportunidades OFF que se muestran bajo ella. */
       currentSlotNoday = today;
       currentSlotIndex = slotIndexAt(today, nowSec);
-      buildOffRows(today, nowSec, startDayMs);
+      buildBattleTaskRows(today, nowSec, startDayMs);
     }
 
-    /* Cuerpo de la tabla del dia actual, donde se insertan las filas OFF.
+    /* Cuerpo de la tabla del dia actual, donde se insertan las filas del
+       grupo Battle Survival.
        La estructura es: .ad-item > .ad-item-body > .ad-wrap > table > tbody. */
     function todayTbody() {
       var item = listsEl.children[0];
@@ -1157,39 +1148,45 @@
       return null;
     }
 
-    /* Reconstruye las filas OFF con las dos franjas siguientes a la que
-       esta en curso. Se ejecuta en cada cambio de franja, de modo que la
-       lista avanza sola cuando comienza una nueva actividad BS. */
-    function buildOffRows(noday, nowSec, startDayMs) {
+    /* Escribe las tres filas del grupo Battle Survival en la tabla del dia
+       actual: la actividad BS de la franja en curso, con su contador en
+       estado [PROGRESS], y las dos actividades OFF consecutivas siguientes,
+       con su contador en estado [COUNTDOWN] y el estilo de fila proxima.
+
+       No hay filas ocultas: al cambiar de franja se retiran las tres filas
+       anteriores y se vuelven a escribir con los datos vigentes. */
+    function buildBattleTaskRows(noday, nowSec, startDayMs) {
       var tbody = todayTbody();
       if (!tbody) return;
 
-      /* Se retiran las filas OFF anteriores del cuerpo de la tabla. */
+      /* Se retiran las filas del grupo Battle Survival anteriores. */
       var kept = [];
       for (var i = 0; i < tbody.children.length; i++) {
         var row = tbody.children[i];
-        var code = "";
-        for (var c = 0; c < row.children.length; c++) {
-          var cell = row.children[c];
-          if (String(cell.className).indexOf("ad-task-icon") >= 0) {
-            code = cell.getAttribute("data-code") || "";
-            break;
-          }
-        }
-        if (code.indexOf(OFF_CODE_PREFIX) === 0) {
+        if (String(row.className).indexOf("ad-bs-task") >= 0) {
           if (typeof tbody.removeChild === "function") tbody.removeChild(row);
         } else {
           kept.push(row);
         }
       }
-      /* El cuerpo conserva unicamente las filas que no son OFF. */
+      /* El cuerpo conserva unicamente las filas que no son del grupo. */
       if (kept.length !== tbody.children.length) tbody.children = kept;
 
       /* Los contadores de las filas retiradas dejan de actualizarse. */
       counters = counters.filter(function (counter) {
-        return counter.offStartSec === undefined;
+        return !counter.isBs && counter.offStartSec === undefined;
       });
 
+      /* La primera fila es la actividad BS de la franja en curso. */
+      var currentSlot = bsSchedule[slotIndexAt(noday, nowSec)];
+      var currentAct = currentSlot ? bsByCodebs[currentSlot.codebs] : null;
+      if (currentAct) {
+        var bsRowEl = buildRow(bsRow(currentAct, noday), 0, startDayMs, nowSec);
+        bsRowEl.classList.add("ad-bs-task");
+        tbody.appendChild(bsRowEl);
+      }
+
+      /* Las dos filas siguientes son las oportunidades OFF consecutivas. */
       var nextSlots = nextScheduleSlots(noday, nowSec, OFF_VISIBLE_COUNT);
       for (var s = 0; s < nextSlots.length; s++) {
         var offAct = offByCodebs[nextSlots[s].codebs];
@@ -1212,12 +1209,12 @@
         currentPhaseEl.textContent = phaseCountdown(nowSec);
       }
 
-      /* Al cambiar de franja de Battle Survival las oportunidades OFF
-         avanzan: se retiran las anteriores y se construyen las dos
-         siguientes a la nueva actividad en curso. */
+      /* Al cambiar de franja de Battle Survival el grupo se reescribe: la
+         actividad BS en curso pasa a ser la anterior y las oportunidades
+         OFF avanzan a las dos siguientes. */
       if (slotIndexAt(currentSlotNoday, nowSec) !== currentSlotIndex) {
         currentSlotIndex = slotIndexAt(currentSlotNoday, nowSec);
-        buildOffRows(currentSlotNoday, nowSec, Date.UTC(
+        buildBattleTaskRows(currentSlotNoday, nowSec, Date.UTC(
           origin.getUTCFullYear(), origin.getUTCMonth(), origin.getUTCDate()
         ));
       }
@@ -1244,10 +1241,6 @@
           counter.td.textContent = result.text;
         }
         applyCounterState(counter.tr, result.state);
-        /* Las actividades BS solo son visibles con el contador en progreso. */
-        if (counter.isBs) applyBsVisibility(counter.tr, result.state);
-        /* Las actividades OFF solo son visibles en cuenta regresiva. */
-        if (counter.offStartSec !== undefined) applyOffVisibility(counter.tr, result.state);
       }
     }
 

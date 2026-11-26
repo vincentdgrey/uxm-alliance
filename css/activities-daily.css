@@ -419,10 +419,6 @@ tr.bs-current td.bs-event::after {
   white-space: nowrap;
   text-align: right;
 }
-/* Actividades de Batalla de Supervivencia: ocultas salvo en progreso. */
-.ad-schedule tbody tr.ad-bs-hidden {
-  display: none;
-}
 /* Nota sobre el caracter referencial de los puntos. */
 .ad-points-note {
   font-size: 0.8rem;
