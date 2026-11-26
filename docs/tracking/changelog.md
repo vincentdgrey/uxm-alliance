@@ -1,5 +1,23 @@
 # Changelog
 
+## [261126c] - 2026-11-26
+
+### Changed
+- **Cada grupo de eventos ocupa un cuerpo de tabla propio** (`<tbody class="ad-event-body" data-event="<código>">`). Las tablas del Duelo de Alianzas se construyen recorriendo los grupos en orden y creando un cuerpo por cada uno, en lugar de una única lista de filas.
+- **El orden de los grupos lo define exclusivamente el valor `view` de `EVENT_CODE`**: `DY` (1) → `ROY` (2) → `KVK` (3) → `AD` (4) → `EQ` (5) → `BEX` (6) → `CUM` (7) → `BS` (8). El recorrido se resuelve con `orderedEvents`, que ordena `EVENT_CODE` por `view`, y las actividades se agrupan con `groupRowsByEvent()`, que conserva el orden original dentro de cada grupo.
+- El grupo `BS` participa del mismo recorrido y solo crea cuerpo en la tabla del día actual; su cuerpo declara `data-event="BS"` y la clase `ad-battle-body`, y su posición depende del valor `view` del evento.
+- El separador de eventos se asigna de forma genérica a la última fila de cada cuerpo que tiene otro grupo detrás.
+- La regla de borde de la última fila pasa a `.ad-schedule > tbody > tr:last-child:not(.ad-event-separator) td`, para que la última fila de un grupo con separador conserve su borde de `2px`. El aspecto visual se mantiene.
+
+### Removed
+- Se retiran `EVENT_ORDER` y `sortRowsByEvent()` de `js/activities-daily.js`, junto con la comparación entre actividades consecutivas que delimitaba los grupos. No queda ninguna otra lógica de orden de grupos.
+
+### Added (tests)
+- `tests/activity-points.test.cjs` comprueba que cada grupo de eventos ocupa un cuerpo propio, que el orden de los cuerpos coincide con el valor `view` de `EVENT_CODE`, que los valores `view` son numéricos, positivos y únicos, y que el separador cierra cada grupo salvo el último.
+- `tests/ui-contract.test.cjs` verifica el agrupamiento por `EVENT_CODE.view` y comprueba que no quedan referencias a `EVENT_ORDER` ni a `sortRowsByEvent`.
+
+### Changed (docs)
+- `docs/core/project-rules.md` documenta el modelo de un cuerpo por grupo de eventos, el orden por `view` de `EVENT_CODE` y el ajuste de la regla de borde de la última fila.
 ## [261126b] - 2026-11-26
 
 ### Changed
