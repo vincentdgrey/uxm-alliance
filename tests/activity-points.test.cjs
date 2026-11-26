@@ -33,6 +33,11 @@ function makeEl(tag) {
     setAttribute(k, v) { el.attributes[k] = v; },
     getAttribute(k) { return el.attributes[k]; },
     appendChild(c) { el.children.push(c); return c; },
+    removeChild(c) {
+      const index = el.children.indexOf(c);
+      if (index >= 0) el.children.splice(index, 1);
+      return c;
+    },
     addEventListener() {}
   };
   Object.defineProperty(el, "className", {
@@ -160,6 +165,16 @@ function expectedPoint(code) {
 
 function taskCellOf(row) {
   return findByClass(row, "ad-objective")[0] || null;
+}
+
+function timeCellOf(row) {
+  return findByClass(row, "ad-time")[0] || null;
+}
+
+/* Clases de estado del contador declaradas en la fila. */
+function stateClasses(row) {
+  const states = ["ad-state-countdown", "ad-state-progress", "ad-state-normal"];
+  return states.filter((state) => row.classList.contains(state));
 }
 
 function rowByTaskCode(result, code) {
@@ -291,8 +306,9 @@ test("las actividades BS solo existen en la tabla del dia actual", () => {
   const bsRows = rows.filter((row) => row.classList.contains("ad-bs-task"));
 
   assert.ok(bsRows.length > 0, "el dia actual debe incluir filas BS");
-  /* BSBUILD, BSHERO, BSRAVEN, BSSOLDIER y BSTECH. */
-  assert.equal(bsRows.length, 5);
+  /* BSBUILD, BSHERO, BSRAVEN, BSSOLDIER y BSTECH, mas las dos
+     actividades OFF siguientes. */
+  assert.equal(bsRows.length, 7);
 });
 
 test("una actividad BS solo es visible con su contador en estado de progreso", () => {
@@ -318,6 +334,7 @@ test("las actividades BS conservan el orden de la fuente de verdad", () => {
 
   const bsCodes = allRows(result.lists)
     .filter((row) => row.classList.contains("ad-bs-task"))
+    .filter((row) => findByClass(row, "ad-task-icon")[0].getAttribute("data-code").indexOf("BS") === 0)
     .map((row) => findByClass(row, "ad-task-icon")[0].getAttribute("data-code"));
 
   assert.deepEqual(bsCodes, ["BSBUILD", "BSHERO", "BSRAVEN", "BSSOLDIER", "BSTECH"]);
@@ -402,4 +419,128 @@ test("las actividades que no son BS no reciben la clase de estrella", () => {
     if (row.classList.contains("ad-bs-task")) continue;
     assert.equal(findByClass(row, "ad-bs-star").length, 0, "solo las tareas BS llevan estrella");
   }
+});
+
+/* ---------- Actividades OFF (oportunidades siguientes) ---------- */
+
+/* Codigos de las filas OFF visibles en una tabla. */
+function offCodesOf(result) {
+  return allRows(result.lists)
+    .filter((row) => row.classList.contains("ad-bs-task"))
+    .map((row) => findByClass(row, "ad-task-icon")[0].getAttribute("data-code"))
+    .filter((code) => code.indexOf("OFF") === 0);
+}
+
+test("se muestran las dos actividades OFF siguientes a la actividad en curso", () => {
+  /* El viernes el horario de HEROE empieza a las 04:00 UTC-2. */
+  const result = render(fridayAt(5, 0, 0));
+
+  /* A las 05:00 esta en curso HEROE; siguen BUILD (08:00) y SOLDIER (12:00). */
+  assert.deepEqual(offCodesOf(result), ["OFFBUILD", "OFFSOLDIER"]);
+});
+
+test("las actividades OFF siguen el orden cronologico del horario", () => {
+  /* El viernes a las 12:00 esta en curso SOLDIER; siguen TECH y RAVEN. */
+  const result = render(fridayAt(12, 0, 0));
+
+  assert.deepEqual(offCodesOf(result), ["OFFTECH", "OFFRAVEN"]);
+});
+
+test("las actividades OFF solo existen en la tabla del dia actual", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  /* Fuera del dia actual no hay ninguna actividad OFF. */
+  const items = result.lists.children;
+  for (let i = 1; i < items.length; i++) {
+    const body = items[i].children.find((c) => String(c.className).includes("ad-item-body"));
+    const table = body.children[0].children[0];
+    const tbody = table.children.find((c) => c.tagName === "TBODY");
+    for (const row of tbody.children) {
+      const code = findByClass(row, "ad-task-icon")[0].getAttribute("data-code");
+      assert.ok(code.indexOf("OFF") !== 0, "las filas OFF solo van en el dia actual");
+    }
+  }
+});
+
+test("el contador de las actividades OFF muestra solo la cuenta regresiva", () => {
+  const result = render(fridayAt(5, 0, 0));
+  const build = rowByTaskCode(result, "OFFBUILD");
+
+  assert.ok(build, "debe existir la fila OFFBUILD");
+
+  const counter = timeCellOf(build);
+  assert.equal(counter.textContent, "T-03:00:00");
+  assert.deepEqual(stateClasses(build), ["ad-state-countdown"]);
+
+  /* No hay tiempo transcurrido ni tiempo restante de duracion. */
+  assert.equal(findByClass(build, "ad-bs-elapsed").length, 0);
+  assert.equal(findByClass(build, "ad-bs-remaining").length, 0);
+});
+
+test("el contador de las actividades OFF se actualiza en cada tick", () => {
+  const result = render(fridayAt(5, 0, 0));
+  const build = rowByTaskCode(result, "OFFBUILD");
+
+  result.update(fridayAt(5, 0, 1));
+  assert.equal(timeCellOf(build).textContent, "T-02:59:59");
+});
+
+test("las actividades OFF marcan la fila completa como proxima", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  for (const code of offCodesOf(result)) {
+    const row = rowByTaskCode(result, code);
+    const task = taskCellOf(row);
+
+    assert.ok(row.classList.contains("ad-off-task"), code + " debe usar ad-off-task en la fila");
+    assert.ok(task.classList.contains("ad-objective"), code + " debe conservar ad-objective");
+
+    /* El indicador de estilo deshabilitado se retira de la columna Tarea. */
+    assert.ok(!task.classList.contains("ad-task-flag-x"), code + " no debe usar ad-task-flag-x");
+    assert.ok(!task.className.includes("ad-task-flag-"), code + " no debe usar ningun flag de tarea");
+  }
+});
+
+test("el estilo de las actividades OFF alcanza Tarea, Recurso y Evento, no Contador ni Icono", () => {
+  const css = read("css/activities-daily.css");
+
+  const rule = css.match(/\.ad-schedule tbody tr\.ad-off-task[^{]*\{[^}]*\}/s);
+  assert.ok(rule, "debe existir la regla de las actividades OFF");
+
+  assert.match(rule[0], /td\.ad-objective/);
+  assert.match(rule[0], /td\.ad-resource/);
+  assert.match(rule[0], /td\.ad-event/);
+  assert.match(rule[0], /background-color:\s*#727374/);
+  assert.match(rule[0], /color:\s*#fff/);
+
+  /* El Contador y el Icono conservan su apariencia habitual. */
+  assert.ok(!rule[0].includes("ad-time"), "el estilo no debe alcanzar el Contador");
+  assert.ok(!rule[0].includes("ad-icon"), "el estilo no debe alcanzar el Icono");
+
+  /* El indicador X se retira por completo del CSS. */
+  assert.ok(!css.includes("ad-task-flag-x"), "no debe quedar el indicador ad-task-flag-x");
+});
+
+test("las actividades OFF no muestran puntos de referencia", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  for (const code of offCodesOf(result)) {
+    assert.equal(pointOf(rowByTaskCode(result, code)), null, code + " no debe mostrar punto");
+  }
+});
+
+test("las actividades OFF avanzan al cambiar de franja en curso", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  /* A las 05:00 esta en curso HEROE; siguen BUILD (08:00) y SOLDIER (12:00). */
+  assert.deepEqual(offCodesOf(result), ["OFFBUILD", "OFFSOLDIER"]);
+
+  /* Al comenzar la franja de BUILD, las oportunidades OFF avanzan. */
+  result.update(fridayAt(8, 0, 0));
+  assert.deepEqual(offCodesOf(result), ["OFFSOLDIER", "OFFTECH"]);
+
+  /* La actividad BUILD pasa a estar en curso y deja de estar oculta. */
+  const build = rowByTaskCode(result, "BSBUILD");
+  assert.ok(!build.classList.contains("ad-bs-hidden"), "BSBUILD esta en progreso");
+  assert.deepEqual(stateClasses(build), ["ad-state-progress"]);
 });

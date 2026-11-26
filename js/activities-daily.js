@@ -124,14 +124,16 @@
     { "code": "DYHERBS", "group": "FOCUS", "icon": "garden", "point": "", "codebs": "" },
     { "code": "DYSOLDIER", "group": "FOCUS", "icon": "soldier-t7", "point": "", "codebs": "SOLDIER" },
     { "code": "DYHOSPITAL", "group": "FOCUS", "icon": "speedup-healing", "point": "", "codebs": "" },
+    { "code": "SHIELD", "group": "FOCUS", "icon": "shield", "point": "", "codebs": "" },
+    { "code": "DYWALL", "group": "FOCUS", "icon": "", "point": "", "codebs": "" },
+
     { "code": "EQGEAR", "group": "GEAR", "icon": "gearstone", "point": "", "codebs": "" },
     { "code": "EQBPRN", "group": "GEAR", "icon": "gear-blueprint-ur", "point": "", "codebs": "" },
+
     { "code": "ELIXIR", "group": "FOCUS", "icon": "", "point": "", "codebs": "" },
     { "code": "SCRAMBLE", "group": "FOCUS", "icon": "medall-fame", "point": "", "codebs": "" },
     { "code": "KWAR", "group": "FOCUS", "icon": "medall-fame", "point": "", "codebs": "" },
-    { "code": "SHIELD", "group": "FOCUS", "icon": "", "point": "", "codebs": "" },
-    { "code": "DYWALL", "group": "FOCUS", "icon": "", "point": "", "codebs": "" },
-    { "code": "CUMULUS", "group": "FOCUS", "icon": "cumulus-cristal", "point": "", "codebs": "" },
+    { "code": "CUMULUS", "group": "FOCUS", "icon": "purified-crystal", "point": "", "codebs": "" },
 
     { "code": "BSBUILD", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "BUILD" },
     { "code": "BSHERO", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "HEROE" },
@@ -139,9 +141,15 @@
     { "code": "BSSOLDIER", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "SOLDIER" },
     { "code": "BSTECH", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "TECH" },
 
-    { "code": "DEMONW", "group": "BS", "icon": "", "point": "", "codebs": "" },
-    { "code": "DEMONR", "group": "BS", "icon": "", "point": "", "codebs": "" },
-    { "code": "DEMONZ", "group": "BS", "icon": "", "point": "", "codebs": "" },
+    { "code": "OFFBUILD", "group": "BS", "icon": "", "point": "", "codebs": "BUILD" },
+    { "code": "OFFHERO", "group": "BS", "icon": "", "point": "", "codebs": "HEROE" },
+    { "code": "OFFRAVEN", "group": "BS", "icon": "", "point": "", "codebs": "RAVEN" },
+    { "code": "OFFSOLDIER", "group": "BS", "icon": "", "point": "", "codebs": "SOLDIER" },
+    { "code": "OFFTECH", "group": "BS", "icon": "", "point": "", "codebs": "TECH" },
+
+    { "code": "DEMONW", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
+    { "code": "DEMONR", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
+    { "code": "DEMONZ", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
   ];
 
   var EVENT_CODE = [
@@ -723,15 +731,81 @@
        Las actividades cuyo codigo comienza con "BS" se agregan unicamente a
        la tabla del dia actual. Su contador es el del horario vinculado de
        Battle Survival y solo son visibles cuando ese contador esta en
-       estado [PROGRESS]; en cualquier otro estado permanecen ocultas. */
+       estado [PROGRESS]; en cualquier otro estado permanecen ocultas.
+
+       Las actividades cuyo codigo comienza con "OFF" representan la
+       oportunidad siguiente de cada tipo de Battle Survival. Se muestran
+       las dos siguientes a la actividad en curso, en orden cronologico,
+       con un contador unicamente en estado [COUNTDOWN]. La fila completa
+       recibe la clase ad-off-task, que marca las celdas Tarea, Recurso y
+       Evento con el aspecto de actividad proxima. */
 
     var BS_CODE_PREFIX = "BS";
+    var OFF_CODE_PREFIX = "OFF";
     /* Simbolo de estrella de habilidad, pintado en rojo en estas tareas. */
     var BS_STAR = "★";
+    /* Clase de fila que marca la actividad como proxima, todavia no activa. */
+    var OFF_TASK_CLASS = "ad-off-task";
+    /* Cantidad de actividades siguientes que se muestran bajo la actual. */
+    var OFF_VISIBLE_COUNT = 2;
 
     var bsActivities = ACTIVITY_CODE.filter(function (a) {
       return a.code.indexOf(BS_CODE_PREFIX) === 0;
     });
+
+    var offActivities = ACTIVITY_CODE.filter(function (a) {
+      return a.code.indexOf(OFF_CODE_PREFIX) === 0;
+    });
+
+    /* Actividad OFF asociada a cada codigo de horario de Battle Survival. */
+    var offByCodebs = {};
+    offActivities.forEach(function (a) {
+      if (a.codebs) offByCodebs[a.codebs] = a;
+    });
+
+    /* Horarios de Battle Survival ordenados dentro de la semana, con el
+       instante semanal de inicio de cada franja. */
+    var bsSchedule = CALENDAR.map(function (c) {
+      var p = c.time_init.split(":");
+      var sec = (+p[0]) * 3600 + (+p[1]) * 60 + (+p[2]);
+      return {
+        noday: c.noday,
+        codebs: c.codebs,
+        sec: sec,
+        weekSec: c.noday * 86400 + sec
+      };
+    }).sort(function (a, b) { return a.weekSec - b.weekSec; });
+
+    /* Indice de la franja de Battle Survival en curso para el instante dado,
+       expresado en segundos dentro de la semana (UTC-2). */
+    function currentScheduleIndex(weekSec) {
+      var idx = 0;
+      for (var i = 0; i < bsSchedule.length; i++) {
+        if (bsSchedule[i].weekSec <= weekSec) idx = i; else break;
+      }
+      return idx;
+    }
+
+    /* Devuelve las siguientes franjas de Battle Survival despues de la que
+       esta en curso, con el instante de inicio relativo al dia actual. */
+    function nextScheduleSlots(noday, nowSec, count) {
+      var weekSec = noday * 86400 + nowSec;
+      var idx = currentScheduleIndex(weekSec);
+      var result = [];
+      for (var i = 1; i <= count; i++) {
+        var pos = idx + i;
+        var slot = bsSchedule[pos % bsSchedule.length];
+        var cycles = Math.floor(pos / bsSchedule.length);
+        /* El instante se expresa en segundos desde las 00:00:00 del dia
+           actual, de modo que el contador desciende correctamente al cruzar
+           la medianoche o el cambio de semana. */
+        result.push({
+          codebs: slot.codebs,
+          startSec: slot.weekSec + cycles * WEEK_SECONDS - noday * 86400
+        });
+      }
+      return result;
+    }
 
     /* Fila de actividad BS para el dia actual. */
     function bsRow(a, noday) {
@@ -746,9 +820,40 @@
       };
     }
 
+    /* Estado de la franja de Battle Survival en curso. Se usa para saber
+       cuando las actividades OFF deben avanzar a las siguientes franjas. */
+    var currentSlotIndex = -1;
+    var currentSlotNoday = -1;
+
+    /* Devuelve el indice de la franja en curso para el dia y la hora dados. */
+    function slotIndexAt(noday, nowSec) {
+      return currentScheduleIndex(noday * 86400 + nowSec);
+    }
+
+    /* Fila de actividad OFF: la oportunidad siguiente de un horario de
+       Battle Survival, con su instante de inicio. El aspecto de actividad
+       proxima se aplica a la fila completa mediante la clase de fila. */
+    function offRow(a, noday, startSec) {
+      return {
+        noday: noday,
+        day: DAY_ABBR[noday],
+        event: "BS",
+        phase: "",
+        code_task: a.code,
+        server_time: "",
+        isOff: true,
+        startSec: startSec
+      };
+    }
+
     /* Aplica la visibilidad de una fila BS segun el estado de su contador. */
     function applyBsVisibility(tr, state) {
       tr.classList.toggle("ad-bs-hidden", state !== STATE_PROGRESS);
+    }
+
+    /* Una fila OFF solo es visible con su contador en cuenta regresiva. */
+    function applyOffVisibility(tr, state) {
+      tr.classList.toggle("ad-bs-hidden", state !== STATE_COUNTDOWN);
     }
 
     /* Reconstruye el texto de la tarea separando cada estrella para poder
@@ -784,7 +889,16 @@
       var ani = r.ani ? String(r.ani).toLowerCase() : "";
       var hasSchedule = !!r.server_time || !!codebs;
 
-      if (offset === 0 && r.server_time) {
+      if (offset === 0 && r.isOff) {
+        /* Las actividades OFF muestran solo la cuenta regresiva hasta el
+           inicio de su franja, sin tiempo transcurrido ni restante. */
+        var remaining = r.startSec - nowSec;
+        if (remaining < 0) remaining = 0;
+        state = STATE_COUNTDOWN;
+        timeTxt = "T-" + fmtCounter(remaining);
+        timeCell = appendCell(tr, timeTxt, "ad-time");
+        counters.push({ td: timeCell, tr: tr, offStartSec: r.startSec });
+      } else if (offset === 0 && r.server_time) {
         /* El dia actual usa la hora propia del servidor y su duracion. */
         var own = serverCounterState(r.server_time, r.server_duration, nowSec);
         state = own.state;
@@ -826,6 +940,8 @@
 
       /* Las actividades BS solo se muestran con el contador en progreso. */
       if (r.isBs) applyBsVisibility(tr, state);
+      /* Las actividades OFF solo se muestran en cuenta regresiva. */
+      if (r.isOff) applyOffVisibility(tr, state);
 
       /* 1. Contador */
       if (!timeCell) timeCell = appendCell(tr, timeTxt, "ad-time");
@@ -838,6 +954,8 @@
       var objectiveText = a ? (activityText(r.code_task, "objective") || r.code_task) : r.code_task;
       var taskCell = appendCell(tr, objectiveText, "ad-objective");
       if (flag) taskCell.classList.add("ad-task-flag-" + flag);
+      /* Las actividades OFF marcan la fila completa como proxima. */
+      if (r.isOff) tr.classList.add(OFF_TASK_CLASS);
       /* En las actividades BS la estrella de habilidad se pinta en rojo. */
       if (r.isBs) appendStars(taskCell, objectiveText);
 
@@ -1010,6 +1128,76 @@
           });
         })(item, title, baseCls);
       }
+
+      /* La franja en curso determina las dos oportunidades OFF que se
+         muestran bajo la actividad BS actual. */
+      currentSlotNoday = today;
+      currentSlotIndex = slotIndexAt(today, nowSec);
+      buildOffRows(today, nowSec, startDayMs);
+    }
+
+    /* Cuerpo de la tabla del dia actual, donde se insertan las filas OFF.
+       La estructura es: .ad-item > .ad-item-body > .ad-wrap > table > tbody. */
+    function todayTbody() {
+      var item = listsEl.children[0];
+      if (!item) return null;
+      var body = null;
+      for (var i = 0; i < item.children.length; i++) {
+        var child = item.children[i];
+        if (String(child.className).indexOf("ad-item-body") >= 0) { body = child; break; }
+      }
+      if (!body) return null;
+      var wrap = body.children[0];
+      if (!wrap) return null;
+      var table = wrap.children[0];
+      if (!table) return null;
+      for (var j = 0; j < table.children.length; j++) {
+        if (table.children[j].tagName === "TBODY") return table.children[j];
+      }
+      return null;
+    }
+
+    /* Reconstruye las filas OFF con las dos franjas siguientes a la que
+       esta en curso. Se ejecuta en cada cambio de franja, de modo que la
+       lista avanza sola cuando comienza una nueva actividad BS. */
+    function buildOffRows(noday, nowSec, startDayMs) {
+      var tbody = todayTbody();
+      if (!tbody) return;
+
+      /* Se retiran las filas OFF anteriores del cuerpo de la tabla. */
+      var kept = [];
+      for (var i = 0; i < tbody.children.length; i++) {
+        var row = tbody.children[i];
+        var code = "";
+        for (var c = 0; c < row.children.length; c++) {
+          var cell = row.children[c];
+          if (String(cell.className).indexOf("ad-task-icon") >= 0) {
+            code = cell.getAttribute("data-code") || "";
+            break;
+          }
+        }
+        if (code.indexOf(OFF_CODE_PREFIX) === 0) {
+          if (typeof tbody.removeChild === "function") tbody.removeChild(row);
+        } else {
+          kept.push(row);
+        }
+      }
+      /* El cuerpo conserva unicamente las filas que no son OFF. */
+      if (kept.length !== tbody.children.length) tbody.children = kept;
+
+      /* Los contadores de las filas retiradas dejan de actualizarse. */
+      counters = counters.filter(function (counter) {
+        return counter.offStartSec === undefined;
+      });
+
+      var nextSlots = nextScheduleSlots(noday, nowSec, OFF_VISIBLE_COUNT);
+      for (var s = 0; s < nextSlots.length; s++) {
+        var offAct = offByCodebs[nextSlots[s].codebs];
+        if (!offAct) continue;
+        var offRowEl = buildRow(offRow(offAct, noday, nextSlots[s].startSec), 0, startDayMs, nowSec);
+        offRowEl.classList.add("ad-bs-task");
+        tbody.appendChild(offRowEl);
+      }
     }
 
     function tick() {
@@ -1023,10 +1211,26 @@
       if (currentPhaseEl) {
         currentPhaseEl.textContent = phaseCountdown(nowSec);
       }
+
+      /* Al cambiar de franja de Battle Survival las oportunidades OFF
+         avanzan: se retiran las anteriores y se construyen las dos
+         siguientes a la nueva actividad en curso. */
+      if (slotIndexAt(currentSlotNoday, nowSec) !== currentSlotIndex) {
+        currentSlotIndex = slotIndexAt(currentSlotNoday, nowSec);
+        buildOffRows(currentSlotNoday, nowSec, Date.UTC(
+          origin.getUTCFullYear(), origin.getUTCMonth(), origin.getUTCDate()
+        ));
+      }
+
       for (var i = 0; i < counters.length; i++) {
         var counter = counters[i];
         var result;
-        if (counter.serverTime) {
+        if (counter.offStartSec !== undefined) {
+          /* Las actividades OFF muestran solo la cuenta regresiva. */
+          var left = counter.offStartSec - nowSec;
+          if (left < 0) left = 0;
+          result = { state: STATE_COUNTDOWN, text: "T-" + fmtCounter(left) };
+        } else if (counter.serverTime) {
           result = serverCounterState(counter.serverTime, counter.serverDuration, nowSec);
         } else {
           result = linkedCounterState(counter.codebs, counter.noday, nowSec);
@@ -1042,6 +1246,8 @@
         applyCounterState(counter.tr, result.state);
         /* Las actividades BS solo son visibles con el contador en progreso. */
         if (counter.isBs) applyBsVisibility(counter.tr, result.state);
+        /* Las actividades OFF solo son visibles en cuenta regresiva. */
+        if (counter.offStartSec !== undefined) applyOffVisibility(counter.tr, result.state);
       }
     }
 

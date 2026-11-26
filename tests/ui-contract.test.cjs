@@ -810,7 +810,7 @@ test("los puntos se integran en la columna Tarea con la nota minima", () => {
   assert.match(js, /taskCell\.classList\.add\("ad-has-point"\)/);
   assert.match(css, /\.ad-objective \{[^}]*position:\s*relative/s);
   assert.match(css, /\.ad-task-point \{[^}]*position:\s*absolute[^}]*right:\s*5px[^}]*bottom:\s*1px/s);
-  assert.match(css, /\.ad-task-point \{[^}]*color:\s*#999[^}]*font-weight:\s*100[^}]*font-size:\s*0\.6rem/s);
+  assert.match(css, /\.ad-task-point \{[^}]*color:\s*#4d7799[^}]*font-weight:\s*100[^}]*font-size:\s*0\.6rem/s);
 
   /* La nota referencial se muestra una sola vez, bajo las tablas. */
   assert.match(html, /class="ad-points-note"[^>]*data-i18n-text="adPointsNote"/);
@@ -1589,11 +1589,11 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
 
   /* El codigo de cada actividad debe estar en el mapa de los 11 idiomas. */
   const activityCode = [...js.matchAll(/"code": "([A-Z0-9]+)"/g)].map((m) => m[1]);
-  assert.equal(activityCode.length, 52);
+  assert.equal(activityCode.length, 60);
 
   /* El español es la fuente de verdad: define el orden canonico de las traducciones. */
   const canonicalCodes = Object.keys(i18n.es.adActivities);
-  assert.equal(canonicalCodes.length, 53);
+  assert.equal(canonicalCodes.length, 61);
   for (const code of activityCode) {
     assert.ok(canonicalCodes.includes(code), "el canon debe traducir " + code);
   }
