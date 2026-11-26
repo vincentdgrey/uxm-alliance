@@ -153,16 +153,18 @@
   ];
 
   var EVENT_CODE = [
-    { "event": "DY", "es": "Consejo Diario", "en": "Tips Daily" },
+    { "event": "DY",  "es": "Consejo Diario",        "en": "Tips Daily",          "view":1 },
 
-    { "event": "AD", "es": "Duelo de Alianza", "en": "Alliance Duel" },
-    { "event": "KVK", "es": "Guerra de Reinos", "en": "Kingdoms War" },
-    { "event": "ROY", "es": "Alboroto Ciudad Real", "en": "Scramble Royal City" },
-    { "event": "BS", "es": "Batalla Supervivencia", "en": "Battle Survival" },
+    { "event": "ROY", "es": "Alboroto Ciudad Real",  "en": "Scramble Royal City", "view":2 },
+    { "event": "KVK", "es": "Guerra de Reinos",      "en": "Kingdoms War",        "view":3 },
 
-    { "event": "EQ", "es": "Mejora de Equipo", "en": "Gear Upgrade" },
-    { "event": "BEX", "es": "Batalla del Elixir", "en": "Elixir Scramble" },
-    { "event": "CUM", "es": "Valle Cúmulos de Cristal", "en": "Cristal Cruster Valley" }
+    { "event": "AD",  "es": "Duelo de Alianza",      "en": "Alliance Duel",       "view":4 },
+
+    { "event": "EQ",  "es": "Mejora de Equipo",      "en": "Gear Upgrade",        "view":5 },
+    { "event": "BEX", "es": "Batalla del Elixir",    "en": "Elixir Scramble",     "view":6 },
+    { "event": "CUM", "es": "Valle Cúmulos de Cristal", "en": "Cristal Cruster Valley" , "view":7 },
+
+    { "event": "BS",  "es": "Batalla Supervivencia", "en": "Battle Survival",     "view":8 },
   ];
 
   var PHASES = [
@@ -607,20 +609,22 @@
       return ev ? (ev[LANG] || ev.en || r.event) : r.event;
     }
 
-    var EVENT_ORDER = ["ROY", "KVK", "BEX", "EQ", "CUM", "DY", "AD"];
+    /* Orden de visualizacion de los grupos de eventos. La fuente de
+       verdad es el valor view de EVENT_CODE: cada grupo ocupa un cuerpo de
+       tabla propio y se muestra en orden ascendente de view. */
+    var orderedEvents = EVENT_CODE.slice().sort(function (a, b) {
+      return a.view - b.view;
+    });
 
-    function sortRowsByEvent(rows) {
-      return rows.map(function (r, index) {
-        return { row: r, index: index };
-      }).sort(function (a, b) {
-        var eventOrder = EVENT_ORDER.indexOf(a.row.event);
-        var eventOrderB = EVENT_ORDER.indexOf(b.row.event);
-        if (eventOrder === -1) eventOrder = EVENT_ORDER.length;
-        if (eventOrderB === -1) eventOrderB = EVENT_ORDER.length;
-        return eventOrder !== eventOrderB ? eventOrder - eventOrderB : a.index - b.index;
-      }).map(function (item) {
-        return item.row;
+    /* Agrupa las actividades de un dia por evento, conservando el orden
+       original de las actividades dentro de cada grupo. */
+    function groupRowsByEvent(rows) {
+      var groups = {};
+      rows.forEach(function (r) {
+        if (!groups[r.event]) groups[r.event] = [];
+        groups[r.event].push(r);
       });
+      return groups;
     }
 
     function parseClock(value) {
@@ -1036,7 +1040,6 @@
 
       for (var k = 0; k < 7; k++) {
         var noday = (today + k) % 7;
-        var rows = sortRowsByEvent(byDay[noday] || []);
 
         var item = document.createElement("div");
         var baseCls = "ad-item" + (k === 0 ? " ad-today" : "");
@@ -1092,30 +1095,46 @@
         thead.appendChild(trh);
         table.appendChild(thead);
 
-        var tbody = document.createElement("tbody");
-        for (var i = 0; i < rows.length; i++) {
-          var row = buildRow(rows[i], k, startDayMs, nowSec);
-          var nextRow = rows[i + 1];
-          if (nextRow && rows[i].event !== nextRow.event) {
-            row.className += " ad-event-separator";
-          } else if (!nextRow && k === 0 && bsActivities.length && rows.length) {
-            /* El grupo de Battle Survival se separa de los demas eventos. */
-            row.className += " ad-event-separator";
-          }
-          tbody.appendChild(row);
-        }
+        /* Cada grupo de eventos ocupa un cuerpo de tabla propio. El
+           orden de los cuerpos lo define el valor view de EVENT_CODE. */
+        var groups = groupRowsByEvent(byDay[noday] || []);
+        var bodies = [];
 
-        /* Las actividades BS se agregan al final del grupo de tareas del
-           dia actual, una vez construida la tabla, mediante
-           buildBattleTaskRows(). */
-        /* El grupo Battle Survival vive en un segundo cuerpo de tabla, de
-           modo que su renovacion no afecte a las tareas normales. */
-        if (k === 0) {
-          battleBodyEl = document.createElement("tbody");
-          battleBodyEl.className = "ad-battle-body";
-          table.appendChild(battleBodyEl);
-        }
-        table.appendChild(tbody);
+        orderedEvents.forEach(function (ev) {
+          var eventRows = groups[ev.event] || [];
+
+          /* Battle Survival solo tiene cuerpo en la tabla del dia actual
+             y sus actividades se escriben despues, en buildBattleTaskRows(). */
+          if (!eventRows.length && !(k === 0 && ev.event === "BS")) return;
+
+          var body = document.createElement("tbody");
+          body.className = "ad-event-body";
+          body.setAttribute("data-event", ev.event);
+          if (ev.event === "BS") {
+            body.className += " ad-battle-body";
+            battleBodyEl = body;
+          }
+
+          eventRows.forEach(function (r) {
+            body.appendChild(buildRow(r, k, startDayMs, nowSec));
+          });
+
+          bodies.push(body);
+        });
+
+        /* El separador de eventos cierra cada grupo que tiene otro grupo
+           detras. Se asigna al final, cuando ya se conocen todos los
+           cuerpos de la tabla. */
+        bodies.forEach(function (body, index) {
+          if (index >= bodies.length - 1) return;
+          if (!body.children.length) return;
+          var lastRow = body.children[body.children.length - 1];
+          lastRow.className += " ad-event-separator";
+        });
+
+        bodies.forEach(function (body) {
+          table.appendChild(body);
+        });
 
         wrap.appendChild(table);
         body.appendChild(wrap);

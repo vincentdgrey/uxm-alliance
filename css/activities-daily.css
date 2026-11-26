@@ -272,9 +272,10 @@ tr.bs-current td.bs-event::after {
 .ad-item.ad-today .ad-schedule tr.ad-event-separator > td {
   border-bottom-color: #1d6e12;
 }
-/* La ultima fila de cada cuerpo pierde el borde inferior. El cuerpo del
-   grupo Battle Survival mantiene el borde en su ultima fila. */
-.ad-schedule > tbody > tr:last-child td {
+/* La ultima fila de cada cuerpo pierde el borde inferior, salvo cuando
+   cierra un grupo de eventos y lleva el separador. El cuerpo del grupo
+   Battle Survival mantiene el borde en su ultima fila. */
+.ad-schedule > tbody > tr:last-child:not(.ad-event-separator) td {
   border-bottom: none;
 }
 .ad-schedule > tbody.ad-battle-body > tr:last-child td {
