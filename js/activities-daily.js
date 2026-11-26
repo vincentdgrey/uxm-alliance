@@ -12,12 +12,12 @@
      Los horarios estan expresados en UTC-2. */
 
   var ACTIVITIES = [
-    { "codebs": "BUILD",   "event": "Build Territory",     "activity_1": "1min Construction Speedup (50H) [+10]", "activity_2": "Increase 1 Building Might (30.000) [+1]", "goal": "30.000 pts" },
-    { "codebs": "HEROE",   "event": "Enhance Heroes",      "activity_1": "20 Ticket Heroes (30T) [+400]",         "activity_2": "1950 Antitoxin (23.4M) [+1]",             "goal": "12.000 pts" },
-    { "codebs": "RAVEN",   "event": "Enhance Raven",       "activity_1": "10 Raven Fruit",                        "activity_2": "1 Stamina (15 Rallys) [+100]",            "goal": "30.000 pts" },
-    { "codebs": "SOLDIER", "event": "Train Soldiers",      "activity_1": "1min Training Boost (17H) [+10]",       "activity_2": "Train 1 Lv.8 Soldier (2.800) [+25]",      "goal": "60.000 pts" },
-    { "codebs": "TECH",    "event": "Technology Research", "activity_1": "1min Research Speedup (50H) [+10]",     "activity_2": "Increase 1 Tech Might (30.000) [+1]",     "goal": "30.000 pts" },
-    
+    { "codebs": "BUILD", "event": "Build Territory", "activity_1": "1min Construction Speedup (50H) [+10]", "activity_2": "Increase 1 Building Might (30.000) [+1]", "goal": "30.000 pts" },
+    { "codebs": "HEROE", "event": "Enhance Heroes", "activity_1": "20 Ticket Heroes (30T) [+400]", "activity_2": "1950 Antitoxin (23.4M) [+1]", "goal": "12.000 pts" },
+    { "codebs": "RAVEN", "event": "Enhance Raven", "activity_1": "10 Raven Fruit", "activity_2": "1 Stamina (15 Rallys) [+100]", "goal": "30.000 pts" },
+    { "codebs": "SOLDIER", "event": "Train Soldiers", "activity_1": "1min Training Boost (17H) [+10]", "activity_2": "Train 1 Lv.8 Soldier (2.800) [+25]", "goal": "60.000 pts" },
+    { "codebs": "TECH", "event": "Technology Research", "activity_1": "1min Research Speedup (50H) [+10]", "activity_2": "Increase 1 Tech Might (30.000) [+1]", "goal": "30.000 pts" },
+
     { "codebs": "STANDBY", "event": "Stand by", "activity_1": "Stand by", "activity_2": "Stand by", "goal": "" }
   ];
 
@@ -73,83 +73,95 @@
   ];
 
   var ACTIVITY_CODE = [
-    { "code": "ANTX",   "group":"FOCUS", "icon":"antitoxin",      "point": 2.5,    "codebs": "HEROE" },
+    { "code": "ANTX", "group": "FOCUS", "icon": "antitoxin", "point": 2.5, "codebs": "HEROE" },
 
-    { "code": "FALCON", "group":"FOCUS", "icon":"falcon-mission", "point": 30000,  "codebs": "" },
-    { "code": "DYFALCON", "group":"FOCUS", "icon":"falcon-mission-lock", "point": "", "codebs": "" },
-    { "code": "STMN",   "group":"FOCUS", "icon":"stamina-bottle", "point": 375,    "codebs": "RAVEN" },
+    { "code": "FALCON", "group": "FOCUS", "icon": "falcon-mission", "point": 30000, "codebs": "" },
+    { "code": "DYFALCON", "group": "FOCUS", "icon": "falcon-mission-lock", "point": "", "codebs": "" },
+    { "code": "STMN", "group": "FOCUS", "icon": "stamina-bottle", "point": 375, "codebs": "RAVEN" },
 
-    { "code": "EPIUR",  "group":"RAVEN", "icon":"epigraf-chest",  "point": 2812.5, "codebs": "" },
-    { "code": "RAVESS", "group":"RAVEN", "icon":"raven-essence",  "point": 6250,   "codebs": "" },
-    { "code": "RAVFRT", "group":"RAVEN", "icon":"raven-fruit",    "point": 7.5,    "codebs": "RAVEN" },
-    { "code": "RAVCH1", "group":"RAVEN", "icon":"raven-chest",    "point": 2750,   "codebs": "" },
+    { "code": "EPIUR", "group": "RAVEN", "icon": "epigraf-chest", "point": 2812.5, "codebs": "" },
+    { "code": "RAVESS", "group": "RAVEN", "icon": "raven-essence", "point": 6250, "codebs": "" },
+    { "code": "RAVFRT", "group": "RAVEN", "icon": "raven-fruit", "point": 7.5, "codebs": "RAVEN" },
+    { "code": "RAVCH1", "group": "RAVEN", "icon": "raven-chest", "point": 2750, "codebs": "" },
 
-    { "code": "HERBS",  "group":"FARM",  "icon":"garden",         "point": 12.5,   "codebs": "" },
-    { "code": "GRAIN",  "group":"FARM",  "icon":"farm",           "point": 12.5,   "codebs": "" },
+    { "code": "HERBS", "group": "FARM", "icon": "garden", "point": 12.5, "codebs": "" },
+    { "code": "GRAIN", "group": "FARM", "icon": "farm", "point": 12.5, "codebs": "" },
 
-    { "code": "CON1SP", "group":"BUILD", "icon":"speedup-build",  "point": 150,    "codebs": "BUILD" },
-    { "code": "CONMGH", "group":"BUILD", "icon":"might-building", "point": 29,     "codebs": "BUILD" },
+    { "code": "CON1SP", "group": "BUILD", "icon": "speedup-build", "point": 150, "codebs": "BUILD" },
+    { "code": "CONMGH", "group": "BUILD", "icon": "might-building", "point": 29, "codebs": "BUILD" },
 
-    { "code": "CRVNUR", "group":"OPER",  "icon":"caravan",        "point": 300000, "codebs": "" },
-    { "code": "OPENUR", "group":"OPER",  "icon":"black-ops-swag", "point": 225000, "codebs": "" },
+    { "code": "CRVNUR", "group": "OPER", "icon": "caravan", "point": 300000, "codebs": "" },
+    { "code": "OPENUR", "group": "OPER", "icon": "black-ops-swag", "point": 225000, "codebs": "" },
 
-    { "code": "TCKSUR", "group":"TAVERN", "icon":"ticket-survivor", "point": 4500, "codebs": "" },
-    { "code": "SAVETS", "group":"TAVERN", "icon":"lock",          "point": "",     "codebs": "" },
-    { "code": "FREETS", "group":"TAVERN", "icon":"free",          "point": "",     "codebs": "" },
-    
-    { "code": "STDSCR", "group":"TECH",  "icon":"study-scroll",   "point": 750,    "codebs": "" },
-    { "code": "TCH1SP", "group":"TECH",  "icon":"speedup-tech",   "point": 150,    "codebs": "TECH" },
-    { "code": "TCHMGH", "group":"TECH",  "icon":"might-research", "point": 30,     "codebs": "TECH" },
+    { "code": "TCKSUR", "group": "TAVERN", "icon": "ticket-survivor", "point": 4500, "codebs": "" },
+    { "code": "SAVETS", "group": "TAVERN", "icon": "lock", "point": "", "codebs": "" },
+    { "code": "FREETS", "group": "TAVERN", "icon": "free", "point": "", "codebs": "" },
 
-    { "code": "SHRDSR", "group":"HERO",  "icon":"shard-sr",       "point": 2500,   "codebs": "" },
-    { "code": "SHRDSS", "group":"HERO",  "icon":"shard-ssr",      "point": 8750,   "codebs": "" },
-    { "code": "SHRDUR", "group":"HERO",  "icon":"shard-ur",       "point": 25000,  "codebs": "" },
-    { "code": "SKILLB", "group":"HERO",  "icon":"skill-badge",    "point": 25,     "codebs": "" },
+    { "code": "STDSCR", "group": "TECH", "icon": "study-scroll", "point": 750, "codebs": "" },
+    { "code": "TCH1SP", "group": "TECH", "icon": "speedup-tech", "point": 150, "codebs": "TECH" },
+    { "code": "TCHMGH", "group": "TECH", "icon": "might-research", "point": 30, "codebs": "TECH" },
 
-    { "code": "TCKHER", "group":"TAVERN", "icon":"ticket-hero",   "point": 4500,   "codebs": "HEROE" },
-    { "code": "SAVETH", "group":"TAVERN", "icon":"lock",          "point": "",     "codebs": "" },
-    { "code": "FREETH",  "group":"TAVERN", "icon":"free",         "point": "",     "codebs": "" },
+    { "code": "SHRDSR", "group": "HERO", "icon": "shard-sr", "point": 2500, "codebs": "" },
+    { "code": "SHRDSS", "group": "HERO", "icon": "shard-ssr", "point": 8750, "codebs": "" },
+    { "code": "SHRDUR", "group": "HERO", "icon": "shard-ur", "point": 25000, "codebs": "" },
+    { "code": "SKILLB", "group": "HERO", "icon": "skill-badge", "point": 25, "codebs": "" },
 
-    { "code": "SOLD1TRN", "group":"SOLDIER", "icon":"boost-training", "point": 150, "codebs": "SOLDIER" },
-    { "code": "SOLDT10",  "group":"SOLDIER", "icon":"soldier-t8", "point": 240,    "codebs": "SOLDIER" },
+    { "code": "TCKHER", "group": "TAVERN", "icon": "ticket-hero", "point": 4500, "codebs": "HEROE" },
+    { "code": "SAVETH", "group": "TAVERN", "icon": "lock", "point": "", "codebs": "" },
+    { "code": "FREETH", "group": "TAVERN", "icon": "free", "point": "", "codebs": "" },
 
-    { "code": "HEA1SP",  "group":"HEAL", "icon":"speedup-healing", "point": 150,   "codebs": "" },
-    { "code": "SOLDDFT", "group":"SOLDIER", "icon":"soldier-defeat", "point": 23.6, "codebs": "" },
-    { "code": "SOLDLST", "group":"SOLDIER", "icon":"soldier-lost", "point": 20,    "codebs": "" },
-    { "code": "SOLDMTC", "group":"SOLDIER", "icon":"soldier-attack", "point": 118, "codebs": "" },
-    
-    { "code": "DYELITE",  "group":"MONSTER", "icon":"elite-blight", "point": "",   "codebs": "RAVEN" },
-    { "code": "DYBOTT",   "group":"FOCUS",  "icon":"stamina-bottle", "point": "",  "codebs": "" },
-    { "code": "DYBOTWAR", "group":"FOCUS",  "icon":"stamina-bottle", "point": "",  "codebs": "" },
-    { "code": "DYHERBS",  "group":"FOCUS",  "icon":"garden",        "point": "",   "codebs": "" },
-    { "code": "DYSOLDIER", "group":"FOCUS", "icon":"soldier-t7",    "point": "",   "codebs": "SOLDIER" },
-    { "code": "DYHOSPITAL", "group":"FOCUS", "icon":"speedup-healing", "point": "", "codebs": "" },
-    { "code": "EQGEAR",  "group":"GEAR",  "icon":"gearstone",       "point": "",   "codebs": "" },
-    { "code": "EQBPRN",  "group":"GEAR",  "icon":"gear-blueprint-ur", "point": "", "codebs": "" },
-    { "code": "ELIXIR",  "group":"FOCUS", "icon":"",                "point": "",   "codebs": "" },
-    { "code": "SCRAMBLE", "group":"FOCUS", "icon":"medall-fame",    "point": "",   "codebs": "" },
-    { "code": "KWAR",    "group":"FOCUS", "icon":"medall-fame",     "point": "",   "codebs": "" },
-    { "code": "SHIELD",  "group":"FOCUS", "icon":"",                "point": "",   "codebs": "" },
-    { "code": "DYWALL",  "group":"FOCUS", "icon":"",                "point": "",   "codebs": "" },
-    { "code": "CUMULUS", "group":"FOCUS", "icon":"cumulus-cristal", "point": "",   "codebs": "" },
-    
-    { "code": "BSBUILD",   "group":"BS", "icon":"skill-badge", "point": "", "codebs": "BUILD" },
-    { "code": "BSHERO",    "group":"BS", "icon":"skill-badge", "point": "", "codebs": "HEROE" },
-    { "code": "BSRAVEN",   "group":"BS", "icon":"skill-badge", "point": "", "codebs": "RAVEN" },
-    { "code": "BSSOLDIER", "group":"BS", "icon":"skill-badge", "point": "", "codebs": "SOLDIER" },
-    { "code": "BSTECH",    "group":"BS", "icon":"skill-badge", "point": "", "codebs": "TECH" },
+    { "code": "SOLD1TRN", "group": "SOLDIER", "icon": "boost-training", "point": 150, "codebs": "SOLDIER" },
+    { "code": "SOLDT10", "group": "SOLDIER", "icon": "soldier-t8", "point": 240, "codebs": "SOLDIER" },
+
+    { "code": "HEA1SP", "group": "HEAL", "icon": "speedup-healing", "point": 150, "codebs": "" },
+    { "code": "SOLDDFT", "group": "SOLDIER", "icon": "soldier-defeat", "point": 23.6, "codebs": "" },
+    { "code": "SOLDLST", "group": "SOLDIER", "icon": "soldier-lost", "point": 20, "codebs": "" },
+    { "code": "SOLDMTC", "group": "SOLDIER", "icon": "soldier-attack", "point": 118, "codebs": "" },
+
+    { "code": "DYELITE", "group": "MONSTER", "icon": "elite-blight", "point": "", "codebs": "RAVEN" },
+    { "code": "DYBOTT", "group": "FOCUS", "icon": "stamina-bottle", "point": "", "codebs": "" },
+    { "code": "DYBOTWAR", "group": "FOCUS", "icon": "stamina-bottle", "point": "", "codebs": "" },
+    { "code": "DYHERBS", "group": "FOCUS", "icon": "garden", "point": "", "codebs": "" },
+    { "code": "DYSOLDIER", "group": "FOCUS", "icon": "soldier-t7", "point": "", "codebs": "SOLDIER" },
+    { "code": "DYHOSPITAL", "group": "FOCUS", "icon": "speedup-healing", "point": "", "codebs": "" },
+    { "code": "SHIELD", "group": "FOCUS", "icon": "shield", "point": "", "codebs": "" },
+    { "code": "DYWALL", "group": "FOCUS", "icon": "", "point": "", "codebs": "" },
+
+    { "code": "EQGEAR", "group": "GEAR", "icon": "gearstone", "point": "", "codebs": "" },
+    { "code": "EQBPRN", "group": "GEAR", "icon": "gear-blueprint-ur", "point": "", "codebs": "" },
+
+    { "code": "ELIXIR", "group": "FOCUS", "icon": "", "point": "", "codebs": "" },
+    { "code": "SCRAMBLE", "group": "FOCUS", "icon": "medall-fame", "point": "", "codebs": "" },
+    { "code": "KWAR", "group": "FOCUS", "icon": "medall-fame", "point": "", "codebs": "" },
+    { "code": "CUMULUS", "group": "FOCUS", "icon": "purified-crystal", "point": "", "codebs": "" },
+
+    { "code": "BSBUILD", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "BUILD" },
+    { "code": "BSHERO", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "HEROE" },
+    { "code": "BSRAVEN", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "RAVEN" },
+    { "code": "BSSOLDIER", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "SOLDIER" },
+    { "code": "BSTECH", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "TECH" },
+
+    { "code": "OFFBUILD", "group": "BS", "icon": "", "point": "", "codebs": "BUILD" },
+    { "code": "OFFHERO", "group": "BS", "icon": "", "point": "", "codebs": "HEROE" },
+    { "code": "OFFRAVEN", "group": "BS", "icon": "", "point": "", "codebs": "RAVEN" },
+    { "code": "OFFSOLDIER", "group": "BS", "icon": "", "point": "", "codebs": "SOLDIER" },
+    { "code": "OFFTECH", "group": "BS", "icon": "", "point": "", "codebs": "TECH" },
+
+    { "code": "DEMONW", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
+    { "code": "DEMONR", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
+    { "code": "DEMONZ", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
   ];
 
   var EVENT_CODE = [
-    { "event": "DY",  "es": "Consejo Diario",           "en": "Tips Daily" },
+    { "event": "DY", "es": "Consejo Diario", "en": "Tips Daily" },
 
-    { "event": "AD",  "es": "Duelo de Alianza",         "en": "Alliance Duel" },
-    { "event": "KVK", "es": "Guerra de Reinos",         "en": "Kingdoms War" },
-    { "event": "ROY", "es": "Alboroto Ciudad Real",     "en": "Scramble Royal City" },
-    { "event": "BS",  "es": "Batalla Supervivencia",    "en": "Battle Survival" },
+    { "event": "AD", "es": "Duelo de Alianza", "en": "Alliance Duel" },
+    { "event": "KVK", "es": "Guerra de Reinos", "en": "Kingdoms War" },
+    { "event": "ROY", "es": "Alboroto Ciudad Real", "en": "Scramble Royal City" },
+    { "event": "BS", "es": "Batalla Supervivencia", "en": "Battle Survival" },
 
-    { "event": "EQ",  "es": "Mejora de Equipo",         "en": "Gear Upgrade" },
-    { "event": "BEX", "es": "Batalla del Elixir",       "en": "Elixir Scramble" },
+    { "event": "EQ", "es": "Mejora de Equipo", "en": "Gear Upgrade" },
+    { "event": "BEX", "es": "Batalla del Elixir", "en": "Elixir Scramble" },
     { "event": "CUM", "es": "Valle Cúmulos de Cristal", "en": "Cristal Cruster Valley" }
   ];
 
@@ -164,103 +176,115 @@
   ];
 
   var DAILY = [
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "ANTX",   "server_time":"" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "FALCON",   "server_time":"", "flag":"I" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVESS", "server_time":"" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVFRT", "server_time":"" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "STMN",   "server_time":"", "ani":"S" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "EPIUR",  "server_time":"" },
-    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "HERBS",  "server_time":"" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "ANTX", "server_time": "" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "FALCON", "server_time": "", "flag": "S" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVESS", "server_time": "" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "RAVFRT", "server_time": "" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "STMN", "server_time": "", "ani": "S" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "EPIUR", "server_time": "" },
+    { "noday": 1, "day": "Mon", "event": "AD", "phase": "PH01", "code_task": "HERBS", "server_time": "" },
 
-    { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "FREETH", "server_time":"" },
-    { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "SAVETS", "server_time":"" },
-    { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "DYSOLDIER", "server_time":"" },
+    { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "FREETH", "server_time": "" },
+    { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "SAVETS", "server_time": "" },
+    { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "DYSOLDIER", "server_time": "" },
     
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "TCKSUR", "server_time":"" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CON1SP", "server_time":"", "ani":"S" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CONMGH", "server_time":"", "ani":"S" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CRVNUR", "server_time":"", "flag":"W" },
-    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "OPENUR", "server_time":"", "flag":"W" },
+    { "noday": 1, "day": "Mon", "event": "DY", "phase": "PH01", "code_task": "DEMONZ", "server_time": "" },
 
-    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYFALCON", "server_time":"", "flag":"A" },
-    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYELITE",  "server_time":"" },
-    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "FREETH",   "server_time":"" },
-    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYSOLDIER", "server_time":"" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "TCKSUR", "server_time": "" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CON1SP", "server_time": "", "ani": "S" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CONMGH", "server_time": "", "ani": "S" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "CRVNUR", "server_time": "", "flag": "W" },
+    { "noday": 2, "day": "Tue", "event": "AD", "phase": "PH02", "code_task": "OPENUR", "server_time": "", "flag": "W" },
+
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYFALCON", "server_time": "", "flag": "A" },
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYELITE", "server_time": "" },
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "FREETH", "server_time": "" },
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DYSOLDIER", "server_time": "" },
+
+    { "noday": 2, "day": "Tue", "event": "DY", "phase": "PH02", "code_task": "DEMONR", "server_time": "" },
+
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "RAVCH1", "server_time": "" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "STDSCR", "server_time": "" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCH1SP", "server_time": "", "ani": "S" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCHMGH", "server_time": "", "ani": "S" },
+    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "FALCON", "server_time": "", "flag": "S" },
+
+    { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "SAVETH", "server_time": "" },
+    { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "FREETS", "server_time": "" },
+    { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "DYSOLDIER", "server_time": "" },
+
+    { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "DEMONW", "server_time": "" },
+
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "TCKHER", "server_time": "" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "ANTX", "server_time": "" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDSR", "server_time": "" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDSS", "server_time": "" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDUR", "server_time": "" },
+    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SKILLB", "server_time": "" },
+
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYFALCON", "server_time": "", "flag": "A" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYELITE", "server_time": "" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "FREETS", "server_time": "" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYBOTWAR", "server_time": "" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYSOLDIER", "server_time": "" },
     
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "RAVCH1", "server_time":"" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "STDSCR", "server_time":"" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCH1SP", "server_time":"", "ani":"S" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "TCHMGH", "server_time":"", "ani":"S" },
-    { "noday": 3, "day": "Wed", "event": "AD", "phase": "PH03", "code_task": "FALCON",   "server_time":"" },
+    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DEMONZ", "server_time": "" },
 
-    { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "SAVETH", "server_time":"" },
-    { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "FREETS", "server_time":"" },
-    { "noday": 3, "day": "Wed", "event": "DY", "phase": "PH03", "code_task": "DYSOLDIER", "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLDT10", "server_time": "", "ani": "S" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLD1TRN", "server_time": "", "ani": "S" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "FALCON", "server_time": "", "flag": "S" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CON1SP", "server_time": "", "ani": "S" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CONMGH", "server_time": "", "ani": "S" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCH1SP", "server_time": "", "ani": "S" },
+    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCHMGH", "server_time": "", "ani": "S" },
+
+    { "noday": 5, "day": "Fri", "event": "ROY", "phase": "PH05", "code_task": "SCRAMBLE", "server_time": "12:00:00", "server_duration": "02:00:00", "flag": "A", "ani": "A" },
+    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR", "server_time": "09:00:00", "server_duration": "00:30:00", "flag": "I", "ani": "S" },
+    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR", "server_time": "18:00:00", "server_duration": "00:30:00", "flag": "I", "ani": "S" },
+    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR", "server_time": "22:00:00", "server_duration": "00:30:00", "flag": "I", "ani": "S" },
+    { "noday": 5, "day": "Fri", "event": "DY", "phase": "PH05", "code_task": "FREETH", "server_time": "" },
+    { "noday": 5, "day": "Fri", "event": "DY", "phase": "PH05", "code_task": "FREETS", "server_time": "" },
+    { "noday": 5, "day": "Fri", "event": "DY", "phase": "PH05", "code_task": "DYBOTWAR", "server_time": "" },
+    { "noday": 5, "day": "Fri", "event": "DY", "phase": "PH05", "code_task": "DYHOSPITAL", "server_time": "", "flag": "W" },
     
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "TCKHER", "server_time":"" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "ANTX",   "server_time":"" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDSR", "server_time":"" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDSS", "server_time":"" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SHRDUR", "server_time":"" },
-    { "noday": 4, "day": "Thu", "event": "AD", "phase": "PH04", "code_task": "SKILLB", "server_time":"" },
+    { "noday": 5, "day": "Fri", "event": "DY", "phase": "PH05", "code_task": "DEMONR", "server_time": "" },
 
-    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYFALCON", "server_time":"", "flag":"A" },
-    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYELITE",  "server_time":"" },
-    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "FREETS",   "server_time":"" },
-    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYBOTWAR", "server_time":"" },
-    { "noday": 4, "day": "Thu", "event": "DY", "phase": "PH04", "code_task": "DYSOLDIER", "server_time":"" },
-    
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLDT10",  "server_time":"", "ani":"S" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "SOLD1TRN", "server_time":"", "ani":"S" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "FALCON",     "server_time":"" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CON1SP",   "server_time":"", "ani":"S" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "CONMGH",   "server_time":"", "ani":"S" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCH1SP",   "server_time":"", "ani":"S" },
-    { "noday": 5, "day": "Fri", "event": "AD", "phase": "PH05", "code_task": "TCHMGH",   "server_time":"", "ani":"S" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CON1SP", "server_time": "", "ani": "S" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "TCH1SP", "server_time": "", "ani": "S" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLD1TRN", "server_time": "", "ani": "S" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "HEA1SP", "server_time": "" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDDFT", "server_time": "" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDLST", "server_time": "" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDMTC", "server_time": "" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CRVNUR", "server_time": "", "flag": "W" },
+    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "OPENUR", "server_time": "", "flag": "W" },
 
-    { "noday": 5, "day": "Fri", "event": "ROY", "phase": "PH05", "code_task": "SCRAMBLE", "server_time":"12:00:00", "server_duration":"02:00:00", "flag":"A", "ani":"A" },
-    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"09:00:00", "server_duration":"00:30:00", "flag":"I", "ani":"S" },
-    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"18:00:00", "server_duration":"00:30:00", "flag":"I", "ani":"S" },
-    { "noday": 5, "day": "Fri", "event": "BEX", "phase": "PH05", "code_task": "ELIXIR",   "server_time":"22:00:00", "server_duration":"00:30:00", "flag":"I", "ani":"S" },
-    { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "FREETH",   "server_time":"" },
-    { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "FREETS",   "server_time":"" },
-    { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "DYBOTWAR", "server_time":"" },
-    { "noday": 5, "day": "Fri", "event": "DY",  "phase": "PH05", "code_task": "DYHOSPITAL", "server_time":"", "flag":"W" },
-    
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CON1SP",   "server_time":"", "ani":"S" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "TCH1SP",   "server_time":"", "ani":"S" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLD1TRN", "server_time":"", "ani":"S" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "HEA1SP",   "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDDFT",  "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDLST",  "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "SOLDMTC",  "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "CRVNUR",   "server_time":"", "flag":"W" },
-    { "noday": 6, "day": "Sat", "event": "AD", "phase": "PH06", "code_task": "OPENUR",   "server_time":"", "flag":"W" },
+    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "PH06", "code_task": "EQGEAR", "server_time": "" },
+    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "PH06", "code_task": "EQBPRN", "server_time": "" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETH", "server_time": "" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETS", "server_time": "" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "SHIELD", "server_time": "00:00:00", "server_duration": "23:00:00", "flag": "W", "ani": "S" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "DYWALL", "server_time": "00:00:00", "server_duration": "23:00:00", "flag": "W", "ani": "S" },
 
-    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "PH06", "code_task": "EQGEAR", "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "EQ", "phase": "PH06", "code_task": "EQBPRN", "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETH", "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETS", "server_time":"" },
-    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "SHIELD", "server_time":"00:00:00", "server_duration":"23:00:00", "flag":"W", "ani":"S" },
-    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "DYWALL", "server_time":"00:00:00", "server_duration":"23:00:00", "flag":"W", "ani":"S" },
+    { "noday": 6, "day": "Sat", "event": "KVK", "phase": "PH06", "code_task": "KWAR", "server_time": "12:00:00", "server_duration": "02:00:00", "flag": "A", "ani": "A" },
 
-    { "noday": 6, "day": "Sat", "event": "KVK","phase": "PH06", "code_task": "KWAR",   "server_time":"12:00:00", "server_duration":"02:00:00", "flag":"A", "ani":"A" },
-    
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYFALCON", "server_time":"", "flag":"A" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYELITE",  "server_time":"" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYBOTT",   "server_time":"" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYHERBS",  "server_time":"16:30:00", "server_duration":"08:00:00" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "FREETH",   "server_time":"" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "SAVETS",   "server_time":"" },
-    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYSOLDIER", "server_time":"" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "DEMONW", "server_time": "" },
 
-    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQGEAR", "server_time":"" },
-    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQBPRN", "server_time":"" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYFALCON", "server_time": "", "flag": "A" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYELITE", "server_time": "" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYBOTT", "server_time": "" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYHERBS", "server_time": "16:30:00", "server_duration": "08:00:00" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "FREETH", "server_time": "" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "SAVETS", "server_time": "" },
+    { "noday": 0, "day": "Sun", "event": "DY", "phase": "PH00", "code_task": "DYSOLDIER", "server_time": "" },
 
-    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"02:00:00", "server_duration":"00:30:00", "ani":"S" },
-    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"09:00:00", "server_duration":"00:30:00", "ani":"S" },
-    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"18:00:00", "server_duration":"00:30:00", "ani":"S" },
-    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time":"23:00:00", "server_duration":"00:30:00", "ani":"S" },
+    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQGEAR", "server_time": "" },
+    { "noday": 0, "day": "Sun", "event": "EQ", "phase": "PH00", "code_task": "EQBPRN", "server_time": "" },
+
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time": "02:00:00", "server_duration": "00:30:00", "ani": "S" },
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time": "09:00:00", "server_duration": "00:30:00", "ani": "S" },
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time": "18:00:00", "server_duration": "00:30:00", "ani": "S" },
+    { "noday": 0, "day": "Sun", "event": "CUM", "phase": "PH00", "code_task": "CUMULUS", "server_time": "23:00:00", "server_duration": "00:30:00", "ani": "S" },
   ];
 
   /* ---------- Utilidades compartidas ---------- */
@@ -707,15 +731,81 @@
        Las actividades cuyo codigo comienza con "BS" se agregan unicamente a
        la tabla del dia actual. Su contador es el del horario vinculado de
        Battle Survival y solo son visibles cuando ese contador esta en
-       estado [PROGRESS]; en cualquier otro estado permanecen ocultas. */
+       estado [PROGRESS]; en cualquier otro estado permanecen ocultas.
+
+       Las actividades cuyo codigo comienza con "OFF" representan la
+       oportunidad siguiente de cada tipo de Battle Survival. Se muestran
+       las dos siguientes a la actividad en curso, en orden cronologico,
+       con un contador unicamente en estado [COUNTDOWN]. La fila completa
+       recibe la clase ad-off-task, que marca las celdas Tarea, Recurso y
+       Evento con el aspecto de actividad proxima. */
 
     var BS_CODE_PREFIX = "BS";
+    var OFF_CODE_PREFIX = "OFF";
     /* Simbolo de estrella de habilidad, pintado en rojo en estas tareas. */
     var BS_STAR = "★";
+    /* Clase de fila que marca la actividad como proxima, todavia no activa. */
+    var OFF_TASK_CLASS = "ad-off-task";
+    /* Cantidad de actividades siguientes que se muestran bajo la actual. */
+    var OFF_VISIBLE_COUNT = 2;
 
     var bsActivities = ACTIVITY_CODE.filter(function (a) {
       return a.code.indexOf(BS_CODE_PREFIX) === 0;
     });
+
+    var offActivities = ACTIVITY_CODE.filter(function (a) {
+      return a.code.indexOf(OFF_CODE_PREFIX) === 0;
+    });
+
+    /* Actividad OFF asociada a cada codigo de horario de Battle Survival. */
+    var offByCodebs = {};
+    offActivities.forEach(function (a) {
+      if (a.codebs) offByCodebs[a.codebs] = a;
+    });
+
+    /* Horarios de Battle Survival ordenados dentro de la semana, con el
+       instante semanal de inicio de cada franja. */
+    var bsSchedule = CALENDAR.map(function (c) {
+      var p = c.time_init.split(":");
+      var sec = (+p[0]) * 3600 + (+p[1]) * 60 + (+p[2]);
+      return {
+        noday: c.noday,
+        codebs: c.codebs,
+        sec: sec,
+        weekSec: c.noday * 86400 + sec
+      };
+    }).sort(function (a, b) { return a.weekSec - b.weekSec; });
+
+    /* Indice de la franja de Battle Survival en curso para el instante dado,
+       expresado en segundos dentro de la semana (UTC-2). */
+    function currentScheduleIndex(weekSec) {
+      var idx = 0;
+      for (var i = 0; i < bsSchedule.length; i++) {
+        if (bsSchedule[i].weekSec <= weekSec) idx = i; else break;
+      }
+      return idx;
+    }
+
+    /* Devuelve las siguientes franjas de Battle Survival despues de la que
+       esta en curso, con el instante de inicio relativo al dia actual. */
+    function nextScheduleSlots(noday, nowSec, count) {
+      var weekSec = noday * 86400 + nowSec;
+      var idx = currentScheduleIndex(weekSec);
+      var result = [];
+      for (var i = 1; i <= count; i++) {
+        var pos = idx + i;
+        var slot = bsSchedule[pos % bsSchedule.length];
+        var cycles = Math.floor(pos / bsSchedule.length);
+        /* El instante se expresa en segundos desde las 00:00:00 del dia
+           actual, de modo que el contador desciende correctamente al cruzar
+           la medianoche o el cambio de semana. */
+        result.push({
+          codebs: slot.codebs,
+          startSec: slot.weekSec + cycles * WEEK_SECONDS - noday * 86400
+        });
+      }
+      return result;
+    }
 
     /* Fila de actividad BS para el dia actual. */
     function bsRow(a, noday) {
@@ -730,9 +820,40 @@
       };
     }
 
+    /* Estado de la franja de Battle Survival en curso. Se usa para saber
+       cuando las actividades OFF deben avanzar a las siguientes franjas. */
+    var currentSlotIndex = -1;
+    var currentSlotNoday = -1;
+
+    /* Devuelve el indice de la franja en curso para el dia y la hora dados. */
+    function slotIndexAt(noday, nowSec) {
+      return currentScheduleIndex(noday * 86400 + nowSec);
+    }
+
+    /* Fila de actividad OFF: la oportunidad siguiente de un horario de
+       Battle Survival, con su instante de inicio. El aspecto de actividad
+       proxima se aplica a la fila completa mediante la clase de fila. */
+    function offRow(a, noday, startSec) {
+      return {
+        noday: noday,
+        day: DAY_ABBR[noday],
+        event: "BS",
+        phase: "",
+        code_task: a.code,
+        server_time: "",
+        isOff: true,
+        startSec: startSec
+      };
+    }
+
     /* Aplica la visibilidad de una fila BS segun el estado de su contador. */
     function applyBsVisibility(tr, state) {
       tr.classList.toggle("ad-bs-hidden", state !== STATE_PROGRESS);
+    }
+
+    /* Una fila OFF solo es visible con su contador en cuenta regresiva. */
+    function applyOffVisibility(tr, state) {
+      tr.classList.toggle("ad-bs-hidden", state !== STATE_COUNTDOWN);
     }
 
     /* Reconstruye el texto de la tarea separando cada estrella para poder
@@ -768,7 +889,16 @@
       var ani = r.ani ? String(r.ani).toLowerCase() : "";
       var hasSchedule = !!r.server_time || !!codebs;
 
-      if (offset === 0 && r.server_time) {
+      if (offset === 0 && r.isOff) {
+        /* Las actividades OFF muestran solo la cuenta regresiva hasta el
+           inicio de su franja, sin tiempo transcurrido ni restante. */
+        var remaining = r.startSec - nowSec;
+        if (remaining < 0) remaining = 0;
+        state = STATE_COUNTDOWN;
+        timeTxt = "T-" + fmtCounter(remaining);
+        timeCell = appendCell(tr, timeTxt, "ad-time");
+        counters.push({ td: timeCell, tr: tr, offStartSec: r.startSec });
+      } else if (offset === 0 && r.server_time) {
         /* El dia actual usa la hora propia del servidor y su duracion. */
         var own = serverCounterState(r.server_time, r.server_duration, nowSec);
         state = own.state;
@@ -810,6 +940,8 @@
 
       /* Las actividades BS solo se muestran con el contador en progreso. */
       if (r.isBs) applyBsVisibility(tr, state);
+      /* Las actividades OFF solo se muestran en cuenta regresiva. */
+      if (r.isOff) applyOffVisibility(tr, state);
 
       /* 1. Contador */
       if (!timeCell) timeCell = appendCell(tr, timeTxt, "ad-time");
@@ -822,6 +954,8 @@
       var objectiveText = a ? (activityText(r.code_task, "objective") || r.code_task) : r.code_task;
       var taskCell = appendCell(tr, objectiveText, "ad-objective");
       if (flag) taskCell.classList.add("ad-task-flag-" + flag);
+      /* Las actividades OFF marcan la fila completa como proxima. */
+      if (r.isOff) tr.classList.add(OFF_TASK_CLASS);
       /* En las actividades BS la estrella de habilidad se pinta en rojo. */
       if (r.isBs) appendStars(taskCell, objectiveText);
 
@@ -994,6 +1128,76 @@
           });
         })(item, title, baseCls);
       }
+
+      /* La franja en curso determina las dos oportunidades OFF que se
+         muestran bajo la actividad BS actual. */
+      currentSlotNoday = today;
+      currentSlotIndex = slotIndexAt(today, nowSec);
+      buildOffRows(today, nowSec, startDayMs);
+    }
+
+    /* Cuerpo de la tabla del dia actual, donde se insertan las filas OFF.
+       La estructura es: .ad-item > .ad-item-body > .ad-wrap > table > tbody. */
+    function todayTbody() {
+      var item = listsEl.children[0];
+      if (!item) return null;
+      var body = null;
+      for (var i = 0; i < item.children.length; i++) {
+        var child = item.children[i];
+        if (String(child.className).indexOf("ad-item-body") >= 0) { body = child; break; }
+      }
+      if (!body) return null;
+      var wrap = body.children[0];
+      if (!wrap) return null;
+      var table = wrap.children[0];
+      if (!table) return null;
+      for (var j = 0; j < table.children.length; j++) {
+        if (table.children[j].tagName === "TBODY") return table.children[j];
+      }
+      return null;
+    }
+
+    /* Reconstruye las filas OFF con las dos franjas siguientes a la que
+       esta en curso. Se ejecuta en cada cambio de franja, de modo que la
+       lista avanza sola cuando comienza una nueva actividad BS. */
+    function buildOffRows(noday, nowSec, startDayMs) {
+      var tbody = todayTbody();
+      if (!tbody) return;
+
+      /* Se retiran las filas OFF anteriores del cuerpo de la tabla. */
+      var kept = [];
+      for (var i = 0; i < tbody.children.length; i++) {
+        var row = tbody.children[i];
+        var code = "";
+        for (var c = 0; c < row.children.length; c++) {
+          var cell = row.children[c];
+          if (String(cell.className).indexOf("ad-task-icon") >= 0) {
+            code = cell.getAttribute("data-code") || "";
+            break;
+          }
+        }
+        if (code.indexOf(OFF_CODE_PREFIX) === 0) {
+          if (typeof tbody.removeChild === "function") tbody.removeChild(row);
+        } else {
+          kept.push(row);
+        }
+      }
+      /* El cuerpo conserva unicamente las filas que no son OFF. */
+      if (kept.length !== tbody.children.length) tbody.children = kept;
+
+      /* Los contadores de las filas retiradas dejan de actualizarse. */
+      counters = counters.filter(function (counter) {
+        return counter.offStartSec === undefined;
+      });
+
+      var nextSlots = nextScheduleSlots(noday, nowSec, OFF_VISIBLE_COUNT);
+      for (var s = 0; s < nextSlots.length; s++) {
+        var offAct = offByCodebs[nextSlots[s].codebs];
+        if (!offAct) continue;
+        var offRowEl = buildRow(offRow(offAct, noday, nextSlots[s].startSec), 0, startDayMs, nowSec);
+        offRowEl.classList.add("ad-bs-task");
+        tbody.appendChild(offRowEl);
+      }
     }
 
     function tick() {
@@ -1007,10 +1211,26 @@
       if (currentPhaseEl) {
         currentPhaseEl.textContent = phaseCountdown(nowSec);
       }
+
+      /* Al cambiar de franja de Battle Survival las oportunidades OFF
+         avanzan: se retiran las anteriores y se construyen las dos
+         siguientes a la nueva actividad en curso. */
+      if (slotIndexAt(currentSlotNoday, nowSec) !== currentSlotIndex) {
+        currentSlotIndex = slotIndexAt(currentSlotNoday, nowSec);
+        buildOffRows(currentSlotNoday, nowSec, Date.UTC(
+          origin.getUTCFullYear(), origin.getUTCMonth(), origin.getUTCDate()
+        ));
+      }
+
       for (var i = 0; i < counters.length; i++) {
         var counter = counters[i];
         var result;
-        if (counter.serverTime) {
+        if (counter.offStartSec !== undefined) {
+          /* Las actividades OFF muestran solo la cuenta regresiva. */
+          var left = counter.offStartSec - nowSec;
+          if (left < 0) left = 0;
+          result = { state: STATE_COUNTDOWN, text: "T-" + fmtCounter(left) };
+        } else if (counter.serverTime) {
           result = serverCounterState(counter.serverTime, counter.serverDuration, nowSec);
         } else {
           result = linkedCounterState(counter.codebs, counter.noday, nowSec);
@@ -1026,6 +1246,8 @@
         applyCounterState(counter.tr, result.state);
         /* Las actividades BS solo son visibles con el contador en progreso. */
         if (counter.isBs) applyBsVisibility(counter.tr, result.state);
+        /* Las actividades OFF solo son visibles en cuenta regresiva. */
+        if (counter.offStartSec !== undefined) applyOffVisibility(counter.tr, result.state);
       }
     }
 

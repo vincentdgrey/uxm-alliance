@@ -70,7 +70,7 @@ test("los codigos de actividades coinciden con ACTIVITY_CODE", () => {
   vm.createContext(context);
   vm.runInContext("var ACTIVITY_CODE = " + match[1], context);
   const rows = context.ACTIVITY_CODE;
-  assert.equal(rows.length, 52);
+  assert.equal(rows.length, 60);
 
   const i18n = loadI18n("actividades-diarias");
   const canonicalCodes = Object.keys(i18n.es.adActivities);
@@ -146,8 +146,13 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
     BSBUILD: { objective: "Insignias de Habilidad ★, Oportunidad al Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H]", resource: "Edificios" },
     BSHERO: { objective: "Insignias de Habilidad ★, Oportunidad al Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe", resource: "Heroes" },
     BSRAVEN: { objective: "Insignias de Habilidad ★, Oportunidad de usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo", resource: "Cuervo" },
-    BSSOLDIER: { objective: "Insignias de Habilidad ★, Oportunidad de entrenar [2.800] Soldados ó Acelerar Entrenamiento [17H]", resource: "Soldados" },
-    BSTECH: { objective: "Insignias de Habilidad ★, Oportunidad al Terminar Investigación [subir 30.000 poder] ó Acelerar [50H]", resource: "Investigación" }
+    BSSOLDIER: { objective: "Insignias de Habilidad ★, Oportunidad de entrenar [2.800] Soldados ó Acelerar [17H] Entrenamiento", resource: "Soldados" },
+    BSTECH: { objective: "Insignias de Habilidad ★, Oportunidad al Terminar Investigación [subir 30.000 poder] ó Acelerar [50H]", resource: "Investigación" },
+    OFFBUILD: { objective: "Próxima Batalla Supervivencia, Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H] Construcción", resource: "Edificios" },
+    OFFHERO: { objective: "Próxima Batalla Supervivencia, Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe", resource: "Heroes" },
+    OFFRAVEN: { objective: "Próxima Batalla Supervivencia, Usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo", resource: "Cuervo" },
+    OFFSOLDIER: { objective: "Próxima Batalla Supervivencia, Entrenar [2.800] Soldados ó Acelerar [17H] Entrenamiento", resource: "Soldados" },
+    OFFTECH: { objective: "Próxima Batalla Supervivencia, Terminar Investigación [subir 30.000 poder] ó Acelerar [50H] Investigación", resource: "Investigación" }
   };
 
   for (const [code, values] of Object.entries(expected)) {
@@ -158,7 +163,7 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
 test("todas las traducciones de actividades cubren los codigos canonicos", () => {
   const i18n = loadI18n("actividades-diarias");
   const canonicalCodes = Object.keys(i18n.es.adActivities);
-  assert.equal(canonicalCodes.length, 53);
+  assert.equal(canonicalCodes.length, 61);
 
   for (const lang of languages) {
     const activities = i18n[lang].adActivities;

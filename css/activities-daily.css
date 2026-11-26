@@ -299,8 +299,18 @@ tr.bs-current td.bs-event::after {
 }
 .ad-schedule td.ad-objective.ad-task-flag-s {
   background-color: #006d0030;
-  color: #fff;
+  color: #015c01;
   border-radius: 4px;
+}
+
+/* Actividades de oportunidad siguiente (codigos OFF...): el fondo y el color
+   se aplican a las celdas Tarea, Recurso y Evento. La columna Contador y la
+   columna de imagen conservan su apariencia habitual. */
+.ad-schedule tbody tr.ad-off-task > td.ad-objective,
+.ad-schedule tbody tr.ad-off-task > td.ad-resource,
+.ad-schedule tbody tr.ad-off-task > td.ad-event {
+  background-color: #aaa;
+  color: #fff;
 }
 
 /* Contador: indicador ani en cuenta regresiva. */
@@ -391,7 +401,7 @@ tr.bs-current td.bs-event::after {
   position: absolute;
   right: 5px;
   bottom: 1px;
-  color: #999;
+  color: #4d7799;
   font-weight: 100;
   font-size: 0.6rem;
   white-space: nowrap;
