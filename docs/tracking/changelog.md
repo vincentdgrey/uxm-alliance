@@ -1,5 +1,22 @@
 # Changelog
 
+## [261125a] - 2026-11-25
+
+### Changed
+- Se propaga a los diez idiomas no españoles de `js/i18n/actividades-diarias/i18n.js` la redacción manual de las actividades de oportunidad siguiente en `texts.es.adActivities`, que pasa de «Oportunidad Próxima» a «Próxima Batalla Supervivencia»: `OFFBUILD`, `OFFHERO`, `OFFRAVEN`, `OFFSOLDIER` y `OFFTECH`. Cada traducción añade el matiz de la actividad al final del objetivo (`Construcción`, `Pesquisa`, `Ricerca`, `Construction`, `Recherche`, `研究`, `Araştırma`, `badań`), conservando las cifras `30.000`, `23.4M`, `30`, `15`, `2.800`, `17H` y `50H`. El texto español no se modifica.
+- `BSSOLDIER` mantiene en los once idiomas la redacción que coloca `[17H]` antes del sustantivo de entrenamiento.
+- Las actividades `OFF...` se distinguen ahora por la clase de fila **`ad-off-task`** en lugar del indicador `ad-task-flag-x` de la columna Tarea. El estilo se aplica a las celdas **Tarea, Recurso y Evento** (`tr.ad-off-task > td.ad-objective`, `> td.ad-resource`, `> td.ad-event`) con fondo `#727374` y texto `#fff`. La columna Contador y la columna de imagen conservan su apariencia habitual.
+
+### Removed
+- Se retira el indicador `ad-task-flag-x` de `css/activities-daily.css` y su uso en `js/activities-daily.js` (`OFF_TASK_FLAG`). El indicador ya solo se usaba en las actividades `OFF...`.
+
+### Added (tests)
+- `tests/activity-points.test.cjs` sustituye la comprobación del indicador `ad-task-flag-x` por dos casos: uno verifica la clase `ad-off-task` en la fila y la ausencia de indicadores de flag en la columna Tarea; otro valida que el selector CSS alcanza Tarea, Recurso y Evento, con fondo `#727374` y texto `#fff`, y que no alcanza `ad-time` ni `ad-icon`.
+- `tests/i18n-structure.test.cjs` actualiza las expectativas del español manual de `OFFBUILD`, `OFFHERO`, `OFFRAVEN`, `OFFSOLDIER` y `OFFTECH`.
+
+### Changed (docs)
+- `docs/core/project-rules.md` documenta la redacción vigente de las actividades `OFF...`, el uso de la clase de fila `ad-off-task` y el alcance de su estilo, y retira el indicador `X` de la lista de indicadores de `DAILY.flag`.
+
 ## [261124d] - 2026-11-24
 
 ### Changed
