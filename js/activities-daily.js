@@ -760,7 +760,7 @@
     var OFF_TASK_CLASS = "ad-off-task";
     /* Cantidad de actividades OFF que se muestran bajo la actividad en
        curso. Con la actividad BS en curso, el grupo muestra cuatro filas. */
-    var OFF_VISIBLE_COUNT = 3;
+    var OFF_VISIBLE_COUNT = 4;
 
     var bsActivities = ACTIVITY_CODE.filter(function (a) {
       return a.code.indexOf(BS_CODE_PREFIX) === 0;
