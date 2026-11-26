@@ -1,5 +1,25 @@
 # Changelog
 
+## [261126a] - 2026-11-26
+
+### Changed
+- **El grupo Battle Survival pasa de siete filas con visibilidad condicionada a tres filas siempre escritas**. `js/activities-daily.js` sustituye `buildOffRows()` por `buildBattleTaskRows()`, que escribe en la tabla del día actual la actividad `BS...` de la franja en curso (contador en estado `[PROGRESS]`) seguida de las dos actividades `OFF...` consecutivas (contador en estado `[COUNTDOWN]` y clase de fila `ad-off-task`). Al cambiar de franja, las tres filas se sobrescriben con los datos vigentes.
+- La lógica deja de crear actividades `BS...` ocultas: el nuevo mapeo `bsByCodebs` relaciona cada código de horario de `CALENDAR` con su actividad `BS...`, y `offByCodebs` con su actividad `OFF...`.
+- El aspecto visible no cambia: la primera fila conserva el contador con el tiempo restante de la duración de cuatro horas, las dos filas `OFF` conservan la cuenta regresiva y el estilo `ad-off-task` en Tarea, Recurso y Evento, y el grupo sigue separado del resto de eventos.
+
+### Removed
+- Se retiran `applyBsVisibility()` y `applyOffVisibility()` de `js/activities-daily.js`, junto con la clase CSS `.ad-bs-hidden` de `css/activities-daily.css`. El grupo Battle Survival ya no oculta filas: todas las que se escriben son visibles.
+
+### Added (tests)
+- `tests/activity-points.test.cjs` comprueba que el grupo Battle Survival muestra exactamente tres filas, que la primera corresponde a la franja en curso con estado `[PROGRESS]` y las dos siguientes con estado `[COUNTDOWN]`, que no queda ninguna fila con la clase `ad-bs-hidden` y que el grupo avanza con la franja en curso (`BSHERO → OFFBUILD → OFFSOLDIER` y, tras el cambio de franja, `BSBUILD → OFFSOLDIER → OFFTECH`).
+- `tests/ui-contract.test.cjs` sustituye la comprobación de la lógica de visibilidad por la del render de las tres filas, y verifica que no quedan referencias a `ad-bs-hidden`, `applyBsVisibility` ni `applyOffVisibility`.
+
+### Fixed (tests)
+- `tests/activity-points.test.cjs` y `tests/ui-contract.test.cjs` actualizan las expectativas del contador `BS` al formato vigente sin espacio tras el signo (`+02:47:39`) y del color de fondo `ad-off-task` al valor manual vigente (`#aaa`).
+
+### Changed (docs)
+- `docs/core/project-rules.md` describe el render de las tres filas del grupo Battle Survival, el mapeo `bsByCodebs`, la sobrescritura al cambiar de franja y la retirada de la lógica de ocultación.
+
 ## [261125a] - 2026-11-25
 
 ### Changed
