@@ -185,16 +185,27 @@ function rowByTaskCode(result, code) {
   return null;
 }
 
-/* Filas del cuerpo principal de la tabla del dia actual, sin el grupo
-   Battle Survival, que vive en un segundo cuerpo de tabla. */
-function todayRows(result) {
-  const item = result.lists.children[0];
+/* Cuerpos de tabla de un dia, en el orden en que se muestran. Cada
+   grupo de eventos ocupa un cuerpo propio. */
+function dayBodies(result, index = 0) {
+  const item = result.lists.children[index];
   const body = item.children.find((c) => String(c.className).includes("ad-item-body"));
   const table = body.children[0].children[0];
-  const tbody = table.children.find(
-    (c) => c.tagName === "TBODY" && !String(c.className).includes("ad-battle-body")
-  );
-  return tbody.children;
+  return table.children.filter((c) => c.tagName === "TBODY");
+}
+
+/* Cuerpos de la tabla del dia actual, sin el grupo Battle Survival. */
+function todayEventBodies(result) {
+  return dayBodies(result).filter((c) => !String(c.className).includes("ad-battle-body"));
+}
+
+/* Filas de los grupos de eventos del dia actual, sin Battle Survival. */
+function todayRows(result) {
+  const rows = [];
+  for (const body of todayEventBodies(result)) {
+    for (const row of body.children) rows.push(row);
+  }
+  return rows;
 }
 
 /* ---------- Puntos dentro de la columna Tarea ---------- */
@@ -298,6 +309,79 @@ test("las actividades sin valor numerico no muestran punto", () => {
   /* DYFALCON y SHIELD declaran point vacio. */
   assert.equal(pointOf(rowByTaskCode(result, "DYFALCON")), null);
   assert.equal(pointOf(rowByTaskCode(result, "SHIELD")), null);
+});
+
+/* ---------- Agrupacion por grupo de eventos ---------- */
+
+test("cada grupo de eventos ocupa un cuerpo de tabla propio", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  const bodies = todayEventBodies(result);
+  assert.ok(bodies.length > 1, "debe haber varios cuerpos");
+
+  for (const body of bodies) {
+    assert.ok(String(body.className).includes("ad-event-body"), "cada cuerpo es un grupo de eventos");
+
+    /* Un cuerpo solo contiene actividades de su propio evento. */
+    const event = body.getAttribute("data-event");
+    for (const row of body.children) {
+      const icon = findByClass(row, "ad-task-icon")[0];
+      assert.ok(icon, "cada fila debe tener su icono");
+    }
+    assert.ok(event, "el cuerpo declara su evento");
+  }
+});
+
+test("los grupos de eventos siguen el orden view de EVENT_CODE", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  /* El viernes existen los grupos DY, ROY, AD y BEX, mas BS en el dia
+     actual. El orden lo define el valor view de EVENT_CODE. */
+  const events = dayBodies(result).map((body) => body.getAttribute("data-event"));
+  assert.deepEqual(events, ["DY", "ROY", "AD", "BEX", "BS"]);
+});
+
+test("el orden de los cuerpos respeta el valor view de la fuente de verdad", () => {
+  const source = read("js/activities-daily.js");
+  const match = source.match(/var EVENT_CODE = (\[[\s\S]*?\n  \]);/);
+  assert.ok(match, "debe existir EVENT_CODE");
+  const context = {};
+  vm.createContext(context);
+  vm.runInContext("var EVENT_CODE = " + match[1], context);
+
+  /* Los valores view son numericos, positivos y unicos. */
+  const views = context.EVENT_CODE.map((e) => e.view);
+  for (const view of views) {
+    assert.equal(typeof view, "number", "view debe ser numerico");
+    assert.ok(view > 0, "view debe ser positivo");
+  }
+  assert.equal(new Set(views).size, views.length, "los valores view deben ser unicos");
+
+  /* Los cuerpos de cada tabla siguen ese orden. */
+  const result = render(fridayAt(5, 0, 0));
+  const byView = {};
+  context.EVENT_CODE.forEach((e) => { byView[e.event] = e.view; });
+  const events = dayBodies(result).map((body) => body.getAttribute("data-event"));
+  const sorted = events.slice().sort((a, b) => byView[a] - byView[b]);
+  assert.deepEqual(events, sorted, "los cuerpos deben seguir el orden view");
+});
+
+test("el separador de eventos cierra cada grupo que tiene otro detras", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  const bodies = dayBodies(result);
+  for (let i = 0; i < bodies.length; i++) {
+    const body = bodies[i];
+    if (!body.children.length) continue;
+    const last = body.children[body.children.length - 1];
+    const isLast = i === bodies.length - 1;
+
+    if (isLast) {
+      assert.ok(!String(last.className).includes("ad-event-separator"), "el ultimo grupo no lleva separador");
+    } else {
+      assert.ok(String(last.className).includes("ad-event-separator"), "cada grupo se cierra con separador");
+    }
+  }
 });
 
 /* ---------- Actividades BS ---------- */
@@ -430,9 +514,10 @@ test("el grupo mantiene cuatro actividades en todo el ciclo de cuatro horas", ()
 test("el grupo Battle Survival se separa de los demas eventos", () => {
   const result = render(fridayAt(5, 0, 0));
 
-  /* La ultima fila de las tareas normales cierra el grupo con separador. */
-  const rows = todayRows(result);
-  const previous = rows[rows.length - 1];
+  /* El ultimo grupo de tareas normales cierra el grupo con separador. */
+  const bodies = todayEventBodies(result);
+  const lastBody = bodies[bodies.length - 1];
+  const previous = lastBody.children[lastBody.children.length - 1];
   assert.ok(previous.classList.contains("ad-event-separator"), "el grupo anterior debe cerrarse con separador");
 
   /* Las filas del grupo BS pertenecen al mismo evento: no se separan. */
