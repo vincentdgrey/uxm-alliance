@@ -824,7 +824,7 @@ test("los puntos se integran en la columna Tarea con la nota minima", () => {
   }
 });
 
-test("las actividades BS solo se muestran en la tabla del dia actual y en estado de progreso", () => {
+test("el grupo Battle Survival escribe tres filas y no oculta ninguna", () => {
   const js = read("js/activities-daily.js");
   const css = read("css/activities-daily.css");
 
@@ -832,13 +832,16 @@ test("las actividades BS solo se muestran en la tabla del dia actual y en estado
   assert.match(js, /var BS_CODE_PREFIX = "BS"/);
   assert.match(js, /a\.code\.indexOf\(BS_CODE_PREFIX\) === 0/);
 
-  /* Se agregan unicamente al dia actual (k === 0). */
-  assert.match(js, /if \(k === 0\) \{[\s\S]*?buildRow\(bsRow\(bsActivities\[b\], noday\), k, startDayMs, nowSec\)/);
+  /* Una sola funcion escribe la actividad BS en curso y las dos OFF. */
+  assert.match(js, /function buildBattleTaskRows\(noday, nowSec, startDayMs\)/);
+  assert.match(js, /var currentAct = currentSlot \? bsByCodebs\[currentSlot\.codebs\] : null/);
+  assert.match(js, /var nextSlots = nextScheduleSlots\(noday, nowSec, OFF_VISIBLE_COUNT\)/);
 
-  /* El estado PROGRESS habilita la fila; cualquier otro estado la oculta. */
-  assert.match(js, /function applyBsVisibility\(tr, state\)/);
-  assert.match(js, /tr\.classList\.toggle\("ad-bs-hidden", state !== STATE_PROGRESS\)/);
-  assert.match(css, /\.ad-schedule tbody tr\.ad-bs-hidden \{[^}]*display:\s*none/s);
+  /* Las tres filas se escriben siempre: no hay logica de ocultacion. */
+  assert.doesNotMatch(js, /ad-bs-hidden/);
+  assert.doesNotMatch(js, /function applyBsVisibility/);
+  assert.doesNotMatch(js, /function applyOffVisibility/);
+  assert.doesNotMatch(css, /ad-bs-hidden/);
 });
 
 test("el grupo Battle Survival se separa con la clase de separador de eventos", () => {
@@ -859,7 +862,7 @@ test("el contador BS muestra el tiempo restante de la duracion de cuatro horas",
   /* El contador BS se compone de dos nodos actualizados en cada tick. */
   assert.match(js, /elapsedEl\.className = "ad-bs-elapsed"/);
   assert.match(js, /remainingEl\.className = "ad-bs-remaining"/);
-  assert.match(js, /counter\.remainingEl\.textContent = result\.state === STATE_PROGRESS \? fmtCounter\(result\.remainingSec\) : ""/);
+  assert.match(js, /counter\.remainingEl\.textContent = result\.state === STATE_PROGRESS \? "" \+ fmtCounter\(result\.remainingSec\) : ""/);
 
   /* Estilo del tiempo restante, bajo el contador. */
   assert.match(css, /\.ad-bs-remaining \{[^}]*display:\s*block[^}]*font-size:\s*10px[^}]*color:\s*#666/s);

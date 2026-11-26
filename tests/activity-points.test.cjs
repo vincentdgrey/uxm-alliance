@@ -299,45 +299,78 @@ test("las actividades sin valor numerico no muestran punto", () => {
 
 /* ---------- Actividades BS ---------- */
 
-test("las actividades BS solo existen en la tabla del dia actual", () => {
+/* Codigos de las tres filas del grupo Battle Survival, en orden. */
+function battleCodesOf(result) {
+  return allRows(result.lists)
+    .filter((row) => row.classList.contains("ad-bs-task"))
+    .map((row) => findByClass(row, "ad-task-icon")[0].getAttribute("data-code"));
+}
+
+test("el grupo Battle Survival muestra siempre tres filas", () => {
   const result = render(fridayAt(12, 0, 0));
 
   const rows = allRows(result.lists);
   const bsRows = rows.filter((row) => row.classList.contains("ad-bs-task"));
 
-  assert.ok(bsRows.length > 0, "el dia actual debe incluir filas BS");
-  /* BSBUILD, BSHERO, BSRAVEN, BSSOLDIER y BSTECH, mas las dos
-     actividades OFF siguientes. */
-  assert.equal(bsRows.length, 7);
+  /* La actividad BS en curso y las dos actividades OFF siguientes. */
+  assert.equal(bsRows.length, 3);
 });
 
-test("una actividad BS solo es visible con su contador en estado de progreso", () => {
+test("las actividades BS solo existen en la tabla del dia actual", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  /* Fuera del dia actual no hay ninguna actividad BS ni OFF. */
+  const items = result.lists.children;
+  for (let i = 1; i < items.length; i++) {
+    const body = items[i].children.find((c) => String(c.className).includes("ad-item-body"));
+    const table = body.children[0].children[0];
+    const tbody = table.children.find((c) => c.tagName === "TBODY");
+    for (const row of tbody.children) {
+      const code = findByClass(row, "ad-task-icon")[0].getAttribute("data-code");
+      assert.ok(code.indexOf("BS") !== 0, "las filas BS solo van en el dia actual");
+      assert.ok(code.indexOf("OFF") !== 0, "las filas OFF solo van en el dia actual");
+    }
+  }
+});
+
+test("la primera fila BS corresponde a la franja en curso y esta en progreso", () => {
   /* El viernes el horario de HEROE empieza a las 04:00 UTC-2. */
   const result = render(fridayAt(5, 0, 0));
+
+  const codes = battleCodesOf(result);
+  assert.deepEqual(codes, ["BSHERO", "OFFBUILD", "OFFSOLDIER"]);
+
   const hero = rowByTaskCode(result, "BSHERO");
-
   assert.ok(hero, "debe existir la fila BSHERO");
-  assert.ok(!hero.classList.contains("ad-bs-hidden"), "en progreso la fila es visible");
-
-  /* Los horarios de los demas codigos siguen en cuenta regresiva. */
-  const build = rowByTaskCode(result, "BSBUILD");
-  assert.ok(build, "debe existir la fila BSBUILD");
-  assert.ok(build.classList.contains("ad-bs-hidden"), "en cuenta regresiva la fila se oculta");
-
-  /* Pasado el tiempo del horario vinculado la fila se oculta. */
-  result.update(fridayAt(12, 0, 0));
-  assert.ok(hero.classList.contains("ad-bs-hidden"), "fuera de progreso la fila se oculta");
+  assert.deepEqual(stateClasses(hero), ["ad-state-progress"]);
 });
 
-test("las actividades BS conservan el orden de la fuente de verdad", () => {
+test("no hay filas ocultas por estado de contador", () => {
   const result = render(fridayAt(5, 0, 0));
 
-  const bsCodes = allRows(result.lists)
-    .filter((row) => row.classList.contains("ad-bs-task"))
-    .filter((row) => findByClass(row, "ad-task-icon")[0].getAttribute("data-code").indexOf("BS") === 0)
-    .map((row) => findByClass(row, "ad-task-icon")[0].getAttribute("data-code"));
+  /* Ninguna fila del grupo Battle Survival se oculta: todas se escriben. */
+  for (const row of allRows(result.lists)) {
+    assert.ok(!String(row.className).includes("ad-bs-hidden"), "no debe quedar la clase ad-bs-hidden");
+  }
 
-  assert.deepEqual(bsCodes, ["BSBUILD", "BSHERO", "BSRAVEN", "BSSOLDIER", "BSTECH"]);
+  /* Las dos filas OFF siguientes estan en cuenta regresiva. */
+  const build = rowByTaskCode(result, "OFFBUILD");
+  assert.deepEqual(stateClasses(build), ["ad-state-countdown"]);
+  const soldier = rowByTaskCode(result, "OFFSOLDIER");
+  assert.deepEqual(stateClasses(soldier), ["ad-state-countdown"]);
+});
+
+test("el grupo Battle Survival avanza con la franja en curso", () => {
+  const result = render(fridayAt(5, 0, 0));
+  assert.deepEqual(battleCodesOf(result), ["BSHERO", "OFFBUILD", "OFFSOLDIER"]);
+
+  /* Al comenzar la franja de BUILD el grupo se reescribe. */
+  result.update(fridayAt(8, 0, 0));
+  assert.deepEqual(battleCodesOf(result), ["BSBUILD", "OFFSOLDIER", "OFFTECH"]);
+
+  /* La actividad BUILD pasa a estar en curso. */
+  const build = rowByTaskCode(result, "BSBUILD");
+  assert.deepEqual(stateClasses(build), ["ad-state-progress"]);
 });
 
 test("las filas BS se agregan al final del grupo de tareas del dia actual", () => {
@@ -377,22 +410,23 @@ test("el contador BS muestra el tiempo restante de la duracion de cuatro horas",
   const elapsed = findByClass(hero, "ad-bs-elapsed")[0];
   const remaining = findByClass(hero, "ad-bs-remaining")[0];
 
-  assert.equal(elapsed.textContent, "+ 02:47:39");
+  assert.equal(elapsed.textContent, "+02:47:39");
   assert.equal(remaining.textContent, "01:12:21");
 
   /* El tiempo restante se recalcula en cada tick. */
   result.update(fridayAt(6, 48, 39));
-  assert.equal(elapsed.textContent, "+ 02:48:39");
+  assert.equal(elapsed.textContent, "+02:48:39");
   assert.equal(remaining.textContent, "01:11:21");
 });
 
-test("el tiempo restante solo aparece con el contador en estado de progreso", () => {
+test("el tiempo restante aparece en la actividad BS en curso", () => {
+  /* A las 03:00 la franja en curso es la de RAVEN, que comenzo a las 00:00. */
   const result = render(fridayAt(3, 0, 0));
-  const build = rowByTaskCode(result, "BSBUILD");
+  const raven = rowByTaskCode(result, "BSRAVEN");
 
-  /* A las 03:00 el horario de BUILD todavia no ha comenzado. */
-  const remaining = findByClass(build, "ad-bs-remaining")[0];
-  assert.equal(remaining.textContent, "", "sin progreso no hay tiempo restante");
+  assert.ok(raven, "debe existir la fila BSRAVEN");
+  const remaining = findByClass(raven, "ad-bs-remaining")[0];
+  assert.equal(remaining.textContent, "01:00:00");
 });
 
 test("las estrellas de las tareas BS se pintan en rojo", () => {
@@ -510,7 +544,7 @@ test("el estilo de las actividades OFF alcanza Tarea, Recurso y Evento, no Conta
   assert.match(rule[0], /td\.ad-objective/);
   assert.match(rule[0], /td\.ad-resource/);
   assert.match(rule[0], /td\.ad-event/);
-  assert.match(rule[0], /background-color:\s*#727374/);
+  assert.match(rule[0], /background-color:\s*#aaa/);
   assert.match(rule[0], /color:\s*#fff/);
 
   /* El Contador y el Icono conservan su apariencia habitual. */
@@ -539,8 +573,7 @@ test("las actividades OFF avanzan al cambiar de franja en curso", () => {
   result.update(fridayAt(8, 0, 0));
   assert.deepEqual(offCodesOf(result), ["OFFSOLDIER", "OFFTECH"]);
 
-  /* La actividad BUILD pasa a estar en curso y deja de estar oculta. */
+  /* La actividad BUILD pasa a estar en curso. */
   const build = rowByTaskCode(result, "BSBUILD");
-  assert.ok(!build.classList.contains("ad-bs-hidden"), "BSBUILD esta en progreso");
   assert.deepEqual(stateClasses(build), ["ad-state-progress"]);
 });
