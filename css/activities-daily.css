@@ -263,8 +263,22 @@ tr.bs-current td.bs-event::after {
 .ad-schedule tbody tr.ad-event-separator td {
   border-bottom: 2px solid #4d7799;
 }
-.ad-schedule tbody tr:last-child td {
+/* Dia actual: encabezado y separador de eventos en verde. Las demas
+   tablas conservan el color general #4d7799. */
+.ad-item.ad-today .ad-schedule thead th {
+  background: #1d6e12;
+  border-bottom-color: #1d6e12;
+}
+.ad-item.ad-today .ad-schedule tr.ad-event-separator > td {
+  border-bottom-color: #1d6e12;
+}
+/* La ultima fila de cada cuerpo pierde el borde inferior. El cuerpo del
+   grupo Battle Survival mantiene el borde en su ultima fila. */
+.ad-schedule > tbody > tr:last-child td {
   border-bottom: none;
+}
+.ad-schedule > tbody.ad-battle-body > tr:last-child td {
+  border-bottom: 1px solid #eee;
 }
 .ad-time {
   white-space: nowrap;
