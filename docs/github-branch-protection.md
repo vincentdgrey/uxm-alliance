@@ -120,8 +120,23 @@ Con la protección corregida, el auto-merge nativo hace el trabajo y el plan B
 queda como red de seguridad idempotente (si el PR ya se fusionó, el job no
 encuentra PR abierto y termina sin acción).
 
+## Regla equivalente con Rulesets (recomendado)
+
+GitHub está migrando la protección clásica a **Rulesets** (`Settings → Rules →
+Branch rules → New branch ruleset`). La ventaja clave para este workflow: en un
+ruleset se puede autorizar explícitamente a **`github-actions[bot]`** como
+excepción de bypass, lo que elimina el error *"Cannot update this protected
+ref"* sin desactivar ninguna restricción. Ver el procedimiento paso a paso en
+**docs/github-ruleset-main.md**.
+
+Nota: si coexisten una branch protection rule antigua y un ruleset sobre
+`main`, GitHub aplica **ambas**; para evitar bloqueos cruzados, eliminar o
+desactivar la regla clásica una vez creado el ruleset
+(`Settings → Branches → Branch protection rules → main → Delete`).
+
 ## Referencias
 
 - GitHub Docs: *Managing auto-merge for pull requests*
 - GitHub Docs: *Configuring branch rule settings* (Allow auto-merges, Restrict pushes)
-- GitHub Community Discussions: "Cannot update ref 'refs/heads/main' with auto-merge and GITHUB_TOKEN" (los bots deben autorizarse explícitamente en *Restrict who can push*)
+- GitHub Docs: *Creating rulesets for a repository* (Bypass list, Pull requests → Auto-merge)
+- GitHub Community Discussions: "Cannot update ref 'refs/heads/main' with auto-merge and GITHUB_TOKEN" (los bots deben autorizarse explícitamente en *Restrict who can push* / *Bypass list*)

@@ -1,5 +1,13 @@
 # Changelog
 
+## [261126b] - 2026-11-26
+
+### Added (docs)
+- `docs/github-ruleset-main.md`: pasos técnicos para crear **Settings → Rules → Branch rules → New branch ruleset** sobre `main` (`protect-main-auto-merge`) y que el workflow de merge automático funcione: prerequisito *Allow auto-merge*, target exacto `main`, Require PR con 1 aprobación, status checks obligatorios (check del workflow), regla **Auto-merge**, **Bypass list con `github-actions[bot]`** (corrección raíz de "Cannot update this protected ref"), eliminación de la branch protection rule clásica para evitar doble bloqueo, verificación por API (`gh api repos/.../rulesets`, `mergeStateStatus`) y reintento del PR #5.
+
+### Changed (docs)
+- `docs/github-branch-protection.md`: nueva sección "Regla equivalente con Rulesets (recomendado)" que enlaza `docs/github-ruleset-main.md` y advierte que rulesets y protection rules se evalúan simultáneamente; referencia ampliada a *Creating rulesets for a repository*.
+
 ## [261126a] - 2026-11-26
 
 ### Changed (CI/CD)
