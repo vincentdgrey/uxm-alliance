@@ -115,6 +115,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+
       - name: Fusionar el PR develop→main si ya es mergeable
         env:
           GH_TOKEN: ${{ github.token }}
@@ -182,13 +187,21 @@ jobs:
             sleep 10
           done
 
+          if [ "$PENDING" -ne 0 ] || [ "$FAILED" -ne 0 ]; then
+            echo "Checks no listos tras el tiempo de espera (pendientes=$PENDING fallidos=$FAILED)."
+            exit 1
+          fi
+
+          # STATE=$(gh pr view "$NUMBER" --json mergeStateStatus --jq '.mergeStateStatus')
+
           # 3) Estado de mergeabilidad calculado por GitHub.
           case "$STATE" in
             BLOCKED)
-              echo "El PR sigue BLOCKED pese a aprobación + checks verdes."
-              echo "Causa más probable: la branch protection de '$TARGET_BRANCH' no autoriza"
-              echo "a escribir a 'github-actions[bot]' (identidad de GITHUB_TOKEN)."
-              echo "Aplicar el checklist de docs/github-branch-protection.md y reintentar."
+              echo "El PR sigue BLOCKED. Revisar los requisitos de merge efectivos:"
+              echo "- rulesets de repositorio u organización"
+              echo "- reglas de protección que coincidan con main"
+              echo "- aprobaciones y checks obligatorios"
+              echo "- permisos del token que ejecuta el merge"
               exit 1
               ;;
             BEHIND)
