@@ -19,6 +19,62 @@
 ### Added (docs)
 - `docs/github-branch-protection.md`: diagnóstico del bloqueo del PR #5, checklist de configuración de branch protection/auto-merge en GitHub (Allow auto-merge, Allow auto-merges, restricción de push con bot autorizado, permisos de Actions) y descripción del flujo de respaldo del workflow.
 
+## [261126c] - 2026-11-26
+
+### Changed
+- **Cada grupo de eventos ocupa un cuerpo de tabla propio** (`<tbody class="ad-event-body" data-event="<código>">`). Las tablas del Duelo de Alianzas se construyen recorriendo los grupos en orden y creando un cuerpo por cada uno, en lugar de una única lista de filas.
+- **El orden de los grupos lo define exclusivamente el valor `view` de `EVENT_CODE`**: `DY` (1) → `ROY` (2) → `KVK` (3) → `AD` (4) → `EQ` (5) → `BEX` (6) → `CUM` (7) → `BS` (8). El recorrido se resuelve con `orderedEvents`, que ordena `EVENT_CODE` por `view`, y las actividades se agrupan con `groupRowsByEvent()`, que conserva el orden original dentro de cada grupo.
+- El grupo `BS` participa del mismo recorrido y solo crea cuerpo en la tabla del día actual; su cuerpo declara `data-event="BS"` y la clase `ad-battle-body`, y su posición depende del valor `view` del evento.
+- El separador de eventos se asigna de forma genérica a la última fila de cada cuerpo que tiene otro grupo detrás.
+- La regla de borde de la última fila pasa a `.ad-schedule > tbody > tr:last-child:not(.ad-event-separator) td`, para que la última fila de un grupo con separador conserve su borde de `2px`. El aspecto visual se mantiene.
+
+### Removed
+- Se retiran `EVENT_ORDER` y `sortRowsByEvent()` de `js/activities-daily.js`, junto con la comparación entre actividades consecutivas que delimitaba los grupos. No queda ninguna otra lógica de orden de grupos.
+
+### Added (tests)
+- `tests/activity-points.test.cjs` comprueba que cada grupo de eventos ocupa un cuerpo propio, que el orden de los cuerpos coincide con el valor `view` de `EVENT_CODE`, que los valores `view` son numéricos, positivos y únicos, y que el separador cierra cada grupo salvo el último.
+- `tests/ui-contract.test.cjs` verifica el agrupamiento por `EVENT_CODE.view` y comprueba que no quedan referencias a `EVENT_ORDER` ni a `sortRowsByEvent`.
+
+### Changed (docs)
+- `docs/core/project-rules.md` documenta el modelo de un cuerpo por grupo de eventos, el orden por `view` de `EVENT_CODE` y el ajuste de la regla de borde de la última fila.
+## [261126b] - 2026-11-26
+
+### Changed
+- **El grupo Battle Survival muestra cuatro actividades en lugar de tres**: `OFF_VISIBLE_COUNT` pasa de `2` a `3`, de modo que la actividad `BS...` en curso va seguida de tres actividades `OFF...` consecutivas, todas con contador en estado `[COUNTDOWN]` y la clase de fila `ad-off-task`.
+- **El grupo se aloja en un segundo cuerpo de tabla propio**, `<tbody class="ad-battle-body">`, creado únicamente en la tabla del día actual. El cuerpo principal conserva solo las tareas normales, y la renovación del grupo ya no requiere recorrer ni filtrar las filas de las tareas diarias.
+- `buildBattleTaskRows()` calcula primero la actividad en curso y las tres siguientes, y solo después **renueva por completo su contenedor**, retirando las filas anteriores y descartando sus contadores antes de escribir las nuevas. Se elimina el recorrido sobre la colección viva `tbody.children`, que podía dejar filas o contadores obsoletos al cambiar de franja.
+- Se retira la función `todayTbody()`, ya innecesaria tras la separación de los cuerpos de tabla.
+- **La tabla del día actual se distingue visualmente del resto**: su encabezado y su separador de eventos usan el verde `#1d6e12`, mediante `.ad-item.ad-today .ad-schedule thead th` y `.ad-item.ad-today .ad-schedule tr.ad-event-separator > td`. Las reglas generales conservan `#4d7799`, de modo que **las tablas de los demás días no cambian**.
+
+### Fixed
+- El grupo ya no se reduce al terminar un contador `[COUNTDOWN]`: mantiene sus cuatro actividades en todo el ciclo de cuatro horas, incluidos los cruces de medianoche y de semana.
+
+### Added (tests)
+- `tests/activity-points.test.cjs` comprueba que el grupo muestra exactamente cuatro filas, que vive en un segundo cuerpo de tabla, que el cuerpo principal no aloja filas `BS` y que el ciclo completo de cuatro horas mantiene una actividad en `[PROGRESS]` y tres en `[COUNTDOWN]` sin perder ni duplicar filas.
+- `tests/ui-contract.test.cjs` verifica el render de cuatro filas, el segundo cuerpo de tabla y los estilos verdes del día actual, y comprueba que las reglas generales de encabezado y separador conservan `#4d7799`.
+
+### Changed (docs)
+- `docs/core/project-rules.md` documenta las cuatro actividades del grupo, el segundo cuerpo de tabla `ad-battle-body`, la renovación completa del contenedor y los estilos verdes de la tabla del día actual.
+## [261126a] - 2026-11-26
+
+### Changed
+- **El grupo Battle Survival pasa de siete filas con visibilidad condicionada a tres filas siempre escritas**. `js/activities-daily.js` sustituye `buildOffRows()` por `buildBattleTaskRows()`, que escribe en la tabla del día actual la actividad `BS...` de la franja en curso (contador en estado `[PROGRESS]`) seguida de las dos actividades `OFF...` consecutivas (contador en estado `[COUNTDOWN]` y clase de fila `ad-off-task`). Al cambiar de franja, las tres filas se sobrescriben con los datos vigentes.
+- La lógica deja de crear actividades `BS...` ocultas: el nuevo mapeo `bsByCodebs` relaciona cada código de horario de `CALENDAR` con su actividad `BS...`, y `offByCodebs` con su actividad `OFF...`.
+- El aspecto visible no cambia: la primera fila conserva el contador con el tiempo restante de la duración de cuatro horas, las dos filas `OFF` conservan la cuenta regresiva y el estilo `ad-off-task` en Tarea, Recurso y Evento, y el grupo sigue separado del resto de eventos.
+
+### Removed
+- Se retiran `applyBsVisibility()` y `applyOffVisibility()` de `js/activities-daily.js`, junto con la clase CSS `.ad-bs-hidden` de `css/activities-daily.css`. El grupo Battle Survival ya no oculta filas: todas las que se escriben son visibles.
+
+### Added (tests)
+- `tests/activity-points.test.cjs` comprueba que el grupo Battle Survival muestra exactamente tres filas, que la primera corresponde a la franja en curso con estado `[PROGRESS]` y las dos siguientes con estado `[COUNTDOWN]`, que no queda ninguna fila con la clase `ad-bs-hidden` y que el grupo avanza con la franja en curso (`BSHERO → OFFBUILD → OFFSOLDIER` y, tras el cambio de franja, `BSBUILD → OFFSOLDIER → OFFTECH`).
+- `tests/ui-contract.test.cjs` sustituye la comprobación de la lógica de visibilidad por la del render de las tres filas, y verifica que no quedan referencias a `ad-bs-hidden`, `applyBsVisibility` ni `applyOffVisibility`.
+
+### Fixed (tests)
+- `tests/activity-points.test.cjs` y `tests/ui-contract.test.cjs` actualizan las expectativas del contador `BS` al formato vigente sin espacio tras el signo (`+02:47:39`) y del color de fondo `ad-off-task` al valor manual vigente (`#aaa`).
+
+### Changed (docs)
+- `docs/core/project-rules.md` describe el render de las tres filas del grupo Battle Survival, el mapeo `bsByCodebs`, la sobrescritura al cambiar de franja y la retirada de la lógica de ocultación.
+
 ## [261125a] - 2026-11-25
 
 ### Changed

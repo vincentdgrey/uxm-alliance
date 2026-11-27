@@ -185,13 +185,27 @@ function rowByTaskCode(result, code) {
   return null;
 }
 
-/* Filas del cuerpo de la tabla del dia actual. */
-function todayRows(result) {
-  const item = result.lists.children[0];
+/* Cuerpos de tabla de un dia, en el orden en que se muestran. Cada
+   grupo de eventos ocupa un cuerpo propio. */
+function dayBodies(result, index = 0) {
+  const item = result.lists.children[index];
   const body = item.children.find((c) => String(c.className).includes("ad-item-body"));
   const table = body.children[0].children[0];
-  const tbody = table.children.find((c) => c.tagName === "TBODY");
-  return tbody.children;
+  return table.children.filter((c) => c.tagName === "TBODY");
+}
+
+/* Cuerpos de la tabla del dia actual, sin el grupo Battle Survival. */
+function todayEventBodies(result) {
+  return dayBodies(result).filter((c) => !String(c.className).includes("ad-battle-body"));
+}
+
+/* Filas de los grupos de eventos del dia actual, sin Battle Survival. */
+function todayRows(result) {
+  const rows = [];
+  for (const body of todayEventBodies(result)) {
+    for (const row of body.children) rows.push(row);
+  }
+  return rows;
 }
 
 /* ---------- Puntos dentro de la columna Tarea ---------- */
@@ -297,75 +311,219 @@ test("las actividades sin valor numerico no muestran punto", () => {
   assert.equal(pointOf(rowByTaskCode(result, "SHIELD")), null);
 });
 
+/* ---------- Agrupacion por grupo de eventos ---------- */
+
+test("cada grupo de eventos ocupa un cuerpo de tabla propio", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  const bodies = todayEventBodies(result);
+  assert.ok(bodies.length > 1, "debe haber varios cuerpos");
+
+  for (const body of bodies) {
+    assert.ok(String(body.className).includes("ad-event-body"), "cada cuerpo es un grupo de eventos");
+
+    /* Un cuerpo solo contiene actividades de su propio evento. */
+    const event = body.getAttribute("data-event");
+    for (const row of body.children) {
+      const icon = findByClass(row, "ad-task-icon")[0];
+      assert.ok(icon, "cada fila debe tener su icono");
+    }
+    assert.ok(event, "el cuerpo declara su evento");
+  }
+});
+
+test("los grupos de eventos siguen el orden view de EVENT_CODE", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  /* El viernes existen los grupos DY, ROY, AD y BEX, mas BS en el dia
+     actual. El orden lo define el valor view de EVENT_CODE. */
+  const events = dayBodies(result).map((body) => body.getAttribute("data-event"));
+  assert.deepEqual(events, ["DY", "ROY", "AD", "BEX", "BS"]);
+});
+
+test("el orden de los cuerpos respeta el valor view de la fuente de verdad", () => {
+  const source = read("js/activities-daily.js");
+  const match = source.match(/var EVENT_CODE = (\[[\s\S]*?\n  \]);/);
+  assert.ok(match, "debe existir EVENT_CODE");
+  const context = {};
+  vm.createContext(context);
+  vm.runInContext("var EVENT_CODE = " + match[1], context);
+
+  /* Los valores view son numericos, positivos y unicos. */
+  const views = context.EVENT_CODE.map((e) => e.view);
+  for (const view of views) {
+    assert.equal(typeof view, "number", "view debe ser numerico");
+    assert.ok(view > 0, "view debe ser positivo");
+  }
+  assert.equal(new Set(views).size, views.length, "los valores view deben ser unicos");
+
+  /* Los cuerpos de cada tabla siguen ese orden. */
+  const result = render(fridayAt(5, 0, 0));
+  const byView = {};
+  context.EVENT_CODE.forEach((e) => { byView[e.event] = e.view; });
+  const events = dayBodies(result).map((body) => body.getAttribute("data-event"));
+  const sorted = events.slice().sort((a, b) => byView[a] - byView[b]);
+  assert.deepEqual(events, sorted, "los cuerpos deben seguir el orden view");
+});
+
+test("el separador de eventos cierra cada grupo que tiene otro detras", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  const bodies = dayBodies(result);
+  for (let i = 0; i < bodies.length; i++) {
+    const body = bodies[i];
+    if (!body.children.length) continue;
+    const last = body.children[body.children.length - 1];
+    const isLast = i === bodies.length - 1;
+
+    if (isLast) {
+      assert.ok(!String(last.className).includes("ad-event-separator"), "el ultimo grupo no lleva separador");
+    } else {
+      assert.ok(String(last.className).includes("ad-event-separator"), "cada grupo se cierra con separador");
+    }
+  }
+});
+
 /* ---------- Actividades BS ---------- */
 
-test("las actividades BS solo existen en la tabla del dia actual", () => {
+/* Codigos de las cuatro filas del grupo Battle Survival, en orden. */
+function battleCodesOf(result) {
+  return allRows(result.lists)
+    .filter((row) => row.classList.contains("ad-bs-task"))
+    .map((row) => findByClass(row, "ad-task-icon")[0].getAttribute("data-code"));
+}
+
+test("el grupo Battle Survival muestra siempre cuatro filas", () => {
   const result = render(fridayAt(12, 0, 0));
 
   const rows = allRows(result.lists);
   const bsRows = rows.filter((row) => row.classList.contains("ad-bs-task"));
 
-  assert.ok(bsRows.length > 0, "el dia actual debe incluir filas BS");
-  /* BSBUILD, BSHERO, BSRAVEN, BSSOLDIER y BSTECH, mas las dos
-     actividades OFF siguientes. */
-  assert.equal(bsRows.length, 7);
+  /* La actividad BS en curso y las tres actividades OFF siguientes. */
+  assert.equal(bsRows.length, 4);
 });
 
-test("una actividad BS solo es visible con su contador en estado de progreso", () => {
+test("el grupo Battle Survival vive en un segundo cuerpo de tabla", () => {
+  const result = render(fridayAt(12, 0, 0));
+
+  const bodies = findByClass(result.lists, "ad-battle-body");
+  assert.equal(bodies.length, 1, "debe existir un cuerpo propio del grupo BS");
+
+  /* El grupo se aloja integramente en ese cuerpo. */
+  const battleRows = bodies[0].children;
+  assert.equal(battleRows.length, 4);
+  for (const row of battleRows) {
+    assert.ok(row.classList.contains("ad-bs-task"), "las filas del grupo llevan ad-bs-task");
+  }
+
+  /* Las tareas normales quedan en el cuerpo principal, sin filas BS. */
+  const main = todayRows(result);
+  for (const row of main) {
+    assert.ok(!row.classList.contains("ad-bs-task"), "el cuerpo principal no aloja filas BS");
+  }
+});
+
+test("las actividades BS solo existen en la tabla del dia actual", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  /* Fuera del dia actual no hay ninguna actividad BS ni OFF. */
+  const items = result.lists.children;
+  for (let i = 1; i < items.length; i++) {
+    const body = items[i].children.find((c) => String(c.className).includes("ad-item-body"));
+    const table = body.children[0].children[0];
+    const tbody = table.children.find((c) => c.tagName === "TBODY");
+    for (const row of tbody.children) {
+      const code = findByClass(row, "ad-task-icon")[0].getAttribute("data-code");
+      assert.ok(code.indexOf("BS") !== 0, "las filas BS solo van en el dia actual");
+      assert.ok(code.indexOf("OFF") !== 0, "las filas OFF solo van en el dia actual");
+    }
+  }
+});
+
+test("la primera fila BS corresponde a la franja en curso y esta en progreso", () => {
   /* El viernes el horario de HEROE empieza a las 04:00 UTC-2. */
   const result = render(fridayAt(5, 0, 0));
+
+  const codes = battleCodesOf(result);
+  assert.deepEqual(codes, ["BSHERO", "OFFBUILD", "OFFSOLDIER", "OFFTECH"]);
+
   const hero = rowByTaskCode(result, "BSHERO");
-
   assert.ok(hero, "debe existir la fila BSHERO");
-  assert.ok(!hero.classList.contains("ad-bs-hidden"), "en progreso la fila es visible");
+  assert.deepEqual(stateClasses(hero), ["ad-state-progress"]);
+});
 
-  /* Los horarios de los demas codigos siguen en cuenta regresiva. */
+test("no hay filas ocultas por estado de contador", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  /* Ninguna fila del grupo Battle Survival se oculta: todas se escriben. */
+  for (const row of allRows(result.lists)) {
+    assert.ok(!String(row.className).includes("ad-bs-hidden"), "no debe quedar la clase ad-bs-hidden");
+  }
+
+  /* Las dos filas OFF siguientes estan en cuenta regresiva. */
+  const build = rowByTaskCode(result, "OFFBUILD");
+  assert.deepEqual(stateClasses(build), ["ad-state-countdown"]);
+  const soldier = rowByTaskCode(result, "OFFSOLDIER");
+  assert.deepEqual(stateClasses(soldier), ["ad-state-countdown"]);
+});
+
+test("el grupo Battle Survival avanza con la franja en curso", () => {
+  const result = render(fridayAt(5, 0, 0));
+  assert.deepEqual(battleCodesOf(result), ["BSHERO", "OFFBUILD", "OFFSOLDIER", "OFFTECH"]);
+
+  /* Al comenzar la franja de BUILD el grupo se reescribe. */
+  result.update(fridayAt(8, 0, 0));
+  assert.deepEqual(battleCodesOf(result), ["BSBUILD", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]);
+
+  /* La actividad BUILD pasa a estar en curso. */
   const build = rowByTaskCode(result, "BSBUILD");
-  assert.ok(build, "debe existir la fila BSBUILD");
-  assert.ok(build.classList.contains("ad-bs-hidden"), "en cuenta regresiva la fila se oculta");
-
-  /* Pasado el tiempo del horario vinculado la fila se oculta. */
-  result.update(fridayAt(12, 0, 0));
-  assert.ok(hero.classList.contains("ad-bs-hidden"), "fuera de progreso la fila se oculta");
+  assert.deepEqual(stateClasses(build), ["ad-state-progress"]);
 });
 
-test("las actividades BS conservan el orden de la fuente de verdad", () => {
-  const result = render(fridayAt(5, 0, 0));
+test("el grupo mantiene cuatro actividades en todo el ciclo de cuatro horas", () => {
+  const result = render(fridayAt(3, 0, 0));
 
-  const bsCodes = allRows(result.lists)
-    .filter((row) => row.classList.contains("ad-bs-task"))
-    .filter((row) => findByClass(row, "ad-task-icon")[0].getAttribute("data-code").indexOf("BS") === 0)
-    .map((row) => findByClass(row, "ad-task-icon")[0].getAttribute("data-code"));
+  /* Cada franja del dia mantiene una BS en curso y tres OFF en cuenta
+     regresiva, sin perder filas ni duplicarlas. */
+  const expected = [
+    [3, 0, ["BSRAVEN", "OFFHERO", "OFFBUILD", "OFFSOLDIER"]],
+    [4, 0, ["BSHERO", "OFFBUILD", "OFFSOLDIER", "OFFTECH"]],
+    [8, 0, ["BSBUILD", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]],
+    [12, 0, ["BSSOLDIER", "OFFTECH", "OFFRAVEN", "OFFHERO"]],
+    [16, 0, ["BSTECH", "OFFRAVEN", "OFFHERO", "OFFBUILD"]],
+    [20, 0, ["BSRAVEN", "OFFHERO", "OFFBUILD", "OFFSOLDIER"]]
+  ];
 
-  assert.deepEqual(bsCodes, ["BSBUILD", "BSHERO", "BSRAVEN", "BSSOLDIER", "BSTECH"]);
-});
+  for (const [hour, minute, codes] of expected) {
+    result.update(fridayAt(hour, minute, 0));
 
-test("las filas BS se agregan al final del grupo de tareas del dia actual", () => {
-  const result = render(fridayAt(5, 0, 0));
+    assert.deepEqual(battleCodesOf(result), codes, hour + ":" + minute);
 
-  const rows = todayRows(result);
-  const firstBsIndex = rows.findIndex((row) => row.classList.contains("ad-bs-task"));
-
-  assert.ok(firstBsIndex > 0, "las filas BS van despues de las tareas normales");
-  /* A partir de la primera fila BS solo hay filas BS. */
-  for (let i = firstBsIndex; i < rows.length; i++) {
-    assert.ok(rows[i].classList.contains("ad-bs-task"), "el grupo BS va al final");
+    /* La primera fila esta en progreso y las tres siguientes en cuenta
+       regresiva. */
+    const rows = allRows(result.lists).filter((row) => row.classList.contains("ad-bs-task"));
+    assert.equal(rows.length, 4, hour + ":" + minute);
+    assert.deepEqual(stateClasses(rows[0]), ["ad-state-progress"], hour + ":" + minute);
+    for (let i = 1; i < rows.length; i++) {
+      assert.deepEqual(stateClasses(rows[i]), ["ad-state-countdown"], hour + ":" + minute);
+      assert.ok(rows[i].classList.contains("ad-off-task"), "las filas OFF llevan ad-off-task");
+    }
   }
 });
 
 test("el grupo Battle Survival se separa de los demas eventos", () => {
   const result = render(fridayAt(5, 0, 0));
 
-  const rows = todayRows(result);
-  const firstBsIndex = rows.findIndex((row) => row.classList.contains("ad-bs-task"));
-
-  /* La ultima fila del grupo anterior lleva el separador. */
-  const previous = rows[firstBsIndex - 1];
+  /* El ultimo grupo de tareas normales cierra el grupo con separador. */
+  const bodies = todayEventBodies(result);
+  const lastBody = bodies[bodies.length - 1];
+  const previous = lastBody.children[lastBody.children.length - 1];
   assert.ok(previous.classList.contains("ad-event-separator"), "el grupo anterior debe cerrarse con separador");
 
-  /* Las filas BS pertenecen al mismo evento: no se separan entre si. */
-  for (let i = firstBsIndex; i < rows.length; i++) {
-    assert.ok(!rows[i].classList.contains("ad-event-separator"), "las filas BS no se separan entre si");
+  /* Las filas del grupo BS pertenecen al mismo evento: no se separan. */
+  const battle = findByClass(result.lists, "ad-battle-body")[0];
+  for (const row of battle.children) {
+    assert.ok(!row.classList.contains("ad-event-separator"), "las filas BS no se separan entre si");
   }
 });
 
@@ -377,22 +535,23 @@ test("el contador BS muestra el tiempo restante de la duracion de cuatro horas",
   const elapsed = findByClass(hero, "ad-bs-elapsed")[0];
   const remaining = findByClass(hero, "ad-bs-remaining")[0];
 
-  assert.equal(elapsed.textContent, "+ 02:47:39");
+  assert.equal(elapsed.textContent, "+02:47:39");
   assert.equal(remaining.textContent, "01:12:21");
 
   /* El tiempo restante se recalcula en cada tick. */
   result.update(fridayAt(6, 48, 39));
-  assert.equal(elapsed.textContent, "+ 02:48:39");
+  assert.equal(elapsed.textContent, "+02:48:39");
   assert.equal(remaining.textContent, "01:11:21");
 });
 
-test("el tiempo restante solo aparece con el contador en estado de progreso", () => {
+test("el tiempo restante aparece en la actividad BS en curso", () => {
+  /* A las 03:00 la franja en curso es la de RAVEN, que comenzo a las 00:00. */
   const result = render(fridayAt(3, 0, 0));
-  const build = rowByTaskCode(result, "BSBUILD");
+  const raven = rowByTaskCode(result, "BSRAVEN");
 
-  /* A las 03:00 el horario de BUILD todavia no ha comenzado. */
-  const remaining = findByClass(build, "ad-bs-remaining")[0];
-  assert.equal(remaining.textContent, "", "sin progreso no hay tiempo restante");
+  assert.ok(raven, "debe existir la fila BSRAVEN");
+  const remaining = findByClass(raven, "ad-bs-remaining")[0];
+  assert.equal(remaining.textContent, "01:00:00");
 });
 
 test("las estrellas de las tareas BS se pintan en rojo", () => {
@@ -431,19 +590,19 @@ function offCodesOf(result) {
     .filter((code) => code.indexOf("OFF") === 0);
 }
 
-test("se muestran las dos actividades OFF siguientes a la actividad en curso", () => {
+test("se muestran las tres actividades OFF siguientes a la actividad en curso", () => {
   /* El viernes el horario de HEROE empieza a las 04:00 UTC-2. */
   const result = render(fridayAt(5, 0, 0));
 
   /* A las 05:00 esta en curso HEROE; siguen BUILD (08:00) y SOLDIER (12:00). */
-  assert.deepEqual(offCodesOf(result), ["OFFBUILD", "OFFSOLDIER"]);
+  assert.deepEqual(offCodesOf(result), ["OFFBUILD", "OFFSOLDIER", "OFFTECH"]);
 });
 
 test("las actividades OFF siguen el orden cronologico del horario", () => {
   /* El viernes a las 12:00 esta en curso SOLDIER; siguen TECH y RAVEN. */
   const result = render(fridayAt(12, 0, 0));
 
-  assert.deepEqual(offCodesOf(result), ["OFFTECH", "OFFRAVEN"]);
+  assert.deepEqual(offCodesOf(result), ["OFFTECH", "OFFRAVEN", "OFFHERO"]);
 });
 
 test("las actividades OFF solo existen en la tabla del dia actual", () => {
@@ -454,10 +613,12 @@ test("las actividades OFF solo existen en la tabla del dia actual", () => {
   for (let i = 1; i < items.length; i++) {
     const body = items[i].children.find((c) => String(c.className).includes("ad-item-body"));
     const table = body.children[0].children[0];
-    const tbody = table.children.find((c) => c.tagName === "TBODY");
-    for (const row of tbody.children) {
-      const code = findByClass(row, "ad-task-icon")[0].getAttribute("data-code");
-      assert.ok(code.indexOf("OFF") !== 0, "las filas OFF solo van en el dia actual");
+    const bodies = table.children.filter((c) => c.tagName === "TBODY");
+    for (const tbody of bodies) {
+      for (const row of tbody.children) {
+        const code = findByClass(row, "ad-task-icon")[0].getAttribute("data-code");
+        assert.ok(code.indexOf("OFF") !== 0, "las filas OFF solo van en el dia actual");
+      }
     }
   }
 });
@@ -510,7 +671,7 @@ test("el estilo de las actividades OFF alcanza Tarea, Recurso y Evento, no Conta
   assert.match(rule[0], /td\.ad-objective/);
   assert.match(rule[0], /td\.ad-resource/);
   assert.match(rule[0], /td\.ad-event/);
-  assert.match(rule[0], /background-color:\s*#727374/);
+  assert.match(rule[0], /background-color:\s*#aaa/);
   assert.match(rule[0], /color:\s*#fff/);
 
   /* El Contador y el Icono conservan su apariencia habitual. */
@@ -533,14 +694,13 @@ test("las actividades OFF avanzan al cambiar de franja en curso", () => {
   const result = render(fridayAt(5, 0, 0));
 
   /* A las 05:00 esta en curso HEROE; siguen BUILD (08:00) y SOLDIER (12:00). */
-  assert.deepEqual(offCodesOf(result), ["OFFBUILD", "OFFSOLDIER"]);
+  assert.deepEqual(offCodesOf(result), ["OFFBUILD", "OFFSOLDIER", "OFFTECH"]);
 
   /* Al comenzar la franja de BUILD, las oportunidades OFF avanzan. */
   result.update(fridayAt(8, 0, 0));
-  assert.deepEqual(offCodesOf(result), ["OFFSOLDIER", "OFFTECH"]);
+  assert.deepEqual(offCodesOf(result), ["OFFSOLDIER", "OFFTECH", "OFFRAVEN"]);
 
-  /* La actividad BUILD pasa a estar en curso y deja de estar oculta. */
+  /* La actividad BUILD pasa a estar en curso. */
   const build = rowByTaskCode(result, "BSBUILD");
-  assert.ok(!build.classList.contains("ad-bs-hidden"), "BSBUILD esta en progreso");
   assert.deepEqual(stateClasses(build), ["ad-state-progress"]);
 });

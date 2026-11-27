@@ -141,28 +141,31 @@
     { "code": "BSSOLDIER", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "SOLDIER" },
     { "code": "BSTECH", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "TECH" },
 
-    { "code": "OFFBUILD", "group": "BS", "icon": "", "point": "", "codebs": "BUILD" },
-    { "code": "OFFHERO", "group": "BS", "icon": "", "point": "", "codebs": "HEROE" },
-    { "code": "OFFRAVEN", "group": "BS", "icon": "", "point": "", "codebs": "RAVEN" },
-    { "code": "OFFSOLDIER", "group": "BS", "icon": "", "point": "", "codebs": "SOLDIER" },
-    { "code": "OFFTECH", "group": "BS", "icon": "", "point": "", "codebs": "TECH" },
+    { "code": "OFFBUILD", "group": "BS", "icon": "lock", "point": "", "codebs": "BUILD" },
+    { "code": "OFFHERO", "group": "BS", "icon": "lock", "point": "", "codebs": "HEROE" },
+    { "code": "OFFRAVEN", "group": "BS", "icon": "lock", "point": "", "codebs": "RAVEN" },
+    { "code": "OFFSOLDIER", "group": "BS", "icon": "lock", "point": "", "codebs": "SOLDIER" },
+    { "code": "OFFTECH", "group": "BS", "icon": "lock", "point": "", "codebs": "TECH" },
 
-    { "code": "DEMONW", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
-    { "code": "DEMONR", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
-    { "code": "DEMONZ", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
+    { "code": "DEMONW", "group": "DY", "icon": "blight-king-demon", "point": "", "codebs": "" },
+    { "code": "DEMONR", "group": "DY", "icon": "blight-king-demon", "point": "", "codebs": "" },
+    { "code": "DEMONZ", "group": "DY", "icon": "blight-king-demon", "point": "", "codebs": "" },
   ];
 
   var EVENT_CODE = [
-    { "event": "DY", "es": "Consejo Diario", "en": "Tips Daily" },
+    { "event": "DY",  "es": "Consejo Diario",        "en": "Tips Daily",          "view":1 },
 
-    { "event": "AD", "es": "Duelo de Alianza", "en": "Alliance Duel" },
-    { "event": "KVK", "es": "Guerra de Reinos", "en": "Kingdoms War" },
-    { "event": "ROY", "es": "Alboroto Ciudad Real", "en": "Scramble Royal City" },
-    { "event": "BS", "es": "Batalla Supervivencia", "en": "Battle Survival" },
+    { "event": "ROY", "es": "Alboroto Ciudad Real",  "en": "Scramble Royal City", "view":2 },
+    { "event": "KVK", "es": "Guerra de Reinos",      "en": "Kingdoms War",        "view":3 },
 
-    { "event": "EQ", "es": "Mejora de Equipo", "en": "Gear Upgrade" },
-    { "event": "BEX", "es": "Batalla del Elixir", "en": "Elixir Scramble" },
-    { "event": "CUM", "es": "Valle Cúmulos de Cristal", "en": "Cristal Cruster Valley" }
+    { "event": "AD",  "es": "Duelo de Alianza",      "en": "Alliance Duel",       "view":4 },
+
+    { "event": "EQ",  "es": "Mejora de Equipo",      "en": "Gear Upgrade",        "view":5 },
+    { "event": "BEX", "es": "Batalla del Elixir",    "en": "Elixir Scramble",     "view":6 },
+    { "event": "CUM", "es": "Valle Cúmulos de Cristal", "en": "Cristal Cruster Valley" , "view":7 },
+
+    { "event": "BS",  "es": "Batalla Supervivencia", "en": "Battle Survival",     "view":8 },
+    { "event": "US",  "es": "Asedio de No Muertos", "en": "Undead Siege",         "view":9 },
   ];
 
   var PHASES = [
@@ -576,6 +579,9 @@
     var lastDay = -1;
     var counters = [];
     var currentPhaseEl = null;
+    /* Segundo cuerpo de tabla del dia actual: aloja el grupo Battle
+       Survival, separado de las tareas normales. */
+    var battleBodyEl = null;
 
     function phaseTitle(noday) {
       var ph = dayPhase[noday];
@@ -604,20 +610,22 @@
       return ev ? (ev[LANG] || ev.en || r.event) : r.event;
     }
 
-    var EVENT_ORDER = ["ROY", "KVK", "BEX", "EQ", "CUM", "DY", "AD"];
+    /* Orden de visualizacion de los grupos de eventos. La fuente de
+       verdad es el valor view de EVENT_CODE: cada grupo ocupa un cuerpo de
+       tabla propio y se muestra en orden ascendente de view. */
+    var orderedEvents = EVENT_CODE.slice().sort(function (a, b) {
+      return a.view - b.view;
+    });
 
-    function sortRowsByEvent(rows) {
-      return rows.map(function (r, index) {
-        return { row: r, index: index };
-      }).sort(function (a, b) {
-        var eventOrder = EVENT_ORDER.indexOf(a.row.event);
-        var eventOrderB = EVENT_ORDER.indexOf(b.row.event);
-        if (eventOrder === -1) eventOrder = EVENT_ORDER.length;
-        if (eventOrderB === -1) eventOrderB = EVENT_ORDER.length;
-        return eventOrder !== eventOrderB ? eventOrder - eventOrderB : a.index - b.index;
-      }).map(function (item) {
-        return item.row;
+    /* Agrupa las actividades de un dia por evento, conservando el orden
+       original de las actividades dentro de cada grupo. */
+    function groupRowsByEvent(rows) {
+      var groups = {};
+      rows.forEach(function (r) {
+        if (!groups[r.event]) groups[r.event] = [];
+        groups[r.event].push(r);
       });
+      return groups;
     }
 
     function parseClock(value) {
@@ -728,17 +736,22 @@
     }
 
     /* ---------- Actividades de Batalla de Supervivencia (codigos BS...) ----------
-       Las actividades cuyo codigo comienza con "BS" se agregan unicamente a
-       la tabla del dia actual. Su contador es el del horario vinculado de
-       Battle Survival y solo son visibles cuando ese contador esta en
-       estado [PROGRESS]; en cualquier otro estado permanecen ocultas.
+       Las actividades cuyo codigo comienza con "BS" describen la franja de
+       Battle Survival en curso. Se muestran unicamente en la tabla del dia
+       actual y su contador es el del horario vinculado, en estado
+       [PROGRESS].
 
        Las actividades cuyo codigo comienza con "OFF" representan la
        oportunidad siguiente de cada tipo de Battle Survival. Se muestran
        las dos siguientes a la actividad en curso, en orden cronologico,
        con un contador unicamente en estado [COUNTDOWN]. La fila completa
        recibe la clase ad-off-task, que marca las celdas Tarea, Recurso y
-       Evento con el aspecto de actividad proxima. */
+       Evento con el aspecto de actividad proxima.
+
+       El grupo Battle Survival muestra siempre cuatro filas: la actividad
+       BS en curso y las tres OFF siguientes. No hay filas ocultas: cuando
+       cambia la franja en curso, JavaScript sobrescribe el contenido de
+       esas cuatro filas. */
 
     var BS_CODE_PREFIX = "BS";
     var OFF_CODE_PREFIX = "OFF";
@@ -746,8 +759,9 @@
     var BS_STAR = "★";
     /* Clase de fila que marca la actividad como proxima, todavia no activa. */
     var OFF_TASK_CLASS = "ad-off-task";
-    /* Cantidad de actividades siguientes que se muestran bajo la actual. */
-    var OFF_VISIBLE_COUNT = 2;
+    /* Cantidad de actividades OFF que se muestran bajo la actividad en
+       curso. Con la actividad BS en curso, el grupo muestra cuatro filas. */
+    var OFF_VISIBLE_COUNT = 4;
 
     var bsActivities = ACTIVITY_CODE.filter(function (a) {
       return a.code.indexOf(BS_CODE_PREFIX) === 0;
@@ -755,6 +769,12 @@
 
     var offActivities = ACTIVITY_CODE.filter(function (a) {
       return a.code.indexOf(OFF_CODE_PREFIX) === 0;
+    });
+
+    /* Actividad BS asociada a cada codigo de horario de Battle Survival. */
+    var bsByCodebs = {};
+    bsActivities.forEach(function (a) {
+      if (a.codebs) bsByCodebs[a.codebs] = a;
     });
 
     /* Actividad OFF asociada a cada codigo de horario de Battle Survival. */
@@ -846,16 +866,6 @@
       };
     }
 
-    /* Aplica la visibilidad de una fila BS segun el estado de su contador. */
-    function applyBsVisibility(tr, state) {
-      tr.classList.toggle("ad-bs-hidden", state !== STATE_PROGRESS);
-    }
-
-    /* Una fila OFF solo es visible con su contador en cuenta regresiva. */
-    function applyOffVisibility(tr, state) {
-      tr.classList.toggle("ad-bs-hidden", state !== STATE_COUNTDOWN);
-    }
-
     /* Reconstruye el texto de la tarea separando cada estrella para poder
        colorearla. Solo se usa en las actividades de Battle Survival. */
     function appendStars(cell, text) {
@@ -938,11 +948,6 @@
         timeTxt = dayDateLabel(startDayMs, offset);
       }
 
-      /* Las actividades BS solo se muestran con el contador en progreso. */
-      if (r.isBs) applyBsVisibility(tr, state);
-      /* Las actividades OFF solo se muestran en cuenta regresiva. */
-      if (r.isOff) applyOffVisibility(tr, state);
-
       /* 1. Contador */
       if (!timeCell) timeCell = appendCell(tr, timeTxt, "ad-time");
       applyCounterState(tr, state);
@@ -963,7 +968,7 @@
          de la columna Tarea y en la posicion inferior izquierda. */
       var pointText = a ? formatPoint(a.point) : "";
       if (pointText) {
-        var pointEl = document.createElement("span");
+        var pointEl = document.createElement("div");
         pointEl.className = "ad-task-point";
         pointEl.textContent = pointText;
         taskCell.appendChild(pointEl);
@@ -1031,11 +1036,11 @@
 
       counters = [];
       currentPhaseEl = null;
+      battleBodyEl = null;
       listsEl.innerHTML = "";
 
       for (var k = 0; k < 7; k++) {
         var noday = (today + k) % 7;
-        var rows = sortRowsByEvent(byDay[noday] || []);
 
         var item = document.createElement("div");
         var baseCls = "ad-item" + (k === 0 ? " ad-today" : "");
@@ -1091,29 +1096,46 @@
         thead.appendChild(trh);
         table.appendChild(thead);
 
-        var tbody = document.createElement("tbody");
-        for (var i = 0; i < rows.length; i++) {
-          var row = buildRow(rows[i], k, startDayMs, nowSec);
-          var nextRow = rows[i + 1];
-          if (nextRow && rows[i].event !== nextRow.event) {
-            row.className += " ad-event-separator";
-          } else if (!nextRow && k === 0 && bsActivities.length && rows.length) {
-            /* El grupo de Battle Survival se separa de los demas eventos. */
-            row.className += " ad-event-separator";
-          }
-          tbody.appendChild(row);
-        }
+        /* Cada grupo de eventos ocupa un cuerpo de tabla propio. El
+           orden de los cuerpos lo define el valor view de EVENT_CODE. */
+        var groups = groupRowsByEvent(byDay[noday] || []);
+        var bodies = [];
 
-        /* Las actividades BS se agregan solo al dia actual, al final del
-           grupo de tareas para no alterar el orden de los demas grupos. */
-        if (k === 0) {
-          for (var b = 0; b < bsActivities.length; b++) {
-            var bsRowEl = buildRow(bsRow(bsActivities[b], noday), k, startDayMs, nowSec);
-            bsRowEl.classList.add("ad-bs-task");
-            tbody.appendChild(bsRowEl);
+        orderedEvents.forEach(function (ev) {
+          var eventRows = groups[ev.event] || [];
+
+          /* Battle Survival solo tiene cuerpo en la tabla del dia actual
+             y sus actividades se escriben despues, en buildBattleTaskRows(). */
+          if (!eventRows.length && !(k === 0 && ev.event === "BS")) return;
+
+          var body = document.createElement("tbody");
+          body.className = "ad-event-body";
+          body.setAttribute("data-event", ev.event);
+          if (ev.event === "BS") {
+            body.className += " ad-battle-body";
+            battleBodyEl = body;
           }
-        }
-        table.appendChild(tbody);
+
+          eventRows.forEach(function (r) {
+            body.appendChild(buildRow(r, k, startDayMs, nowSec));
+          });
+
+          bodies.push(body);
+        });
+
+        /* El separador de eventos cierra cada grupo que tiene otro grupo
+           detras. Se asigna al final, cuando ya se conocen todos los
+           cuerpos de la tabla. */
+        bodies.forEach(function (body, index) {
+          if (index >= bodies.length - 1) return;
+          if (!body.children.length) return;
+          var lastRow = body.children[body.children.length - 1];
+          lastRow.className += " ad-event-separator";
+        });
+
+        bodies.forEach(function (body) {
+          table.appendChild(body);
+        });
 
         wrap.appendChild(table);
         body.appendChild(wrap);
@@ -1129,74 +1151,58 @@
         })(item, title, baseCls);
       }
 
-      /* La franja en curso determina las dos oportunidades OFF que se
-         muestran bajo la actividad BS actual. */
+      /* La franja en curso determina la actividad BS visible y las tres
+         oportunidades OFF que se muestran bajo ella. */
       currentSlotNoday = today;
       currentSlotIndex = slotIndexAt(today, nowSec);
-      buildOffRows(today, nowSec, startDayMs);
+      buildBattleTaskRows(today, nowSec, startDayMs);
     }
 
-    /* Cuerpo de la tabla del dia actual, donde se insertan las filas OFF.
-       La estructura es: .ad-item > .ad-item-body > .ad-wrap > table > tbody. */
-    function todayTbody() {
-      var item = listsEl.children[0];
-      if (!item) return null;
-      var body = null;
-      for (var i = 0; i < item.children.length; i++) {
-        var child = item.children[i];
-        if (String(child.className).indexOf("ad-item-body") >= 0) { body = child; break; }
-      }
-      if (!body) return null;
-      var wrap = body.children[0];
-      if (!wrap) return null;
-      var table = wrap.children[0];
-      if (!table) return null;
-      for (var j = 0; j < table.children.length; j++) {
-        if (table.children[j].tagName === "TBODY") return table.children[j];
-      }
-      return null;
-    }
+    /* Escribe las cuatro filas del grupo Battle Survival en su contenedor
+       propio: la actividad BS de la franja en curso, con su contador en
+       estado [PROGRESS], y las tres actividades OFF consecutivas
+       siguientes, con su contador en estado [COUNTDOWN] y el estilo de
+       fila proxima.
 
-    /* Reconstruye las filas OFF con las dos franjas siguientes a la que
-       esta en curso. Se ejecuta en cada cambio de franja, de modo que la
-       lista avanza sola cuando comienza una nueva actividad BS. */
-    function buildOffRows(noday, nowSec, startDayMs) {
-      var tbody = todayTbody();
-      if (!tbody) return;
+       El contenedor se renueva por completo en cada cambio de franja, de
+       modo que nunca quedan filas ni contadores obsoletos. */
+    function buildBattleTaskRows(noday, nowSec, startDayMs) {
+      var body = battleBodyEl;
+      if (!body) return;
 
-      /* Se retiran las filas OFF anteriores del cuerpo de la tabla. */
-      var kept = [];
-      for (var i = 0; i < tbody.children.length; i++) {
-        var row = tbody.children[i];
-        var code = "";
-        for (var c = 0; c < row.children.length; c++) {
-          var cell = row.children[c];
-          if (String(cell.className).indexOf("ad-task-icon") >= 0) {
-            code = cell.getAttribute("data-code") || "";
-            break;
-          }
-        }
-        if (code.indexOf(OFF_CODE_PREFIX) === 0) {
-          if (typeof tbody.removeChild === "function") tbody.removeChild(row);
-        } else {
-          kept.push(row);
-        }
-      }
-      /* El cuerpo conserva unicamente las filas que no son OFF. */
-      if (kept.length !== tbody.children.length) tbody.children = kept;
-
-      /* Los contadores de las filas retiradas dejan de actualizarse. */
-      counters = counters.filter(function (counter) {
-        return counter.offStartSec === undefined;
-      });
+      /* Se calculan primero las actividades, para no dejar el grupo a medio
+         escribir si alguna de ellas no estuviera definida. */
+      var currentSlot = bsSchedule[slotIndexAt(noday, nowSec)];
+      var currentAct = currentSlot ? bsByCodebs[currentSlot.codebs] : null;
+      if (!currentAct) return;
 
       var nextSlots = nextScheduleSlots(noday, nowSec, OFF_VISIBLE_COUNT);
+      var offActs = [];
       for (var s = 0; s < nextSlots.length; s++) {
         var offAct = offByCodebs[nextSlots[s].codebs];
-        if (!offAct) continue;
-        var offRowEl = buildRow(offRow(offAct, noday, nextSlots[s].startSec), 0, startDayMs, nowSec);
+        if (offAct) offActs.push({ activity: offAct, startSec: nextSlots[s].startSec });
+      }
+
+      /* Se retiran las filas anteriores del grupo y sus contadores. */
+      while (body.children.length) {
+        body.removeChild(body.children[0]);
+      }
+      counters = counters.filter(function (counter) {
+        return !counter.isBs && counter.offStartSec === undefined;
+      });
+
+      /* La primera fila es la actividad BS de la franja en curso. */
+      var bsRowEl = buildRow(bsRow(currentAct, noday), 0, startDayMs, nowSec);
+      bsRowEl.classList.add("ad-bs-task");
+      body.appendChild(bsRowEl);
+
+      /* Las filas siguientes son las oportunidades OFF consecutivas. */
+      for (var o = 0; o < offActs.length; o++) {
+        var offRowEl = buildRow(
+          offRow(offActs[o].activity, noday, offActs[o].startSec), 0, startDayMs, nowSec
+        );
         offRowEl.classList.add("ad-bs-task");
-        tbody.appendChild(offRowEl);
+        body.appendChild(offRowEl);
       }
     }
 
@@ -1212,12 +1218,12 @@
         currentPhaseEl.textContent = phaseCountdown(nowSec);
       }
 
-      /* Al cambiar de franja de Battle Survival las oportunidades OFF
-         avanzan: se retiran las anteriores y se construyen las dos
-         siguientes a la nueva actividad en curso. */
+      /* Al cambiar de franja de Battle Survival el grupo se reescribe: la
+         actividad BS en curso pasa a ser la anterior y las oportunidades
+         OFF avanzan a las tres siguientes. */
       if (slotIndexAt(currentSlotNoday, nowSec) !== currentSlotIndex) {
         currentSlotIndex = slotIndexAt(currentSlotNoday, nowSec);
-        buildOffRows(currentSlotNoday, nowSec, Date.UTC(
+        buildBattleTaskRows(currentSlotNoday, nowSec, Date.UTC(
           origin.getUTCFullYear(), origin.getUTCMonth(), origin.getUTCDate()
         ));
       }
@@ -1244,10 +1250,6 @@
           counter.td.textContent = result.text;
         }
         applyCounterState(counter.tr, result.state);
-        /* Las actividades BS solo son visibles con el contador en progreso. */
-        if (counter.isBs) applyBsVisibility(counter.tr, result.state);
-        /* Las actividades OFF solo son visibles en cuenta regresiva. */
-        if (counter.offStartSec !== undefined) applyOffVisibility(counter.tr, result.state);
       }
     }
 

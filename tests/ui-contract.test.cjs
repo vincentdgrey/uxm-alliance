@@ -824,29 +824,56 @@ test("los puntos se integran en la columna Tarea con la nota minima", () => {
   }
 });
 
-test("las actividades BS solo se muestran en la tabla del dia actual y en estado de progreso", () => {
+test("el grupo Battle Survival escribe cuatro filas y no oculta ninguna", () => {
   const js = read("js/activities-daily.js");
   const css = read("css/activities-daily.css");
 
-  /* Solo las actividades cuyo codigo empieza con BS se agregan. */
+  /* Solo las actividades cuyo codigo empieza por BS se agregan. */
   assert.match(js, /var BS_CODE_PREFIX = "BS"/);
   assert.match(js, /a\.code\.indexOf\(BS_CODE_PREFIX\) === 0/);
 
-  /* Se agregan unicamente al dia actual (k === 0). */
-  assert.match(js, /if \(k === 0\) \{[\s\S]*?buildRow\(bsRow\(bsActivities\[b\], noday\), k, startDayMs, nowSec\)/);
+  /* Una sola funcion escribe la actividad BS en curso y las tres OFF. */
+  assert.match(js, /function buildBattleTaskRows\(noday, nowSec, startDayMs\)/);
+  assert.match(js, /var currentAct = currentSlot \? bsByCodebs\[currentSlot\.codebs\] : null/);
+  assert.match(js, /var nextSlots = nextScheduleSlots\(noday, nowSec, OFF_VISIBLE_COUNT\)/);
 
-  /* El estado PROGRESS habilita la fila; cualquier otro estado la oculta. */
-  assert.match(js, /function applyBsVisibility\(tr, state\)/);
-  assert.match(js, /tr\.classList\.toggle\("ad-bs-hidden", state !== STATE_PROGRESS\)/);
-  assert.match(css, /\.ad-schedule tbody tr\.ad-bs-hidden \{[^}]*display:\s*none/s);
+  /* Tres actividades OFF: con la BS en curso, cuatro filas. */
+  assert.match(js, /var OFF_VISIBLE_COUNT = 3/);
+
+  /* El grupo de Battle Survival ocupa un cuerpo propio, dentro del
+     recorrido de grupos y con su evento declarado. */
+  assert.match(js, /var body = document\.createElement\("tbody"\)/);
+  assert.match(js, /body\.className = "ad-event-body"/);
+  assert.match(js, /body\.className \+= " ad-battle-body"/);
+  assert.match(js, /battleBodyEl = body/);
+
+  /* Las cuatro filas se escriben siempre: no hay logica de ocultacion. */
+  assert.doesNotMatch(js, /ad-bs-hidden/);
+  assert.doesNotMatch(js, /function applyBsVisibility/);
+  assert.doesNotMatch(js, /function applyOffVisibility/);
+  assert.doesNotMatch(css, /ad-bs-hidden/);
+});
+
+test("el encabezado y el separador del dia actual usan el verde de batalla", () => {
+  const css = read("css/activities-daily.css");
+
+  /* El dia actual pinta el encabezado y el separador con #1d6e12. */
+  assert.match(css, /\.ad-item\.ad-today \.ad-schedule thead th \{[^}]*background:\s*#1d6e12[^}]*border-bottom-color:\s*#1d6e12/s);
+  assert.match(css, /\.ad-item\.ad-today \.ad-schedule tr\.ad-event-separator > td \{[^}]*border-bottom-color:\s*#1d6e12/s);
+
+  /* Las reglas generales conservan el color #4d7799. */
+  assert.match(css, /\.ad-schedule th \{[^}]*background:\s*#4d7799/s);
+  assert.match(css, /\.ad-schedule tbody tr\.ad-event-separator td \{[^}]*border-bottom:\s*2px solid #4d7799/s);
 });
 
 test("el grupo Battle Survival se separa con la clase de separador de eventos", () => {
   const js = read("js/activities-daily.js");
 
-  /* La ultima fila del grupo anterior al de Battle Survival lleva separador. */
-  assert.match(js, /!nextRow && k === 0 && bsActivities\.length && rows\.length/);
-  assert.match(js, /row\.className \+= " ad-event-separator"/);
+  /* El separador se asigna a la ultima fila de cada cuerpo que tiene
+     otro grupo detras, de forma generica para todos los grupos. */
+  assert.match(js, /bodies\.forEach\(function \(body, index\) \{/);
+  assert.match(js, /if \(index >= bodies\.length - 1\) return/);
+  assert.match(js, /lastRow\.className \+= " ad-event-separator"/);
 });
 
 test("el contador BS muestra el tiempo restante de la duracion de cuatro horas", () => {
@@ -859,7 +886,7 @@ test("el contador BS muestra el tiempo restante de la duracion de cuatro horas",
   /* El contador BS se compone de dos nodos actualizados en cada tick. */
   assert.match(js, /elapsedEl\.className = "ad-bs-elapsed"/);
   assert.match(js, /remainingEl\.className = "ad-bs-remaining"/);
-  assert.match(js, /counter\.remainingEl\.textContent = result\.state === STATE_PROGRESS \? fmtCounter\(result\.remainingSec\) : ""/);
+  assert.match(js, /counter\.remainingEl\.textContent = result\.state === STATE_PROGRESS \? "" \+ fmtCounter\(result\.remainingSec\) : ""/);
 
   /* Estilo del tiempo restante, bajo el contador. */
   assert.match(css, /\.ad-bs-remaining \{[^}]*display:\s*block[^}]*font-size:\s*10px[^}]*color:\s*#666/s);
@@ -911,21 +938,25 @@ test("las tablas del duelo de alianzas comparten ancho y anchos de columna", () 
   assert.match(css, /\.ad-icon img \{[^}]*height:\s*24px/s);
 });
 
-test("el duelo de alianzas ordena por evento y muestra iconos de tarea", () => {
+test("el duelo de alianzas agrupa por evento segun EVENT_CODE y muestra iconos de tarea", () => {
   const js = read("js/activities-daily.js");
   const css = read("css/activities-daily.css");
 
-  /* Orden fijo por grupos y eventos, estable dentro de cada grupo. */
-  assert.match(js, /var EVENT_ORDER = \["ROY", "KVK", "BEX", "EQ", "CUM", "DY", "AD"\]/);
-  assert.match(js, /function sortRowsByEvent\(rows\)/);
-  assert.match(js, /var eventOrder = EVENT_ORDER\.indexOf\(a\.row\.event\)/);
-  assert.match(js, /var eventOrderB = EVENT_ORDER\.indexOf\(b\.row\.event\)/);
-  assert.match(js, /return eventOrder !== eventOrderB \? eventOrder - eventOrderB : a\.index - b\.index/);
-  assert.match(js, /var rows = sortRowsByEvent\(byDay\[noday\] \|\| \[\]\)/);
+  /* El orden de los grupos lo define el valor view de EVENT_CODE. */
+  assert.match(js, /var orderedEvents = EVENT_CODE\.slice\(\)\.sort\(function \(a, b\) \{/);
+  assert.match(js, /return a\.view - b\.view/);
+  assert.match(js, /function groupRowsByEvent\(rows\)/);
+  assert.match(js, /var groups = groupRowsByEvent\(byDay\[noday\] \|\| \[\]\)/);
+  assert.match(js, /orderedEvents\.forEach\(function \(ev\)/);
+  assert.match(js, /body\.setAttribute\("data-event", ev\.event\)/);
+
+  /* Se retira cualquier otra logica de orden de grupos. */
+  assert.doesNotMatch(js, /EVENT_ORDER/);
+  assert.doesNotMatch(js, /sortRowsByEvent/);
+  assert.doesNotMatch(js, /rows\[i\]\.event !== nextRow\.event/);
 
   /* Separador de 2 px unicamente entre grupos de eventos. */
-  assert.match(js, /rows\[i\]\.event !== nextRow\.event/);
-  assert.match(js, /row\.className \+= " ad-event-separator"/);
+  assert.match(js, /lastRow\.className \+= " ad-event-separator"/);
   assert.match(css, /\.ad-schedule tbody tr\.ad-event-separator td \{[^}]*border-bottom:\s*2px solid #4d7799/s);
 
   /* La segunda columna carga el PNG indicado por ACTIVITY_CODE.icon. */
@@ -1593,7 +1624,7 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
 
   /* El español es la fuente de verdad: define el orden canonico de las traducciones. */
   const canonicalCodes = Object.keys(i18n.es.adActivities);
-  assert.equal(canonicalCodes.length, 61);
+  assert.equal(canonicalCodes.length, 62);
   for (const code of activityCode) {
     assert.ok(canonicalCodes.includes(code), "el canon debe traducir " + code);
   }
