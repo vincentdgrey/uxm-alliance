@@ -1624,7 +1624,7 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
 
   /* El español es la fuente de verdad: define el orden canonico de las traducciones. */
   const canonicalCodes = Object.keys(i18n.es.adActivities);
-  assert.equal(canonicalCodes.length, 61);
+  assert.equal(canonicalCodes.length, 62);
   for (const code of activityCode) {
     assert.ok(canonicalCodes.includes(code), "el canon debe traducir " + code);
   }

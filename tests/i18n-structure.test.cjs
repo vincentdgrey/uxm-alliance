@@ -97,7 +97,7 @@ test("las traducciones pendientes de integrar en los datos son solo CHEESE7", ()
   for (const language of languages) {
     const codes = Object.keys(i18n[language].adActivities);
     const pending = codes.filter((code) => !expectedCodes.includes(code));
-    assert.deepEqual(pending, ["CHEESE7"], language);
+    assert.deepEqual(pending, ["CHEESE7", "UNDEAD"], language);
   }
 });
 
@@ -107,16 +107,16 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
     CON1SP: { objective: "Usa Aceleración de Construcción, Activa Ministerio Construcción", resource: "Acelerador Construcción" },
     TCH1SP: { objective: "Usa Aceleración de Investigación, Activa Ministerio Investigación", resource: "Acelerador Desarrollo" },
     TCHMGH: { objective: "Aumenta el Poder de Tecnología, Buscar Investigaciones con Pergamino de Estudio", resource: "Pergamino de Estudio" },
-    SHRDSR: { objective: "Consume Fragmento de Héroe SR", resource: "Tienda Santuario" },
-    SHRDSS: { objective: "Consume Fragmento de Héroe SSR", resource: "Tienda Santuario" },
-    SHRDUR: { objective: "Consume Fragmento de Héroe UR", resource: "Tienda Santuario" },
+    SHRDSR: { objective: "Consume Fragmento de Héroe SR, prioriza en tu héroe a Promover, ejemplo Robin", resource: "Fragmento de Héroe SR" },
+    SHRDSS: { objective: "Consume Fragmento de Héroe SSR, prioriza en tu héroe a Promover, ejemplo Claire o Bella", resource: "Fragmento de Héroe SSR" },
+    SHRDUR: { objective: "Consume Fragmento de Héroe UR, prioriza DPS > Soporte > Tanque", resource: "Fragmento de Héroe UR" },
     SKILLB: { objective: "Usa Insignia de Habilidad, Prioridad Aumentar Habilidad Héroe UR", resource: "Insignia de Habilidad" },
     SOLD1TRN: { objective: "Usa Aceleración de Entrenamiento, Activa Ministerio de Guerra", resource: "Acelerador Entrenamiento" },
     SOLDT10: { objective: "Entrena Soldado, Prioridad Promover T7 a T8", resource: "Soldados T6 > T7 > T8" },
     ELIXIR: { objective: "Generar Puntos por Capturar Edificios", resource: "Castillo del Elixir" },
     CRVNUR: { objective: "Envía Caravanas UR", resource: "4 Caravanas" },
-    OPENUR: { objective: "Ejecuta Operaciones Encubiertas UR, mínimo 6, la última es más difícil", resource: "7 Operaciones Encubiertas" },
-    ANTX: { objective: "Consume Antitoxinas x660", resource: "Suministros Antídoto" },
+    OPENUR: { objective: "Ejecuta Operaciones Encubiertas UR, mínimo 6 UR, la última más difícil dejarla en SSR", resource: "7 Operaciones Encubiertas" },
+    ANTX: { objective: "Consume Antitoxinas x660, priorizar primer escuadrón UR", resource: "Suministros Antídoto" },
     HERBS: { objective: "Recolecta Hierbas x60, todo el día", resource: "Jardín de Hierbas Nv.10, 8H, 1.1M" },
     GRAIN: { objective: "Recolecta Trigo/Madera x100", resource: "Granja Nv.10, 6.5H, 2.2M" },
     CONMGH: { objective: "Aumenta el Poder de Un Edificio, Prefiere tiempos de construcción cortos", resource: "Mejora Edificio" },
@@ -143,6 +143,10 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
     DYSOLDIER: { objective: "Entrena Soldados T6 o T7; Promover el Día de Preparación de Guerra", resource: "Soldado T7" },
     DYWALL: { objective: "Retira tus soldados del Muro; Día de Guerra", resource: "Muro Santuario" },
     CHEESE7: { objective: "335M de Daño al Ladrón del Queso Lv.7, 30min duración, 1.4B de daño para el MVP1", resource: "Trampa del Queso" },
+    UNDEAD: { objective: "Resistir 20 Oleadas del Asedio de No Muertos, Colocar/Reforzar soldados en el Muro", resource: "Soldados en Muro" },
+    DEMONW: { objective: "Rey Demonio Guerrero, Daño Héroe Ranger +50%, 4 DPS + 1 Soporte", resource: "Rey Demonio" },
+    DEMONR: { objective: "Rey Demonio Montaraz, Daño Héroe Brujo +50%, 4 DPS + 1 Soporte", resource: "Rey Demonio" },
+    DEMONZ: { objective: "Rey Demonio Brujo, Daño Héroe Guerrero +50%, 4 DPS + 1 Soporte", resource: "Rey Demonio" },
     BSBUILD: { objective: "Insignias de Habilidad ★, Oportunidad al Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H]", resource: "Edificios" },
     BSHERO: { objective: "Insignias de Habilidad ★, Oportunidad al Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe", resource: "Heroes" },
     BSRAVEN: { objective: "Insignias de Habilidad ★, Oportunidad de usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo", resource: "Cuervo" },
@@ -163,7 +167,7 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
 test("todas las traducciones de actividades cubren los codigos canonicos", () => {
   const i18n = loadI18n("actividades-diarias");
   const canonicalCodes = Object.keys(i18n.es.adActivities);
-  assert.equal(canonicalCodes.length, 61);
+  assert.equal(canonicalCodes.length, 62);
 
   for (const lang of languages) {
     const activities = i18n[lang].adActivities;

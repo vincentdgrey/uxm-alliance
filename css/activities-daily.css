@@ -410,12 +410,14 @@ tr.bs-current td.bs-event::after {
   position: relative;
 }
 .ad-has-point {
-  padding-bottom: 16px;
+  /* padding-bottom: 16px; */
 }
 .ad-task-point {
-  position: absolute;
-  right: 5px;
-  bottom: 1px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: right;
   color: #4d7799;
   font-weight: 100;
   font-size: 0.6rem;

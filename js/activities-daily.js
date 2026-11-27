@@ -147,9 +147,9 @@
     { "code": "OFFSOLDIER", "group": "BS", "icon": "lock", "point": "", "codebs": "SOLDIER" },
     { "code": "OFFTECH", "group": "BS", "icon": "lock", "point": "", "codebs": "TECH" },
 
-    { "code": "DEMONW", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
-    { "code": "DEMONR", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
-    { "code": "DEMONZ", "group": "BS", "icon": "blight-king-demon", "point": "", "codebs": "" },
+    { "code": "DEMONW", "group": "DY", "icon": "blight-king-demon", "point": "", "codebs": "" },
+    { "code": "DEMONR", "group": "DY", "icon": "blight-king-demon", "point": "", "codebs": "" },
+    { "code": "DEMONZ", "group": "DY", "icon": "blight-king-demon", "point": "", "codebs": "" },
   ];
 
   var EVENT_CODE = [
@@ -165,6 +165,7 @@
     { "event": "CUM", "es": "Valle Cúmulos de Cristal", "en": "Cristal Cruster Valley" , "view":7 },
 
     { "event": "BS",  "es": "Batalla Supervivencia", "en": "Battle Survival",     "view":8 },
+    { "event": "US",  "es": "Asedio de No Muertos", "en": "Undead Siege",         "view":9 },
   ];
 
   var PHASES = [
@@ -967,7 +968,7 @@
          de la columna Tarea y en la posicion inferior izquierda. */
       var pointText = a ? formatPoint(a.point) : "";
       if (pointText) {
-        var pointEl = document.createElement("span");
+        var pointEl = document.createElement("div");
         pointEl.className = "ad-task-point";
         pointEl.textContent = pointText;
         taskCell.appendChild(pointEl);

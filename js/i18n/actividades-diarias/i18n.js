@@ -18,7 +18,7 @@
         pageDailyTitle:"Actividades Diarias",
         pageDailyLead:"Detalles de las actividades diarias que te ayudaran a mejorar diariamente.",
         adActivities:{
-          ANTX:{ objective:"Consume Antitoxinas x660",resource:"Suministros Antídoto"},
+          ANTX:{ objective:"Consume Antitoxinas x660, priorizar primer escuadrón UR",resource:"Suministros Antídoto"},
 
           STMN: { objective:"Consume Energía/Stamina, comprar 24 botellas en Shop VIP",resource:"Botella de Energía/Stamina"},
           DYBOTT: {objective:"Guarda Botellas de Energía/Stamina para la Próxima Fase del Cuervo",resource:"Botella de Energía/Stamina"},
@@ -44,7 +44,7 @@
           TCHMGH:{objective:"Aumenta el Poder de Tecnología, Buscar Investigaciones con Pergamino de Estudio",resource:"Pergamino de Estudio"},
           
           CRVNUR:{objective:"Envía Caravanas UR",resource:"4 Caravanas"},
-          OPENUR:{objective:"Ejecuta Operaciones Encubiertas UR, mínimo 6, la última es más difícil",resource:"7 Operaciones Encubiertas"},
+          OPENUR:{objective:"Ejecuta Operaciones Encubiertas UR, mínimo 6 UR, la última más difícil dejarla en SSR",resource:"7 Operaciones Encubiertas"},
           
           TCKSUR:{objective:"Recluta Supervivientes, usando TODOS los Tickets de Superviviente",resource:"Ticket de Superviviente"},
           SAVETS:{objective:"GUARDA TODOS los Tickets de Superviviente",resource:"Ticket de Superviviente"},
@@ -54,9 +54,9 @@
           SAVETH:{objective:"GUARDA TODOS los Tickets de Héroe",resource:"Ticket de Héroe"},
           FREETH:{objective:"Usa SOLO 1 Ticket GRATIS de Héroe",resource:"Ticket de Héroe"},
 
-          SHRDSR:{objective:"Consume Fragmento de Héroe SR",resource:"Tienda Santuario"},
-          SHRDSS:{objective:"Consume Fragmento de Héroe SSR",resource:"Tienda Santuario"},
-          SHRDUR:{objective:"Consume Fragmento de Héroe UR",resource:"Tienda Santuario"},
+          SHRDSR:{objective:"Consume Fragmento de Héroe SR, prioriza en tu héroe a Promover, ejemplo Robin",resource:"Fragmento de Héroe SR"},
+          SHRDSS:{objective:"Consume Fragmento de Héroe SSR, prioriza en tu héroe a Promover, ejemplo Claire o Bella",resource:"Fragmento de Héroe SSR"},
+          SHRDUR:{objective:"Consume Fragmento de Héroe UR, prioriza DPS > Soporte > Tanque",resource:"Fragmento de Héroe UR"},
           SKILLB:{objective:"Usa Insignia de Habilidad, Prioridad Aumentar Habilidad Héroe UR",resource:"Insignia de Habilidad"},
 
           SOLD1TRN:{objective:"Usa Aceleración de Entrenamiento, Activa Ministerio de Guerra",resource:"Acelerador Entrenamiento"},
@@ -82,9 +82,10 @@
           CUMULUS:{objective:"Recolecta Cristal Purificado en Cúmulos, 30min duración",resource:"Cúmulos de Cristal"},
 
           CHEESE7:{objective:"335M de Daño al Ladrón del Queso Lv.7, 30min duración, 1.4B de daño para el MVP1",resource:"Trampa del Queso"},
-          DEMONW:{objective:"Rey Demonio Guerrero, Daño Héroe Ranger +50%, 3 Damage Dealer + 1 Support",resource:"Rey Demonio"},
-          DEMONR:{objective:"Rey Demonio Montaraz, Daño Héroe Brujo +50%, 3 Damage Dealer + 1 Support",resource:"Rey Demonio"},
-          DEMONZ:{objective:"Rey Demonio Brujo, Daño Héroe Guerrero +50%, 3 Damage Dealer + 1 Support",resource:"Rey Demonio"},
+          UNDEAD:{objective:"Resistir 20 Oleadas del Asedio de No Muertos, Colocar/Reforzar soldados en el Muro",resource:"Soldados en Muro"},
+          DEMONW:{objective:"Rey Demonio Guerrero, Daño Héroe Ranger +50%, 4 DPS + 1 Soporte",resource:"Rey Demonio"},
+          DEMONR:{objective:"Rey Demonio Montaraz, Daño Héroe Brujo +50%, 4 DPS + 1 Soporte",resource:"Rey Demonio"},
+          DEMONZ:{objective:"Rey Demonio Brujo, Daño Héroe Guerrero +50%, 4 DPS + 1 Soporte",resource:"Rey Demonio"},
 
           BSBUILD:{objective:"Insignias de Habilidad ★, Oportunidad al Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H]",resource:"Edificios"},
           BSHERO:{objective:"Insignias de Habilidad ★, Oportunidad al Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe",resource:"Heroes"},
@@ -134,7 +135,7 @@ bsNext:"Upcoming",
         pageDailyTitle:"Daily Activities",
 pageDailyLead:"Details of the daily activities that will help you improve every day.",
         adActivities:{
-          ANTX:{objective:"Consume 660 Antitoxins",resource:"Antidote Supplies"},
+          ANTX:{objective:"Consume 660 Antitoxins, prioritize the first UR squad",resource:"Antidote Supplies"},
 
           STMN:{objective:"Consume Energy/Stamina, buy 24 bottles in the VIP Shop",resource:"Energy/Stamina Bottle"},
           DYBOTT:{objective:"Save Energy/Stamina Bottles for the Next Raven Phase",resource:"Energy/Stamina Bottle"},
@@ -160,7 +161,7 @@ pageDailyLead:"Details of the daily activities that will help you improve every 
           TCHMGH:{objective:"Increase Tech Might, Find Research with Study Scrolls",resource:"Study Scroll"},
 
           CRVNUR:{objective:"Dispatch UR Caravans",resource:"4 Caravan"},
-          OPENUR:{objective:"Execute UR Covert Operations, minimum 6, the last one is harder",resource:"7 Black Ops"},
+          OPENUR:{objective:"Execute UR Covert Operations, minimum 6 UR, leave the hardest one at SSR",resource:"7 Black Ops"},
 
           TCKSUR:{objective:"Recruit Survivors, using ALL Survivor Tickets",resource:"Survivor Ticket"},
           SAVETS:{objective:"SAVE ALL Survivor Tickets",resource:"Survivor Ticket"},
@@ -170,9 +171,9 @@ pageDailyLead:"Details of the daily activities that will help you improve every 
           SAVETH:{objective:"SAVE ALL Hero Tickets",resource:"Hero Ticket"},
           FREETH:{objective:"Use ONLY 1 FREE Hero Ticket",resource:"Hero Ticket"},
 
-          SHRDSR:{objective:"Consume SR Hero Shard", resource:"Sanctuary Shop"},
-          SHRDSS:{objective:"Consume SSR Hero Shard", resource:"Sanctuary Shop"},
-          SHRDUR:{objective:"Consume UR Hero Shard", resource:"Sanctuary Shop"},
+          SHRDSR:{objective:"Consume SR Hero Shard, prioritize promoting your Hero, example Robin",resource:"SR Hero Shard"},
+          SHRDSS:{objective:"Consume SSR Hero Shard, prioritize promoting your Hero, example Claire or Bella",resource:"SSR Hero Shard"},
+          SHRDUR:{objective:"Consume UR Hero Shard, prioritize DPS > Support > Tank",resource:"UR Hero Shard"},
           SKILLB:{objective:"Use Skill Badge, Priority Increase UR Hero Skill",resource:"Skill Badge"},
 
           SOLD1TRN:{objective:"Use Training Boost, Activate Ministry of War",resource:"Training Boost"},
@@ -197,9 +198,10 @@ pageDailyLead:"Details of the daily activities that will help you improve every 
           KWAR:{objective:"1.5M Honor Points, Defeat/Lose/Heal Soldiers",resource:"Kingdom War (KvK)"},
           CUMULUS:{objective:"Gather Purified Crystal in Cumulus, 30min duration",resource:"Cumulus Crystal"},
           CHEESE7:{objective:"335M Damage to the Cheese Thief Lv.7, 30min duration, 1.4B damage for MVP1",resource:"Cheese Trap"},
-          DEMONW:{objective:"Demon King Warrior, Ranger Hero Damage +50%, 3 Damage Dealer + 1 Support",resource:"Demon King"},
-          DEMONR:{objective:"Demon King Ranger, Wizard Hero Damage +50%, 3 Damage Dealer + 1 Support",resource:"Demon King"},
-          DEMONZ:{objective:"Demon King Wizard, Warrior Hero Damage +50%, 3 Damage Dealer + 1 Support",resource:"Demon King"},
+          UNDEAD:{objective:"Withstand 20 Waves of the Undead Siege, Place/Reinforce soldiers on the Wall",resource:"Soldiers on the Wall"},
+          DEMONW:{objective:"Demon King Warrior, Ranger Hero Damage +50%, 4 DPS + 1 Support",resource:"Demon King"},
+          DEMONR:{objective:"Demon King Ranger, Wizard Hero Damage +50%, 4 DPS + 1 Support",resource:"Demon King"},
+          DEMONZ:{objective:"Demon King Wizard, Warrior Hero Damage +50%, 4 DPS + 1 Support",resource:"Demon King"},
 
           BSBUILD:{objective:"Skill Badges ★, Opportunity when finishing Constructions [raise 30.000 might] or Speed up [50H]",resource:"Buildings"},
           BSHERO:{objective:"Skill Badges ★, Opportunity when using [23.4M] Antitoxins or [30] Hero Tickets",resource:"Heroes"},
@@ -231,7 +233,7 @@ bsNext:"Próximo",
         pageDailyTitle:"Atividades Diárias",
 pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos os dias.",
         adActivities:{
-          ANTX:{objective:"Consuma 660 Antitoxinas",resource:"Suprimentos de Antídoto"},
+          ANTX:{objective:"Consuma 660 Antitoxinas, priorize o primeiro esquadrão UR",resource:"Suprimentos de Antídoto"},
 
           STMN:{objective:"Consuma Energia/Stamina, compre 24 garrafas na Shop VIP",resource:"Garrafa de Energia/Stamina"},
           DYBOTT:{objective:"Guarde Garrafas de Energia/Stamina para a Próxima Fase do Corvo",resource:"Garrafa de Energia/Stamina"},
@@ -257,7 +259,7 @@ pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos
           TCHMGH:{objective:"Aumente o Poder de Tecnologia, Pesquise com Pergaminhos de Estudo",resource:"Pergaminho de Estudo"},
 
           CRVNUR:{objective:"Envie Caravanas UR",resource:"4 Caravanas"},
-          OPENUR:{objective:"Execute Operações Secretas UR, mínimo 6, a última é mais difícil",resource:"7 Operações Secretas"},
+          OPENUR:{objective:"Execute Operações Secretas UR, mínimo 6 UR, a última mais difícil deixe em SSR",resource:"7 Operações Secretas"},
 
           TCKSUR:{objective:"Recrute Sobreviventes, usando TODOS os Tickets de Sobrevivente",resource:"Ticket de Sobrevivente"},
           SAVETS:{objective:"GUARDE TODOS os Tickets de Sobrevivente",resource:"Ticket de Sobrevivente"},
@@ -267,9 +269,9 @@ pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos
           SAVETH:{objective:"GUARDE TODOS os Tickets de Herói",resource:"Ticket de Herói"},
           FREETH:{objective:"Use SOMENTE 1 Ticket GRATUITO de Herói",resource:"Ticket de Herói"},
 
-          SHRDSR:{objective:"Consuma Fragmentos de Herói SR", resource:"Loja do Santuário"},
-          SHRDSS:{objective:"Consuma Fragmentos de Herói SSR", resource:"Loja do Santuário"},
-          SHRDUR:{objective:"Consuma Fragmentos de Herói UR", resource:"Loja do Santuário"},
+          SHRDSR:{objective:"Consuma Fragmentos de Herói SR, priorize promover no seu Herói, exemplo Robin",resource:"Fragmento de Herói SR"},
+          SHRDSS:{objective:"Consuma Fragmentos de Herói SSR, priorize promover no seu Herói, exemplo Claire ou Bella",resource:"Fragmento de Herói SSR"},
+          SHRDUR:{objective:"Consuma Fragmentos de Herói UR, priorize DPS > Suporte > Tanque",resource:"Fragmento de Herói UR"},
           SKILLB:{objective:"Use Emblema de Habilidade, Prioridade Aumentar a Habilidade do Herói UR",resource:"Emblema de Habilidade"},
 
           SOLD1TRN:{objective:"Use Aceleração de Treinamento, Ative Ministério da Guerra",resource:"Aceleração de Treinamento"},
@@ -294,9 +296,10 @@ pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos
           KWAR:{objective:"1.5M Pontos de Honra, Derrote/Perca/Cure Soldados",resource:"Guerra de Reinos (KvK)"},
           CUMULUS:{objective:"Colete Cristal Purificado nos Cúmulos, 30min de duração",resource:"Cúmulos de Cristal"},
           CHEESE7:{objective:"335M de Dano ao Ladrão de Queijo Lv.7, 30min de duração, 1.4B de dano para o MVP1",resource:"Armadilha de Queijo"},
-          DEMONW:{objective:"Rei Demônio Guerreiro, Dano do Herói Ranger +50%, 3 Damage Dealer + 1 Support",resource:"Rei Demônio"},
-          DEMONR:{objective:"Rei Demônio Montaraz, Dano do Herói Bruxo +50%, 3 Damage Dealer + 1 Support",resource:"Rei Demônio"},
-          DEMONZ:{objective:"Rei Demônio Bruxo, Dano do Herói Guerreiro +50%, 3 Damage Dealer + 1 Support",resource:"Rei Demônio"},
+          UNDEAD:{objective:"Resista a 20 Ondas do Cerco dos Mortos-Vivos, Coloque/Reforce soldados no Muro",resource:"Soldados no Muro"},
+          DEMONW:{objective:"Rei Demônio Guerreiro, Dano do Herói Ranger +50%, 4 DPS + 1 Suporte",resource:"Rei Demônio"},
+          DEMONR:{objective:"Rei Demônio Montaraz, Dano do Herói Bruxo +50%, 4 DPS + 1 Suporte",resource:"Rei Demônio"},
+          DEMONZ:{objective:"Rei Demônio Bruxo, Dano do Herói Guerreiro +50%, 4 DPS + 1 Suporte",resource:"Rei Demônio"},
 
           BSBUILD:{objective:"Emblemas de Habilidade ★, Oportunidade ao Terminar Construções [aumentar 30.000 poder] ou Acelerar [50H]",resource:"Edifícios"},
           BSHERO:{objective:"Emblemas de Habilidade ★, Oportunidade ao Usar [23.4M] Antitoxinas ou [30] Tickets de Herói",resource:"Heróis"},
@@ -328,7 +331,7 @@ bsNext:"Prossimo",
         pageDailyTitle:"Attività Giornaliere",
 pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliorare ogni giorno.",
         adActivities:{
-          ANTX:{objective:"Consuma 660 Antitossine",resource:"Rifornimenti Antidoto"},
+          ANTX:{objective:"Consuma 660 Antitossine, dai priorità al primo squadrone UR",resource:"Rifornimenti Antidoto"},
 
           STMN:{objective:"Consuma Energia/Stamina, compra 24 bottiglie nel Shop VIP",resource:"Bottiglia di Energia/Stamina"},
           DYBOTT:{objective:"Salva Bottiglie di Energia/Stamina per la Prossima Fase del Corvo",resource:"Bottiglia di Energia/Stamina"},
@@ -354,7 +357,7 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           TCHMGH:{objective:"Aumenta la Potenza della Tecnologia, Cerca ricerche con Pergamene di Studio",resource:"Pergamena di Studio"},
 
           CRVNUR:{objective:"Invia Carovane UR",resource:"4 Carovane"},
-          OPENUR:{objective:"Esegui Operazioni Segrete UR, minimo 6, l'ultima è più difficile",resource:"7 Operazioni Segrete"},
+          OPENUR:{objective:"Esegui Operazioni Segrete UR, minimo 6 UR, lascia la più difficile a SSR",resource:"7 Operazioni Segrete"},
 
           TCKSUR:{objective:"Recluta Sopravvissuti, usando TUTTI i Ticket del Sopravvissuto",resource:"Ticket del Sopravvissuto"},
           SAVETS:{objective:"SALVA TUTTI i Ticket del Sopravvissuto",resource:"Ticket del Sopravvissuto"},
@@ -364,9 +367,9 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           SAVETH:{objective:"SALVA TUTTI i Ticket dell'Eroe",resource:"Ticket dell'Eroe"},
           FREETH:{objective:"Usa SOLO 1 Ticket GRATIS dell'Eroe",resource:"Ticket dell'Eroe"},
 
-          SHRDSR:{objective:"Consuma Frammento di Eroe SR", resource:"Negozio del Santuario"},
-          SHRDSS:{objective:"Consuma Frammento di Eroe SSR", resource:"Negozio del Santuario"},
-          SHRDUR:{objective:"Consuma Frammento di Eroe UR", resource:"Negozio del Santuario"},
+          SHRDSR:{objective:"Consuma Frammento di Eroe SR, dai priorità alla promozione del tuo Eroe, esempio Robin",resource:"Frammento di Eroe SR"},
+          SHRDSS:{objective:"Consuma Frammento di Eroe SSR, dai priorità alla promozione del tuo Eroe, esempio Claire o Bella",resource:"Frammento di Eroe SSR"},
+          SHRDUR:{objective:"Consuma Frammento di Eroe UR, priorità DPS > Supporto > Tank",resource:"Frammento di Eroe UR"},
           SKILLB:{objective:"Usa Distintivo di Abilità, Priorità Aumenta l'Abilità dell'Eroe UR",resource:"Distintivo di Abilità"},
 
           SOLD1TRN:{objective:"Usa Accelerazione di Addestramento, Attiva il Ministero della Guerra",resource:"Accelerazione di Addestramento"},
@@ -391,9 +394,10 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           KWAR:{objective:"1.5M Punti di Onore, Sconfiggi/Perdi/Cura Soldati",resource:"Guerra dei Regni (KvK)"},
           CUMULUS:{objective:"Raccogli Cristallo Purificato nei Cumuli, 30min di durata",resource:"Cumuli di Cristallo"},
           CHEESE7:{objective:"335M di Danno al Ladro di Formaggio Lv.7, 30min di durata, 1.4B di danno per l'MVP1",resource:"Trappola del Formaggio"},
-          DEMONW:{objective:"Re Demone Guerriero, Danno Eroe Ranger +50%, 3 Damage Dealer + 1 Support",resource:"Re Demone"},
-          DEMONR:{objective:"Re Demone Montaraz, Danno Eroe Mago +50%, 3 Damage Dealer + 1 Support",resource:"Re Demone"},
-          DEMONZ:{objective:"Re Demone Mago, Danno Eroe Guerriero +50%, 3 Damage Dealer + 1 Support",resource:"Re Demone"},
+          UNDEAD:{objective:"Resisti a 20 Ondate dell'Assedio dei Non Morti, Colloca/Rinforza soldati sul Muro",resource:"Soldati sul Muro"},
+          DEMONW:{objective:"Re Demone Guerriero, Danno Eroe Ranger +50%, 4 DPS + 1 Supporto",resource:"Re Demone"},
+          DEMONR:{objective:"Re Demone Montaraz, Danno Eroe Mago +50%, 4 DPS + 1 Supporto",resource:"Re Demone"},
+          DEMONZ:{objective:"Re Demone Mago, Danno Eroe Guerriero +50%, 4 DPS + 1 Supporto",resource:"Re Demone"},
 
           BSBUILD:{objective:"Distintivi di Abilità ★, Opportunità al Termine delle Costruzioni [aumentare 30.000 potenza] o Accelerare [50H]",resource:"Edifici"},
           BSHERO:{objective:"Distintivi di Abilità ★, Opportunità all'Uso [23.4M] Antitossine o [30] Ticket dell'Eroe",resource:"Eroi"},
@@ -425,7 +429,7 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
         pageDailyTitle:"Tägliche Aktivitäten",
         pageDailyLead:"Details der täglichen Aktivitäten, die dir helfen, jeden Tag besser zu werden.",
         adActivities:{
-          ANTX:{ objective:"Verbrauche 660 Antitoxine",resource:"Antidot-Vorräte"},
+          ANTX:{ objective:"Verbrauche 660 Antitoxine, priorisiere die erste UR-Gruppe",resource:"Antidot-Vorräte"},
 
           STMN: { objective:"Verbrauche Energie/Ausdauer, kaufe 24 Flaschen im VIP-Shop",resource:"Energie-/Ausdauerflasche"},
           DYBOTT: {objective:"Bewahre Energie-/Ausdauerflaschen für die nächste Rabenphase auf",resource:"Energie-/Ausdauerflasche"},
@@ -451,7 +455,7 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           TCHMGH:{objective:"Erhöhe die Technologiestärke, suche Forschung mit Studierrollen",resource:"Studierrolle"},
 
           CRVNUR:{objective:"Entsende UR-Karawanen",resource:"4 Karawanen"},
-          OPENUR:{objective:"Führe UR-Geheime Operationen aus, mindestens 6, die letzte ist schwieriger",resource:"7 Geheime Operationen"},
+          OPENUR:{objective:"Führe UR-Geheime Operationen aus, mindestens 6 UR, die schwierigste auf SSR lassen",resource:"7 Geheime Operationen"},
 
           TCKSUR:{objective:"Rekrutiere Überlebende, mit ALLEN Überlebenden-Tickets",resource:"Überlebenden-Ticket"},
           SAVETS:{objective:"BEWAHRE ALLE Überlebenden-Tickets auf",resource:"Überlebenden-Ticket"},
@@ -461,9 +465,9 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           SAVETH:{objective:"BEWAHRE ALLE Helden-Tickets auf",resource:"Helden-Ticket"},
           FREETH:{objective:"Nutze NUR 1 KOSTENLOSES Helden-Ticket",resource:"Helden-Ticket"},
 
-          SHRDSR:{objective:"Verbrauche SR-Heldenfragment", resource:"Heiligtum-Shop"},
-          SHRDSS:{objective:"Verbrauche SSR-Heldenfragment", resource:"Heiligtum-Shop"},
-          SHRDUR:{objective:"Verbrauche UR-Heldenfragment", resource:"Heiligtum-Shop"},
+          SHRDSR:{objective:"Verbrauche SR-Heldenfragment, priorisiere die Beförderung deines Helden, Beispiel Robin",resource:"SR-Heldenfragment"},
+          SHRDSS:{objective:"Verbrauche SSR-Heldenfragment, priorisiere die Beförderung deines Helden, Beispiel Claire oder Bella",resource:"SSR-Heldenfragment"},
+          SHRDUR:{objective:"Verbrauche UR-Heldenfragment, Priorität DPS > Support > Tank",resource:"UR-Heldenfragment"},
           SKILLB:{objective:"Nutze das Fähigkeitsabzeichen, Priorität UR-Heldenfähigkeit erhöhen",resource:"Fähigkeitsabzeichen"},
 
           SOLD1TRN:{objective:"Nutze Trainingsbeschleunigung, aktiviere Kriegsministerium",resource:"Trainingsbeschleunigung"},
@@ -488,9 +492,10 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           KWAR:{objective:"1.5M Ehrenpunkte, Soldaten besiegen/verlieren/heilen",resource:"Königreichskrieg (KvK)"},
           CUMULUS:{objective:"Sammle gereinigten Kristall in Kristallhaufen, 30min Dauer",resource:"Kristallhaufen"},
           CHEESE7:{objective:"335M Schaden am Käse-Dieb Lv.7, 30min Dauer, 1.4B Schaden für den MVP1",resource:"Käsefalle"},
-          DEMONW:{objective:"Dämonenkönig Krieger, Schaden des Helden Ranger +50%, 3 Damage Dealer + 1 Support",resource:"Dämonenkönig"},
-          DEMONR:{objective:"Dämonenkönig Montaraz, Schaden des Helden Magier +50%, 3 Damage Dealer + 1 Support",resource:"Dämonenkönig"},
-          DEMONZ:{objective:"Dämonenkönig Magier, Schaden des Helden Krieger +50%, 3 Damage Dealer + 1 Support",resource:"Dämonenkönig"},
+          UNDEAD:{objective:"Halte 20 Wellen der Belagerung der Untoten stand, Stelle/Verstärke Soldaten auf der Mauer",resource:"Soldaten auf der Mauer"},
+          DEMONW:{objective:"Dämonenkönig Krieger, Schaden des Helden Ranger +50%, 4 DPS + 1 Support",resource:"Dämonenkönig"},
+          DEMONR:{objective:"Dämonenkönig Montaraz, Schaden des Helden Magier +50%, 4 DPS + 1 Support",resource:"Dämonenkönig"},
+          DEMONZ:{objective:"Dämonenkönig Magier, Schaden des Helden Krieger +50%, 4 DPS + 1 Support",resource:"Dämonenkönig"},
 
           BSBUILD:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Fertigstellen von Bauten [Stärke um 30.000 erhöhen] oder Beschleunigen [50H]",resource:"Gebäude"},
           BSHERO:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Verwenden [23.4M] Antitoxinen oder [30] Helden-Tickets",resource:"Helden"},
@@ -540,7 +545,7 @@ bsNext:"Prochaine",
         pageDailyTitle:"Activités Quotidiennes",
 pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous améliorer chaque jour.",
         adActivities:{
-          ANTX:{objective:"Consommez 660 Antitoxines",resource:"Fournitures d'Antidote"},
+          ANTX:{objective:"Consommez 660 Antitoxines, priorisez la première escouade UR",resource:"Fournitures d'Antidote"},
 
           STMN:{objective:"Consommez de l'Énergie/Endurance, achetez 24 bouteilles dans la Boutique VIP",resource:"Bouteille d'Énergie/Endurance"},
           DYBOTT:{objective:"Sauvegardez des Bouteilles d'Énergie/Endurance pour la Prochaine Phase du Corbeau",resource:"Bouteille d'Énergie/Endurance"},
@@ -566,7 +571,7 @@ pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous am
           TCHMGH:{objective:"Augmentez la Puissance de Technologie, Recherchez avec des Parchemins d'Étude",resource:"Parchemin d'Étude"},
 
           CRVNUR:{objective:"Envoyez des Caravanes UR",resource:"4 Caravanes"},
-          OPENUR:{objective:"Effectuez des Opérations Secrètes UR, minimum 6, la dernière est plus difficile",resource:"7 Opérations Secrètes"},
+          OPENUR:{objective:"Effectuez des Opérations Secrètes UR, minimum 6 UR, laissez la plus difficile en SSR",resource:"7 Opérations Secrètes"},
 
           TCKSUR:{objective:"Recrutez des Survivants, en utilisant TOUS les Tickets de Survivant",resource:"Ticket de Survivant"},
           SAVETS:{objective:"SAUVEGARDEZ TOUS les Tickets de Survivant",resource:"Ticket de Survivant"},
@@ -576,9 +581,9 @@ pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous am
           SAVETH:{objective:"SAUVEGARDEZ TOUS les Tickets de Héros",resource:"Ticket de Héros"},
           FREETH:{objective:"Utilisez UNIQUEMENT 1 Ticket GRATUIT de Héros",resource:"Ticket de Héros"},
 
-          SHRDSR:{objective:"Consommez un Fragment de Héros SR", resource:"Boutique du Sanctuaire"},
-          SHRDSS:{objective:"Consommez un Fragment de Héros SSR", resource:"Boutique du Sanctuaire"},
-          SHRDUR:{objective:"Consommez un Fragment de Héros UR", resource:"Boutique du Sanctuaire"},
+          SHRDSR:{objective:"Consommez un Fragment de Héros SR, priorisez la promotion de votre Héros, exemple Robin",resource:"Fragment de Héros SR"},
+          SHRDSS:{objective:"Consommez un Fragment de Héros SSR, priorisez la promotion de votre Héros, exemple Claire ou Bella",resource:"Fragment de Héros SSR"},
+          SHRDUR:{objective:"Consommez un Fragment de Héros UR, priorité DPS > Support > Tank",resource:"Fragment de Héros UR"},
           SKILLB:{objective:"Utilisez un Badge de Compétence, Priorité Augmentez la Compétence du Héros UR",resource:"Badge de Compétence"},
 
           SOLD1TRN:{objective:"Utilisez une Accélération d'Entraînement, Activez le Ministère de la Guerre",resource:"Accélération d'Entraînement"},
@@ -603,9 +608,10 @@ pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous am
           KWAR:{objective:"1.5M Points d'Honneur, Vaincre/Perdre/Soigner des Soldats",resource:"Guerre des Royaumes (KvK)"},
           CUMULUS:{objective:"Récoltez du Cristal Purifié dans les Cumuls, 30min de durée",resource:"Cumuls de Cristal"},
           CHEESE7:{objective:"335M de Dégâts au Voleur de Fromage Nv.7, 30min de durée, 1.4B de dégâts pour le MVP1",resource:"Piège à Fromage"},
-          DEMONW:{objective:"Roi Démon Guerrier, Dégâts du Héros Rôdeur +50%, 3 Damage Dealer + 1 Support",resource:"Roi Démon"},
-          DEMONR:{objective:"Roi Démon Montaraz, Dégâts du Héros Mage +50%, 3 Damage Dealer + 1 Support",resource:"Roi Démon"},
-          DEMONZ:{objective:"Roi Démon Mage, Dégâts du Héros Guerrier +50%, 3 Damage Dealer + 1 Support",resource:"Roi Démon"},
+          UNDEAD:{objective:"Résistez à 20 Vagues du Siège des Morts-Vivants, Placez/Renforcez des soldats sur le Mur",resource:"Soldats sur le Mur"},
+          DEMONW:{objective:"Roi Démon Guerrier, Dégâts du Héros Rôdeur +50%, 4 DPS + 1 Support",resource:"Roi Démon"},
+          DEMONR:{objective:"Roi Démon Montaraz, Dégâts du Héros Mage +50%, 4 DPS + 1 Support",resource:"Roi Démon"},
+          DEMONZ:{objective:"Roi Démon Mage, Dégâts du Héros Guerrier +50%, 4 DPS + 1 Support",resource:"Roi Démon"},
 
           BSBUILD:{objective:"Badges de Compétence ★, Opportunité à la fin des Constructions [augmenter la Puissance de 30.000] ou Accélérer [50H]",resource:"Bâtiments"},
           BSHERO:{objective:"Badges de Compétence ★, Opportunité lors de l'Utilisation [23.4M] Antitoxines ou [30] Tickets de Héros",resource:"Héros"},
@@ -637,7 +643,7 @@ bsNext:"次回",
         pageDailyTitle:"デイリー活動",
 pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
         adActivities:{
-          ANTX:{objective:"解毒剤を660個消費する",resource:"解毒剤の物資"},
+          ANTX:{objective:"解毒剤を660個消費する、最初のUR小隊を優先する",resource:"解毒剤の物資"},
 
           STMN:{objective:"エネルギー/スタミナを消費し、VIPショップで24個購入",resource:"エネルギー/スタミナ瓶"},
           DYBOTT:{objective:"次のレイベンフェーズ用にエネルギー/スタミナ瓶を保存",resource:"エネルギー/スタミナ瓶"},
@@ -663,7 +669,7 @@ pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
           TCHMGH:{objective:"技術の威力を上げる、学習巻軸で研究を行う",resource:"学習巻軸"},
 
           CRVNUR:{objective:"UR隊商を派遣する",resource:"隊商 4つ"},
-          OPENUR:{objective:"UR秘密作戦を実行する、最低6回、最後が最も難しい",resource:"秘密作戦 7回"},
+          OPENUR:{objective:"UR秘密作戦を実行する、最低6回UR、最も難しいものはSSRのままにする",resource:"秘密作戦 7回"},
 
           TCKSUR:{objective:"生存者をリクルートする、すべての生存者のチケットを使う",resource:"生存者のチケット"},
           SAVETS:{objective:"生存者のチケットをすべて保存する",resource:"生存者のチケット"},
@@ -673,9 +679,9 @@ pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
           SAVETH:{objective:"英雄のチケットをすべて保存する",resource:"英雄のチケット"},
           FREETH:{objective:"無料の英雄チケット1枚だけを使う",resource:"英雄のチケット"},
 
-          SHRDSR:{objective:"SR英雄の欠片を消費する", resource:"聖域のショップ"},
-          SHRDSS:{objective:"SSR英雄の欠片を消費する", resource:"聖域のショップ"},
-          SHRDUR:{objective:"UR英雄の欠片を消費する", resource:"聖域のショップ"},
+          SHRDSR:{objective:"SR英雄の欠片を消費する、英雄の昇格を優先、例:ロビン",resource:"SR英雄の欠片"},
+          SHRDSS:{objective:"SSR英雄の欠片を消費する、英雄の昇格を優先、例:クレアまたはベラ",resource:"SSR英雄の欠片"},
+          SHRDUR:{objective:"UR英雄の欠片を消費する、DPS > サポート > タンクの順を優先",resource:"UR英雄の欠片"},
           SKILLB:{objective:"スキルバッジを使う、優先してUR英雄のスキルを上げる",resource:"スキルバッジ"},
 
           SOLD1TRN:{objective:"訓練速度アップを使う、戦争大臣の役職を発動",resource:"訓練速度アップ"},
@@ -700,9 +706,10 @@ pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
           KWAR:{objective:"1.5M Honorポイント、兵士を撃破/失う/回復",resource:"王国戦争 (KvK)"},
           CUMULUS:{objective:"30分間クリスタルの山で精製クリスタルを採取する",resource:"クリスタルの山"},
           CHEESE7:{objective:"チーズ泥棒 Lv.7 に335Mダメージ、30分間、1.4BダメージでMVP1",resource:"チーズの罠"},
-          DEMONW:{objective:"デーモンキング ウォリアー、レンジャー英雄のダメージ +50%、3 Damage Dealer + 1 Support",resource:"デーモンキング"},
-          DEMONR:{objective:"デーモンキング モンタラーズ、ウィザード英雄のダメージ +50%、3 Damage Dealer + 1 Support",resource:"デーモンキング"},
-          DEMONZ:{objective:"デーモンキング ウィザード、ウォリアー英雄のダメージ +50%、3 Damage Dealer + 1 Support",resource:"デーモンキング"},
+          UNDEAD:{objective:"アンデッドSiegeの20波に耐える、壁に兵士を配置/増援する",resource:"壁の兵士"},
+          DEMONW:{objective:"デーモンキング ウォリアー、レンジャー英雄のダメージ +50%、4 DPS + 1 Support",resource:"デーモンキング"},
+          DEMONR:{objective:"デーモンキング モンタラーズ、ウィザード英雄のダメージ +50%、4 DPS + 1 Support",resource:"デーモンキング"},
+          DEMONZ:{objective:"デーモンキング ウィザード、ウォリアー英雄のダメージ +50%、4 DPS + 1 Support",resource:"デーモンキング"},
 
           BSBUILD:{objective:"スキルバッジ ★、建設完了時の機会 [威力を30.000上昇] または加速 [50H]",resource:"建物"},
           BSHERO:{objective:"スキルバッジ ★、使用時の機会 [23.4M] 解毒剤 または [30] 英雄チケット",resource:"英雄"},
@@ -734,7 +741,7 @@ bsNext:"Следующее",
         pageDailyTitle:"Ежедневные активности",
 pageDailyLead:"Подробности ежедневных активностей, которые помогут вам постоянно совершенствоваться.",
         adActivities:{
-          ANTX:{objective:"Потребить 660 Антитоксинов",resource:"Припасы Антидота"},
+          ANTX:{objective:"Потребить 660 Антитоксинов, приоритет первому отряду UR",resource:"Припасы Антидота"},
 
           STMN:{objective:"Потребить Энергию/Стамину, купить 24 бутылки в VIP-магазине",resource:"Бутылка Энергии/Стамины"},
           DYBOTT:{objective:"Сохранить Бутылки Энергии/Стамины для Следующей Фазы Ворона",resource:"Бутылка Энергии/Стамины"},
@@ -760,7 +767,7 @@ pageDailyLead:"Подробности ежедневных активносте�
           TCHMGH:{objective:"Увеличить Мощь Технологии, Искать исследования с помощью Свитков Изучения",resource:"Свиток Изучения"},
 
           CRVNUR:{objective:"Отправить 4 Каравана UR",resource:"4 Каравана"},
-          OPENUR:{objective:"Выполнить 7 Скрытых Операций UR, минимум 6, последняя самая сложная",resource:"7 Скрытых Операций"},
+          OPENUR:{objective:"Выполнить 7 Скрытых Операций UR, минимум 6 UR, самую сложную оставить на SSR",resource:"7 Скрытых Операций"},
 
           TCKSUR:{objective:"Нанять Выживших, используйте ВСЕ Билеты Выжившего",resource:"Билет Выжившего"},
           SAVETS:{objective:"СОХРАНИТЬ ВСЕ Билеты Выжившего",resource:"Билет Выжившего"},
@@ -770,9 +777,9 @@ pageDailyLead:"Подробности ежедневных активносте�
           SAVETH:{objective:"СОХРАНИТЬ ВСЕ Билеты Героя",resource:"Билет Героя"},
           FREETH:{objective:"Использовать ТОЛЬКО 1 Бесплатный Билет Героя",resource:"Билет Героя"},
 
-          SHRDSR:{objective:"Потребить Осколок Героя SR", resource:"Магазин Святилища"},
-          SHRDSS:{objective:"Потребить Осколок Героя SSR", resource:"Магазин Святилища"},
-          SHRDUR:{objective:"Потребить Осколок Героя UR", resource:"Магазин Святилища"},
+          SHRDSR:{objective:"Потребить Осколок Героя SR, приоритет повышению Героя, например Роджер",resource:"Осколок Героя SR"},
+          SHRDSS:{objective:"Потребить Осколок Героя SSR, приоритет повышению Героя, например Клэр или Белла",resource:"Осколок Героя SSR"},
+          SHRDUR:{objective:"Потребить Осколок Героя UR, приоритет DPS > Поддержка > Танк",resource:"Осколок Героя UR"},
           SKILLB:{objective:"Использовать Значок Навыка, Приоритет повысить Навык Героя UR",resource:"Значок Навыка"},
 
           SOLD1TRN:{objective:"Использовать Ускорение Обучения, Активировать Министерство Обучения",resource:"Ускорение Обучения"},
@@ -797,9 +804,10 @@ pageDailyLead:"Подробности ежедневных активносте�
           KWAR:{objective:"1.5M Очков Чести, Победить/Потерять/Вылечить Солдат",resource:"Война Королевств (KvK)"},
           CUMULUS:{objective:"Собирать Очищенный Кристалл в Кристальных Холмах, 30мин",resource:"Кристальные Холмы"},
           CHEESE7:{objective:"Нанести 335M урона Вору Сыра Ур.7, 30мин, 1.4B урона для MVP1",resource:"Сырная Ловушка"},
-          DEMONW:{objective:"Король Демон Воин, Урон Героя Рейнджера +50%, 3 Damage Dealer + 1 Support",resource:"Король Демон"},
-          DEMONR:{objective:"Король Демон Монтараз, Урон Героя Волшебника +50%, 3 Damage Dealer + 1 Support",resource:"Король Демон"},
-          DEMONZ:{objective:"Король Демон Волшебник, Урон Героя Воина +50%, 3 Damage Dealer + 1 Support",resource:"Король Демон"},
+          UNDEAD:{objective:"Выдержать 20 волн Осады Нежити, Разместить/Усилить солдат на Стене",resource:"Солдаты на Стене"},
+          DEMONW:{objective:"Король Демон Воин, Урон Героя Рейнджера +50%, 4 DPS + 1 Support",resource:"Король Демон"},
+          DEMONR:{objective:"Король Демон Монтараз, Урон Героя Волшебника +50%, 4 DPS + 1 Support",resource:"Король Демон"},
+          DEMONZ:{objective:"Король Демон Волшебник, Урон Героя Воина +50%, 4 DPS + 1 Support",resource:"Король Демон"},
 
           BSBUILD:{objective:"Значки Навыка ★, Возможность при завершении Строительств [повысить Мощь на 30.000] или Ускорить [50H]",resource:"Здания"},
           BSHERO:{objective:"Значки Навыка ★, Возможность при Использовании [23.4M] Антитоксинов или [30] Билетов Героя",resource:"Герои"},
@@ -831,7 +839,7 @@ bsNext:"即将开始",
         pageDailyTitle:"每日活动",
 pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
         adActivities:{
-          ANTX:{objective:"消耗660解毒剂",resource:"解毒剂补给"},
+          ANTX:{objective:"消耗660解毒剂，优先第一UR小队",resource:"解毒剂补给"},
 
           STMN:{objective:"消耗能量/体力，在VIP商店购买24瓶",resource:"能量/体力瓶"},
           DYBOTT:{objective:"为下一渡鸦阶段保存能量/体力瓶",resource:"能量/体力瓶"},
@@ -857,7 +865,7 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           TCHMGH:{objective:"提升科技战力，使用研究卷轴寻找研究",resource:"研究卷轴"},
 
           CRVNUR:{objective:"派遣4支UR商队",resource:"4支商队"},
-          OPENUR:{objective:"执行7次UR秘密行动，至少6次，最后一次最难",resource:"7次秘密行动"},
+          OPENUR:{objective:"执行7次UR秘密行动，至少6次UR，最难的一次保留为SSR",resource:"7次秘密行动"},
 
           TCKSUR:{objective:"招募幸存者，使用所有幸存者票券",resource:"幸存者票券"},
           SAVETS:{objective:"保存所有幸存者票券",resource:"幸存者票券"},
@@ -867,9 +875,9 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           SAVETH:{objective:"保存所有英雄票券",resource:"英雄票券"},
           FREETH:{objective:"仅使用1张免费英雄票券",resource:"英雄票券"},
 
-          SHRDSR:{objective:"消耗SR英雄碎片", resource:"圣所商店"},
-          SHRDSS:{objective:"消耗SSR英雄碎片", resource:"圣所商店"},
-          SHRDUR:{objective:"消耗UR英雄碎片", resource:"圣所商店"},
+          SHRDSR:{objective:"消耗SR英雄碎片，优先晋升你的英雄，例如罗宾",resource:"SR英雄碎片"},
+          SHRDSS:{objective:"消耗SSR英雄碎片，优先晋升你的英雄，例如克莱尔或贝拉",resource:"SSR英雄碎片"},
+          SHRDUR:{objective:"消耗UR英雄碎片，优先输出 > 辅助 > 坦克",resource:"UR英雄碎片"},
           SKILLB:{objective:"使用技能徽章，优先提升UR英雄技能",resource:"技能徽章"},
 
           SOLD1TRN:{objective:"使用训练加速，激活战争大臣",resource:"训练加速"},
@@ -894,9 +902,10 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           KWAR:{objective:"1.5M 荣誉点数，击败/失去/治疗士兵",resource:"王国战争 (KvK)"},
           CUMULUS:{objective:"从水晶堆中采集30分钟纯化水晶",resource:"水晶堆"},
           CHEESE7:{objective:"对奶酪小偷 7 级造成335M伤害，持续30分钟，1.4B伤害达成MVP1",resource:"奶酪陷阱"},
-          DEMONW:{objective:"恶魔王 战士，游侠英雄伤害 +50%，3 伤害输出 + 1 辅助",resource:"恶魔王"},
-          DEMONR:{objective:"恶魔王 山地人，巫师英雄伤害 +50%，3 伤害输出 + 1 辅助",resource:"恶魔王"},
-          DEMONZ:{objective:"恶魔王 巫师，战士英雄伤害 +50%，3 伤害输出 + 1 辅助",resource:"恶魔王"},
+          UNDEAD:{objective:"抵挡亡灵围攻的20波，在城墙上布置/增援士兵",resource:"城墙上的士兵"},
+          DEMONW:{objective:"恶魔王 战士，游侠英雄伤害 +50%，4 伤害输出 + 1 辅助",resource:"恶魔王"},
+          DEMONR:{objective:"恶魔王 山地人，巫师英雄伤害 +50%，4 伤害输出 + 1 辅助",resource:"恶魔王"},
+          DEMONZ:{objective:"恶魔王 巫师，战士英雄伤害 +50%，4 伤害输出 + 1 辅助",resource:"恶魔王"},
 
           BSBUILD:{objective:"技能徽章 ★，完成建造时的机会 [提升 30.000 战力] 或加速 [50H]",resource:"建筑"},
           BSHERO:{objective:"技能徽章 ★，使用时的机会 [23.4M] 解毒剂 或 [30] 英雄票券",resource:"英雄"},
@@ -946,7 +955,7 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
         adEvents:{ DY:"Günlük İpucu", AD:"İttifak Düellosu", KVK:"Krallıklar Savaşı", ROY:"Kral Şehri Karışıklığı", BS:"Hayatta Kalma Savaşı", EQ:"Ekipman Yükseltme", BEX:"Elixir Savaşı", CUM:"Kristal Yığınları Vadisi", CHE:"Peynir Tuzağı" },
         adActivities:{
           ANTX:{
-            objective:"660 Antitoksin tüket",
+            objective:"660 Antitoksin tüket, ilk UR takımına öncelik ver",
             resource:"Antidot Malzemeleri"
           },
 
@@ -1029,7 +1038,7 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
             resource:"4 Kervan"
           },
           OPENUR:{
-            objective:"UR Gizli Operasyonları Yap, en az 6, sonuncusu daha zor",
+            objective:"UR Gizli Operasyonları Yap, en az 6 UR, en zor olanı SSR'de bırak",
             resource:"7 Gizli Operasyon"
           },
 
@@ -1060,16 +1069,16 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           },
 
           SHRDSR:{
-            objective:"SR Kahraman Parçası Tüket",
-            resource:"Kutsal Alan Mağazası"
+            objective:"SR Kahraman Parçası Tüket, Kahramanını Yükseltmeye Öncelik Ver, örnek Robin",
+            resource:"SR Kahraman Parçası"
           },
           SHRDSS:{
-            objective:"SSR Kahraman Parçası Tüket",
-            resource:"Kutsal Alan Mağazası"
+            objective:"SSR Kahraman Parçası Tüket, Kahramanını Yükseltmeye Öncelik Ver, örnek Claire veya Bella",
+            resource:"SSR Kahraman Parçası"
           },
           SHRDUR:{
-            objective:"UR Kahraman Parçası Tüket",
-            resource:"Kutsal Alan Mağazası"
+            objective:"UR Kahraman Parçası Tüket, Öncelik DPS > Destek > Tank",
+            resource:"UR Kahraman Parçası"
           },
           SKILLB:{
             objective:"Yetenek Rozeti Kullan, Öncelik UR Kahraman Yeteneğini Artır",
@@ -1152,16 +1161,20 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
             objective:"Peynir Hırsızı Sv.7'ye 335M Hasar, 30 dakika süre, MVP1 için 1.4B hasar",
             resource:"Peynir Tuzağı"
           },
+          UNDEAD:{
+            objective:"Ölüler Kuşatması'nın 20 Dalgasına Dayan, Surlara Asker Yerleştir/Güçlendir",
+            resource:"Surlardaki Askerler"
+          },
           DEMONW:{
-            objective:"Şeytan Kralı Savaşçı, Ranger Kahraman Hasarı +50%, 3 Damage Dealer + 1 Support",
+            objective:"Şeytan Kralı Savaşçı, Ranger Kahraman Hasarı +50%, 4 DPS + 1 Support",
             resource:"Şeytan Kralı"
           },
           DEMONR:{
-            objective:"Şeytan Kralı Montaraz, Büyücü Kahraman Hasarı +50%, 3 Damage Dealer + 1 Support",
+            objective:"Şeytan Kralı Montaraz, Büyücü Kahraman Hasarı +50%, 4 DPS + 1 Support",
             resource:"Şeytan Kralı"
           },
           DEMONZ:{
-            objective:"Şeytan Kralı Büyücü, Savaşçı Kahraman Hasarı +50%, 3 Damage Dealer + 1 Support",
+            objective:"Şeytan Kralı Büyücü, Savaşçı Kahraman Hasarı +50%, 4 DPS + 1 Support",
             resource:"Şeytan Kralı"
           },
 
@@ -1233,7 +1246,7 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
         },
         adEvents:{ DY:"Codzienna Wskazówka", AD:"Pojedynek Sojuszy", KVK:"Wojna Królestw", ROY:"Zamieszanie w Królewskim Mieście", BS:"Battle Survival", EQ:"Ulepszanie Ekwipunku", BEX:"Bitwa o Eliksir", CUM:"Dolina Kryształowych Skał", CHE:"Pułapka na Ser" },
         adActivities:{
-          ANTX:{ objective:"Zużyj 660 Antidotów",resource:"Zapasy Antydotów"},
+          ANTX:{ objective:"Zużyj 660 Antidotów, priorytet dla pierwszego oddziału UR",resource:"Zapasy Antydotów"},
 
           STMN: { objective:"Zużyj energię/wytrzymałość, kup 24 butelki w Sklepie VIP",resource:"Butelka Energii/Wytrzymałości"},
           DYBOTT: {objective:"Zachowaj butelki energii/wytrzymałości na Następną Fazę Kruka",resource:"Butelka Energii/Wytrzymałości"},
@@ -1259,7 +1272,7 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           TCHMGH:{objective:"Zwiększ Moc Technologii, szukaj badań ze Zwijkami Nauki",resource:"Zwijka Nauki"},
 
           CRVNUR:{objective:"Wyślij 4 Karawany UR",resource:"4 Karawany"},
-          OPENUR:{objective:"Wykonaj Tajne Operacje UR, minimum 6, ostatnia trudniejsza",resource:"7 Tajnych Operacji"},
+          OPENUR:{objective:"Wykonaj Tajne Operacje UR, minimum 6 UR, najtrudniejszą zostaw na SSR",resource:"7 Tajnych Operacji"},
 
           TCKSUR:{objective:"Zatrudnij Ocalałych, używając WSZYSTKICH Biletów Ocalałego",resource:"Bilet Ocalałego"},
           SAVETS:{objective:"ZACHOWAJ WSZYSTKIE Bilety Ocalałego",resource:"Bilet Ocalałego"},
@@ -1269,9 +1282,9 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           SAVETH:{objective:"ZACHOWAJ WSZYSTKIE Bilety Bohatera",resource:"Bilet Bohatera"},
           FREETH:{objective:"Użyj TYLKO 1 DARMOWEGO Biletu Bohatera",resource:"Bilet Bohatera"},
 
-          SHRDSR:{objective:"Zużyj Fragment Bohatera SR",resource:"Sklep Sanktuarium"},
-          SHRDSS:{objective:"Zużyj Fragment Bohatera SSR",resource:"Sklep Sanktuarium"},
-          SHRDUR:{objective:"Zużyj Fragment Bohatera UR",resource:"Sklep Sanktuarium"},
+          SHRDSR:{objective:"Zużyj Fragment Bohatera SR, priorytet: awansuj Bohatera, przykład Robin",resource:"Fragment Bohatera SR"},
+          SHRDSS:{objective:"Zużyj Fragment Bohatera SSR, priorytet: awansuj Bohatera, przykład Claire lub Bella",resource:"Fragment Bohatera SSR"},
+          SHRDUR:{objective:"Zużyj Fragment Bohatera UR, priorytet: DPS > Wsparcie > Czołg",resource:"Fragment Bohatera UR"},
           SKILLB:{objective:"Użyj Odznaki Umiejętności, Priorytet: Zwiększ Umiejętność Bohatera UR",resource:"Odznaka Umiejętności"},
 
           SOLD1TRN:{objective:"Użyj Przyspieszenia Szkolenia, aktywuj Ministerstwo Wojny",resource:"Przyspieszenie Szkolenia"},
@@ -1296,9 +1309,10 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           KWAR:{objective:"1.5M Punktów Honoru, pokonaj/strac/ulecz żołnierzy",resource:"Wojna Królestw (KvK)"},
           CUMULUS:{objective:"Zbieraj oczyszczony Kryształ ze Skał, 30min czasu",resource:"Kryształowe Skały"},
           CHEESE7:{objective:"Zadaj 335M obrażeń Złodziejowi Ser Lv.7, 30min czasu, 1.4B obrażeń dla MVP1",resource:"Pułapka na Ser"},
-          DEMONW:{objective:"Król Demonów Wojownik, obrażenia Bohatera Rangera +50%, 3 Damage Dealer + 1 Support",resource:"Król Demonów"},
-          DEMONR:{objective:"Król Demonów Montaraz, obrażenia Bohatera Czarodzieja +50%, 3 Damage Dealer + 1 Support",resource:"Król Demonów"},
-          DEMONZ:{objective:"Król Demonów Czarodziej, obrażenia Bohatera Wojownika +50%, 3 Damage Dealer + 1 Support",resource:"Król Demonów"},
+          UNDEAD:{objective:"Wytrzymaj 20 Fal Oblężenia Zombies, Postaw/Wzmocnij żołnierzy na Murze",resource:"Żołnierze na Murze"},
+          DEMONW:{objective:"Król Demonów Wojownik, obrażenia Bohatera Rangera +50%, 4 DPS + 1 Support",resource:"Król Demonów"},
+          DEMONR:{objective:"Król Demonów Montaraz, obrażenia Bohatera Czarodzieja +50%, 4 DPS + 1 Support",resource:"Król Demonów"},
+          DEMONZ:{objective:"Król Demonów Czarodziej, obrażenia Bohatera Wojownika +50%, 4 DPS + 1 Support",resource:"Król Demonów"},
 
           BSBUILD:{objective:"Odznaka Umiejętności ★, okazja po zakończeniu budowy [zwiększ moc o 30.000] lub przyspiesz [50H]",resource:"Budynki"},
           BSHERO:{objective:"Odznaka Umiejętności ★, okazja przy użyciu [23.4M] Antydotów lub [30] Biletów Bohatera",resource:"Bohaterowie"},
