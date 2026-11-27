@@ -147,9 +147,9 @@
     { "code": "OFFSOLDIER", "group": "BS", "icon": "lock", "point": "", "codebs": "SOLDIER" },
     { "code": "OFFTECH", "group": "BS", "icon": "lock", "point": "", "codebs": "TECH" },
 
-    { "code": "DEMONW", "group": "DY", "icon": "blight-king-demon", "point": "", "codebs": "" },
-    { "code": "DEMONR", "group": "DY", "icon": "blight-king-demon", "point": "", "codebs": "" },
-    { "code": "DEMONZ", "group": "DY", "icon": "blight-king-demon", "point": "", "codebs": "" },
+    { "code": "DEMONW", "group": "DY", "icon": "shield-warrior", "point": "", "codebs": "" },
+    { "code": "DEMONR", "group": "DY", "icon": "shield-ranger", "point": "", "codebs": "" },
+    { "code": "DEMONZ", "group": "DY", "icon": "shield-warlock", "point": "", "codebs": "" },
   ];
 
   var EVENT_CODE = [
