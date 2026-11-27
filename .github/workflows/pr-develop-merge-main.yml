@@ -1,230 +1,268 @@
 name: PR Develop Merge Main
 
-# Flujo de merge automático develop -> main.
+# Flujo develop -> main
 #
-# 1. `create-or-update-pr` (push a `develop`): crea/reutiliza el PR hacia
-#    `main`, solicita revisión y activa la cola de auto-merge.
-# 2. `merge-on-approval` (pull_request_review publicado + check_suite
-#    completado): al cumplirse TODAS las condiciones de mergeabilidad
-#    (aprobación + checks en verde), intenta el merge directamente como
-#    plan B ante fallos de la cola nativa de auto-merge.
+# 1. create-or-update-pr (push a develop): crea/reutiliza el PR hacia main,
+#    solicita revisión y activa el auto-merge nativo de GitHub.
+# 2. merge-on-approval (revisión aprobada): respaldo del auto-merge. Si el PR
+#    ya es mergeable lo fusiona; si no, explica en el log y en el resumen del
+#    job POR QUÉ no se puede (checks fallidos, conflictos, rama atrasada o
+#    configuración de protección/rulesets de main).
 #
-# CAUSA DEL BLOQUEO OBSERVADO ("Merging is blocked — Cannot update this
-# protected ref"): la branch protection de `main` no autoriza a escribir a
-# la identidad que ejecuta el merge. Los workflows de GitHub Actions usan el
-# token `GITHUB_TOKEN`, cuya identidad es `github-actions[bot]`; si en
-# "Restrict who can push to matching branches" no está incluido ese bot (o
-# no se marcó "Allow auto-merge"), el merge queda bloqueado aunque el PR
-# esté aprobado y los checks pasen. Solución: configurar la protección según
-# docs/github-branch-protection.md (sección "Checklist de configuración").
+# IMPORTANTE: ningún workflow puede saltarse una protección de main.
+# Si aparece "Cannot update this protected ref" hay que corregir la
+# configuración del repositorio (Settings -> Rules / Branches), o ejecutar el
+# merge con un token (AUTOMERGE_TOKEN) de una identidad autorizada/bypass.
+
 on:
   push:
-    branches:
-      - develop
+    branches: [develop]
   pull_request_review:
     types: [submitted]
-  check_suite:
-    types: [completed]
 
 permissions:
   contents: write
   pull-requests: write
   checks: read
+  statuses: read
 
+# Un grupo por tipo de evento: así un evento no reemplaza (cancela) a otro
+# pendiente de distinto tipo, como ocurría con el grupo único anterior.
 concurrency:
-  group: pr-develop-to-main
+  group: pr-develop-to-main-${{ github.event_name }}
   cancel-in-progress: false
 
 jobs:
   create-or-update-pr:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
-      # Necesario porque `gh pr create`/`gh pr merge` invocan git internamente
-      # y requieren un repositorio git en el directorio de trabajo.
-      - name: Checkout del código
-        uses: actions/checkout@v4
-        with:
-          ref: develop
-
       - name: Crear o reutilizar el PR y activar auto-merge
         env:
-          GH_TOKEN: ${{ github.token }}
+          # Con AUTOMERGE_TOKEN (PAT/GitHub App) el PR sí dispara el CI
+          # `pull_request`; con GITHUB_TOKEN no.
+          GH_TOKEN: ${{ secrets.AUTOMERGE_TOKEN || github.token }}
+          GH_REPO: ${{ github.repository }}
           SOURCE_BRANCH: develop
           TARGET_BRANCH: main
-          # Revisores solicitados (basta la aprobación de uno de ellos,
-          # siempre que cumpla las reglas de protección de `main`)
           REVIEWERS: edwin-coder-arquitech vincentdgrey
-
         run: |
           set -euo pipefail
 
-          PR_URL=$(gh pr list \
-            --head "$SOURCE_BRANCH" \
-            --base "$TARGET_BRANCH" \
-            --state open \
-            --json url \
-            --jq '.[0].url // empty')
+          # --- 1) Crear o reutilizar el PR --------------------------------
+          PR_NUMBER=$(gh pr list \
+            --head "$SOURCE_BRANCH" --base "$TARGET_BRANCH" \
+            --state open --json number --jq '.[0].number // empty')
 
-          if [ -z "$PR_URL" ]; then
-            PR_ARGS=(
-              --base "$TARGET_BRANCH"
-              --head "$SOURCE_BRANCH"
-              --title "Merge automático: develop → main"
-              --body "Este PR se fusionará automáticamente a \`main\` cuando sea aprobado por @edwin-coder-arquitech o @vincentdgrey y cumpla los requisitos de revisión y CI. Ver docs/github-branch-protection.md para la configuración de branch protection necesaria."
-            )
-            for reviewer in $REVIEWERS; do
-              PR_ARGS+=(--reviewer "$reviewer")
-            done
-            PR_URL=$(gh pr create "${PR_ARGS[@]}")
+          if [ -z "$PR_NUMBER" ]; then
+            if ! OUT=$(gh pr create \
+                --base "$TARGET_BRANCH" --head "$SOURCE_BRANCH" \
+                --title "Merge automático: ${SOURCE_BRANCH} → ${TARGET_BRANCH}" \
+                --body "Se fusionará a \`${TARGET_BRANCH}\` cuando sea aprobado y pasen los checks obligatorios." 2>&1); then
+              echo "$OUT"
+              if grep -qi "no commits between" <<<"$OUT"; then
+                echo "::notice::${SOURCE_BRANCH} no tiene cambios respecto a ${TARGET_BRANCH}; no se crea PR."
+                exit 0
+              fi
+              echo "::error title=No se pudo crear el PR::Revisa el log del paso (permisos del token o 'Allow GitHub Actions to create and approve pull requests')."
+              exit 1
+            fi
+            PR_URL=$(tail -n1 <<<"$OUT")
+            PR_NUMBER="${PR_URL##*/}"
+            if ! [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
+              echo "$OUT"
+              echo "::error title=Respuesta inesperada de gh pr create::No se pudo obtener el número del PR."
+              exit 1
+            fi
+            echo "PR creado: $PR_URL"
           else
-            # Volver a solicitar revisión en cada push (las revisiones
-            # quedan obsoletas si la rama cambia tras el último commit).
-            for reviewer in $REVIEWERS; do
-              gh pr edit "$PR_URL" --add-reviewer "$reviewer" || true
-            done
+            echo "PR existente: #$PR_NUMBER"
           fi
 
-          echo "PR gestionado: $PR_URL"
+          # --- 2) Solicitar revisión (sin fallar si no es posible) --------
+          AUTHOR=$(gh pr view "$PR_NUMBER" --json author --jq '.author.login')
+          DECISION=$(gh pr view "$PR_NUMBER" --json reviewDecision --jq '.reviewDecision')
 
-          # Auto-merge: GitHub sólo fusionará cuando el PR tenga la
-          # aprobación requerida y pasen las comprobaciones obligatorias.
-          gh pr merge "$PR_URL" --auto --merge || {
-            echo "No se pudo activar el auto-merge. Verificar:"
-            echo "  1) Settings -> General -> Allow merge committing -> 'Allow auto-merge'"
-            echo "  2) Branch protection de 'main' con 'Require a pull request before merging'"
-            echo "     y revisiones obligatorias (1 aprobación)."
-            echo "  3) En 'Restrict who can push to matching branches' incluir a"
-            echo "     'github-actions[bot]' (identidad del GITHUB_TOKEN); sin esto"
-            echo "     el merge falla con 'Cannot update this protected ref'."
-            echo "Nota: el job 'merge-on-approval' intentará el merge igualmente"
-            echo "al aprobarse el PR, como respaldo de la cola de auto-merge."
+          if [ "$DECISION" != "APPROVED" ]; then
+            for reviewer in $REVIEWERS; do
+              if [ "$reviewer" = "$AUTHOR" ]; then
+                echo "Se omite a $reviewer: es el autor del PR."
+                continue
+              fi
+              gh pr edit "$PR_NUMBER" --add-reviewer "$reviewer" \
+                || echo "::warning::No se pudo solicitar revisión a $reviewer."
+            done
+          else
+            echo "El PR ya está aprobado; no se solicitan revisiones nuevas."
+          fi
+
+          # --- 3) Activar auto-merge, clasificando el error ----------------
+          if OUT=$(gh pr merge "$PR_NUMBER" --auto --merge 2>&1); then
+            echo "$OUT"
+            exit 0
+          fi
+          echo "$OUT"
+
+          if grep -qiE "already (enabled|queued)" <<<"$OUT"; then
+            echo "::notice::El auto-merge ya estaba activado."
+          elif grep -qi "clean status" <<<"$OUT"; then
+            echo "::notice::El PR ya cumple los requisitos; se fusiona directamente."
+            gh pr merge "$PR_NUMBER" --merge
+          elif grep -qiE "auto.?merge is not allowed" <<<"$OUT"; then
+            echo "::error title=Auto-merge desactivado::Activa Settings -> General -> 'Allow auto-merge'."
             exit 1
-          }
+          else
+            echo "::error title=No se pudo activar el auto-merge::Revisa 'Allow auto-merge' y la protección de ${TARGET_BRANCH} (ver log)."
+            exit 1
+          fi
 
   merge-on-approval:
-    # Plan B: si la cola de auto-merge no ejecuta el merge (p. ej. porque la
-    # protección de rama no autoriza al bot), este job fusiona el PR en cuanto
-    # se cumplen todas las condiciones: aprobación + checks en verde.
-    # Se dispara tanto al publicarse una revisión como al completarse un
-    # check_suite, porque ambas condiciones pueden llegar en cualquier orden.
+    # Solo reacciona a aprobaciones sobre el PR develop -> main. Ya no escucha
+    # `check_suite` (poco fiable y generaba ejecuciones que se cancelaban entre
+    # sí); si los checks aún corren, el auto-merge nativo fusiona al terminar.
     if: >-
-      github.event_name == 'pull_request_review' ||
-      github.event_name == 'check_suite'
+      github.event_name == 'pull_request_review' &&
+      github.event.review.state == 'approved' &&
+      github.event.pull_request.head.ref == 'develop' &&
+      github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
-      - name: Checkout del código
-        uses: actions/checkout@v4
-        with:
-          ref: develop
-
-      - name: Fusionar el PR develop→main si ya es mergeable
+      - name: Fusionar el PR develop → main si ya es mergeable
         env:
-          GH_TOKEN: ${{ github.token }}
-          # Identidad del token: github-actions[bot]; debe estar autorizado
-          # en la branch protection de main (ver docs/github-branch-protection.md).
+          GH_TOKEN: ${{ secrets.AUTOMERGE_TOKEN || github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          SELF_WORKFLOW: ${{ github.workflow }}
           SOURCE_BRANCH: develop
           TARGET_BRANCH: main
           REQUIRED_APPROVERS: edwin-coder-arquitech vincentdgrey
-
         run: |
           set -euo pipefail
 
-          PR_JSON=$(gh pr list \
-            --head "$SOURCE_BRANCH" \
-            --base "$TARGET_BRANCH" \
-            --state open \
-            --json number,url,mergeable,mergeStateStatus,reviewDecision,statusCheckRollup)
+          diagnose_blocked() {
+            echo "::error title=Merge bloqueado por la configuración del repo::El PR está aprobado y los checks pasan, pero GitHub rechaza el merge. Revisa rulesets/branch protection de ${TARGET_BRANCH}."
+            RULES=$(gh api "repos/${GH_REPO}/rules/branches/${TARGET_BRANCH}" \
+              --jq '[.[].type] | unique | join(", ")' 2>/dev/null || echo "no disponible")
+            [ -n "$RULES" ] || RULES="ninguna regla de ruleset"
+            {
+              echo "### Merge bloqueado en ${TARGET_BRANCH}"
+              echo ""
+              echo "- Respuesta de GitHub: \`${OUT}\`"
+              echo "- Reglas de rulesets que aplican a ${TARGET_BRANCH}: \`${RULES}\`"
+              case "$RULES" in
+                *update*) echo "- **La regla \`update\` (Restrict updates) impide fusionar a quien no esté en la lista de bypass.** Quítala o añade bypass (modo 'pull requests only') a la identidad que hace el merge." ;;
+              esac
+              echo "- Revisa también Settings -> Branches (protección clásica): 'Restrict who can push', 'Require approval of the most recent push', CODEOWNERS."
+              echo "- Alternativa: guardar un PAT de un admin con bypass como secret \`AUTOMERGE_TOKEN\`."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "Reglas de rulesets que aplican a ${TARGET_BRANCH}: ${RULES}"
+          }
 
-          if [ "$PR_JSON" = "[]" ]; then
-            echo "No hay PR abierto ${SOURCE_BRANCH} -> ${TARGET_BRANCH}; nada que hacer."
+          # --- 0) Estado actual (reintenta solo si GitHub aún calcula) -----
+          for i in $(seq 1 6); do
+            PR_JSON=$(gh pr view "$PR_NUMBER" --json state,mergeStateStatus,reviewDecision)
+            PR_STATE=$(jq -r '.state' <<<"$PR_JSON")
+            STATE=$(jq -r '.mergeStateStatus' <<<"$PR_JSON")
+            DECISION=$(jq -r '.reviewDecision' <<<"$PR_JSON")
+            if [ "$STATE" != "UNKNOWN" ]; then break; fi
+            echo "mergeStateStatus=UNKNOWN; reintento $i/6..."
+            sleep 5
+          done
+          echo "PR #$PR_NUMBER: state=$PR_STATE merge=$STATE review=$DECISION"
+
+          if [ "$PR_STATE" != "OPEN" ]; then
+            echo "::notice::El PR ya no está abierto ($PR_STATE); nada que hacer."
             exit 0
           fi
 
-          NUMBER=$(echo "$PR_JSON" | jq -r '.[0].number')
-          URL=$(echo "$PR_JSON" | jq -r '.[0].url')
-          MERGEABLE=$(echo "$PR_JSON" | jq -r '.[0].mergeable')
-          STATE=$(echo "$PR_JSON" | jq -r '.[0].mergeStateStatus')
-          DECISION=$(echo "$PR_JSON" | jq -r '.[0].reviewDecision')
-
-          echo "PR #$NUMBER ($URL): mergeable=$MERGEABLE state=$STATE review=$DECISION"
-
-          # 1) ¿Aprobación válida? La revisión debe ser APPROVED y provenir
-          #    de alguno de los aprobadores autorizados (no vale el propio bot
-          #    ni cuentas sin permiso de escritura).
+          # --- 1) Aprobación válida ----------------------------------------
           if [ "$DECISION" != "APPROVED" ]; then
-            echo "Sin aprobación pendiente de regla de revisión ($DECISION); esperando."
+            echo "::notice::Aún no cumple la regla de revisión ($DECISION); se espera."
             exit 0
           fi
 
-          APPROVER_VALID=false
-          for reviewer in $REQUIRED_APPROVERS; do
-            if gh pr view "$NUMBER" --json reviews \
-                 --jq "[.reviews[] | select(.state==\"APPROVED\") | .author.login] | index(\"$reviewer\")" \
-                 | grep -q '^[0-9]'; then
-              APPROVER_VALID=true
-              break
-            fi
+          APPROVERS=$(gh pr view "$PR_NUMBER" --json reviews \
+            --jq '.reviews[] | select(.state=="APPROVED") | .author.login' | sort -u)
+          VALID=false
+          for a in $APPROVERS; do
+            case " $REQUIRED_APPROVERS " in *" $a "*) VALID=true ;; esac
           done
-          if [ "$APPROVER_VALID" != "true" ]; then
-            echo "La aprobación no proviene de un revisor autorizado (${REQUIRED_APPROVERS}); esperando."
+          if [ "$VALID" != "true" ]; then
+            echo "::notice::La aprobación no viene de un revisor autorizado ($REQUIRED_APPROVERS)."
             exit 0
           fi
 
-          # 2) ¿Checks completados y en verde? (espera explícita por si el
-          #    evento llegó antes de que terminara el check_suite).
-          for i in $(seq 1 30); do
-            CHECKS=$(gh pr view "$NUMBER" --json statusCheckRollup \
-                     --jq '[.statusCheckRollup[] | {status: (.status // ""), conclusion: (.conclusion // "")}]')
-            PENDING=$(echo "$CHECKS" | jq '[.[] | select(.status != "COMPLETED" and .conclusion == "")] | length')
-            FAILED=$(echo "$CHECKS" | jq '[.[] | select(.conclusion == "FAILURE" or .conclusion == "TIMED_OUT" or .conclusion == "CANCELLED")] | length')
-            if [ "$PENDING" -eq 0 ] && [ "$FAILED" -eq 0 ]; then
-              break
-            fi
-            echo "Checks pendientes/fallantes (pendientes=$PENDING fallidos=$FAILED); reintento $i/30..."
-            sleep 10
-          done
+          # --- 2) Checks (sin contar las ejecuciones de ESTE workflow) -----
+          # Antes el job se contaba a sí mismo como "pendiente" y esperaba
+          # 5 minutos en vano; el filtro por workflowName lo evita.
+          CHECKS=$(gh pr view "$PR_NUMBER" --json statusCheckRollup \
+            | jq -c --arg self "$SELF_WORKFLOW" '
+                [.statusCheckRollup[]?
+                 | select((.workflowName // "") != $self)
+                 | {name: (.name // .context // "?"),
+                    status: (.status // ""),
+                    conclusion: (.conclusion // .state // "")}]')
 
-          if [ "$PENDING" -ne 0 ] || [ "$FAILED" -ne 0 ]; then
-            echo "Checks no listos tras el tiempo de espera (pendientes=$PENDING fallidos=$FAILED)."
+          PENDING_NAMES=$(jq -r '.[]
+            | select((.status != "" and .status != "COMPLETED")
+                     or (.status == "" and (.conclusion == "PENDING" or .conclusion == "EXPECTED")))
+            | .name' <<<"$CHECKS")
+          FAILED_NAMES=$(jq -r '.[]
+            | select(.conclusion | IN("FAILURE","TIMED_OUT","CANCELLED","ACTION_REQUIRED","STARTUP_FAILURE","ERROR"))
+            | .name' <<<"$CHECKS")
+
+          if [ -n "$FAILED_NAMES" ]; then
+            echo "$FAILED_NAMES" | sed 's/^/  fallido: /'
+            echo "::error title=Checks fallidos::Hay checks en rojo/cancelados; el merge no se intenta."
             exit 1
           fi
 
-          # STATE=$(gh pr view "$NUMBER" --json mergeStateStatus --jq '.mergeStateStatus')
+          if [ -n "$PENDING_NAMES" ]; then
+            echo "$PENDING_NAMES" | sed 's/^/  pendiente: /'
+            echo "::notice::Hay checks en curso; se asegura el auto-merge y se termina (fusionará solo al pasar)."
+            gh pr merge "$PR_NUMBER" --auto --merge \
+              || echo "::warning::No se pudo (re)activar el auto-merge."
+            exit 0
+          fi
 
-          # 3) Estado de mergeabilidad calculado por GitHub.
+          # --- 3) Estados que no se resuelven intentando el merge ----------
           case "$STATE" in
-            BLOCKED)
-              echo "El PR sigue BLOCKED. Revisar los requisitos de merge efectivos:"
-              echo "- rulesets de repositorio u organización"
-              echo "- reglas de protección que coincidan con main"
-              echo "- aprobaciones y checks obligatorios"
-              echo "- permisos del token que ejecuta el merge"
+            BEHIND)
+              echo "::error title=develop está detrás de main::Actualiza develop con main manualmente (un push con GITHUB_TOKEN no dispara CI y puede invalidar la aprobación)."
               exit 1
               ;;
-            BEHIND)
-              # develop quedó detrás de main: actualizarla desde main para
-              # desbloquear el merge (push permitido en develop, no protegida).
-              echo "develop está detrás de main; sincronizando..."
-              git clone --quiet "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" repo
-              cd repo
-              git fetch --quiet origin "$SOURCE_BRANCH" "$TARGET_BRANCH"
-              git checkout --quiet -B "$SOURCE_BRANCH" "origin/$SOURCE_BRANCH"
-              git -c user.name="github-actions[bot]" \
-                  -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
-                  merge --no-edit "origin/$TARGET_BRANCH"
-              git push --quiet origin "$SOURCE_BRANCH"
-              echo "develop actualizada; el próximo evento reintentará el merge."
+            DIRTY)
+              echo "::error title=Conflictos::El PR tiene conflictos con ${TARGET_BRANCH}; resuélvelos en ${SOURCE_BRANCH}."
+              exit 1
+              ;;
+            DRAFT)
+              echo "::notice::El PR es borrador; se espera."
               exit 0
               ;;
-            DIRTY|DRAFT|UNKNOWN)
-              echo "PR no mergeable ahora (state=$STATE); esperando eventos siguientes."
+            UNKNOWN)
+              echo "::warning::GitHub no calculó la mergeabilidad; se reintentará con el próximo evento."
               exit 0
               ;;
           esac
 
-          # 4) Merge explícito (idempotente: si auto-merge ya lo fusionó, no hay PR abierto).
-          gh pr merge "$NUMBER" --merge --subject "Merge automático: ${SOURCE_BRANCH} → ${TARGET_BRANCH} (#${NUMBER})"
-          echo "PR #$NUMBER fusionado a $TARGET_BRANCH."
+          # --- 4) Merge explícito (CLEAN/UNSTABLE/HAS_HOOKS/BLOCKED) --------
+          # BLOCKED sin checks pendientes ni fallidos se intenta igualmente
+          # para obtener el motivo real que devuelve GitHub.
+          if OUT=$(gh pr merge "$PR_NUMBER" --merge \
+              --subject "Merge automático: ${SOURCE_BRANCH} → ${TARGET_BRANCH} (#${PR_NUMBER})" 2>&1); then
+            echo "$OUT"
+            echo "PR #$PR_NUMBER fusionado a $TARGET_BRANCH."
+            exit 0
+          fi
+
+          echo "$OUT"
+          if grep -qiE "protected (ref|branch)|cannot update|base branch policy|prohibits|not allowed|ruleset" <<<"$OUT"; then
+            diagnose_blocked
+          else
+            echo "::error title=Falló el merge::Revisa el log del paso."
+          fi
+          exit 1
