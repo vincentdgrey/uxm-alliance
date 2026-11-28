@@ -824,7 +824,7 @@ test("los puntos se integran en la columna Tarea con la nota minima", () => {
   }
 });
 
-test("el grupo Battle Survival escribe cuatro filas y no oculta ninguna", () => {
+test("el grupo Battle Survival escribe la actividad en curso y las que quedan del dia", () => {
   const js = read("js/activities-daily.js");
   const css = read("css/activities-daily.css");
 
@@ -832,13 +832,16 @@ test("el grupo Battle Survival escribe cuatro filas y no oculta ninguna", () => 
   assert.match(js, /var BS_CODE_PREFIX = "BS"/);
   assert.match(js, /a\.code\.indexOf\(BS_CODE_PREFIX\) === 0/);
 
-  /* Una sola funcion escribe la actividad BS en curso y las tres OFF. */
+  /* Una sola funcion escribe la actividad BS en curso, las OFF del dia y
+     las del dia siguiente. */
   assert.match(js, /function buildBattleTaskRows\(noday, nowSec, startDayMs\)/);
   assert.match(js, /var currentAct = currentSlot \? bsByCodebs\[currentSlot\.codebs\] : null/);
-  assert.match(js, /var nextSlots = nextScheduleSlots\(noday, nowSec, OFF_VISIBLE_COUNT\)/);
 
-  /* Tres actividades OFF: con la BS en curso, cuatro filas. */
-  assert.match(js, /var OFF_VISIBLE_COUNT = 3/);
+  /* Las franjas pendientes se calculan por dia, sin un numero fijo. */
+  assert.match(js, /function remainingDaySlots\(noday, nowSec\)/);
+  assert.match(js, /function daySlots\(noday, currentNoday\)/);
+  assert.doesNotMatch(js, /OFF_VISIBLE_COUNT/);
+  assert.doesNotMatch(js, /function nextScheduleSlots/);
 
   /* El grupo de Battle Survival ocupa un cuerpo propio, dentro del
      recorrido de grupos y con su evento declarado. */
@@ -846,12 +849,71 @@ test("el grupo Battle Survival escribe cuatro filas y no oculta ninguna", () => 
   assert.match(js, /body\.className = "ad-event-body"/);
   assert.match(js, /body\.className \+= " ad-battle-body"/);
   assert.match(js, /battleBodyEl = body/);
+  assert.match(js, /nextBattleBodyEl = body/);
 
-  /* Las cuatro filas se escriben siempre: no hay logica de ocultacion. */
+  /* Las filas se escriben siempre: no hay logica de ocultacion. */
   assert.doesNotMatch(js, /ad-bs-hidden/);
   assert.doesNotMatch(js, /function applyBsVisibility/);
   assert.doesNotMatch(js, /function applyOffVisibility/);
   assert.doesNotMatch(css, /ad-bs-hidden/);
+});
+
+test("el consejo de tiempo de entrenamiento es una fila BS bajo la actividad en curso", () => {
+  const js = read("js/activities-daily.js");
+  const css = read("css/activities-daily.css");
+  const i18n = loadI18n("js/i18n.js", pageI18n.daily);
+
+  /* La proxima SOLDIER se busca despues de la franja en curso, con una
+     busqueda circular que cubre el cruce de semana. */
+  assert.match(js, /function nextTrainSlot\(noday, nowSec\)/);
+  assert.match(js, /var TRAIN_CODEBS = "SOLDIER"/);
+  assert.match(js, /var TRAIN_OPTIMAL_DURATION = 3 \* 3600/);
+
+  /* El entrenamiento optimo dura tres horas desde el inicio de la proxima
+     SOLDIER. */
+  assert.match(js, /endSec: startSec \+ TRAIN_OPTIMAL_DURATION/);
+
+  /* La actividad que declara el consejo. */
+  assert.match(js, /var TRAINING_CODE = "BSTRAIN"/);
+  assert.match(js, /\{ "code": "BSTRAIN", "group": "BS", "icon": "boost-training", "point": "", "codebs": "" \}/);
+
+  /* La fila se escribe bajo la actividad BS en curso. */
+  assert.match(js, /function trainingAdviceRow\(noday, trainEndSec\)/);
+  assert.match(js, /tr\.classList\.add\(TRAINING_ADVICE_CLASS\)/);
+
+  /* El texto de la tarea se compone con un nodo propio para el tiempo. */
+  assert.match(js, /function appendTrainingAdviceText\(cell, template, trainEndSec, nowSec\)/);
+  assert.match(js, /timeEl\.className = "ad-training-advice-time"/);
+  assert.match(js, /timeEl\.textContent = fmtCounter\(trainEndSec - nowSec\)/);
+
+  /* Se actualiza en cada tick. */
+  assert.match(js, /counter\.timeEl\.textContent = fmtCounter\(trainLeft\)/);
+
+  /* El formato antiguo desaparece del codigo y de los estilos. */
+  assert.doesNotMatch(js, /fmtTrainTime/);
+  assert.doesNotMatch(js, /TRAIN_LABEL/);
+  assert.doesNotMatch(js, /ad-training-time/);
+  assert.doesNotMatch(css, /ad-training-time/);
+
+  /* Estilo propio del valor del tiempo. */
+  assert.match(css, /\.ad-training-advice-time \{[^}]*color:\s*#df1b1b[^}]*font-weight:\s*700/s);
+  assert.match(css, /\.ad-training-advice > td\.ad-objective \{[^}]*font-weight:\s*100/s);
+
+  /* La plantilla declara el marcador {time} en los once idiomas. */
+  const languages = ["es", "en", "pt", "it", "de", "fr", "ja", "ru", "zh", "tr", "pl"];
+  for (const language of languages) {
+    const activity = i18n[language].adActivities.BSTRAIN;
+    assert.ok(activity, language + " debe declarar la actividad BSTRAIN");
+    assert.ok(activity.objective.includes("{time}"), language + " debe declarar el marcador {time}");
+    assert.ok(activity.resource.length > 0, language + " debe declarar el recurso");
+  }
+
+  /* La redaccion canonica en español es la acordada. */
+  assert.equal(
+    i18n.es.adActivities.BSTRAIN.objective,
+    "Consejo: Tiempo de Entrenamiento Optimo {time}, hasta la proxima Batalla de Supervivencia Tema Soldados"
+  );
+  assert.equal(i18n.es.adActivities.BSTRAIN.resource, "Soldados");
 });
 
 test("el encabezado y el separador del dia actual usan el verde de batalla", () => {
@@ -1620,11 +1682,11 @@ test("las actividades, fases y eventos del duelo de alianzas se traducen en los 
 
   /* El codigo de cada actividad debe estar en el mapa de los 11 idiomas. */
   const activityCode = [...js.matchAll(/"code": "([A-Z0-9]+)"/g)].map((m) => m[1]);
-  assert.equal(activityCode.length, 60);
+  assert.equal(activityCode.length, 61);
 
   /* El español es la fuente de verdad: define el orden canonico de las traducciones. */
   const canonicalCodes = Object.keys(i18n.es.adActivities);
-  assert.equal(canonicalCodes.length, 62);
+  assert.equal(canonicalCodes.length, 63);
   for (const code of activityCode) {
     assert.ok(canonicalCodes.includes(code), "el canon debe traducir " + code);
   }

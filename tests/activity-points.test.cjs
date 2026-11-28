@@ -386,32 +386,88 @@ test("el separador de eventos cierra cada grupo que tiene otro detras", () => {
 
 /* ---------- Actividades BS ---------- */
 
-/* Codigos de las cuatro filas del grupo Battle Survival, en orden. */
-function battleCodesOf(result) {
-  return allRows(result.lists)
-    .filter((row) => row.classList.contains("ad-bs-task"))
-    .map((row) => findByClass(row, "ad-task-icon")[0].getAttribute("data-code"));
+/* Codigos de las filas del grupo Battle Survival del dia indicado.
+   El indice 0 corresponde al dia actual y el 1 al dia siguiente. */
+function battleCodesOf(result, index = 0) {
+  const bodies = dayBodies(result, index).filter((c) => String(c.className).includes("ad-battle-body"));
+  const codes = [];
+  for (const body of bodies) {
+    for (const row of body.children) {
+      codes.push(findByClass(row, "ad-task-icon")[0].getAttribute("data-code"));
+    }
+  }
+  return codes;
 }
 
-test("el grupo Battle Survival muestra siempre cuatro filas", () => {
-  const result = render(fridayAt(12, 0, 0));
+/* Filas del grupo Battle Survival del dia indicado. */
+function battleRowsOf(result, index = 0) {
+  const bodies = dayBodies(result, index).filter((c) => String(c.className).includes("ad-battle-body"));
+  const rows = [];
+  for (const body of bodies) {
+    for (const row of body.children) rows.push(row);
+  }
+  return rows;
+}
 
-  const rows = allRows(result.lists);
-  const bsRows = rows.filter((row) => row.classList.contains("ad-bs-task"));
+/* Fila del grupo Battle Survival con un codigo de tarea dado. */
+function battleRowByTaskCode(result, code, index = 0) {
+  for (const row of battleRowsOf(result, index)) {
+    const icon = findByClass(row, "ad-task-icon")[0];
+    if (icon && icon.getAttribute("data-code") === code) return row;
+  }
+  return null;
+}
 
-  /* La actividad BS en curso y las tres actividades OFF siguientes. */
-  assert.equal(bsRows.length, 4);
+/* Fila del consejo de tiempo de entrenamiento optimo. */
+function adviceRowOf(result, index = 0) {
+  for (const row of battleRowsOf(result, index)) {
+    if (row.classList.contains("ad-training-advice")) return row;
+  }
+  return null;
+}
+
+test("el grupo Battle Survival muestra la actividad en curso, el consejo y las que quedan del dia", () => {
+  /* A las 00:00 del viernes quedan cinco franjas en el dia. */
+  const result = render(fridayAt(0, 0, 0));
+
+  const rows = battleRowsOf(result);
+  assert.equal(rows.length, 7, "la actividad en curso, el consejo y las cinco restantes");
+
+  /* La primera fila esta en progreso y las siguientes en cuenta regresiva. */
+  assert.deepEqual(stateClasses(rows[0]), ["ad-state-progress"]);
+  for (let i = 2; i < rows.length; i++) {
+    assert.deepEqual(stateClasses(rows[i]), ["ad-state-countdown"]);
+    assert.ok(rows[i].classList.contains("ad-off-task"), "las filas OFF llevan ad-off-task");
+  }
 });
 
-test("el grupo Battle Survival vive en un segundo cuerpo de tabla", () => {
-  const result = render(fridayAt(12, 0, 0));
+test("el listado del dia se reduce en una actividad cada cuatro horas", () => {
+  const expected = [
+    [0, 0, 5],
+    [4, 0, 4],
+    [8, 0, 3],
+    [12, 0, 2],
+    [16, 0, 1],
+    [20, 0, 0]
+  ];
+
+  for (const [hour, minute, pending] of expected) {
+    const result = render(fridayAt(hour, minute, 0));
+    const rows = battleRowsOf(result);
+    /* La actividad en curso, el consejo y las actividades pendientes. */
+    assert.equal(rows.length, pending + 2, hour + ":" + minute + " pendiente");
+  }
+});
+
+test("el grupo Battle Survival del dia actual vive en un cuerpo propio", () => {
+  const result = render(fridayAt(5, 0, 0));
 
   const bodies = findByClass(result.lists, "ad-battle-body");
-  assert.equal(bodies.length, 1, "debe existir un cuerpo propio del grupo BS");
+  assert.equal(bodies.length, 2, "el dia actual y el dia siguiente");
 
-  /* El grupo se aloja integramente en ese cuerpo. */
-  const battleRows = bodies[0].children;
-  assert.equal(battleRows.length, 4);
+  /* El grupo del dia actual aloja la actividad en curso, el consejo y las OFF. */
+  const battleRows = battleRowsOf(result);
+  assert.equal(battleRows.length, 6);
   for (const row of battleRows) {
     assert.ok(row.classList.contains("ad-bs-task"), "las filas del grupo llevan ad-bs-task");
   }
@@ -423,19 +479,38 @@ test("el grupo Battle Survival vive en un segundo cuerpo de tabla", () => {
   }
 });
 
-test("las actividades BS solo existen en la tabla del dia actual", () => {
+test("las actividades BS del dia siguiente ocupan su propio cuerpo de tabla", () => {
   const result = render(fridayAt(5, 0, 0));
 
-  /* Fuera del dia actual no hay ninguna actividad BS ni OFF. */
+  /* El dia siguiente declara el evento BS con su propio cuerpo. */
+  const nextBodies = dayBodies(result, 1).filter((c) => String(c.className).includes("ad-battle-body"));
+  assert.equal(nextBodies.length, 1, "debe existir un cuerpo BS en el dia siguiente");
+  assert.equal(nextBodies[0].getAttribute("data-event"), "BS");
+
+  /* Muestra las seis actividades del dia siguiente. */
+  const rows = battleRowsOf(result, 1);
+  assert.equal(rows.length, 6);
+  for (const row of rows) {
+    assert.ok(row.classList.contains("ad-bs-task"));
+    assert.ok(row.classList.contains("ad-off-task"));
+    assert.deepEqual(stateClasses(row), ["ad-state-countdown"]);
+  }
+});
+
+test("las actividades BS solo existen en el dia actual y en el siguiente", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  /* A partir del tercer dia no hay ninguna actividad BS ni OFF. */
   const items = result.lists.children;
-  for (let i = 1; i < items.length; i++) {
+  for (let i = 2; i < items.length; i++) {
     const body = items[i].children.find((c) => String(c.className).includes("ad-item-body"));
     const table = body.children[0].children[0];
-    const tbody = table.children.find((c) => c.tagName === "TBODY");
-    for (const row of tbody.children) {
-      const code = findByClass(row, "ad-task-icon")[0].getAttribute("data-code");
-      assert.ok(code.indexOf("BS") !== 0, "las filas BS solo van en el dia actual");
-      assert.ok(code.indexOf("OFF") !== 0, "las filas OFF solo van en el dia actual");
+    for (const tbody of table.children.filter((c) => c.tagName === "TBODY")) {
+      for (const row of tbody.children) {
+        const code = findByClass(row, "ad-task-icon")[0].getAttribute("data-code");
+        assert.ok(code.indexOf("BS") !== 0, "las filas BS solo van en el dia actual y el siguiente");
+        assert.ok(code.indexOf("OFF") !== 0, "las filas OFF solo van en el dia actual y el siguiente");
+      }
     }
   }
 });
@@ -445,9 +520,9 @@ test("la primera fila BS corresponde a la franja en curso y esta en progreso", (
   const result = render(fridayAt(5, 0, 0));
 
   const codes = battleCodesOf(result);
-  assert.deepEqual(codes, ["BSHERO", "OFFBUILD", "OFFSOLDIER", "OFFTECH"]);
+  assert.deepEqual(codes, ["BSHERO", "BSTRAIN", "OFFBUILD", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]);
 
-  const hero = rowByTaskCode(result, "BSHERO");
+  const hero = battleRowByTaskCode(result, "BSHERO");
   assert.ok(hero, "debe existir la fila BSHERO");
   assert.deepEqual(stateClasses(hero), ["ad-state-progress"]);
 });
@@ -460,38 +535,38 @@ test("no hay filas ocultas por estado de contador", () => {
     assert.ok(!String(row.className).includes("ad-bs-hidden"), "no debe quedar la clase ad-bs-hidden");
   }
 
-  /* Las dos filas OFF siguientes estan en cuenta regresiva. */
-  const build = rowByTaskCode(result, "OFFBUILD");
+  /* Las filas OFF siguientes estan en cuenta regresiva. */
+  const build = battleRowByTaskCode(result, "OFFBUILD");
   assert.deepEqual(stateClasses(build), ["ad-state-countdown"]);
-  const soldier = rowByTaskCode(result, "OFFSOLDIER");
+  const soldier = battleRowByTaskCode(result, "OFFSOLDIER");
   assert.deepEqual(stateClasses(soldier), ["ad-state-countdown"]);
 });
 
 test("el grupo Battle Survival avanza con la franja en curso", () => {
   const result = render(fridayAt(5, 0, 0));
-  assert.deepEqual(battleCodesOf(result), ["BSHERO", "OFFBUILD", "OFFSOLDIER", "OFFTECH"]);
+  assert.deepEqual(battleCodesOf(result), ["BSHERO", "BSTRAIN", "OFFBUILD", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]);
 
   /* Al comenzar la franja de BUILD el grupo se reescribe. */
   result.update(fridayAt(8, 0, 0));
-  assert.deepEqual(battleCodesOf(result), ["BSBUILD", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]);
+  assert.deepEqual(battleCodesOf(result), ["BSBUILD", "BSTRAIN", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]);
 
   /* La actividad BUILD pasa a estar en curso. */
-  const build = rowByTaskCode(result, "BSBUILD");
+  const build = battleRowByTaskCode(result, "BSBUILD");
   assert.deepEqual(stateClasses(build), ["ad-state-progress"]);
 });
 
-test("el grupo mantiene cuatro actividades en todo el ciclo de cuatro horas", () => {
+test("el grupo mantiene la actividad en curso, el consejo y las pendientes en todo el ciclo", () => {
   const result = render(fridayAt(3, 0, 0));
 
-  /* Cada franja del dia mantiene una BS en curso y tres OFF en cuenta
-     regresiva, sin perder filas ni duplicarlas. */
+  /* Cada franja del dia mantiene una BS en curso, el consejo y las OFF
+     pendientes del dia, sin perder filas ni duplicarlas. */
   const expected = [
-    [3, 0, ["BSRAVEN", "OFFHERO", "OFFBUILD", "OFFSOLDIER"]],
-    [4, 0, ["BSHERO", "OFFBUILD", "OFFSOLDIER", "OFFTECH"]],
-    [8, 0, ["BSBUILD", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]],
-    [12, 0, ["BSSOLDIER", "OFFTECH", "OFFRAVEN", "OFFHERO"]],
-    [16, 0, ["BSTECH", "OFFRAVEN", "OFFHERO", "OFFBUILD"]],
-    [20, 0, ["BSRAVEN", "OFFHERO", "OFFBUILD", "OFFSOLDIER"]]
+    [3, 0, ["BSRAVEN", "BSTRAIN", "OFFHERO", "OFFBUILD", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]],
+    [4, 0, ["BSHERO", "BSTRAIN", "OFFBUILD", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]],
+    [8, 0, ["BSBUILD", "BSTRAIN", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]],
+    [12, 0, ["BSSOLDIER", "BSTRAIN", "OFFTECH", "OFFRAVEN"]],
+    [16, 0, ["BSTECH", "BSTRAIN", "OFFRAVEN"]],
+    [20, 0, ["BSRAVEN", "BSTRAIN"]]
   ];
 
   for (const [hour, minute, codes] of expected) {
@@ -499,12 +574,11 @@ test("el grupo mantiene cuatro actividades en todo el ciclo de cuatro horas", ()
 
     assert.deepEqual(battleCodesOf(result), codes, hour + ":" + minute);
 
-    /* La primera fila esta en progreso y las tres siguientes en cuenta
+    /* La primera fila esta en progreso y las siguientes en cuenta
        regresiva. */
-    const rows = allRows(result.lists).filter((row) => row.classList.contains("ad-bs-task"));
-    assert.equal(rows.length, 4, hour + ":" + minute);
+    const rows = battleRowsOf(result);
     assert.deepEqual(stateClasses(rows[0]), ["ad-state-progress"], hour + ":" + minute);
-    for (let i = 1; i < rows.length; i++) {
+    for (let i = 2; i < rows.length; i++) {
       assert.deepEqual(stateClasses(rows[i]), ["ad-state-countdown"], hour + ":" + minute);
       assert.ok(rows[i].classList.contains("ad-off-task"), "las filas OFF llevan ad-off-task");
     }
@@ -583,41 +657,49 @@ test("las actividades que no son BS no reciben la clase de estrella", () => {
 /* ---------- Actividades OFF (oportunidades siguientes) ---------- */
 
 /* Codigos de las filas OFF visibles en una tabla. */
-function offCodesOf(result) {
-  return allRows(result.lists)
-    .filter((row) => row.classList.contains("ad-bs-task"))
-    .map((row) => findByClass(row, "ad-task-icon")[0].getAttribute("data-code"))
-    .filter((code) => code.indexOf("OFF") === 0);
+function offCodesOf(result, index = 0) {
+  return battleCodesOf(result, index).filter((code) => code.indexOf("OFF") === 0);
 }
 
-test("se muestran las tres actividades OFF siguientes a la actividad en curso", () => {
+test("se muestran todas las actividades OFF que quedan en el dia", () => {
   /* El viernes el horario de HEROE empieza a las 04:00 UTC-2. */
   const result = render(fridayAt(5, 0, 0));
 
-  /* A las 05:00 esta en curso HEROE; siguen BUILD (08:00) y SOLDIER (12:00). */
-  assert.deepEqual(offCodesOf(result), ["OFFBUILD", "OFFSOLDIER", "OFFTECH"]);
+  /* A las 05:00 esta en curso HEROE; siguen BUILD (08:00), SOLDIER (12:00),
+     TECH (16:00) y RAVEN (20:00). */
+  assert.deepEqual(offCodesOf(result), ["OFFBUILD", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]);
 });
 
 test("las actividades OFF siguen el orden cronologico del horario", () => {
   /* El viernes a las 12:00 esta en curso SOLDIER; siguen TECH y RAVEN. */
   const result = render(fridayAt(12, 0, 0));
 
-  assert.deepEqual(offCodesOf(result), ["OFFTECH", "OFFRAVEN", "OFFHERO"]);
+  assert.deepEqual(offCodesOf(result), ["OFFTECH", "OFFRAVEN"]);
 });
 
-test("las actividades OFF solo existen en la tabla del dia actual", () => {
+test("el dia siguiente muestra las seis actividades del dia", () => {
   const result = render(fridayAt(5, 0, 0));
 
-  /* Fuera del dia actual no hay ninguna actividad OFF. */
+  /* El sabado comienza con HEROE a las 00:00 y termina con HEROE a las
+     20:00. */
+  assert.deepEqual(offCodesOf(result, 1), [
+    "OFFHERO", "OFFBUILD", "OFFSOLDIER", "OFFTECH", "OFFRAVEN", "OFFHERO"
+  ]);
+});
+
+test("las actividades OFF solo existen en el dia actual y en el siguiente", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  /* A partir del tercer dia no hay ninguna actividad OFF. */
   const items = result.lists.children;
-  for (let i = 1; i < items.length; i++) {
+  for (let i = 2; i < items.length; i++) {
     const body = items[i].children.find((c) => String(c.className).includes("ad-item-body"));
     const table = body.children[0].children[0];
     const bodies = table.children.filter((c) => c.tagName === "TBODY");
     for (const tbody of bodies) {
       for (const row of tbody.children) {
         const code = findByClass(row, "ad-task-icon")[0].getAttribute("data-code");
-        assert.ok(code.indexOf("OFF") !== 0, "las filas OFF solo van en el dia actual");
+        assert.ok(code.indexOf("OFF") !== 0, "las filas OFF solo van en el dia actual y el siguiente");
       }
     }
   }
@@ -625,7 +707,7 @@ test("las actividades OFF solo existen en la tabla del dia actual", () => {
 
 test("el contador de las actividades OFF muestra solo la cuenta regresiva", () => {
   const result = render(fridayAt(5, 0, 0));
-  const build = rowByTaskCode(result, "OFFBUILD");
+  const build = battleRowByTaskCode(result, "OFFBUILD");
 
   assert.ok(build, "debe existir la fila OFFBUILD");
 
@@ -638,9 +720,20 @@ test("el contador de las actividades OFF muestra solo la cuenta regresiva", () =
   assert.equal(findByClass(build, "ad-bs-remaining").length, 0);
 });
 
+test("el contador de las actividades OFF del dia siguiente puede superar las 24 horas", () => {
+  const result = render(fridayAt(5, 0, 0));
+  const hero = battleRowByTaskCode(result, "OFFHERO", 1);
+
+  assert.ok(hero, "debe existir la fila OFFHERO del dia siguiente");
+
+  /* El sabado a las 00:00 esta a 19 horas de la franja en curso. */
+  assert.equal(timeCellOf(hero).textContent, "T-19:00:00");
+  assert.deepEqual(stateClasses(hero), ["ad-state-countdown"]);
+});
+
 test("el contador de las actividades OFF se actualiza en cada tick", () => {
   const result = render(fridayAt(5, 0, 0));
-  const build = rowByTaskCode(result, "OFFBUILD");
+  const build = battleRowByTaskCode(result, "OFFBUILD");
 
   result.update(fridayAt(5, 0, 1));
   assert.equal(timeCellOf(build).textContent, "T-02:59:59");
@@ -650,7 +743,7 @@ test("las actividades OFF marcan la fila completa como proxima", () => {
   const result = render(fridayAt(5, 0, 0));
 
   for (const code of offCodesOf(result)) {
-    const row = rowByTaskCode(result, code);
+    const row = battleRowByTaskCode(result, code);
     const task = taskCellOf(row);
 
     assert.ok(row.classList.contains("ad-off-task"), code + " debe usar ad-off-task en la fila");
@@ -686,21 +779,154 @@ test("las actividades OFF no muestran puntos de referencia", () => {
   const result = render(fridayAt(5, 0, 0));
 
   for (const code of offCodesOf(result)) {
-    assert.equal(pointOf(rowByTaskCode(result, code)), null, code + " no debe mostrar punto");
+    assert.equal(pointOf(battleRowByTaskCode(result, code)), null, code + " no debe mostrar punto");
   }
 });
 
 test("las actividades OFF avanzan al cambiar de franja en curso", () => {
   const result = render(fridayAt(5, 0, 0));
 
-  /* A las 05:00 esta en curso HEROE; siguen BUILD (08:00) y SOLDIER (12:00). */
-  assert.deepEqual(offCodesOf(result), ["OFFBUILD", "OFFSOLDIER", "OFFTECH"]);
+  /* A las 05:00 esta en curso HEROE; siguen BUILD (08:00), SOLDIER (12:00),
+     TECH (16:00) y RAVEN (20:00). */
+  assert.deepEqual(offCodesOf(result), ["OFFBUILD", "OFFSOLDIER", "OFFTECH", "OFFRAVEN"]);
 
   /* Al comenzar la franja de BUILD, las oportunidades OFF avanzan. */
   result.update(fridayAt(8, 0, 0));
   assert.deepEqual(offCodesOf(result), ["OFFSOLDIER", "OFFTECH", "OFFRAVEN"]);
 
   /* La actividad BUILD pasa a estar en curso. */
-  const build = rowByTaskCode(result, "BSBUILD");
+  const build = battleRowByTaskCode(result, "BSBUILD");
   assert.deepEqual(stateClasses(build), ["ad-state-progress"]);
+});
+
+/* ---------- Consejo de tiempo de entrenamiento optimo ---------- */
+
+test("el consejo de entrenamiento aparece una sola vez y solo en el dia actual", () => {
+  const result = render(fridayAt(10, 16, 32));
+
+  const rows = allRows(result.lists).filter((row) => row.classList.contains("ad-training-advice"));
+  assert.equal(rows.length, 1, "debe existir una sola fila de consejo");
+
+  /* La fila vive en el cuerpo propio del dia actual. */
+  assert.ok(adviceRowOf(result), "el consejo esta en el dia actual");
+  assert.equal(adviceRowOf(result, 1), null, "el dia siguiente no muestra el consejo");
+});
+
+test("el consejo se ubica debajo de la actividad BS en curso", () => {
+  const result = render(fridayAt(5, 0, 0));
+
+  const rows = battleRowsOf(result);
+  const advice = adviceRowOf(result);
+
+  /* La segunda fila del grupo es el consejo. */
+  assert.equal(rows[1], advice, "el consejo va inmediatamente debajo de la actividad en curso");
+  assert.deepEqual(stateClasses(rows[0]), ["ad-state-progress"]);
+  assert.ok(advice.classList.contains("ad-bs-task"), "el consejo pertenece al grupo BS");
+  assert.ok(!advice.classList.contains("ad-off-task"), "el consejo no es una actividad proxima");
+});
+
+test("la columna Contador del consejo queda vacia", () => {
+  const result = render(fridayAt(10, 16, 32));
+
+  const advice = adviceRowOf(result);
+  const counter = findByClass(advice, "ad-time")[0];
+
+  assert.equal(counter.textContent, "", "el consejo no muestra contador");
+  assert.equal(findByClass(advice, "ad-bs-elapsed").length, 0);
+  assert.equal(findByClass(advice, "ad-bs-remaining").length, 0);
+});
+
+test("el consejo muestra el tiempo optimo en la columna Tarea", () => {
+  const result = render(fridayAt(10, 16, 32));
+
+  const advice = adviceRowOf(result);
+  const task = taskCellOf(advice);
+
+  /* La proxima SOLDIER del viernes comienza a las 12:00 y el entrenamiento
+     optimo dura tres horas: el tiempo acaba a las 15:00. */
+  assert.equal(
+    task.textContent,
+    "Consejo: Tiempo de Entrenamiento Optimo 04:43:28, hasta la proxima Batalla de Supervivencia Tema Soldados"
+  );
+
+  /* El tiempo vive en su propio nodo, para actualizarlo sin rehacer la
+     frase. */
+  const time = findByClass(advice, "ad-training-advice-time")[0];
+  assert.equal(time.textContent, "04:43:28");
+  assert.match(time.textContent, /^\d{2}:\d{2}:\d{2}$/);
+});
+
+test("el consejo muestra Soldados en Recurso y Batalla Supervivencia en Evento", () => {
+  const result = render(fridayAt(10, 16, 32));
+
+  const advice = adviceRowOf(result);
+
+  assert.equal(findByClass(advice, "ad-resource")[0].textContent, "Soldados");
+  assert.equal(findByClass(advice, "ad-event")[0].textContent, "Batalla Supervivencia");
+});
+
+test("el tiempo del consejo se actualiza en cada tick", () => {
+  const result = render(fridayAt(10, 16, 32));
+
+  const time = findByClass(adviceRowOf(result), "ad-training-advice-time")[0];
+  assert.equal(time.textContent, "04:43:28");
+
+  result.update(fridayAt(10, 16, 33));
+  assert.equal(findByClass(adviceRowOf(result), "ad-training-advice-time")[0].textContent, "04:43:27");
+});
+
+test("el consejo excluye la SOLDIER que esta en curso", () => {
+  /* A las 12:00 la SOLDIER del viernes esta en curso: el consejo apunta a
+     la siguiente, la del sabado a las 08:00, cuyo entrenamiento optimo
+     acaba a las 11:00. */
+  const result = render(fridayAt(12, 0, 0));
+
+  const time = findByClass(adviceRowOf(result), "ad-training-advice-time")[0];
+  assert.equal(time.textContent, "23:00:00");
+});
+
+test("el consejo admite valores superiores a 24 horas", () => {
+  const result = render(fridayAt(20, 0, 0));
+
+  const time = findByClass(adviceRowOf(result), "ad-training-advice-time")[0];
+  /* La proxima SOLDIER es la del sabado a las 08:00. */
+  assert.equal(time.textContent, "15:00:00");
+});
+
+test("el consejo cruza el cambio de semana", () => {
+  /* El sabado a las 20:00 no queda ninguna franja en el dia: la proxima
+     SOLDIER es la del domingo a las 04:00. */
+  const now = new Date();
+  const daysSinceSaturday = (now.getUTCDay() + 7 - 6) % 7;
+  const saturday = new Date(Date.UTC(
+    now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - daysSinceSaturday
+  ));
+  const at = Date.parse(saturday.toISOString().slice(0, 10) + "T20:00:00Z") + 2 * 3600 * 1000;
+
+  const result = render(at);
+
+  const advice = adviceRowOf(result);
+  assert.ok(advice, "el consejo debe existir tambien al cierre del dia");
+
+  /* El domingo a las 04:00, mas tres horas de entrenamiento optimo. */
+  const time = findByClass(advice, "ad-training-advice-time")[0];
+  assert.equal(time.textContent, "11:00:00");
+});
+
+test("las actividades OFF ya no muestran el tiempo de entrenamiento", () => {
+  const result = render(fridayAt(10, 16, 32));
+
+  for (const code of offCodesOf(result)) {
+    const row = battleRowByTaskCode(result, code);
+    const resource = findByClass(row, "ad-resource")[0];
+
+    assert.equal(resource.children.length, 0, code + " no debe mostrar hijos en la celda de recurso");
+    assert.ok(!String(row.className).includes("ad-training"), code + " no debe llevar la clase del consejo");
+  }
+
+  /* El formato antiguo no existe en ninguna parte del documento. */
+  for (const row of allRows(result.lists)) {
+    assert.ok(!row.textContent.includes("[Train"), "no debe quedar el formato antiguo");
+    assert.equal(findByClass(row, "ad-training-time").length, 0);
+  }
 });

@@ -125,7 +125,7 @@
     { "code": "DYSOLDIER", "group": "FOCUS", "icon": "soldier-t7", "point": "", "codebs": "SOLDIER" },
     { "code": "DYHOSPITAL", "group": "FOCUS", "icon": "speedup-healing", "point": "", "codebs": "" },
     { "code": "SHIELD", "group": "FOCUS", "icon": "shield", "point": "", "codebs": "" },
-    { "code": "DYWALL", "group": "FOCUS", "icon": "", "point": "", "codebs": "" },
+    { "code": "DYWALL", "group": "FOCUS", "icon": "skin-heavy-knight", "point": "", "codebs": "" },
 
     { "code": "EQGEAR", "group": "GEAR", "icon": "gearstone", "point": "", "codebs": "" },
     { "code": "EQBPRN", "group": "GEAR", "icon": "gear-blueprint-ur", "point": "", "codebs": "" },
@@ -140,6 +140,7 @@
     { "code": "BSRAVEN", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "RAVEN" },
     { "code": "BSSOLDIER", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "SOLDIER" },
     { "code": "BSTECH", "group": "BS", "icon": "skill-badge", "point": "", "codebs": "TECH" },
+    { "code": "BSTRAIN", "group": "BS", "icon": "boost-training", "point": "", "codebs": "" },
 
     { "code": "OFFBUILD", "group": "BS", "icon": "lock", "point": "", "codebs": "BUILD" },
     { "code": "OFFHERO", "group": "BS", "icon": "lock", "point": "", "codebs": "HEROE" },
@@ -266,10 +267,10 @@
     { "noday": 6, "day": "Sat", "event": "EQ", "phase": "PH06", "code_task": "EQBPRN", "server_time": "" },
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETH", "server_time": "" },
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "FREETS", "server_time": "" },
-    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "SHIELD", "server_time": "00:00:00", "server_duration": "23:00:00", "flag": "W", "ani": "S" },
-    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "DYWALL", "server_time": "00:00:00", "server_duration": "23:00:00", "flag": "W", "ani": "S" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "SHIELD", "server_time": "00:00:00", "server_duration": "23:00:00", "flag": "W", "ani": "A" },
+    { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "DYWALL", "server_time": "00:00:00", "server_duration": "23:00:00", "flag": "W", "ani": "A" },
 
-    { "noday": 6, "day": "Sat", "event": "KVK", "phase": "PH06", "code_task": "KWAR", "server_time": "12:00:00", "server_duration": "02:00:00", "flag": "A", "ani": "A" },
+    { "noday": 6, "day": "Sat", "event": "KVK", "phase": "PH06", "code_task": "KWAR", "server_time": "12:00:00", "server_duration": "02:00:00", "flag": "S", "ani": "S" },
 
     { "noday": 6, "day": "Sat", "event": "DY", "phase": "PH06", "code_task": "DEMONW", "server_time": "" },
 
@@ -582,6 +583,9 @@
     /* Segundo cuerpo de tabla del dia actual: aloja el grupo Battle
        Survival, separado de las tareas normales. */
     var battleBodyEl = null;
+    /* Cuerpo de tabla del dia siguiente: aloja el grupo Battle Survival
+       completo de ese dia. */
+    var nextBattleBodyEl = null;
 
     function phaseTitle(noday) {
       var ph = dayPhase[noday];
@@ -743,15 +747,21 @@
 
        Las actividades cuyo codigo comienza con "OFF" representan la
        oportunidad siguiente de cada tipo de Battle Survival. Se muestran
-       las dos siguientes a la actividad en curso, en orden cronologico,
-       con un contador unicamente en estado [COUNTDOWN]. La fila completa
-       recibe la clase ad-off-task, que marca las celdas Tarea, Recurso y
-       Evento con el aspecto de actividad proxima.
+       en orden cronologico, con un contador unicamente en estado
+       [COUNTDOWN]. La fila completa recibe la clase ad-off-task, que marca
+       las celdas Tarea, Recurso y Evento con el aspecto de actividad
+       proxima.
 
-       El grupo Battle Survival muestra siempre cuatro filas: la actividad
-       BS en curso y las tres OFF siguientes. No hay filas ocultas: cuando
-       cambia la franja en curso, JavaScript sobrescribe el contenido de
-       esas cuatro filas. */
+       En la tabla del dia actual se muestran la actividad BS en curso y
+       todas las franjas OFF que quedan en el dia, de modo que el listado
+       se reduce en una actividad cada cuatro horas, hasta agotar el dia.
+
+       En la tabla del dia siguiente se muestran las seis franjas de ese
+       dia, todas en estado [COUNTDOWN]. La cuenta regresiva se calcula
+       desde el instante actual, por lo que puede superar las 24 horas.
+
+       No hay filas ocultas: cuando cambia la franja en curso, JavaScript
+       sobrescribe el contenido de los grupos. */
 
     var BS_CODE_PREFIX = "BS";
     var OFF_CODE_PREFIX = "OFF";
@@ -759,9 +769,16 @@
     var BS_STAR = "★";
     /* Clase de fila que marca la actividad como proxima, todavia no activa. */
     var OFF_TASK_CLASS = "ad-off-task";
-    /* Cantidad de actividades OFF que se muestran bajo la actividad en
-       curso. Con la actividad BS en curso, el grupo muestra cuatro filas. */
-    var OFF_VISIBLE_COUNT = 4;
+    /* Clase de fila que marca el consejo de tiempo de entrenamiento. */
+    var TRAINING_ADVICE_CLASS = "ad-training-advice";
+    /* Codigo de la actividad que declara el consejo de tiempo de
+       entrenamiento optimo. */
+    var TRAINING_CODE = "BSTRAIN";
+    /* Codigo de horario que corresponde a Entrenar Soldados. */
+    var TRAIN_CODEBS = "SOLDIER";
+    /* Duracion del entrenamiento optimo: el consejo cuenta hasta tres horas
+       despues del inicio de la proxima actividad SOLDIER. */
+    var TRAIN_OPTIMAL_DURATION = 3 * 3600;
 
     var bsActivities = ACTIVITY_CODE.filter(function (a) {
       return a.code.indexOf(BS_CODE_PREFIX) === 0;
@@ -806,25 +823,63 @@
       return idx;
     }
 
-    /* Devuelve las siguientes franjas de Battle Survival despues de la que
-       esta en curso, con el instante de inicio relativo al dia actual. */
-    function nextScheduleSlots(noday, nowSec, count) {
+    /* Devuelve las franjas de Battle Survival que quedan en el dia indicado
+       despues de la que esta en curso. El instante de inicio se expresa en
+       segundos desde las 00:00:00 del dia actual, de modo que el contador
+       desciende correctamente al cruzar la medianoche o el cambio de
+       semana. */
+    function remainingDaySlots(noday, nowSec) {
       var weekSec = noday * 86400 + nowSec;
       var idx = currentScheduleIndex(weekSec);
       var result = [];
-      for (var i = 1; i <= count; i++) {
-        var pos = idx + i;
-        var slot = bsSchedule[pos % bsSchedule.length];
-        var cycles = Math.floor(pos / bsSchedule.length);
-        /* El instante se expresa en segundos desde las 00:00:00 del dia
-           actual, de modo que el contador desciende correctamente al cruzar
-           la medianoche o el cambio de semana. */
-        result.push({
-          codebs: slot.codebs,
-          startSec: slot.weekSec + cycles * WEEK_SECONDS - noday * 86400
-        });
+      for (var i = idx + 1; i < bsSchedule.length; i++) {
+        var slot = bsSchedule[i];
+        /* Solo interesan las franjas del mismo dia en curso. */
+        if (slot.noday !== noday) break;
+        result.push({ codebs: slot.codebs, startSec: slot.sec });
       }
       return result;
+    }
+
+    /* Devuelve todas las franjas de Battle Survival del dia indicado, con
+       el instante de inicio relativo al dia actual. Sirve para listar el
+       dia siguiente completo, con contadores en estado [COUNTDOWN]. */
+    function daySlots(noday, currentNoday) {
+      var result = [];
+      for (var i = 0; i < bsSchedule.length; i++) {
+        var slot = bsSchedule[i];
+        if (slot.noday !== noday) continue;
+        /* El inicio se mide desde la medianoche del dia en curso, de modo
+           que la cuenta regresiva del dia siguiente puede superar 24 horas. */
+        var offset = slot.noday - currentNoday;
+        if (offset < 0) offset += 7;
+        result.push({ codebs: slot.codebs, startSec: offset * 86400 + slot.sec });
+      }
+      return result;
+    }
+
+    /* Proxima franja SOLDIER posterior a la franja en curso. Cuando la
+       actividad en curso es SOLDIER, se toma la siguiente y no la propia.
+       El instante devuelto es relativo a la medianoche del dia en curso.
+       La busqueda es circular dentro del calendario semanal, de modo que
+       el cruce de semana no deja al consejo sin proxima actividad. */
+    function nextTrainSlot(noday, nowSec) {
+      var weekSec = noday * 86400 + nowSec;
+      var idx = currentScheduleIndex(weekSec);
+      var total = bsSchedule.length;
+      for (var i = 1; i <= total; i++) {
+        var pos = idx + i;
+        var slot = bsSchedule[pos % total];
+        if (slot.codebs !== TRAIN_CODEBS) continue;
+        /* El instante se mide desde la medianoche del dia en curso. */
+        var cycles = Math.floor(pos / total);
+        var startSec = slot.weekSec + cycles * WEEK_SECONDS - noday * 86400;
+        return {
+          startSec: startSec,
+          endSec: startSec + TRAIN_OPTIMAL_DURATION
+        };
+      }
+      return null;
     }
 
     /* Fila de actividad BS para el dia actual. */
@@ -850,7 +905,7 @@
       return currentScheduleIndex(noday * 86400 + nowSec);
     }
 
-    /* Fila de actividad OFF: la oportunidad siguiente de un horario de
+    /* Fila de la actividad OFF: la oportunidad siguiente de un horario de
        Battle Survival, con su instante de inicio. El aspecto de actividad
        proxima se aplica a la fila completa mediante la clase de fila. */
     function offRow(a, noday, startSec) {
@@ -864,6 +919,47 @@
         isOff: true,
         startSec: startSec
       };
+    }
+
+    /* Fila del consejo de tiempo de entrenamiento optimo. Se ubica bajo la
+       actividad BS en curso y anuncia hasta cuando conviene entrenar antes
+       de la proxima Batalla de Supervivencia de tema Soldados. */
+    function trainingAdviceRow(noday, trainEndSec) {
+      return {
+        noday: noday,
+        day: DAY_ABBR[noday],
+        event: "BS",
+        phase: "",
+        code_task: TRAINING_CODE,
+        server_time: "",
+        isTrainingAdvice: true,
+        trainEndSec: trainEndSec
+      };
+    }
+
+    /* Escribe el texto del consejo en la columna Tarea. La plantilla declara
+       el marcador {time}, que se reemplaza por un nodo propio con el tiempo
+       restante, de modo que solo ese nodo se actualiza en cada tick. */
+    function appendTrainingAdviceText(cell, template, trainEndSec, nowSec) {
+      var parts = String(template || "").split("{time}");
+      cell.textContent = "";
+
+      var headEl = document.createElement("span");
+      headEl.className = "ad-training-advice-text";
+      headEl.textContent = parts[0] || "";
+      cell.appendChild(headEl);
+
+      var timeEl = document.createElement("span");
+      timeEl.className = "ad-training-advice-time";
+      timeEl.textContent = fmtCounter(trainEndSec - nowSec);
+      cell.appendChild(timeEl);
+
+      var tailEl = document.createElement("span");
+      tailEl.className = "ad-training-advice-text";
+      tailEl.textContent = parts[1] || "";
+      cell.appendChild(tailEl);
+
+      counters.push({ tr: cell.parentNode, timeEl: timeEl, trainEndSec: trainEndSec });
     }
 
     /* Reconstruye el texto de la tarea separando cada estrella para poder
@@ -899,9 +995,11 @@
       var ani = r.ani ? String(r.ani).toLowerCase() : "";
       var hasSchedule = !!r.server_time || !!codebs;
 
-      if (offset === 0 && r.isOff) {
+      if (r.isOff) {
         /* Las actividades OFF muestran solo la cuenta regresiva hasta el
-           inicio de su franja, sin tiempo transcurrido ni restante. */
+           inicio de su franja, sin tiempo transcurrido ni restante. La
+           cuenta se mide desde el instante actual, de modo que las del dia
+           siguiente pueden superar las 24 horas. */
         var remaining = r.startSec - nowSec;
         if (remaining < 0) remaining = 0;
         state = STATE_COUNTDOWN;
@@ -961,6 +1059,12 @@
       if (flag) taskCell.classList.add("ad-task-flag-" + flag);
       /* Las actividades OFF marcan la fila completa como proxima. */
       if (r.isOff) tr.classList.add(OFF_TASK_CLASS);
+      /* El consejo de entrenamiento anuncia el tiempo restante y no lleva
+         contador en su propia columna. */
+      if (r.isTrainingAdvice) {
+        tr.classList.add(TRAINING_ADVICE_CLASS);
+        appendTrainingAdviceText(taskCell, objectiveText, r.trainEndSec, nowSec);
+      }
       /* En las actividades BS la estrella de habilidad se pinta en rojo. */
       if (r.isBs) appendStars(taskCell, objectiveText);
 
@@ -1037,6 +1141,7 @@
       counters = [];
       currentPhaseEl = null;
       battleBodyEl = null;
+      nextBattleBodyEl = null;
       listsEl.innerHTML = "";
 
       for (var k = 0; k < 7; k++) {
@@ -1104,16 +1209,21 @@
         orderedEvents.forEach(function (ev) {
           var eventRows = groups[ev.event] || [];
 
-          /* Battle Survival solo tiene cuerpo en la tabla del dia actual
-             y sus actividades se escriben despues, en buildBattleTaskRows(). */
-          if (!eventRows.length && !(k === 0 && ev.event === "BS")) return;
+          /* Battle Survival tiene cuerpo en la tabla del dia actual y en la
+             del dia siguiente. Sus actividades se escriben despues, en
+             buildBattleTaskRows(). */
+          if (!eventRows.length && !(k <= 1 && ev.event === "BS")) return;
 
           var body = document.createElement("tbody");
           body.className = "ad-event-body";
           body.setAttribute("data-event", ev.event);
           if (ev.event === "BS") {
             body.className += " ad-battle-body";
-            battleBodyEl = body;
+            if (k === 0) {
+              battleBodyEl = body;
+            } else {
+              nextBattleBodyEl = body;
+            }
           }
 
           eventRows.forEach(function (r) {
@@ -1151,58 +1261,101 @@
         })(item, title, baseCls);
       }
 
-      /* La franja en curso determina la actividad BS visible y las tres
-         oportunidades OFF que se muestran bajo ella. */
+      /* La franja en curso determina la actividad BS visible, las
+         oportunidades OFF que quedan en el dia y el grupo completo del dia
+         siguiente. */
       currentSlotNoday = today;
       currentSlotIndex = slotIndexAt(today, nowSec);
       buildBattleTaskRows(today, nowSec, startDayMs);
     }
 
-    /* Escribe las cuatro filas del grupo Battle Survival en su contenedor
-       propio: la actividad BS de la franja en curso, con su contador en
-       estado [PROGRESS], y las tres actividades OFF consecutivas
-       siguientes, con su contador en estado [COUNTDOWN] y el estilo de
-       fila proxima.
+    /* Escribe el grupo Battle Survival del dia actual y el del dia
+       siguiente, cada uno en su contenedor propio.
 
-       El contenedor se renueva por completo en cada cambio de franja, de
+       En el dia actual se escribe la actividad BS de la franja en curso, con
+       su contador en estado [PROGRESS], el consejo de tiempo de
+       entrenamiento optimo y todas las actividades OFF que quedan en el dia,
+       con su contador en estado [COUNTDOWN] y el estilo de fila proxima. El
+       listado se reduce en una actividad cada cuatro horas.
+
+       En el dia siguiente se escriben las seis actividades del dia, todas en
+       estado [COUNTDOWN]. La cuenta regresiva se calcula desde el instante
+       actual, por lo que puede superar las 24 horas.
+
+       Los contenedores se renuevan por completo en cada cambio de franja, de
        modo que nunca quedan filas ni contadores obsoletos. */
     function buildBattleTaskRows(noday, nowSec, startDayMs) {
       var body = battleBodyEl;
-      if (!body) return;
+      var nextBody = nextBattleBodyEl;
+      if (!body && !nextBody) return;
 
       /* Se calculan primero las actividades, para no dejar el grupo a medio
          escribir si alguna de ellas no estuviera definida. */
       var currentSlot = bsSchedule[slotIndexAt(noday, nowSec)];
       var currentAct = currentSlot ? bsByCodebs[currentSlot.codebs] : null;
-      if (!currentAct) return;
 
-      var nextSlots = nextScheduleSlots(noday, nowSec, OFF_VISIBLE_COUNT);
-      var offActs = [];
-      for (var s = 0; s < nextSlots.length; s++) {
-        var offAct = offByCodebs[nextSlots[s].codebs];
-        if (offAct) offActs.push({ activity: offAct, startSec: nextSlots[s].startSec });
+      /* La proxima actividad SOLDIER, posterior a la franja en curso, aporta
+         el tiempo de entrenamiento optimo. */
+      var trainSlot = nextTrainSlot(noday, nowSec);
+
+      /* Se retiran las filas anteriores de los grupos y sus contadores. */
+      if (body) {
+        while (body.children.length) {
+          body.removeChild(body.children[0]);
+        }
       }
-
-      /* Se retiran las filas anteriores del grupo y sus contadores. */
-      while (body.children.length) {
-        body.removeChild(body.children[0]);
+      if (nextBody) {
+        while (nextBody.children.length) {
+          nextBody.removeChild(nextBody.children[0]);
+        }
       }
       counters = counters.filter(function (counter) {
-        return !counter.isBs && counter.offStartSec === undefined;
+        return !counter.isBs && counter.offStartSec === undefined && counter.trainEndSec === undefined;
       });
 
-      /* La primera fila es la actividad BS de la franja en curso. */
-      var bsRowEl = buildRow(bsRow(currentAct, noday), 0, startDayMs, nowSec);
-      bsRowEl.classList.add("ad-bs-task");
-      body.appendChild(bsRowEl);
+      /* Grupo del dia actual: la actividad BS en curso, el consejo de
+         entrenamiento y las OFF que quedan en el dia. */
+      if (body && currentAct) {
+        var bsRowEl = buildRow(bsRow(currentAct, noday), 0, startDayMs, nowSec);
+        bsRowEl.classList.add("ad-bs-task");
+        body.appendChild(bsRowEl);
 
-      /* Las filas siguientes son las oportunidades OFF consecutivas. */
-      for (var o = 0; o < offActs.length; o++) {
-        var offRowEl = buildRow(
-          offRow(offActs[o].activity, noday, offActs[o].startSec), 0, startDayMs, nowSec
-        );
-        offRowEl.classList.add("ad-bs-task");
-        body.appendChild(offRowEl);
+        /* El consejo va bajo la actividad en curso: indica hasta cuando
+           conviene entrenar antes de la proxima Batalla de Supervivencia de
+           tema Soldados. */
+        if (trainSlot) {
+          var adviceRowEl = buildRow(
+            trainingAdviceRow(noday, trainSlot.endSec), 0, startDayMs, nowSec
+          );
+          adviceRowEl.classList.add("ad-bs-task");
+          body.appendChild(adviceRowEl);
+        }
+
+        var todaySlots = remainingDaySlots(noday, nowSec);
+        for (var s = 0; s < todaySlots.length; s++) {
+          var todayAct = offByCodebs[todaySlots[s].codebs];
+          if (!todayAct) continue;
+          var todayRowEl = buildRow(
+            offRow(todayAct, noday, todaySlots[s].startSec), 0, startDayMs, nowSec
+          );
+          todayRowEl.classList.add("ad-bs-task");
+          body.appendChild(todayRowEl);
+        }
+      }
+
+      /* Grupo del dia siguiente: todas las franjas de ese dia. */
+      if (nextBody) {
+        var nextNoday = (noday + 1) % 7;
+        var nextSlots = daySlots(nextNoday, noday);
+        for (var n = 0; n < nextSlots.length; n++) {
+          var nextAct = offByCodebs[nextSlots[n].codebs];
+          if (!nextAct) continue;
+          var nextRowEl = buildRow(
+            offRow(nextAct, nextNoday, nextSlots[n].startSec), 1, startDayMs, nowSec
+          );
+          nextRowEl.classList.add("ad-bs-task");
+          nextBody.appendChild(nextRowEl);
+        }
       }
     }
 
@@ -1218,9 +1371,9 @@
         currentPhaseEl.textContent = phaseCountdown(nowSec);
       }
 
-      /* Al cambiar de franja de Battle Survival el grupo se reescribe: la
-         actividad BS en curso pasa a ser la anterior y las oportunidades
-         OFF avanzan a las tres siguientes. */
+      /* Al cambiar de franja de Battle Survival los grupos se reescriben: la
+         actividad BS en curso pasa a ser la anterior, las oportunidades OFF
+         del dia se reducen y las del dia siguiente se actualizan. */
       if (slotIndexAt(currentSlotNoday, nowSec) !== currentSlotIndex) {
         currentSlotIndex = slotIndexAt(currentSlotNoday, nowSec);
         buildBattleTaskRows(currentSlotNoday, nowSec, Date.UTC(
@@ -1230,6 +1383,14 @@
 
       for (var i = 0; i < counters.length; i++) {
         var counter = counters[i];
+        if (counter.trainEndSec !== undefined) {
+          /* El consejo de entrenamiento cuenta hasta el final del
+             entrenamiento optimo de la proxima actividad SOLDIER. */
+          var trainLeft = counter.trainEndSec - nowSec;
+          if (trainLeft < 0) trainLeft = 0;
+          counter.timeEl.textContent = fmtCounter(trainLeft);
+          continue;
+        }
         var result;
         if (counter.offStartSec !== undefined) {
           /* Las actividades OFF muestran solo la cuenta regresiva. */

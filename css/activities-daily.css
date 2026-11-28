@@ -362,19 +362,21 @@ tr.bs-current td.bs-event::after {
 
 .ad-schedule tbody tr.ad-state-countdown > td.ad-time.ad-counter-ani-i {
   background-color: #00578a;
-  color: #00415f;
+  color: #fff;
 }
 .ad-schedule tbody tr.ad-state-progress > td.ad-time.ad-counter-ani-i {
   background-color: #00578a;
-  color: #00415f;
+  color: #fff;
   animation: uxm-ad-counter-ani-i-progress 1.8s ease-in-out infinite;
 }
 @keyframes uxm-ad-counter-ani-i-progress {
   0%, 100% {
     background-color: #00578a;
+    color: #fff;
   }
   50% {
     background-color: #00aeff;
+    color: #00578a;
   }
 }
 
@@ -421,6 +423,18 @@ tr.bs-current td.bs-event::after {
   color: #4d7799;
   font-weight: 100;
   font-size: 0.6rem;
+  white-space: nowrap;
+}
+/* Consejo de tiempo de entrenamiento optimo: fila de Batalla Supervivencia
+   que anuncia hasta cuando conviene entrenar antes de la proxima Batalla de
+   Supervivencia de tema Soldados. */
+.ad-training-advice > td.ad-objective {
+  font-weight: 100;
+}
+.ad-training-advice-time {
+  color: #df1b1b;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 /* Estrella de habilidad de las actividades de Battle Survival. */
