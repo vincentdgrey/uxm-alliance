@@ -79,7 +79,7 @@
     { "code": "DYFALCON", "group": "FOCUS", "icon": "falcon-mission-lock", "point": "", "codebs": "" },
     { "code": "STMN", "group": "FOCUS", "icon": "stamina-bottle", "point": 375, "codebs": "RAVEN" },
 
-    { "code": "EPIUR", "group": "RAVEN", "icon": "epigraf-chest", "point": 2812.5, "codebs": "" },
+    { "code": "EPIUR", "group": "RAVEN", "icon": "epigraf-chest-ssr", "point": 2812.5, "codebs": "" },
     { "code": "RAVESS", "group": "RAVEN", "icon": "raven-essence", "point": 6250, "codebs": "" },
     { "code": "RAVFRT", "group": "RAVEN", "icon": "raven-fruit", "point": 7.5, "codebs": "RAVEN" },
     { "code": "RAVCH1", "group": "RAVEN", "icon": "raven-chest", "point": 2750, "codebs": "" },
@@ -90,7 +90,7 @@
     { "code": "CON1SP", "group": "BUILD", "icon": "speedup-build", "point": 150, "codebs": "BUILD" },
     { "code": "CONMGH", "group": "BUILD", "icon": "might-building", "point": 29, "codebs": "BUILD" },
 
-    { "code": "CRVNUR", "group": "OPER", "icon": "caravan", "point": 300000, "codebs": "" },
+    { "code": "CRVNUR", "group": "OPER", "icon": "caravan-ur", "point": 300000, "codebs": "" },
     { "code": "OPENUR", "group": "OPER", "icon": "black-ops-swag", "point": 225000, "codebs": "" },
 
     { "code": "TCKSUR", "group": "TAVERN", "icon": "ticket-survivor", "point": 4500, "codebs": "" },
