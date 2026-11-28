@@ -436,6 +436,7 @@ tr.bs-current td.bs-event::after {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  font-family: 'Courier New', Courier, monospace;
 }
 /* Estrella de habilidad de las actividades de Battle Survival. */
 .ad-bs-task .ad-bs-star {
