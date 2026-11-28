@@ -1,5 +1,44 @@
 # Changelog
 
+## [261128a] - 2026-11-28
+
+### Changed
+- **El tiempo de entrenamiento óptimo pasa de la columna Recurso de la actividad `OFFSOLDIER` a una fila propia de Batalla Supervivencia**. Se retira el indicador `[Train HH H MM M]` de `js/activities-daily.js` y del CSS, junto con `TRAIN_LABEL` y `fmtTrainTime()`.
+- **La nueva fila de consejo se ubica inmediatamente debajo de la actividad `BS...` en curso** del día actual y solo en esa tabla. Se declara la actividad `BSTRAIN` en `ACTIVITY_CODE` (`group: "BS"`, `icon: "boost-training"`, sin `codebs`) y sus traducciones en los 11 idiomas dentro de `adActivities`.
+  - La fila lleva las clases `ad-bs-task ad-training-advice`, no lleva `ad-off-task` ni `ad-state-progress`, y **no muestra nada en la columna Contador**.
+  - La columna Tarea muestra `Consejo: Tiempo de Entrenamiento Optimo HH:MM:SS, hasta la proxima Batalla de Supervivencia Tema Soldados`; la columna Recurso muestra `Soldados` y la columna Evento `Batalla Supervivencia`.
+  - El texto se compone con el marcador `{time}` en la plantilla y un nodo propio `<span class="ad-training-advice-time">`, de modo que solo el valor se actualiza en cada tick sin reconstruir la frase.
+- **El cálculo del entrenamiento óptimo cambia a tres horas**: `fin de la próxima SOLDIER = inicio + 3 horas`, y el tiempo restante es `fin - instante actual`. La duración se declara en `TRAIN_OPTIMAL_DURATION`, independiente de `LINKED_DEFAULT_DURATION`, que sigue siendo de cuatro horas para los contadores de las actividades `BS`.
+- **La búsqueda de la próxima `SOLDIER` pasa a ser circular dentro del calendario semanal**, de modo que el cruce de semana (por ejemplo, el sábado por la noche) no deja al consejo sin próxima actividad. En ese caso el consejo muestra `11:00:00`.
+- El grupo del día siguiente no cambia: mantiene sus seis actividades `OFF...` en estado `[COUNTDOWN]` y no muestra el consejo, que es información del día en curso.
+
+### Changed (tests)
+- `tests/activity-points.test.cjs` comprueba la posición del consejo bajo la actividad en curso, la columna Contador vacía, los textos de Tarea, Recurso y Evento, la actualización por segundo, el cálculo de tres horas, la exclusión de la `SOLDIER` en curso, el cruce de semana y la ausencia del formato antiguo `[Train ...]`.
+- `tests/ui-contract.test.cjs` verifica el contrato de `BSTRAIN`, la duración de tres horas, el marcador `{time}` en los 11 idiomas y la redacción canónica en español.
+- `tests/i18n-structure.test.cjs` actualiza el número de actividades canónicas a 63 y refleja la redacción manual vigente de las actividades `BS`, con el símbolo `★` al inicio del texto.
+
+### Changed (docs)
+- `docs/core/project-rules.md` documenta la fila de consejo, el cálculo de tres horas y la búsqueda circular de la próxima `SOLDIER`.
+
+## [261127a] - 2026-11-27
+
+### Changed
+- **El grupo Battle Survival del día actual ya no tiene un número fijo de actividades**: se elimina `OFF_VISIBLE_COUNT` y la función `nextScheduleSlots()`. En su lugar, `remainingDaySlots()` devuelve las franjas de `CALENDAR` posteriores a la franja en curso y del mismo día. El listado queda así: a las 00:00 cinco actividades `OFF...`, a las 04:00 cuatro, a las 08:00 tres, a las 12:00 dos, a las 16:00 una y a las 20:00 ninguna, de modo que **se reduce en una actividad cada cuatro horas**. La actividad `BS...` en curso se mantiene sin cambios, con su contador en estado `[PROGRESS]`.
+- **El grupo Battle Survival aparece también en la tabla del día siguiente** (segundo panel, `ad-item ad-open`), dentro de su propio cuerpo `<tbody class="ad-event-body ad-battle-body" data-event="BS">`. Muestra las seis franjas del día siguiente, generadas con `daySlots()`, todas con las clases `ad-state-countdown ad-off-task ad-bs-task`.
+- **Los contadores de las actividades `OFF...` del día siguiente se calculan desde el instante actual**, con el formato `T-HH:MM:SS`, y pueden **superar las 24 horas** (por ejemplo, `T-44:00:00` a las 00:00). Antes, al caer en un día futuro, esas filas mostraban la fecha `MM/DD` de la tarea.
+- `buildBattleTaskRows()` escribe los dos grupos (día actual y día siguiente) y renueva por completo ambos contenedores en cada cambio de franja, retirando sus filas anteriores y descartando sus contadores.
+
+### Added
+- **Tiempo de entrenamiento óptimo en la columna Recurso de la próxima actividad `SOLDIER`**: el intervalo que falta para que termine la próxima actividad, es decir `inicio de la próxima SOLDIER + 4 horas - instante actual`. Se obtiene con `nextTrainSlot()`, que busca la primera franja `SOLDIER` **posterior** a la franja en curso, de modo que cuando la actividad en curso es `SOLDIER` el indicador apunta a la siguiente. El valor se formatea con `fmtTrainTime()` como `[Train HH H MM M]`, por ejemplo `[Train 26H16M]`, y solo muestra horas y minutos.
+- El indicador se agrega en la celda `.ad-resource`, debajo del texto del recurso, como un `<div class="ad-training-time">`, y se recalcula en cada tick. El texto `Train` es literal y no requiere traducción.
+
+### Added (tests)
+- `tests/activity-points.test.cjs` comprueba la reducción progresiva del listado del día, las seis actividades del día siguiente, los contadores `OFF` que superan las 24 horas, la exclusividad del indicador de entrenamiento y su exclusión de la `SOLDIER` en curso.
+- `tests/ui-contract.test.cjs` verifica el contrato del grupo Battle Survival por día y el del indicador de tiempo de entrenamiento.
+
+### Changed (docs)
+- `docs/core/project-rules.md` documenta el listado dinámico del día, el grupo completo del día siguiente y el tiempo de entrenamiento óptimo.
+
 ## [261126b] - 2026-11-26
 
 ### Added (docs)

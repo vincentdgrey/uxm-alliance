@@ -87,11 +87,12 @@
           DEMONR:{objective:"Rey Demonio Montaraz, Daño Héroe Brujo +50%, 4 DPS + 1 Soporte",resource:"Rey Demonio"},
           DEMONZ:{objective:"Rey Demonio Brujo, Daño Héroe Guerrero +50%, 4 DPS + 1 Soporte",resource:"Rey Demonio"},
 
-          BSBUILD:{objective:"Insignias de Habilidad ★, Oportunidad al Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H]",resource:"Edificios"},
-          BSHERO:{objective:"Insignias de Habilidad ★, Oportunidad al Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe",resource:"Heroes"},
-          BSRAVEN:{objective:"Insignias de Habilidad ★, Oportunidad de usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo",resource:"Cuervo"},
-          BSSOLDIER:{objective:"Insignias de Habilidad ★, Oportunidad de entrenar [2.800] Soldados ó Acelerar [17H] Entrenamiento",resource:"Soldados"},
-          BSTECH:{objective:"Insignias de Habilidad ★, Oportunidad al Terminar Investigación [subir 30.000 poder] ó Acelerar [50H]",resource:"Investigación"},
+          BSBUILD:{objective:"★ Insignias de Habilidad, Oportunidad al Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H]",resource:"Edificios"},
+          BSHERO:{objective:"★ Insignias de Habilidad, Oportunidad al Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe",resource:"Heroes"},
+          BSRAVEN:{objective:"★ Insignias de Habilidad, Oportunidad de usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo",resource:"Cuervo"},
+          BSSOLDIER:{objective:"★ Insignias de Habilidad, Oportunidad de entrenar [2.800] Soldados ó Acelerar [17H] Entrenamiento",resource:"Soldados"},
+          BSTECH:{objective:"★ Insignias de Habilidad, Oportunidad al Terminar Investigación [subir 30.000 poder] ó Acelerar [50H]",resource:"Investigación"},
+          BSTRAIN:{objective:"Consejo: Tiempo de Entrenamiento Optimo {time}, hasta la proxima Batalla de Supervivencia Tema Soldados",resource:"Soldados"},
 
           OFFBUILD:{objective:"Próxima Batalla Supervivencia, Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H] Construcción",resource:"Edificios"},
           OFFHERO:{objective:"Próxima Batalla Supervivencia, Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe",resource:"Heroes"},
@@ -203,11 +204,12 @@ pageDailyLead:"Details of the daily activities that will help you improve every 
           DEMONR:{objective:"Demon King Ranger, Wizard Hero Damage +50%, 4 DPS + 1 Support",resource:"Demon King"},
           DEMONZ:{objective:"Demon King Wizard, Warrior Hero Damage +50%, 4 DPS + 1 Support",resource:"Demon King"},
 
-          BSBUILD:{objective:"Skill Badges ★, Opportunity when finishing Constructions [raise 30.000 might] or Speed up [50H]",resource:"Buildings"},
-          BSHERO:{objective:"Skill Badges ★, Opportunity when using [23.4M] Antitoxins or [30] Hero Tickets",resource:"Heroes"},
-          BSRAVEN:{objective:"Skill Badges ★, Opportunity to use Stamina/Energy in [15] Rallys or Raven Fruit",resource:"Raven"},
-          BSSOLDIER:{objective:"Skill Badges ★, Opportunity to train [2.800] Soldiers or Speed up [17H] Training",resource:"Soldiers"},
-          BSTECH:{objective:"Skill Badges ★, Opportunity when finishing Research [raise 30.000 might] or Speed up [50H]",resource:"Research"},
+          BSBUILD:{objective:"★ Skill Badges, Opportunity when finishing Constructions [raise 30.000 might] or Speed up [50H]",resource:"Buildings"},
+          BSHERO:{objective:"★ Skill Badges, Opportunity when using [23.4M] Antitoxins or [30] Hero Tickets",resource:"Heroes"},
+          BSRAVEN:{objective:"★ Skill Badges, Opportunity to use Stamina/Energy in [15] Rallys or Raven Fruit",resource:"Raven"},
+          BSSOLDIER:{objective:"★ Skill Badges, Opportunity to train [2.800] Soldiers or Speed up [17H] Training",resource:"Soldiers"},
+          BSTECH:{objective:"★ Skill Badges, Opportunity when finishing Research [raise 30.000 might] or Speed up [50H]",resource:"Research"},
+          BSTRAIN:{objective:"Tip: Optimal Training Time {time}, until the next Soldiers Battle Survival",resource:"Soldiers"},
 
           OFFBUILD:{objective:"Next Battle Survival, Finish Constructions [raise 30.000 might] or Speed up [50H] Construction",resource:"Buildings"},
           OFFHERO:{objective:"Next Battle Survival, Use [23.4M] Antitoxins or [30] Hero Tickets",resource:"Heroes"},
@@ -301,11 +303,12 @@ pageDailyLead:"Detalhes das atividades diárias que o ajudarão a melhorar todos
           DEMONR:{objective:"Rei Demônio Montaraz, Dano do Herói Bruxo +50%, 4 DPS + 1 Suporte",resource:"Rei Demônio"},
           DEMONZ:{objective:"Rei Demônio Bruxo, Dano do Herói Guerreiro +50%, 4 DPS + 1 Suporte",resource:"Rei Demônio"},
 
-          BSBUILD:{objective:"Emblemas de Habilidade ★, Oportunidade ao Terminar Construções [aumentar 30.000 poder] ou Acelerar [50H]",resource:"Edifícios"},
-          BSHERO:{objective:"Emblemas de Habilidade ★, Oportunidade ao Usar [23.4M] Antitoxinas ou [30] Tickets de Herói",resource:"Heróis"},
-          BSRAVEN:{objective:"Emblemas de Habilidade ★, Oportunidade de usar Stamina/Energia em [15] Rallys ou Fruta de Corvo",resource:"Corvo"},
-          BSSOLDIER:{objective:"Emblemas de Habilidade ★, Oportunidade de treinar [2.800] Soldados ou Acelerar [17H] Treinamento",resource:"Soldados"},
-          BSTECH:{objective:"Emblemas de Habilidade ★, Oportunidade ao Terminar Pesquisa [aumentar 30.000 poder] ou Acelerar [50H]",resource:"Pesquisa"},
+          BSBUILD:{objective:"★ Emblemas de Habilidade, Oportunidade ao Terminar Construções [aumentar 30.000 poder] ou Acelerar [50H]",resource:"Edifícios"},
+          BSHERO:{objective:"★ Emblemas de Habilidade, Oportunidade ao Usar [23.4M] Antitoxinas ou [30] Tickets de Herói",resource:"Heróis"},
+          BSRAVEN:{objective:"★ Emblemas de Habilidade, Oportunidade de usar Stamina/Energia em [15] Rallys ou Fruta de Corvo",resource:"Corvo"},
+          BSSOLDIER:{objective:"★ Emblemas de Habilidade, Oportunidade de treinar [2.800] Soldados ou Acelerar [17H] Treinamento",resource:"Soldados"},
+          BSTECH:{objective:"★ Emblemas de Habilidade, Oportunidade ao Terminar Pesquisa [aumentar 30.000 poder] ou Acelerar [50H]",resource:"Pesquisa"},
+          BSTRAIN:{objective:"Dica: Tempo Ótimo de Treinamento {time}, até a próxima Battle Survival de Tema Soldados",resource:"Soldados"},
 
           OFFBUILD:{objective:"Próxima Battle Survival, Terminar Construções [aumentar 30.000 poder] ou Acelerar [50H] Construção",resource:"Edifícios"},
           OFFHERO:{objective:"Próxima Battle Survival, Usar [23.4M] Antitoxinas ou [30] Tickets de Herói",resource:"Heróis"},
@@ -399,11 +402,12 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           DEMONR:{objective:"Re Demone Montaraz, Danno Eroe Mago +50%, 4 DPS + 1 Supporto",resource:"Re Demone"},
           DEMONZ:{objective:"Re Demone Mago, Danno Eroe Guerriero +50%, 4 DPS + 1 Supporto",resource:"Re Demone"},
 
-          BSBUILD:{objective:"Distintivi di Abilità ★, Opportunità al Termine delle Costruzioni [aumentare 30.000 potenza] o Accelerare [50H]",resource:"Edifici"},
-          BSHERO:{objective:"Distintivi di Abilità ★, Opportunità all'Uso [23.4M] Antitossine o [30] Ticket dell'Eroe",resource:"Eroi"},
-          BSRAVEN:{objective:"Distintivi di Abilità ★, Opportunità di usare Stamina/Energia in [15] Rally o Frutto di Corvo",resource:"Corvo"},
-          BSSOLDIER:{objective:"Distintivi di Abilità ★, Opportunità di addestrare [2.800] Soldati o Accelerare [17H] Addestramento",resource:"Soldati"},
-          BSTECH:{objective:"Distintivi di Abilità ★, Opportunità al Termine della Ricerca [aumentare 30.000 potenza] o Accelerare [50H]",resource:"Ricerca"},
+          BSBUILD:{objective:"★ Distintivi di Abilità, Opportunità al Termine delle Costruzioni [aumentare 30.000 potenza] o Accelerare [50H]",resource:"Edifici"},
+          BSHERO:{objective:"★ Distintivi di Abilità, Opportunità all'Uso [23.4M] Antitossine o [30] Ticket dell'Eroe",resource:"Eroi"},
+          BSRAVEN:{objective:"★ Distintivi di Abilità, Opportunità di usare Stamina/Energia in [15] Rally o Frutto di Corvo",resource:"Corvo"},
+          BSSOLDIER:{objective:"★ Distintivi di Abilità, Opportunità di addestrare [2.800] Soldati o Accelerare [17H] Addestramento",resource:"Soldati"},
+          BSTECH:{objective:"★ Distintivi di Abilità, Opportunità al Termine della Ricerca [aumentare 30.000 potenza] o Accelerare [50H]",resource:"Ricerca"},
+          BSTRAIN:{objective:"Consiglio: Tempo di Addestramento Ottimale {time}, fino alla prossima Battle Survival a Tema Soldati",resource:"Soldati"},
 
           OFFBUILD:{objective:"Prossima Battle Survival, Termina le Costruzioni [aumenta 30.000 potenza] o Accelera [50H] Costruzione",resource:"Edifici"},
           OFFHERO:{objective:"Prossima Battle Survival, Usa [23.4M] Antitossine o [30] Ticket Eroe",resource:"Eroi"},
@@ -497,11 +501,12 @@ pageDailyLead:"Dettagli delle attività giornaliere che ti aiuteranno a migliora
           DEMONR:{objective:"Dämonenkönig Montaraz, Schaden des Helden Magier +50%, 4 DPS + 1 Support",resource:"Dämonenkönig"},
           DEMONZ:{objective:"Dämonenkönig Magier, Schaden des Helden Krieger +50%, 4 DPS + 1 Support",resource:"Dämonenkönig"},
 
-          BSBUILD:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Fertigstellen von Bauten [Stärke um 30.000 erhöhen] oder Beschleunigen [50H]",resource:"Gebäude"},
-          BSHERO:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Verwenden [23.4M] Antitoxinen oder [30] Helden-Tickets",resource:"Helden"},
-          BSRAVEN:{objective:"Fähigkeitsabzeichen ★, Gelegenheit, Ausdauer/Energie in [15] Rallys oder Rabenfrucht zu nutzen",resource:"Rabe"},
-          BSSOLDIER:{objective:"Fähigkeitsabzeichen ★, Gelegenheit, [2.800] Soldaten zu trainieren oder [17H] Training zu beschleunigen",resource:"Soldaten"},
-          BSTECH:{objective:"Fähigkeitsabzeichen ★, Gelegenheit beim Fertigstellen der Forschung [Stärke um 30.000 erhöhen] oder Beschleunigen [50H]",resource:"Forschung"},
+          BSBUILD:{objective:"★ Fähigkeitsabzeichen, Gelegenheit beim Fertigstellen von Bauten [Stärke um 30.000 erhöhen] oder Beschleunigen [50H]",resource:"Gebäude"},
+          BSHERO:{objective:"★ Fähigkeitsabzeichen, Gelegenheit beim Verwenden [23.4M] Antitoxinen oder [30] Helden-Tickets",resource:"Helden"},
+          BSRAVEN:{objective:"★ Fähigkeitsabzeichen, Gelegenheit, Ausdauer/Energie in [15] Rallys oder Rabenfrucht zu nutzen",resource:"Rabe"},
+          BSSOLDIER:{objective:"★ Fähigkeitsabzeichen, Gelegenheit, [2.800] Soldaten zu trainieren oder [17H] Training zu beschleunigen",resource:"Soldaten"},
+          BSTECH:{objective:"★ Fähigkeitsabzeichen, Gelegenheit beim Fertigstellen der Forschung [Stärke um 30.000 erhöhen] oder Beschleunigen [50H]",resource:"Forschung"},
+          BSTRAIN:{objective:"Hinweis: Optimale Trainingszeit {time}, bis zur nächsten Battle Survival mit dem Thema Soldaten",resource:"Soldaten"},
 
           OFFBUILD:{objective:"Nächste Battle Survival, Bauen abschließen [Stärke um 30.000 erhöhen] oder [50H] Construction beschleunigen",resource:"Gebäude"},
           OFFHERO:{objective:"Nächste Battle Survival, [23.4M] Antitoxine oder [30] Heldentickets verwenden",resource:"Helden"},
@@ -613,11 +618,12 @@ pageDailyLead:"Détails des activités quotidiennes qui vous aideront à vous am
           DEMONR:{objective:"Roi Démon Montaraz, Dégâts du Héros Mage +50%, 4 DPS + 1 Support",resource:"Roi Démon"},
           DEMONZ:{objective:"Roi Démon Mage, Dégâts du Héros Guerrier +50%, 4 DPS + 1 Support",resource:"Roi Démon"},
 
-          BSBUILD:{objective:"Badges de Compétence ★, Opportunité à la fin des Constructions [augmenter la Puissance de 30.000] ou Accélérer [50H]",resource:"Bâtiments"},
-          BSHERO:{objective:"Badges de Compétence ★, Opportunité lors de l'Utilisation [23.4M] Antitoxines ou [30] Tickets de Héros",resource:"Héros"},
-          BSRAVEN:{objective:"Badges de Compétence ★, Opportunité d'utiliser de l'Énergie/Endurance lors de [15] Rallys ou du Fruit de Corbeau",resource:"Corbeau"},
-          BSSOLDIER:{objective:"Badges de Compétence ★, Opportunité d'entraîner [2.800] Soldats ou d'Accélérer l'Entraînement [17H]",resource:"Soldats"},
-          BSTECH:{objective:"Badges de Compétence ★, Opportunité à la fin de la Recherche [augmenter la Puissance de 30.000] ou Accélérer [50H]",resource:"Recherche"},
+          BSBUILD:{objective:"★ Badges de Compétence, Opportunité à la fin des Constructions [augmenter la Puissance de 30.000] ou Accélérer [50H]",resource:"Bâtiments"},
+          BSHERO:{objective:"★ Badges de Compétence, Opportunité lors de l'Utilisation [23.4M] Antitoxines ou [30] Tickets de Héros",resource:"Héros"},
+          BSRAVEN:{objective:"★ Badges de Compétence, Opportunité d'utiliser de l'Énergie/Endurance lors de [15] Rallys ou du Fruit de Corbeau",resource:"Corbeau"},
+          BSSOLDIER:{objective:"★ Badges de Compétence, Opportunité d'entraîner [2.800] Soldats ou d'Accélérer l'Entraînement [17H]",resource:"Soldats"},
+          BSTECH:{objective:"★ Badges de Compétence, Opportunité à la fin de la Recherche [augmenter la Puissance de 30.000] ou Accélérer [50H]",resource:"Recherche"},
+          BSTRAIN:{objective:"Conseil : Temps d'Entraînement Optimal {time}, jusqu'à la prochaine Battle Survival au thème Soldats",resource:"Soldats"},
 
           OFFBUILD:{objective:"Prochaine Battle Survival, Terminer les Constructions [augmenter la Puissance de 30.000] ou Accélérer [50H] Construction",resource:"Bâtiments"},
           OFFHERO:{objective:"Prochaine Battle Survival, Utiliser [23.4M] Antitoxines ou [30] Tickets de Héros",resource:"Héros"},
@@ -716,6 +722,7 @@ pageDailyLead:"毎日改善するためのデイリー活動の詳細。",
           BSRAVEN:{objective:"スキルバッジ ★、エネルギー/スタミナを [15] 集结で使用 または レイベンの果物 を使う機会",resource:"レイベン"},
           BSSOLDIER:{objective:"スキルバッジ ★、兵士 [2.800] を訓練 または [17H] 訓練を加速 する機会",resource:"兵士"},
           BSTECH:{objective:"スキルバッジ ★、研究完了時の機会 [威力を30.000上昇] または加速 [50H]",resource:"研究"},
+          BSTRAIN:{objective:"ヒント: 最適な訓練時間 {time}、次の兵士テーマの Battle Survival まで",resource:"兵士"},
 
           OFFBUILD:{objective:"次の Battle Survival、建設完了 [威力を30.000上昇] または [50H] 建設を加速",resource:"建物"},
           OFFHERO:{objective:"次の Battle Survival、解毒剤 [23.4M] または英雄チケット [30] 使用",resource:"英雄"},
@@ -809,11 +816,12 @@ pageDailyLead:"Подробности ежедневных активносте�
           DEMONR:{objective:"Король Демон Монтараз, Урон Героя Волшебника +50%, 4 DPS + 1 Support",resource:"Король Демон"},
           DEMONZ:{objective:"Король Демон Волшебник, Урон Героя Воина +50%, 4 DPS + 1 Support",resource:"Король Демон"},
 
-          BSBUILD:{objective:"Значки Навыка ★, Возможность при завершении Строительств [повысить Мощь на 30.000] или Ускорить [50H]",resource:"Здания"},
-          BSHERO:{objective:"Значки Навыка ★, Возможность при Использовании [23.4M] Антитоксинов или [30] Билетов Героя",resource:"Герои"},
-          BSRAVEN:{objective:"Значки Навыка ★, Возможность использовать Энергию/Стамину в [15] Ралли или Плод Ворона",resource:"Ворона"},
-          BSSOLDIER:{objective:"Значки Навыка ★, Возможность обучить [2.800] Солдат или Ускорить Обучение [17H]",resource:"Солдаты"},
-          BSTECH:{objective:"Значки Навыка ★, Возможность при завершении Исследований [повысить Мощь на 30.000] или Ускорить [50H]",resource:"Исследования"},
+          BSBUILD:{objective:"★ Значки Навыка, Возможность при завершении Строительств [повысить Мощь на 30.000] или Ускорить [50H]",resource:"Здания"},
+          BSHERO:{objective:"★ Значки Навыка, Возможность при Использовании [23.4M] Антитоксинов или [30] Билетов Героя",resource:"Герои"},
+          BSRAVEN:{objective:"★ Значки Навыка, Возможность использовать Энергию/Стамину в [15] Ралли или Плод Ворона",resource:"Ворона"},
+          BSSOLDIER:{objective:"★ Значки Навыка, Возможность обучить [2.800] Солдат или Ускорить Обучение [17H]",resource:"Солдаты"},
+          BSTECH:{objective:"★ Значки Навыка, Возможность при завершении Исследований [повысить Мощь на 30.000] или Ускорить [50H]",resource:"Исследования"},
+          BSTRAIN:{objective:"Совет: Оптимальное время тренировки {time}, до следующей Battle Survival с темой Солдат",resource:"Солдаты"},
 
           OFFBUILD:{objective:"Следующая Battle Survival, Завершить Постройки [повысить Мощь на 30.000] или Ускорить [50H] Строительство",resource:"Здания"},
           OFFHERO:{objective:"Следующая Battle Survival, Использовать [23.4M] Антитоксины или [30] Билетов Героя",resource:"Герои"},
@@ -912,6 +920,7 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           BSRAVEN:{objective:"技能徽章 ★，在 [15] 次集结中使用体力/能量 或 渡鸦果实 的机会",resource:"渡鸦"},
           BSSOLDIER:{objective:"技能徽章 ★，训练 [2.800] 名士兵 或 加速 [17H] 训练 的机会",resource:"士兵"},
           BSTECH:{objective:"技能徽章 ★，完成研究时的机会 [提升 30.000 战力] 或加速 [50H]",resource:"研究"},
+          BSTRAIN:{objective:"提示：最佳训练时间 {time}，直到下一次士兵主题的 Battle Survival",resource:"士兵"},
 
           OFFBUILD:{objective:"下次 Battle Survival，完成建造 [提升 30.000 战力] 或加速 [50H] 建造",resource:"建筑"},
           OFFHERO:{objective:"下次 Battle Survival，使用 [23.4M] 解毒剂 或 [30] 英雄券",resource:"英雄"},
@@ -1179,24 +1188,28 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           },
 
           BSBUILD:{
-            objective:"Yetenek Rozeti ★, İnşaatları Bitirdiğinizde Fırsat [30.000 güç artır] veya Hızlandır [50H]",
+            objective:"★ Yetenek Rozeti, İnşaatları Bitirdiğinizde Fırsat [30.000 güç artır] veya Hızlandır [50H]",
             resource:"Binalar"
           },
           BSHERO:{
-            objective:"Yetenek Rozeti ★, Kullanma Fırsatı [23.4M] Antitoksin veya [30] Kahraman Bileti",
+            objective:"★ Yetenek Rozeti, Kullanma Fırsatı [23.4M] Antitoksin veya [30] Kahraman Bileti",
             resource:"Kahramanlar"
           },
           BSRAVEN:{
-            objective:"Yetenek Rozeti ★, Enerji/Dayanıklılığı [15] Rally'de Kullanma veya Karga Meyvesi Fırsatı",
+            objective:"★ Yetenek Rozeti, Enerji/Dayanıklılığı [15] Rally'de Kullanma veya Karga Meyvesi Fırsatı",
             resource:"Karga"
           },
           BSSOLDIER:{
-            objective:"Yetenek Rozeti ★, [2.800] Asker Eğitme veya [17H] Eğitimi Hızlandırma Fırsatı",
+            objective:"★ Yetenek Rozeti, [2.800] Asker Eğitme veya [17H] Eğitimi Hızlandırma Fırsatı",
             resource:"Askerler"
           },
           BSTECH:{
-            objective:"Yetenek Rozeti ★, Araştırmayı Bitirdiğinizde Fırsat [30.000 güç artır] veya Hızlandır [50H]",
+            objective:"★ Yetenek Rozeti, Araştırmayı Bitirdiğinizde Fırsat [30.000 güç artır] veya Hızlandır [50H]",
             resource:"Araştırma"
+          },
+          BSTRAIN:{
+            objective:"İpucu: Optimal Eğitim Süresi {time}, bir sonraki Asker Teması Battle Survival'a kadar",
+            resource:"Askerler"
           },
 
           OFFBUILD:{
@@ -1314,11 +1327,12 @@ pageDailyLead:"每日活动的详细信息，帮助你每天不断进步。",
           DEMONR:{objective:"Król Demonów Montaraz, obrażenia Bohatera Czarodzieja +50%, 4 DPS + 1 Support",resource:"Król Demonów"},
           DEMONZ:{objective:"Król Demonów Czarodziej, obrażenia Bohatera Wojownika +50%, 4 DPS + 1 Support",resource:"Król Demonów"},
 
-          BSBUILD:{objective:"Odznaka Umiejętności ★, okazja po zakończeniu budowy [zwiększ moc o 30.000] lub przyspiesz [50H]",resource:"Budynki"},
-          BSHERO:{objective:"Odznaka Umiejętności ★, okazja przy użyciu [23.4M] Antydotów lub [30] Biletów Bohatera",resource:"Bohaterowie"},
-          BSRAVEN:{objective:"Odznaka Umiejętności ★, okazja na zużycie energii/wytrzymałości w [15] Rajdach lub Owocu Kruka",resource:"Kruk"},
-          BSSOLDIER:{objective:"Odznaka Umiejętności ★, okazja na wyszkolenie [2.800] Żołnierzy lub przyspieszenie [17H] szkolenia",resource:"Żołnierze"},
-          BSTECH:{objective:"Odznaka Umiejętności ★, okazja po zakończeniu badań [zwiększ moc o 30.000] lub przyspiesz [50H]",resource:"Badania"},
+          BSBUILD:{objective:"★ Odznaka Umiejętności, okazja po zakończeniu budowy [zwiększ moc o 30.000] lub przyspiesz [50H]",resource:"Budynki"},
+          BSHERO:{objective:"★ Odznaka Umiejętności, okazja przy użyciu [23.4M] Antydotów lub [30] Biletów Bohatera",resource:"Bohaterowie"},
+          BSRAVEN:{objective:"★ Odznaka Umiejętności, okazja na zużycie energii/wytrzymałości w [15] Rajdach lub Owocu Kruka",resource:"Kruk"},
+          BSSOLDIER:{objective:"★ Odznaka Umiejętności, okazja na wyszkolenie [2.800] Żołnierzy lub przyspieszenie [17H] szkolenia",resource:"Żołnierze"},
+          BSTECH:{objective:"★ Odznaka Umiejętności, okazja po zakończeniu badań [zwiększ moc o 30.000] lub przyspiesz [50H]",resource:"Badania"},
+          BSTRAIN:{objective:"Wskazówka: Optymalny Czas Szkolenia {time}, do następnej Battle Survival z tematem Żołnierze",resource:"Żołnierze"},
 
           OFFBUILD:{objective:"Następna Battle Survival, Zakończ budowy [zwiększ moc o 30.000] lub przyspiesz [50H] budowy",resource:"Budynki"},
           OFFHERO:{objective:"Następna Battle Survival, Użyj [23.4M] Antydotów lub [30] Biletów Bohatera",resource:"Bohaterowie"},

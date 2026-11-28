@@ -70,7 +70,7 @@ test("los codigos de actividades coinciden con ACTIVITY_CODE", () => {
   vm.createContext(context);
   vm.runInContext("var ACTIVITY_CODE = " + match[1], context);
   const rows = context.ACTIVITY_CODE;
-  assert.equal(rows.length, 60);
+  assert.equal(rows.length, 61);
 
   const i18n = loadI18n("actividades-diarias");
   const canonicalCodes = Object.keys(i18n.es.adActivities);
@@ -147,11 +147,12 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
     DEMONW: { objective: "Rey Demonio Guerrero, Daño Héroe Ranger +50%, 4 DPS + 1 Soporte", resource: "Rey Demonio" },
     DEMONR: { objective: "Rey Demonio Montaraz, Daño Héroe Brujo +50%, 4 DPS + 1 Soporte", resource: "Rey Demonio" },
     DEMONZ: { objective: "Rey Demonio Brujo, Daño Héroe Guerrero +50%, 4 DPS + 1 Soporte", resource: "Rey Demonio" },
-    BSBUILD: { objective: "Insignias de Habilidad ★, Oportunidad al Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H]", resource: "Edificios" },
-    BSHERO: { objective: "Insignias de Habilidad ★, Oportunidad al Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe", resource: "Heroes" },
-    BSRAVEN: { objective: "Insignias de Habilidad ★, Oportunidad de usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo", resource: "Cuervo" },
-    BSSOLDIER: { objective: "Insignias de Habilidad ★, Oportunidad de entrenar [2.800] Soldados ó Acelerar [17H] Entrenamiento", resource: "Soldados" },
-    BSTECH: { objective: "Insignias de Habilidad ★, Oportunidad al Terminar Investigación [subir 30.000 poder] ó Acelerar [50H]", resource: "Investigación" },
+    BSBUILD: { objective: "★ Insignias de Habilidad, Oportunidad al Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H]", resource: "Edificios" },
+    BSHERO: { objective: "★ Insignias de Habilidad, Oportunidad al Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe", resource: "Heroes" },
+    BSRAVEN: { objective: "★ Insignias de Habilidad, Oportunidad de usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo", resource: "Cuervo" },
+    BSSOLDIER: { objective: "★ Insignias de Habilidad, Oportunidad de entrenar [2.800] Soldados ó Acelerar [17H] Entrenamiento", resource: "Soldados" },
+    BSTECH: { objective: "★ Insignias de Habilidad, Oportunidad al Terminar Investigación [subir 30.000 poder] ó Acelerar [50H]", resource: "Investigación" },
+    BSTRAIN: { objective: "Consejo: Tiempo de Entrenamiento Optimo {time}, hasta la proxima Batalla de Supervivencia Tema Soldados", resource: "Soldados" },
     OFFBUILD: { objective: "Próxima Batalla Supervivencia, Terminar Construcciones [subir 30.000 poder] ó Acelerar [50H] Construcción", resource: "Edificios" },
     OFFHERO: { objective: "Próxima Batalla Supervivencia, Usar [23.4M] Antitoxinas ó [30] Tickets de Héroe", resource: "Heroes" },
     OFFRAVEN: { objective: "Próxima Batalla Supervivencia, Usar Stamina/Energía en [15] Rallys ó Fruta de Cuervo", resource: "Cuervo" },
@@ -167,7 +168,7 @@ test("los textos españoles manuales se conservan como fuente de traduccion", ()
 test("todas las traducciones de actividades cubren los codigos canonicos", () => {
   const i18n = loadI18n("actividades-diarias");
   const canonicalCodes = Object.keys(i18n.es.adActivities);
-  assert.equal(canonicalCodes.length, 62);
+  assert.equal(canonicalCodes.length, 63);
 
   for (const lang of languages) {
     const activities = i18n[lang].adActivities;
